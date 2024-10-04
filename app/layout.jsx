@@ -1,6 +1,7 @@
 // app/layout.jsx
 import './globals.css';
 import Navbar from './components/Navbar';
+import Footer from './components/footer'
 
 export const metadata = {
   title: 'Konsultasi Psikologi',
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
       <body>
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
