@@ -3,10 +3,10 @@ import Image from 'next/image';
 
 export default function Navbar() {
     return (
-        <nav className="flex justify-between items-center py-4 px-8 bg-blue-300 text-white">
+        <nav className="flex justify-between items-center py-4 px-8 bg-gray-300 text-white">
             <div className="text-lg font-bold">
                 <Link href="/">
-                    <Image src="/image/logo.webp" alt="Logo" width={150} height={50} />
+                    <Image src="/image/logo.webp" alt="Logo" width={150} height={0} />
                 </Link>
             </div>
             <ul className="flex space-x-6">
