@@ -1,9 +1,9 @@
-import Navbar from './components/Navbar';
+import Keunggulan from './components/section/keunggulan';
 
 export default function HomePage() {
   return (
     <div>
-      <Navbar />
+      <Keunggulan />
     </div>
   );
 }
