@@ -18,16 +18,11 @@ const Footer = () => {
               Tamansari Hills Residence Blok B01 No.10, RT.02/RW.10,
               Mangunharjo, Kec. Banyumanik, Kota Semarang, Jawa Tengah 50272
             </address>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-600"></a>
-              <a href="#" className="text-gray-600"></a>
-              <a href="#" className="text-gray-600"></a>
-            </div>
           </div>
         </div>
 
-        <div className="lg:w-1/2 flex">
-          <div className="lg:w-1/2 text-sm text-gray-700 mt-6 lg:mt-0">
+        <div className="lg:w-1/2 flex sm:ml-6 sm:mb-4">
+          <div className="lg:w-1/2 text-sm text-gray-700 mt-6 lg:mt-0 sm:pr-20">
             <h5 className="font-bold mb-3">Tentang</h5>
             <ul>
               <li>
