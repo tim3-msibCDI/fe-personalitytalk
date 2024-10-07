@@ -3,13 +3,13 @@ import Image from "next/image";
 
 export default function Navbar() {
   return (
-    <nav className="flex justify-between items-center py-4 px-8 bg-gray-300 text-black">
-      <div className="text-lg font-bold">
+    <nav className="flex justify-between items-center py-4 px-8 bg-white shadow-lg text-lg sticky top-0 z-50">
+      <div className="text-lg font-bold ml-20">
         <Link href="/">
-          <Image src="/image/logo.webp" alt="Logo" width={150} height={0} />
+          <Image src="/image/logo.webp" alt="Logo" width={131} height={0} />
         </Link>
       </div>
-      <ul className="flex space-x-6">
+      <ul className="flex space-x-6 font-light text-textcolor">
         <li>
           <Link href="/konsultasi">Konsultasi</Link>
         </li>
@@ -17,15 +17,13 @@ export default function Navbar() {
           <Link href="/course">Course</Link>
         </li>
         <li>
-          <Link href="/pages/user/about" as="/about">
-            About Us
-          </Link>
+          <Link href="/pages/user/about">About Us</Link>
         </li>
       </ul>
       <div>
         <Link
           href="/login"
-          className="bg-gray-700 px-4 py-2 rounded hover:bg-black"
+          className="bg-primary text-white px-4 py-2 rounded mr-20 mt-5 mb-5"
         >
           Login
         </Link>

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-200 py-10">
+    <footer className="bg-gray-200 py-10 text-base">
       <div className="container mx-auto px-4 flex flex-col lg:flex-row justify-between items-start">
         <div className="lg:w-1/2 ml-6">
           <div className="lg:w-1/2">
@@ -14,7 +14,7 @@ const Footer = () => {
                 height={0}
               />
             </div>
-            <address className="not-italic text-sm text-gray-700 mb-4">
+            <address className="not-italic text-gray-700 mb-4">
               Tamansari Hills Residence Blok B01 No.10, RT.02/RW.10,
               Mangunharjo, Kec. Banyumanik, Kota Semarang, Jawa Tengah 50272
             </address>
@@ -22,7 +22,7 @@ const Footer = () => {
         </div>
 
         <div className="lg:w-1/2 flex sm:ml-6 sm:mb-4">
-          <div className="lg:w-1/2 text-sm text-gray-700 mt-6 lg:mt-0 sm:pr-20">
+          <div className="lg:w-1/2 text-gray-700 mt-6 lg:mt-0 sm:pr-20">
             <h5 className="font-bold mb-3">Tentang</h5>
             <ul>
               <li>
@@ -48,7 +48,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="lg:w-1/2 text-sm text-gray-700 mt-6 lg:mt-0">
+          <div className="lg:w-1/2 text-gray-700 mt-6 lg:mt-0">
             <h5 className="font-bold mb-3">Lainnya</h5>
             <ul>
               <li>
@@ -82,7 +82,7 @@ const Footer = () => {
       </div>
 
       <hr className="border-gray-300 max-w-[1200px] mx-auto" />
-      <div className="max-w-[1200px] mx-auto text-center text-sm text-gray-600 mt-2">
+      <div className="max-w-[1200px] mx-auto text-center text-gray-600 mt-2">
         PersonalityTalk © 2024. All rights reserved.
       </div>
     </footer>
