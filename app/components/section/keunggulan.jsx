@@ -2,11 +2,11 @@ import Image from 'next/image';
 
 export default function Keunggulan() {
     return (
-        <section className="flex flex-col md:flex-row items-center py-12 px-6 md:px-12 gap-60">
-            <div className="md:w-1/2">
-                <h1 className="text-4xl font-bold mb-4">
-                    Selesaikan masalah kamu bersama PERSONALITYTALK
-                </h1>
+        <section className="flex flex-col md:flex-row items-center py-12 px-6 md:px-12 gap-20">
+            <div className="md:w-2/3 ml-20">
+                <h2 className="text-4xl font-bold mb-4">
+                    Selesaikan masalah kamu bersama PersonalityTalk
+                </h2>
                 <h6 className="text-lg text-gray-600 mb-6">
                     Layanan terlengkap & terpercaya seputar Konsultasi, Informasi Penyakit Mental dan Online Course psikologi.
                 </h6>
@@ -49,12 +49,12 @@ export default function Keunggulan() {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center mr-20">
                 <Image
                     src="/image/Rectangle_2.png"
                     alt="Gambar Konten Kanan"
-                    width={300}
-                    height={300}
+                    width={400}
+                    height={400}
                     className="rounded-lg"
                 />
             </div>
