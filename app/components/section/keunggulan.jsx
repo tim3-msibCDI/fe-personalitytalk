@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function Keunggulan() {
     return (
-        <section className="flex flex-col md:flex-row items-center py-12 px-6 md:px-12 gap-56">
+        <section className="flex flex-col md:flex-row items-center py-12 px-6 md:px-12 gap-60">
             <div className="md:w-1/2">
                 <h1 className="text-4xl font-bold mb-4">
                     Selesaikan masalah kamu bersama PERSONALITYTALK
@@ -53,8 +53,8 @@ export default function Keunggulan() {
                 <Image
                     src="/image/Rectangle_2.png"
                     alt="Gambar Konten Kanan"
-                    width={400}
-                    height={400}
+                    width={300}
+                    height={300}
                     className="rounded-lg"
                 />
             </div>

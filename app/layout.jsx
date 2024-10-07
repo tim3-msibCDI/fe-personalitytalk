@@ -3,7 +3,7 @@ import './globals.css';
 import Navbar from './components/Navbar';
 
 export const metadata = {
-  title: 'Konsultasi Psikologi',
+  title: 'Personality Talk',
   description: 'Layanan Konsultasi Psikologi Profesional Online',
 };
 
