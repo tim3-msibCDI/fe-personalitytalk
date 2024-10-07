@@ -24,7 +24,7 @@ export default function Navbar() {
         </ul>
         <div>
           <Link
-            href="/login"
+            href="/pages/login"
             className="bg-primary text-white px-4 py-2 rounded mr-20 mt-5 mb-5"
           >
             Login
