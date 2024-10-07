@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-200 py-10 text-base">
+    <footer className="bg-whitebg py-10 text-base font-light text-textcolor">
       <div className="container mx-auto px-4 flex flex-col lg:flex-row justify-between items-start">
         <div className="lg:w-1/2 ml-6">
           <div className="lg:w-1/2">
@@ -23,7 +23,7 @@ const Footer = () => {
 
         <div className="lg:w-1/2 flex sm:ml-6 sm:mb-4">
           <div className="lg:w-1/2 text-gray-700 mt-6 lg:mt-0 sm:pr-20">
-            <h5 className="font-bold mb-3">Tentang</h5>
+            <h5 className="font-semibold mb-3">Tentang</h5>
             <ul>
               <li>
                 <a href="#" className="hover:underline">
@@ -49,7 +49,7 @@ const Footer = () => {
           </div>
 
           <div className="lg:w-1/2 text-gray-700 mt-6 lg:mt-0">
-            <h5 className="font-bold mb-3">Lainnya</h5>
+            <h5 className="font-semibold mb-3">Lainnya</h5>
             <ul>
               <li>
                 <a href="#" className="hover:underline">
@@ -81,7 +81,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <hr className="border-gray-300 max-w-[1200px] mx-auto" />
+      <hr className="border-textcolor max-w-[1200px] mx-auto" />
       <div className="max-w-[1200px] mx-auto text-center text-gray-600 mt-2">
         PersonalityTalk © 2024. All rights reserved.
       </div>
