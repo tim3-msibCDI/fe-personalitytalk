@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="bg-whitebg py-10 text-base font-light text-textcolor">
+    <footer className="bg-whitebg py-10 text-base font-light text-textcolor shadow-bottom">
       <div className="container mx-auto px-4 flex flex-col lg:flex-row justify-between items-start">
         <div className="lg:w-1/2 ml-6">
           <div className="lg:w-1/2">
@@ -82,7 +82,7 @@ const Footer = () => {
       </div>
 
       <hr className="border-textcolor max-w-[1200px] mx-auto" />
-      <div className="max-w-[1200px] mx-auto text-center text-gray-600 mt-2">
+      <div className="max-w-[1200px] mx-auto text-center text-textcolor mt-2">
         PersonalityTalk © 2024. All rights reserved.
       </div>
     </footer>

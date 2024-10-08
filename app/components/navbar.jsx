@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Navbar() {
   return (
     <>
-      <nav className="bg-white shadow sticky top-0 z-50 py-4 px-8">
+      <nav className="bg-whitebg shadow-top sticky top-0 z-50 py-4 px-8">
         <div className="flex justify-between items-center">
         <div className="text-lg font-bold ml-20">
           <Link href="/">
@@ -25,7 +25,7 @@ export default function Navbar() {
         <div>
           <Link
             href="/pages/login"
-            className="bg-primary text-white px-4 py-2 rounded mr-20 mt-5 mb-5"
+            className="bg-primary text-white px-4 py-2 rounded-lg mr-20 mt-5 mb-5 px-8"
           >
             Login
           </Link>
