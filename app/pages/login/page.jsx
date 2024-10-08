@@ -27,7 +27,9 @@ export default function Login() {
               <form action="">
                 <div className="">
                   <div>
-                    <label className="text-m font-normal text-textcolor">Email</label>
+                    <label className="text-m font-normal text-textcolor">
+                      Email
+                    </label>
                   </div>
                   <div>
                     <input
@@ -40,7 +42,9 @@ export default function Login() {
                 </div>
                 <div className="pt-5">
                   <div>
-                    <label className="text-m font-normal text-textcolor">Password</label>
+                    <label className="text-m font-normal text-textcolor">
+                      Password
+                    </label>
                   </div>
                   <div>
                     <input
@@ -57,13 +61,23 @@ export default function Login() {
                 <button className="bg-primary text-whitebg text-s w-full py-2 px-4 mt-8 rounded-lg">
                   Login
                 </button>
-                <button className="bg-whitebg text-textcolor text-s w-full py-2 px-4 mt-3.5 rounded-lg">
+                <button className="flex items-center px-4 py-2 bg-whitebg text-textcolor rounded-lg w-full justify-center text-s mt-3.5">
+                  <Image
+                    src="/image/icons/google.svg"
+                    alt="Google Logo" width={0} height={30}
+                    className="w-6 h-6 mr-2"
+                  />
                   Lanjutkan dengan Akun Google
                 </button>
               </form>
 
-              <div>
-                
+              <div className="flex flex-row justify-center mt-7 ">
+                <div className="text-textcolor mr-5 py-2 ">
+                  Belum punya akun?
+                </div>
+                <button className="rounded-lg px-4 py-2 text-s font-medium bg-whitebg border border-primary text-primary">
+                  Daftar Disini
+                </button>
               </div>
             </div>
           </div>
