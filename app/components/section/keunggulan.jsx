@@ -1,55 +1,31 @@
 import Image from 'next/image';
+import { layanan } from '@/app/constants';
 
 export default function Keunggulan() {
     return (
-        <section className="flex flex-col md:flex-row items-center py-12 px-6 md:px-12 gap-56">
-            <div className="md:w-1/2">
-                <h1 className="text-4xl font-bold mb-4">
-                    Selesaikan masalah kamu bersama PERSONALITYTALK
-                </h1>
+        <section id="keunggulan" className="flex flex-col md:flex-row items-center py-12 px-6 md:px-12 gap-20">
+            <div className="md:w-2/3 ml-20">
+                <h2 className="text-4xl font-bold mb-4">
+                    Selesaikan masalah kamu bersama PersonalityTalk
+                </h2>
                 <h6 className="text-lg text-gray-600 mb-6">
                     Layanan terlengkap & terpercaya seputar Konsultasi, Informasi Penyakit Mental dan Online Course psikologi.
                 </h6>
                 <div className="grid grid-cols-4 gap-4">
-                    <div className="flex flex-col items-center justify-center space-y-2 p-4 border border-gray-300 rounded-lg hover:shadow-lg transition duration-300 text-center">
-                        <Image
-                            src="/image/group_7.png"
-                            alt="Icon 1"
-                            width={50}
-                            height={50}
-                        />
-                        <span>Konsultasi</span>
-                    </div>
-                    <div className="flex flex-col items-center justify-center space-y-2 p-4 border border-gray-300 rounded-lg hover:shadow-lg transition duration-300 text-center">
-                        <Image
-                            src="/image/group_7.png"
-                            alt="Icon 2"
-                            width={50}
-                            height={50}
-                        />
-                        <span>Course</span>
-                    </div>
-                    <div className="flex flex-col items-center justify-center space-y-2 p-4 border border-gray-300 rounded-lg hover:shadow-lg transition duration-300 text-center">
-                        <Image
-                            src="/image/group_7.png"
-                            alt="Icon 3"
-                            width={50}
-                            height={50}
-                        />
-                        <span>Tes Mental</span>
-                    </div>
-                    <div className="flex flex-col items-center justify-center space-y-2 p-4 border border-gray-300 rounded-lg hover:shadow-lg transition duration-300 text-center">
-                        <Image
-                            src="/image/group_7.png"
-                            alt="Icon 4"
-                            width={50}
-                            height={50}
-                        />
-                        <span>Informasi Penyakit</span>
-                    </div>
+                    {layanan.map((item, index) => (
+                        <a key={item.id} href={`#${item.slug}`} className="flex flex-col items-center justify-center space-y-2 p-4 border border-gray-300 rounded-lg hover:shadow-lg transition duration-300 text-center scroll-smooth">
+                            <Image
+                                src={item.iconkeunggulan}
+                                alt={item.iconalt}
+                                width={50}
+                                height={50}
+                            />
+                            <span>{item.name}</span>
+                        </a>
+                    ))}
                 </div>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center mr-20">
                 <Image
                     src="/image/Rectangle_2.png"
                     alt="Gambar Konten Kanan"
