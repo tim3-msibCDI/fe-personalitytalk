@@ -2,9 +2,9 @@ export default function Profile() {
   return (
     <>
       <div>
-        <div>
-          <h2>Tentang Kami</h2>
-          <h1>PERSONALITYTALK</h1>
+        <div className="text-center mt-14">
+          <h3 className="text-h3 font-medium">Tentang Kami</h3>
+          <h1 className="text-h1 font-semibold mt-2">PersonalityTalk</h1>
         </div>
         <div>
           <div>
