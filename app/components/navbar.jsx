@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function Navbar() {
     return (
-        <nav className="flex justify-between items-center py-4 px-8 bg-white shadow-lg text-lg sticky top-0 z-5">
+        <nav className="flex justify-between items-center py-4 px-8 bg-white shadow-lg text-lg sticky top-0 z-50">
             <div className="text-lg font-bold ml-20">
                 <Link href="/">
                     <Image src="/image/logo_biro_new.png" alt="Logo" width={131} height={50} />

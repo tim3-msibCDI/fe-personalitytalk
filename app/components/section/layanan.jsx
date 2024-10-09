@@ -3,16 +3,16 @@ import Image from "next/image";
 
 export default function Layanan() {
     return (
-        <section className="flex flex-col items-center ml-20 mr-20">
-            <div className="text-center mt-20">
+        <section id="layanan" className="flex flex-col items-center ml-20 mr-20 scroll-mt-20 pt-20">
+            <div className="text-center">
                 <h2 className="font-bold text-black text-3xl">Layanan PersonalityTalk</h2>
                 <p className="text-black mt-2 mb-10">Dapatkan berbagai layanan untuk mengatasi masalah yang kamu hadapi</p>
             </div>
             <div className="mt-8 w-full mb-20">
                 {layanan.map((item, index) => (
-                    <div key={item.id}>
+                    <div key={item.id} id={item.slug}>
                         {item.id % 2 !== 0 ? (
-                            <div className="flex flex-row justify-between items-center p-4 gap-16">
+                            <div className="flex flex-row justify-between items-center p-4 gap-16 pt-20">
                                 <div className="w-1/3">
                                     <Image
                                         src={item.images}
