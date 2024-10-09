@@ -14,7 +14,7 @@ module.exports = {
         primarylight: "#FDD9B7",
         primarylight2: "#FFE7D1",
         whitebg: "#FBFBFB",
-        textcolor: "#404040",
+        textcolor: "#252525",
         textsec: "#8D8D8D",
         yellowStar : "#FFD700",
         success : "#40D046",

@@ -1,18 +1,26 @@
+import Image from "next/image";
+
 export default function Profile() {
   return (
     <>
-      <div>
-        <div className="text-center mt-14">
+      <div className="py-14 bg-whitebg">
+        <div className="text-center">
           <h3 className="text-h3 font-medium">Tentang Kami</h3>
           <h1 className="text-h1 font-semibold mt-2">PersonalityTalk</h1>
         </div>
-        <div>
-          <div>
-            <img src="" alt="" />
-          </div>
-          <div>
-            <h5>Apa itu PersonalityTalk?</h5>
-            <p>
+        <div className="flex mx-28 mt-12">
+          <Image
+            src="/image/about1.png"
+            alt="About"
+            width={386.702}
+            height={262}
+            className="rounded-lg"
+          />
+          <div className="ml-20">
+            <h2 className="text-h2 font-semibold mb-8">
+              Apa itu PersonalityTalk?
+            </h2>
+            <p className="text-m font-light tracking-wide mr-10">
               PersonalityTalk adalah lembaga yang bergerak di bidang jasa
               training, coaching, dan consulting dalam bidang psikologi. Berdiri
               sejak tahun 2014, Alhamdulillah PersonalityTalk telah membantu
@@ -28,4 +36,4 @@ export default function Profile() {
       </div>
     </>
   );
-};
+}

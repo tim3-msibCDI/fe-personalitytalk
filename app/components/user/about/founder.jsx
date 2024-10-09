@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Founder() {
   let founder = {
     name: "Faris Fanani, M.Psi",
@@ -6,18 +8,16 @@ export default function Founder() {
   };
   return (
     <>
-      <div>
+      <div className="py-14 px-24 text-textcolor bg-whitebg">
         <div>
-          <h1>Founder</h1>
+          <h1 className="text-h1 font-medium text-center">Founder</h1>
         </div>
-        <div>
-          <div>
-            <img src="" alt="" />
-          </div>
-          <div>
-            <h1>{founder.name}</h1>
-            <p>{founder.jabatan}</p>
-            <p>{founder.ket}</p>
+        <div className="flex mt-6">
+          <Image src="/image/founder.png" alt="Founder" width={184.346} height={310} className="ml-14" />
+          <div className="ml-28 my-7">
+            <h1 className="text-h2 font-medium mb-3">{founder.name}</h1>
+            <p className="text-m font-medium mb-3">{founder.jabatan}</p>
+            <p className="text-m font-light">{founder.ket}</p>
           </div>
         </div>
       </div>
