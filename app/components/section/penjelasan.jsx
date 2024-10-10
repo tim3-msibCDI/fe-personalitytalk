@@ -17,7 +17,7 @@ export default function Penjelasan() {
     };
 
     return (
-        <section className="py-12 px-6 md:px-12 ml-20 mt-15">
+        <section className="py-12 px-6 md:px-12 ml-20 mt-20 mb-20">
             <div className="mb-8">
                 <h2 className="text-3xl font-bold mb-4 text-center md:text-left">Apa itu PersonalityTalk?</h2>
             </div>

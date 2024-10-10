@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function Alasan() {
     return(
-        <section className="bg-slate-600 p-2">
+        <section className="bg-slate-600 p-2 mb-20">
             <div className="mb-8 mt-20 flex flex-col">
                 <h2 className="text-3xl font-bold text-center">Kenapa Harus PersonalityTalk</h2>
             </div>
