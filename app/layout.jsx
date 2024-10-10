@@ -4,13 +4,13 @@ import Navbar from './components/Navbar';
 import Footer from './components/footer'
 
 export const metadata = {
-  title: 'Konsultasi Psikologi',
+  title: 'Personality Talk',
   description: 'Layanan Konsultasi Psikologi Profesional Online',
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body>
         <Navbar />
         {children}
