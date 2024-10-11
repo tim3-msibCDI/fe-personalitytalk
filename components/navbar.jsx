@@ -19,12 +19,12 @@ export default function Navbar() {
             <Link href="/course">Course</Link>
           </li>
           <li>
-            <Link href="/pages/user/about">About Us</Link>
+            <Link href="/about">About Us</Link>
           </li>
         </ul>
         <div>
           <Link
-            href="/pages/login"
+            href="/login"
             className="bg-primary text-white py-2 rounded-lg mr-20 mt-5 mb-5 px-8"
           >
             Login

@@ -1,7 +1,5 @@
 // app/layout.jsx
-import './globals.css';
-import Navbar from './components/Navbar';
-import Footer from './components/footer'
+import '../styles/globals.css';
 
 export const metadata = {
   title: 'Personality Talk',
@@ -12,9 +10,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth">
       <body>
-        <Navbar />
         {children}
-        <Footer />
       </body>
     </html>
   );

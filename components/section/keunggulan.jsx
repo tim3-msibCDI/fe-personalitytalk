@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { layanan } from '@/app/constants';
+import { layanan } from '@/constants';
 
 export default function Keunggulan() {
     return (

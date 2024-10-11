@@ -1,4 +1,4 @@
-import { layanan } from "@/app/constants";
+import { layanan } from "@/constants";
 import Image from "next/image";
 
 export default function Layanan() {

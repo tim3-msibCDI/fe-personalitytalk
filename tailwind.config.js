@@ -32,6 +32,9 @@ module.exports = {
       size: {
         553: "34.5rem",
       },
+      width: {
+        553: '34.5rem',
+      },
       boxShadow: {
         "bottom": "0px -4px 4px 0px rgba(0, 0, 0, 0.15)",
         "top" : "0px 4px 4px 0px rgba(0, 0, 0, 0.15)",
