@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Register() {
+export default function Registermhs() {
   return (
     <>
       <div className="flex flex-row mt-16 mb-24 justify-center">
@@ -140,6 +140,39 @@ export default function Register() {
                   </div>
                 </div>
 
+                <div className="pt-5 flex w-full">
+                  <div className="w-1/2">
+                    <div>
+                      <label className="text-m font-normal text-textcolor">
+                        NIM
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        type="number"
+                        placeholder="Masukan NIM anda"
+                        id="no_telp"
+                        className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="ml-4 w-1/2">
+                    <div>
+                      <label className="text-m font-normal text-textcolor">
+                        Prodi
+                      </label>
+                    </div>
+                    <div>
+                      <select className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light">
+                        <option>Prodi</option>
+                        <option>Kedokteran</option>
+                        <option>Kedokteran Jiwa</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="pt-5 flex">
                   <div className="my-auto mr-4">
                     <input
@@ -174,15 +207,6 @@ export default function Register() {
                   Lanjutkan dengan Akun Google
                 </button>
               </form>
-
-              <div className="flex flex-row justify-center mt-7 ">
-                <div className="text-textcolor mr-5 py-2 ">
-                  Belum punya akun?
-                </div>
-                <button className="rounded-lg px-4 py-2 text-s font-medium bg-whitebg border border-primary text-primary">
-                  Daftar Disini
-                </button>
-              </div>
             </div>
           </div>
         </div>

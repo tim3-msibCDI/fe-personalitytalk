@@ -13,7 +13,7 @@ export default function Founder() {
           <h1 className="text-h1 font-medium text-center">Founder</h1>
         </div>
         <div className="flex mt-6">
-          <Image src="/image/founder.png" alt="Founder" width={184.346} height={310} className="ml-14" />
+          <Image src="/image/founder1.png" alt="Founder" width={184.346} height={310} className="ml-14" />
           <div className="ml-28 my-7">
             <h1 className="text-h2 font-medium mb-3">{founder.name}</h1>
             <p className="text-m font-medium mb-3">{founder.jabatan}</p>

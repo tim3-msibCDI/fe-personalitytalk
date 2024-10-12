@@ -1,3 +1,4 @@
+import Footerrmhs from "@/components/footerrmhs";
 import Countlist from "@/components/user/about/countlist";
 import Founder from "@/components/user/about/founder";
 import Mitra from "@/components/user/about/mitra";
@@ -13,6 +14,7 @@ export default function About() {
       <Founder />
       <Psikologlist />
       <Mitra />
+      <Footerrmhs />
     </>
   );
 }

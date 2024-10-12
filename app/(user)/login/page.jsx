@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Login() {
   return (
@@ -76,7 +77,7 @@ export default function Login() {
                   Belum punya akun?
                 </div>
                 <button className="rounded-lg px-4 py-2 text-s font-medium bg-whitebg border border-primary text-primary">
-                  Daftar Disini
+                  <Link href="/register">Daftar Disini</Link>
                 </button>
               </div>
             </div>
