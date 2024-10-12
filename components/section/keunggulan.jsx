@@ -5,7 +5,7 @@ export default function Keunggulan() {
     return (
         <section id="keunggulan" className="flex flex-col md:flex-row items-center py-12 px-6 md:px-12 gap-20">
             <div className="md:w-2/3 ml-20">
-                <h1 className="text-4xl font-bold mb-4">
+                <h1 className="text-h1 font-bold mb-4">
                     Selesaikan masalah kamu bersama PersonalityTalk
                 </h1>
                 <p className="text-m text-textcolor mb-6">
