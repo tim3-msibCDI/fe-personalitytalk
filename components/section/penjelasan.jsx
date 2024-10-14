@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { slides, description } from '@/constants';
 
 export default function Penjelasan() {
+    // Ubah slide setiap 5 detik
     const [currentSlide, setCurrentSlide] = useState(0);
     useEffect(() => {
         const interval = setInterval(() => {
@@ -12,6 +13,7 @@ export default function Penjelasan() {
         }, 5000);
         return () => clearInterval(interval);
     }, []);
+    // Ubah slide dengan dot
     const handleDotClick = (index) => {
         setCurrentSlide(index);
     };
