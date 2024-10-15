@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { penyakit } from '../constants';
+import { penyakit } from '@/constants';
 import Link from 'next/link';
 
 export default function Informasi() {
