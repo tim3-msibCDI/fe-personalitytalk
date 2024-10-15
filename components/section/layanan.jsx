@@ -12,7 +12,7 @@ export default function Layanan() {
             {/* Konten */}
             <div className="mt-8 w-full">
                 {layanan.map((item, index) => (
-                    <div key={item.id} id={item.slug}>
+                    <div key={item.id} id={item.slug} className="scroll-mt-28">
                         {item.id % 2 !== 0 ? (
                             <div className="flex flex-row justify-between items-center p-4 gap-16 p-10">
                                 <div className="w-1/3">
@@ -98,8 +98,8 @@ export default function Layanan() {
                         )}
                     </div>
                 ))}
-                {/* Border setelah layanan terakhir */}
-                <hr className="border-t border-gray-400" />
+                {/* Border setelah layanan */}
+                <hr className="my-8 border-t border-gray-400" />
             </div>
         </section>
     );
