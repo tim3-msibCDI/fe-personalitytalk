@@ -57,7 +57,7 @@ export const layanan =[
     name: 'Informasi Penyakit',
     slug: 'informasi-penyakit-mental',
     buttonname: 'Cari Informasi',
-    description: 'Cari segala informasi termasuk pengertian, gejala, dan dampak dari Penyakit Mental yang dapat dimengerti dan cara penangannya.',
+    description: 'Cari segala informasi termasuk pengertian, gejala, dan dampak dari <b> Kesehatan Mental </b> yang dapat dimengerti dan cara penangannya',
     icon_white: '/icons/info-penyakit.png',
     icon_orange: '/icons/i-info.png',
     iconalt: 'Icon Penyakit Mental',
@@ -92,3 +92,36 @@ export const alasan = [
     alt:'Image Terpercaya',
   }
 ]
+
+export const artikel = [
+  {
+    id: 1,
+    name: 'Artikel 1',
+    images: '/image/artikel.png',
+    alt:'Image Artikel 1',
+    tanggal: '30 Desember 2024',
+  },
+  {
+    id: 2,
+    name: 'Artikel 2',
+    images: '/image/artikel.png',
+    alt:'Image Artikel 2',
+    tanggal: '30 Desember 2024',
+  },
+  {
+    id: 3,
+    name: 'Artikel 3',
+    images: '/image/artikel.png',
+    alt:'Image Artikel 3',
+    tanggal: '30 Desember 2024',
+  },
+  {
+    id: 4,
+    name: 'Artikel 4',
+    images: '/image/artikel.png',
+    alt:'Image Artikel 4',
+    tanggal: '30 Desember 2024',
+  },
+]
+
+export const TOPARTIKEL = artikel.slice(0, 3);

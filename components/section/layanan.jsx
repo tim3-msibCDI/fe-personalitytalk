@@ -92,11 +92,14 @@ export default function Layanan() {
                                 </div>
                             </div>
                         )}
+                        {/* Border diantara layanan */}
                         {index < layanan.length - 1 && (
                             <hr className="my-8 border-t border-gray-400" />
                         )}
                     </div>
                 ))}
+                {/* Border setelah layanan terakhir */}
+                <hr className="border-t border-gray-400" />
             </div>
         </section>
     );
