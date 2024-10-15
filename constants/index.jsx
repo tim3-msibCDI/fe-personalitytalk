@@ -1,12 +1,12 @@
 export const slides = [
   {
-    imageSrc: '/image/Rectangle_6.png',
+    imageSrc: '/image/images_1.png',
   },
   {
-    imageSrc: '/image/Rectangle_6.png',
+    imageSrc: '/image/images_2.png',
   },
   {
-    imageSrc: '/image/Rectangle_6.png',
+    imageSrc: '/image/images_3.png',
   }
 ];
 

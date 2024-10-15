@@ -1,4 +1,4 @@
-import { penyakit } from "@/app/constants";
+import { penyakit } from "@/constants";
 
 export default function DetailPenyakit({ params }) {
     const { penyakit: penyakitName } = params;
