@@ -7,13 +7,12 @@ export default function Layanan() {
             {/* Header */}
             <div className="text-center">
                 <h2 className="font-bold text-black text-3xl">Layanan PersonalityTalk</h2>
-                <p className="text-black mt-2">Dapatkan berbagai layanan untuk mengatasi masalah yang kamu hadapi</p>
+                <p className="text-black mt-2 mb-10">Dapatkan berbagai layanan untuk mengatasi masalah yang kamu hadapi</p>
             </div>
             {/* Konten */}
             <div className="mt-8 w-full">
                 {layanan.map((item, index) => (
-                    <div key={item.id} id={item.slug} className="scroll-mt-28">
-                        {/* Kondisi untuk id ganjil mulai dari kiri */}
+                    <div key={item.id} id={item.slug}>
                         {item.id % 2 !== 0 ? (
                             <div className="flex flex-row justify-between items-center p-4 gap-16 p-10">
                                 <div className="w-1/3">
@@ -33,10 +32,14 @@ export default function Layanan() {
                                             width={30}
                                             height={30}
                                         />
-                                        <span className="ml-2 text-black font-bold text-lg">{item.name}</span>
+                                        <span className="ml-2 text-primary font-bold text-h2">{item.name}</span>
                                     </div>
                                     <div className="mb-4">
-                                        <p className="text-gray-700">{item.description}</p>
+                                        {/* Render description dengan tag <b> */}
+                                        <p
+                                            className="text-m text-bold"
+                                            dangerouslySetInnerHTML={{ __html: item.description }}
+                                        />
                                     </div>
                                     <div className="inline-flex flex items-center bg-primary p-2 rounded-md cursor-pointer">
                                         <p className="text-white font-bold mr-2">{item.buttonname}</p>
@@ -50,7 +53,6 @@ export default function Layanan() {
                                 </div>
                             </div>
                         ) : (
-                            // Id genap mulai dari kanan
                             <div className="flex flex-row-reverse justify-between items-center p-4 gap-16 p-10">
                                 <div className="w-1/3">
                                     <Image
@@ -69,10 +71,14 @@ export default function Layanan() {
                                             width={30}
                                             height={30}
                                         />
-                                        <span className="ml-2 text-black font-bold text-lg">{item.name}</span>
+                                        <span className="ml-2 text-primary font-bold text-h2">{item.name}</span>
                                     </div>
                                     <div className="mb-4">
-                                        <p className="text-gray-700">{item.description}</p>
+                                        {/* Render description dengan tag <b> */}
+                                        <p
+                                            className="text-m text-bold"
+                                            dangerouslySetInnerHTML={{ __html: item.description }}
+                                        />
                                     </div>
                                     <div className="inline-flex flex items-center justify-end bg-primary p-2 rounded-md cursor-pointer">
                                         <p className="text-white font-bold mr-2">{item.buttonname}</p>
@@ -86,7 +92,6 @@ export default function Layanan() {
                                 </div>
                             </div>
                         )}
-                        {/* Border tiap setelah 1 layanan */}
                         {index < layanan.length - 1 && (
                             <hr className="my-8 border-t border-gray-400" />
                         )}
