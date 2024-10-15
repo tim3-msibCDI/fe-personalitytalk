@@ -54,15 +54,15 @@ export const layanan =[
   },
   {
     id: 4,
-    name: 'Informasi Penyakit',
-    slug: 'informasi-penyakit-mental',
+    name: 'Informasi Kesehatan',
+    slug: 'informasi-kesehatan',
     buttonname: 'Cari Informasi',
     description: 'Cari segala informasi termasuk pengertian, gejala, dan dampak dari <b> Kesehatan Mental </b> yang dapat dimengerti dan cara penangannya',
     icon_white: '/icons/info-penyakit.png',
     icon_orange: '/icons/i-info.png',
-    iconalt: 'Icon Penyakit Mental',
+    iconalt: 'Icon Informasi Kesehatan',
     images: '/image/img-info.png',
-    imagealt: 'Image Penyakit Mental',
+    imagealt: 'Image Informasi Kesehatan',
   },
 ]
 
