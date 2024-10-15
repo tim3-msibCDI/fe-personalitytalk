@@ -64,7 +64,8 @@ export const layanan = [
     images: '/image/img-info.png',
     imagealt: 'Image Penyakit Mental',
   },
-]
+];
+
 export const penyakit = [
   { "id": 1, "name": "Agoraphobia", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan."},
   { "id": 2, "name": "Anorexia Nervosa", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
