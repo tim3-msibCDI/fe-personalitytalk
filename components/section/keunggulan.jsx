@@ -16,7 +16,7 @@ export default function Keunggulan() {
                     {layanan.map((item, index) => (
                         <a key={item.id} href={`#${item.slug}`} className="flex flex-col items-center space-y-2 p-5 bg-primary border border-gray-300 rounded-lg hover:shadow-lg transition duration-300 text-center scroll-smooth">
                             <Image className="mb-3"
-                                src={item.icons}
+                                src={item.icon_white}
                                 alt={item.iconalt}
                                 width={50}
                                 height={50}
