@@ -19,8 +19,8 @@ export default function Layanan() {
                                     <Image
                                         src={item.images}
                                         alt={item.imagealt}
-                                        width={350}
-                                        height={350}
+                                        width={1920}
+                                        height={1080}
                                         className="object-contain"
                                     />
                                 </div>
@@ -58,8 +58,8 @@ export default function Layanan() {
                                     <Image
                                         src={item.images}
                                         alt={item.imagealt}
-                                        width={350}
-                                        height={350}
+                                        width={1920}
+                                        height={1080}
                                         className="object-contain"
                                     />
                                 </div>
