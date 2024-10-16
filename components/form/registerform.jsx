@@ -6,7 +6,15 @@ import SelectField from "./SelectField";
 import CheckboxField from "./CheckboxField";
 
 export default function RegisterForm() {
-  const [role, setRole] = useState(""); // State untuk menyimpan role yang dipilih
+  const [role, setRole] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm_password, setConfirmPassword] = useState("");
+  const [phone_number, setPhone_number] = useState("");
+  const [date_birth, setDateBirth] = useState(""); 
+  
+
 
   return (
     <form action="">
@@ -15,6 +23,7 @@ export default function RegisterForm() {
         label="Nama Lengkap"
         placeholder="Masukan Nama Lengkap Anda"
         id="name"
+        onChange={(e)=>setName(e.target.value)}
         required
       />
       <InputField
@@ -22,30 +31,40 @@ export default function RegisterForm() {
         label="Email"
         placeholder="Masukan Email Anda"
         id="email"
+        onChange={(e)=>setEmail(e.target.value)}
+        required
       />
       <InputField
         type="password"
         label="Password"
         placeholder="Masukan Password Anda"
         id="password"
+        onChange={(e)=>setPassword(e.target.value)}
+        required
       />
       <InputField
         type="password"
         label="Confirm Password"
         placeholder="Ulangi Password Anda"
         id="confirm_password"
+        onChange={(e)=>setConfirmPassword(e.target.value)}
+        required
       />
       <InputField
         type="number"
         label="Nomor Telepon"
         placeholder="Masukan nomor telepon anda"
         id="no_telp"
+        onChange={(e)=>setPhone_number(e.target.value)}
+        required
       />
       <InputField
         type="date"
         label="Tanggal Lahir"
         placeholder="Masukan Tanggal Lahir"
         id="birth_date"
+        onChange={(e)=>setDateBirth(e.target.value)}
+        required
       />
 
       <SelectField
@@ -72,7 +91,8 @@ export default function RegisterForm() {
             type="text"
             label="Universitas"
             placeholder="Masukan Universitas Anda"
-            id="universiteas"
+            id="universitas"
+            required
           />
           <SelectField
             label="Jurusan"
