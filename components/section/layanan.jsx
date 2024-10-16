@@ -43,7 +43,7 @@ export default function Layanan() {
                                             dangerouslySetInnerHTML={{ __html: item.description }}
                                         />
                                     </div>
-                                    <div className={`inline-flex flex items-center ${item.id % 2 === 0 ? 'justify-end' : ''} bg-primary p-2 rounded-md cursor-pointer`}>
+                                    <div className={`inline-flex flex items-center ${item.id % 2 === 0 ? 'justify-end' : ''} bg-primary py-2 px-4 rounded-md cursor-pointer`}>
                                         <p className="text-white font-bold mr-2">{item.buttonname}</p>
                                         <Image
                                             src="/icons/arrow.png"

@@ -79,7 +79,7 @@ export default function Informasi() {
             <div key={colIndex}>
               {column.map((item, index) => (
                 <div key={index} className="py-2">
-                  <Link href={`/informasi-penyakit-mental/${encodeURIComponent(item.name.replace(/\s+/g, '-'))}`}>
+                  <Link href={`/informasi-kesehatan/${encodeURIComponent(item.name.replace(/\s+/g, '-'))}`}>
                     <span className="text-blue-500 hover:underline">{item.name}</span>
                   </Link>
                 </div>
