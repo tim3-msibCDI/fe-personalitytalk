@@ -16,6 +16,7 @@ module.exports = {
         whitebg: "#FBFBFB",
         textcolor: "#252525",
         textsec: "#8D8D8D",
+        text2 : "#A3A3A3",
         yellowStar : "#FFD700",
         success : "#40D046",
         fail : "#EF0000",
