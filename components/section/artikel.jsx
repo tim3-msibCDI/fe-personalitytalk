@@ -45,7 +45,7 @@ export default function Artikel() {
                 <div className="flex justify-center mt-8">
                     <button
                         onClick={() => setShowAll(true)}
-                        className="flex items-center bg-primary text-white font-bold py-2 px-4 rounded-md hover:bg-primary-dark transition-colors"
+                        className="flex items-center bg-primary text-h3 text-white py-2 px-4 rounded-md"
                     >
                         Lihat Artikel Lainnya
                         <Image

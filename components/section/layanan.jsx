@@ -34,7 +34,7 @@ export default function Layanan() {
                                             width={30}
                                             height={30}
                                         />
-                                        <span className="ml-2 text-primary font-bold text-h2">{item.name}</span>
+                                        <span className="ml-2 text-primary font-semibold text-h2">{item.name}</span>
                                     </div>
                                     <div className="mb-4">
                                         {/* Render description dengan tag <b> */}
@@ -44,7 +44,7 @@ export default function Layanan() {
                                         />
                                     </div>
                                     <div className={`inline-flex flex items-center ${item.id % 2 === 0 ? 'justify-end' : ''} bg-primary py-2 px-4 rounded-md cursor-pointer`}>
-                                        <p className="text-white font-bold mr-2">{item.buttonname}</p>
+                                        <p className="text-white text-h3 mr-2">{item.buttonname}</p>
                                         <Image
                                             src="/icons/arrow.png"
                                             alt="Arrow"
