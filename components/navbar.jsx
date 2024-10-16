@@ -9,7 +9,7 @@ export default function Navbar() {
                     <Image src="/image/logo_biro_new.png" alt="Logo" width={131} height={50} />
                 </Link>
             </div>
-            <ul className="flex space-x-6 font-light text-textcolor">
+            <ul className="flex space-x-6 font-light text-textcolor text-h3">
                 <li>
                     <Link href="/konsultasi">Konsultasi</Link>
                 </li>
@@ -17,11 +17,17 @@ export default function Navbar() {
                     <Link href="/course">Course</Link>
                 </li>
                 <li>
+                    <Link href="/tes-mental">Tes Mental</Link>
+                </li>
+                <li>
                     <Link href="/about">About Us</Link>
                 </li>
             </ul>
-            <div>
-                <Link href="/login" className="bg-primary text-white px-4 py-2 rounded mr-20 mt-5 mb-5">
+            <div className="mr-20">
+                <Link href="/register" className="border border-primary text-primary text-m px-4 py-2 rounded mr-5 mt-5 mb-5">
+                    Register
+                </Link>
+                <Link href="/login" className="border border-primary bg-primary text-white text-m px-5 py-2 rounded mt-5 mb-5">
                     Login
                 </Link>
             </div>
