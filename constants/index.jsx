@@ -1,12 +1,12 @@
 export const slides = [
   {
-    imageSrc: '/image/Rectangle_6.png',
+    imageSrc: '/image/images_1.png',
   },
   {
-    imageSrc: '/image/Rectangle_6.png',
+    imageSrc: '/image/images_2.png',
   },
   {
-    imageSrc: '/image/Rectangle_6.png',
+    imageSrc: '/image/images_3.png',
   }
 ];
 
@@ -54,17 +54,18 @@ export const layanan = [
   },
   {
     id: 4,
-    name: 'Informasi Penyakit',
-    slug: 'informasi-penyakit-mental',
+    name: 'Informasi Kesehatan',
+    slug: 'informasi-kesehatan',
     buttonname: 'Cari Informasi',
     description: 'Cari segala informasi termasuk pengertian, gejala, dan dampak dari <b> Kesehatan Mental </b> yang dapat dimengerti dan cara penangannya',
     icon_white: '/icons/info-penyakit.png',
     icon_orange: '/icons/i-info.png',
-    iconalt: 'Icon Penyakit Mental',
+    iconalt: 'Icon Informasi Kesehatan',
     images: '/image/img-info.png',
-    imagealt: 'Image Penyakit Mental',
+    imagealt: 'Image Informasi Kesehatan',
   },
-]
+];
+
 export const penyakit = [
   { "id": 1, "name": "Agoraphobia", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan."},
   { "id": 2, "name": "Anorexia Nervosa", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },

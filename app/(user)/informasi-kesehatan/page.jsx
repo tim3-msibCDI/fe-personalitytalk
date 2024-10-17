@@ -79,7 +79,7 @@ export default function Informasi() {
             <div key={colIndex}>
               {column.map((item, index) => (
                 <div key={index} className="py-2">
-                  <Link href={`/informasi-penyakit-mental/${encodeURIComponent(item.name.replace(/\s+/g, '-'))}`}>
+                  <Link href={`/informasi-kesehatan/${encodeURIComponent(item.name.replace(/\s+/g, '-'))}`}>
                     <span className="text-blue-500 hover:underline">{item.name}</span>
                   </Link>
                 </div>
@@ -88,13 +88,13 @@ export default function Informasi() {
           ))}
         </div>
         {filteredPenyakit.length > itemsPerPage && (
-          <div className="flex justify-center mt-6">
+          <div className="flex justify-center mt-6 mb-10">
             {pageGroup > 0 && (
-              <button className="px-4 py-2 mx-2 border border-primary" onClick={prevPageGroup}>
+              <button className="px-3 mx-2 border border-primary" onClick={prevPageGroup}>
                 <img
                   src="/icons/arrow_left.png"
-                  alt="Previous Page Group"
-                  className="w-3"
+                  alt="Previous Page"
+                  className="w-5"
                 />
               </button>
             )}
@@ -109,11 +109,11 @@ export default function Informasi() {
               </button>
             ))}
             {(pageGroup + 1) * maxVisiblePages < totalPages && (
-              <button className="px-4 py-2 mx-2 border border-primary" onClick={nextPageGroup}>
+              <button className="px-3 mx-2 border border-primary" onClick={nextPageGroup}>
                 <img
                   src="/icons/arrow_right.png"
-                  alt="Next Page Group"
-                  className="w-3"
+                  alt="Next Page"
+                  className="w-5"
                 />
               </button>
             )}
