@@ -34,7 +34,12 @@ export default function Login() {
         throw new Error("Failed to submit the data. Please try again.");
       }
 
-      const data = await response.json();
+      const responseData = await response.json();
+      // Mengambil token dari data respons
+      const token = responseData.data.token;
+
+      // Misalnya, menyimpan token ke localStorage atau state
+      sessionStorage.setItem("authToken", token);
       window.location.href = "/";
     } catch (error) {
       setError(error.message);
