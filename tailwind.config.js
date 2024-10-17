@@ -40,6 +40,9 @@ module.exports = {
         "bottom": "0px -4px 4px 0px rgba(0, 0, 0, 0.15)",
         "top" : "0px 4px 4px 0px rgba(0, 0, 0, 0.15)",
       },
+      width: {
+        '45': '47%',
+      },
     },
   },
   plugins: [],

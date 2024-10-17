@@ -10,7 +10,7 @@ export default function Navbar() {
   const isActive = (href) => pathname === href;
 
   return (
-    <nav className="flex justify-between items-center py-4 px-8 bg-white shadow-lg text-lg sticky top-0 z-50">
+    <nav className="flex justify-between items-center py-4 px-8 bg-whitebg shadow-lg text-lg sticky top-0 z-50">
       <div className="text-lg font-bold ml-20">
         <Link href="/">
           <Image
@@ -21,18 +21,46 @@ export default function Navbar() {
           />
         </Link>
       </div>
-      <ul className="flex space-x-6 font-light text-textcolor text-h3">
+      <ul className="flex space-x-6 font-light text-textcolor text-m">
         <li>
-          <Link href="/konsultasi" className={isActive("/konsultasi") ? "font-medium underline" : ""}>Konsultasi</Link>
+          <Link
+            href="/konsultasi"
+            className={`${
+              isActive("/konsultasi") ? "font-semibold underline underline-offset-8" : ""
+            }`}
+          >
+            Konsultasi
+          </Link>
         </li>
         <li>
-          <Link href="/course" className={isActive("/course") ? "font-medium underline" : ""}>Course</Link>
+          <Link
+            href="/course"
+            className={`${
+              isActive("/course") ? "font-semibold underline underline-offset-8" : ""
+            }`}
+          >
+            Course
+          </Link>
         </li>
         <li>
-          <Link href="/tes-mental" className={isActive("/tes-mental") ? "font-medium underline" : ""}>Tes Mental</Link>
+          <Link
+            href="/tes-mental"
+            className={`${
+              isActive("/tes-mental") ? "font-semibold underline underline-offset-8" : ""
+            }`}
+          >
+            Tes Mental
+          </Link>
         </li>
         <li>
-          <Link href="/about" className={isActive("/about") ? "font-medium underline" : ""}>About Us</Link>
+          <Link
+            href="/about"
+            className={`${
+              isActive("/about") ? "font-semibold underline underline-offset-8" : ""
+            }`}
+          >
+            About Us
+          </Link>
         </li>
       </ul>
       <div className="mr-20">
