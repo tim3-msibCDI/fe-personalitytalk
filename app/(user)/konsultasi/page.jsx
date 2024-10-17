@@ -32,7 +32,7 @@ export default function Konsultasi() {
             <CardUnggulList />
           </div>
         </div>
-        <div className="w-2/5">
+        <div className="w-2/5 ">
           <Image
             src="/image/img-content/hero1.png"
             alt="foto"

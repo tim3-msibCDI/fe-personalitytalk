@@ -10,18 +10,19 @@ export default function Navbar() {
   const isActive = (href) => pathname === href;
 
   return (
-    <nav className="flex justify-between items-center py-4 px-8 bg-whitebg shadow-lg text-lg sticky top-0 z-50">
-      <div className="text-lg font-bold ml-20">
+    <nav className="flex justify-between items-center py-4 px-6 md:px-8 lg:px-12 bg-white shadow-lg text-lg sticky top-0 z-50">
+      <div className="text-lg font-bold">
         <Link href="/">
           <Image
             src="/image/logo_biro_new.png"
             alt="Logo"
             width={131}
             height={50}
+            className="h-auto"
           />
         </Link>
       </div>
-      <ul className="flex space-x-6 font-light text-textcolor text-m">
+      <ul className="hidden md:flex space-x-4 lg:space-x-6 font-light text-textcolor text-sm md:text-base lg:text-lg">
         <li>
           <Link
             href="/konsultasi"
@@ -63,19 +64,39 @@ export default function Navbar() {
           </Link>
         </li>
       </ul>
-      <div className="mr-20">
+      <div className="hidden md:flex mr-4 lg:mr-8 space-x-4">
         <Link
           href="/register"
-          className="border border-primary text-primary text-m px-4 py-2 rounded-lg mr-5 mt-5 mb-5"
+          className="border border-primary text-primary text-sm md:text-base lg:text-lg px-3 py-1.5 md:px-4 md:py-2 rounded-lg"
         >
           Register
         </Link>
         <Link
           href="/login"
-          className="border border-primary bg-primary text-white text-m px-5 py-2 rounded-lg mt-5 mb-5"
+          className="border border-primary bg-primary text-white text-sm md:text-base lg:text-lg px-4 py-1.5 md:px-5 md:py-2 rounded-lg"
         >
           Login
         </Link>
+      </div>
+      {/* Responsive mobile menu */}
+      <div className="md:hidden flex items-center">
+        <button className="text-primary focus:outline-none">
+          {/* Burger icon */}
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16m-7 6h7"
+            />
+          </svg>
+        </button>
       </div>
     </nav>
   );
