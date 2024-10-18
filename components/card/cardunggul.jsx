@@ -1,21 +1,20 @@
 import Image from "next/image";
 
-export default function CardUnggul({path, text}) {
+export default function CardUnggul({ path, text }) {
   return (
-    <>
-      <div className="rounded-lg px-2 py-4 inline-flex h-24 w-45 bg-primarylight mt-4 space-x-3 shadow-top mr-2">
-        <div className="bg-primary p-1 rounded-lg">
+    <div className="flex items-center space-x-3 p-2 bg-primarylight rounded-lg shadow-top mt-4 mr-2">
+      <div className="bg-primary p-1 rounded-lg">
         <Image
           src={path}
           alt="Icon"
-          width={64}
-          height={64}
+          width={58}
+          height={52}
+          className="object-contain"
         />
-        </div>
-        <div className="py-auto">
-            <p>{text}</p>
-        </div>
       </div>
-    </>
+      <div className="flex-1">
+        <p className="text-sm text-gray-800">{text}</p>
+      </div>
+    </div>
   );
 }

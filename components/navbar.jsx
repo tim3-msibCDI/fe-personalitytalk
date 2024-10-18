@@ -11,10 +11,10 @@ export default function Navbar() {
 
   return (
     <nav className="flex justify-between items-center py-4 px-6 md:px-8 lg:px-12 bg-white shadow-lg text-lg sticky top-0 z-50">
-      <div className="text-lg font-bold ml-4 lg:ml-8">
+      <div className="text-m font-bold ml-4 lg:ml-8">
         <Link href="/">
           <Image
-            src="/image/logo_biro_new.png"
+            src="/image/logo.webp"
             alt="Logo"
             width={131}
             height={50}
@@ -22,7 +22,7 @@ export default function Navbar() {
           />
         </Link>
       </div>
-      <ul className="hidden md:flex space-x-4 lg:space-x-6 font-light text-textcolor text-sm md:text-base lg:text-lg">
+      <ul className="hidden md:flex space-x-4 lg:space-x-6 font-light text-textcolor text-m md:text-base lg:text-m">
         <li>
           <Link
             href="/konsultasi"
@@ -67,13 +67,13 @@ export default function Navbar() {
       <div className="hidden md:flex mr-4 lg:mr-8 space-x-4">
         <Link
           href="/register"
-          className="border border-primary text-primary text-sm md:text-base lg:text-lg px-3 py-1.5 md:px-4 md:py-2 rounded-lg"
+          className="border border-primary text-primary text-sm md:text-base lg:text-m px-3 py-1.5 md:px-4 md:py-2 rounded-lg"
         >
           Register
         </Link>
         <Link
           href="/login"
-          className="border border-primary bg-primary text-white text-sm md:text-base lg:text-lg px-4 py-1.5 md:px-5 md:py-2 rounded-lg"
+          className="border border-primary bg-primary text-white text-sm md:text-base lg:text-m px-4 py-1.5 md:px-5 md:py-2 rounded-lg"
         >
           Login
         </Link>
