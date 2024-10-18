@@ -9,44 +9,46 @@ export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm_password, setConfirmPassword] = useState("");
-  const [phone_number, setPhoneNumber] = useState("");
-  const [date_birth, setDateBirth] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [dateBirth, setDateBirth] = useState("");
   const [gender, setGender] = useState("");
   const [university, setUniversity] = useState("");
   const [major, setMajor] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState({});
 
+  // Function untuk handle submit
   async function onSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
-    setError(null);
-  
-    if (password !== confirm_password) {
-      setError("Password dan Konfirmasi Password tidak sama");
+    setError({});
+
+    // Validasi sederhana di frontend
+    if (password !== confirmPassword) {
+      setError({
+        confirmPassword: "Password dan Konfirmasi Password tidak sama",
+      });
       setIsLoading(false);
       return;
     }
-  
+
     try {
       const formData = {
-        name: name,
-        email: email,
-        password: password,
-        phone_number: phone_number,
-        date_birth: date_birth,
-        gender: gender,
-        role: role,
+        name,
+        email,
+        password,
+        phone_number: phoneNumber,
+        date_birth: dateBirth,
+        gender,
+        role,
         ...(role === "M" && {
           universitas: university,
           jurusan: major,
         }),
       };
-  
-      console.log("FormData being sent:", formData);
-  
+
       const response = await fetch("http://127.0.0.1:8000/api/register/", {
         method: "POST",
         headers: {
@@ -54,26 +56,28 @@ export default function Register() {
         },
         body: JSON.stringify(formData),
       });
-  
-      console.log("API Response:", response);
-  
+
       if (!response.ok) {
         const errorData = await response.json();
-        console.log("Error data from API:", errorData);
-        throw new Error("Failed to submit the data: " + errorData.message);
+        if (response.status === 500) {
+          // Menangani error 500
+          setServerError(
+            "Terjadi kesalahan pada server. Silakan coba lagi nanti."
+          );
+        } else {
+          setError(errorData.data || {});
+        }
+        throw new Error("Gagal mengirim data");
       }
-  
+
       const data = await response.json();
-      window.location.href = "/login"
-      console.log("Data submitted successfully:", data);
+      window.location.href = "/login";
     } catch (error) {
-      setError(error.message);
       console.error("Submission error:", error);
     } finally {
       setIsLoading(false);
     }
   }
-  
 
   return (
     <>
@@ -97,6 +101,11 @@ export default function Register() {
           </div>
 
           <div className="text-textcolor mt-8">
+            {serverError && (
+              <div className="bg-red-500 text-white py-2 px-4 mb-4 rounded-lg">
+                {serverError}
+              </div>
+            )}
             <div className="mx-6">
               <form onSubmit={onSubmit}>
                 <div>
@@ -111,6 +120,9 @@ export default function Register() {
                     className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
                     required
                   />
+                  {error.name && (
+                    <span className="text-red-500 text-sm">{error.name}</span>
+                  )}
                 </div>
 
                 <div className="pt-5">
@@ -123,7 +135,11 @@ export default function Register() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
+                    required
                   />
+                  {error.email && (
+                    <span className="text-red-500 text-sm">{error.email}</span>
+                  )}
                 </div>
 
                 <div className="pt-5">
@@ -136,7 +152,13 @@ export default function Register() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
+                    required
                   />
+                  {error.password && (
+                    <span className="text-red-500 text-sm">
+                      {error.password}
+                    </span>
+                  )}
                 </div>
 
                 <div className="pt-5">
@@ -146,10 +168,16 @@ export default function Register() {
                   <input
                     type="password"
                     placeholder="Ulangi Password Anda"
-                    value={confirm_password}
+                    value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
+                    required
                   />
+                  {error.confirmPassword && (
+                    <span className="text-red-500 text-sm">
+                      {error.confirmPassword}
+                    </span>
+                  )}
                 </div>
 
                 <div className="pt-5">
@@ -159,10 +187,16 @@ export default function Register() {
                   <input
                     type="text"
                     placeholder="Masukan nomor telepon anda"
-                    value={phone_number}
+                    value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
+                    required
                   />
+                  {error.phone_number && (
+                    <span className="text-red-500 text-sm">
+                      {error.phone_number}
+                    </span>
+                  )}
                 </div>
 
                 <div className="pt-5">
@@ -171,10 +205,16 @@ export default function Register() {
                   </label>
                   <input
                     type="date"
-                    value={date_birth}
+                    value={dateBirth}
                     onChange={(e) => setDateBirth(e.target.value)}
                     className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
+                    required
                   />
+                  {error.date_birth && (
+                    <span className="text-red-500 text-sm">
+                      {error.date_birth}
+                    </span>
+                  )}
                 </div>
 
                 <div className="pt-5">
@@ -185,11 +225,15 @@ export default function Register() {
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
                     className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
+                    required
                   >
                     <option value="">Pilih Jenis Kelamin</option>
                     <option value="M">Laki-laki</option>
                     <option value="F">Perempuan</option>
                   </select>
+                  {error.gender && (
+                    <span className="text-red-500 text-sm">{error.gender}</span>
+                  )}
                 </div>
 
                 <div className="pt-5">
@@ -200,11 +244,15 @@ export default function Register() {
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
                     className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
+                    required
                   >
                     <option value="">Pilih Role</option>
                     <option value="M">Mahasiswa</option>
                     <option value="U">Umum</option>
                   </select>
+                  {error.role && (
+                    <span className="text-red-500 text-sm">{error.role}</span>
+                  )}
                 </div>
 
                 {role === "M" && (
@@ -219,7 +267,13 @@ export default function Register() {
                         value={university}
                         onChange={(e) => setUniversity(e.target.value)}
                         className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
+                        required
                       />
+                      {error.universitas && (
+                        <span className="text-red-500 text-sm">
+                          {error.universitas}
+                        </span>
+                      )}
                     </div>
 
                     <div className="pt-5">
@@ -232,7 +286,13 @@ export default function Register() {
                         value={major}
                         onChange={(e) => setMajor(e.target.value)}
                         className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
+                        required
                       />
+                      {error.jurusan && (
+                        <span className="text-red-500 text-sm">
+                          {error.jurusan}
+                        </span>
+                      )}
                     </div>
                   </>
                 )}
@@ -244,19 +304,15 @@ export default function Register() {
                     name="sdk"
                     value="sdk"
                     className="w-5 h-5 border-2 border-solid border-primary bg-primary text-primary"
+                    required
                   />
-                  <label
-                    htmlFor="sdk"
-                    className="text-m font-light underline ml-2 decoration-solid"
-                  >
-                    <Link href="#">
-                      Dengan ini, Saya telah membaca dan menyetujui Syarat dan
-                      Ketentuan
+                  <label htmlFor="sdk" className="text-m font-light">
+                    Dengan ini, saya telah membaca dan menyetujui
+                    <Link href="/syarat-dan-ketentuan" className="underline">
+                      Syarat dan Ketentuan
                     </Link>
                   </label>
                 </div>
-
-                {error && <div style={{ color: "red" }}>{error}</div>}
 
                 <button
                   className="bg-primary text-whitebg text-s w-full py-2 px-4 mt-8 rounded-lg"

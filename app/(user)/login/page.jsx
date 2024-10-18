@@ -31,18 +31,31 @@ export default function Login() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to submit the data. Please try again.");
+        if (response.status === 500) {
+          throw new Error("Server error, please try again later.");
+        } else if (response.status === 404) {
+          throw new Error("API endpoint not found.");
+        } else {
+          throw new Error(
+            "Failed to submit the data. Please check your input."
+          );
+        }
       }
 
       const responseData = await response.json();
-      // Mengambil token dari data respons
       const token = responseData.data.token;
 
-      // Misalnya, menyimpan token ke localStorage atau state
+      // Save token to sessionStorage or state
       sessionStorage.setItem("authToken", token);
       window.location.href = "/";
     } catch (error) {
-      setError(error.message);
+      if (error.message === "Failed to fetch") {
+        setError(
+          "Unable to reach the server. Please check your network connection."
+        );
+      } else {
+        setError(error.message);
+      }
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -72,7 +85,13 @@ export default function Login() {
 
           <div className="text-textcolor mt-8">
             <div className="mx-6">
-              {error && <div style={{ color: "red" }}>{error}</div>}
+              {/* Display the error notification if exists */}
+              {error && (
+                <div className="mb-4 p-3 text-white bg-red-500 rounded-lg">
+                  {error}
+                </div>
+              )}
+
               <form onSubmit={onSubmit}>
                 <div className="">
                   <div>
