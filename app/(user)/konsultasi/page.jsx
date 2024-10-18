@@ -1,5 +1,6 @@
 import ButtonPrimary from "@/components/button/buttonprimary";
 import CardUnggulList from "@/components/card/cardunggullist";
+import Cara from "@/components/konsultasi/cara";
 import Image from "next/image";
 
 export default function Konsultasi() {
@@ -41,6 +42,7 @@ export default function Konsultasi() {
           />
         </div>
       </div>
+      <Cara/>
     </>
   );
 }

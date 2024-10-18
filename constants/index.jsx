@@ -308,3 +308,36 @@ export const artikel = [
 ]
 
 export const TOPARTIKEL = artikel.slice(0, 3);
+
+export const cara_konsultasi = [
+  {
+    id: 1,
+    name: 'Pilih Topik Konsultasi',
+    images: '/image/cara-konsul/1.png',
+  },
+  {
+    id: 2,
+    name: 'Login / Register',
+    images: '/image/cara-konsul/2.png',
+  },
+  {
+    id: 3,
+    name: 'Pilih Psikolog',
+    images: '/image/cara-konsul/3.png',
+  },
+  {
+    id: 4,
+    name: 'Pilih Waktu Konsultasi',
+    images: '/image/cara-konsul/4.png',
+  },
+  {
+    id: 5,
+    name: 'Pilih Metode Pembayaran',
+    images: '/image/cara-konsul/5.png',
+  },
+  {
+    id: 6,
+    name: 'Konsul dengan Psikolog Kamu',
+    images: '/image/cara-konsul/6.png',
+  }
+]
