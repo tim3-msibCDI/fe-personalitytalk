@@ -7,12 +7,28 @@ import { useState } from "react";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [errors, setErrors] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Fungsi untuk menutup notifikasi error
+  const closeErrorNotification = () => {
+    setError(null);
+  };
+
+  // Fungsi untuk validasi input
+  const validate = () => {
+    let tempErrors = {};
+    if (!email) tempErrors.email = "Email harus diisi";
+    if (!password) tempErrors.password = "Password harus diisi";
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
+
   async function onSubmit(event) {
     event.preventDefault();
+    if (!validate()) return; // Jika ada error validasi, tidak lanjutkan submit
+
     setIsLoading(true);
     setError(null);
 
@@ -31,15 +47,7 @@ export default function Login() {
       });
 
       if (!response.ok) {
-        if (response.status === 500) {
-          throw new Error("Server error, please try again later.");
-        } else if (response.status === 404) {
-          throw new Error("API endpoint not found.");
-        } else {
-          throw new Error(
-            "Failed to submit the data. Please check your input."
-          );
-        }
+        throw new Error("Password yang Anda Masukkan Tidak Sesuai !");
       }
 
       const responseData = await response.json();
@@ -49,13 +57,7 @@ export default function Login() {
       sessionStorage.setItem("authToken", token);
       window.location.href = "/";
     } catch (error) {
-      if (error.message === "Failed to fetch") {
-        setError(
-          "Unable to reach the server. Please check your network connection."
-        );
-      } else {
-        setError(error.message);
-      }
+      setError(error.message);
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -73,7 +75,7 @@ export default function Login() {
             height={0}
           />
         </div>
-        <div className="bg-primarylight rounded-lg size-553">
+        <div className="bg-primarylight rounded-lg w-553">
           <div className="grid justify-center mt-7">
             <Image
               src="/image/logo.webp"
@@ -83,12 +85,15 @@ export default function Login() {
             />
           </div>
 
-          <div className="text-textcolor mt-8">
+          <div className="text-textcolor my-8">
             <div className="mx-6">
               {/* Display the error notification if exists */}
               {error && (
-                <div className="mb-4 p-3 text-white bg-red-500 rounded-lg">
-                  {error}
+                <div className="mb-4 p-3 bg-[#fbfbfb8f] text-fail font-medium rounded-lg flex justify-between items-center">
+                  <span>{error}</span>
+                  <button onClick={closeErrorNotification} className="text-[#E74C3C] font-bold">
+                    X
+                  </button>
                 </div>
               )}
 
@@ -104,9 +109,15 @@ export default function Login() {
                       type="email"
                       placeholder="Masukan Email Anda"
                       id="email"
+                      value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="py-2 px-4 w-full rounded-lg text-s tracking- text-textsec mt-1 font-light"
+                      className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
+                        errors.email ? "border-red-500" : "border-text2"
+                      }`}
                     />
+                    {errors.email && (
+                      <span className="text-red-500 text-sm">{errors.email}</span>
+                    )}
                   </div>
                 </div>
                 <div className="pt-5">
@@ -120,13 +131,19 @@ export default function Login() {
                       type="password"
                       placeholder="Masukan Password Anda"
                       id="password"
+                      value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="py-2 px-4 w-full rounded-lg text-s tracking- text-textsec mt-1 font-light"
+                      className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
+                        errors.password ? "border-red-500" : "border-text2"
+                      }`}
                     />
+                    {errors.password && (
+                      <span className="text-red-500 text-sm">{errors.password}</span>
+                    )}
                   </div>
                 </div>
                 <div className="text-fail text-s font-light p-1">
-                  <p className="text-right">lupa kata sandi?</p>
+                  <p className="text-right">Lupa kata sandi?</p>
                 </div>
                 <button
                   className="bg-primary text-whitebg text-s w-full py-2 px-4 mt-8 rounded-lg"
