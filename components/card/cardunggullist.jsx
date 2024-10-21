@@ -4,19 +4,35 @@ const CardUnggulList = () => {
   const cardData = [
     {
       path: "/icons/konsultasi/puas.png", 
-      text: "86% Pengguna merasa puas dengan layanan konsultasi",
+      text: (
+        <>
+          <span className="font-bold">86%</span> Pengguna merasa puas dengan layanan konsultasi
+        </>
+      ),
     },
     {
       path: "/icons/konsultasi/beragam.png",
-      text: "Topik yang disediakan sangat beragam",
+      text: (
+        <>
+          Topik yang disediakan sangat <span className="font-bold">beragam</span>
+        </>
+      ),
     },
     {
       path: "/icons/konsultasi/pengguna.png",
-      text: "Telah dipercaya oleh 8K+ Pengguna",
+      text: (
+        <>
+          Telah dipercaya oleh <span className="font-bold">8K+</span> Pengguna
+        </>
+      ),
     },
     {
       path: "/icons/konsultasi/psikolog.png",
-      text: "Ditangani oleh Psikolog & Konselor Bersertifikat",
+      text: (
+        <>
+          Ditangani oleh <span className="font-bold">Psikolog & Konselor Bersertifikat</span>
+        </>
+      ),
     },
   ];
 
