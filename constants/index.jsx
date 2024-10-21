@@ -67,12 +67,12 @@ export const layanan = [
 ];
 
 export const penyakit = [
-  { "id": 1, "name": "Agoraphobia", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan."},
+  { "id": 1, "name": "Agoraphobia", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
   { "id": 2, "name": "Anorexia Nervosa", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
   { "id": 3, "name": "Antisocial Personality Disorder", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
-  { "id": 4, "name": "Anxiety Disorder" , "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
-  { "id": 5, "name": "Autism Spectrum Disorder (ASD)" , "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
-  { "id": 6, "name": "Bipolar Disorder" , "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
+  { "id": 4, "name": "Anxiety Disorder", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
+  { "id": 5, "name": "Autism Spectrum Disorder (ASD)", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
+  { "id": 6, "name": "Bipolar Disorder", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
   { "id": 7, "name": "Body Dysmorphic Disorder", "author": "John Doe", "image": "/image/image_4.png", "description": "Body Dysmorphic Disorder adalah gangguan mental di mana seseorang memiliki obsesi berlebihan terhadap kekurangan fisik yang tidak signifikan." },
   { "id": 8, "name": "Borderline Personality Disorder", "author": "John Doe", "image": "/image/image_4.png", "description": "Borderline Personality Disorder adalah gangguan kepribadian yang ditandai dengan suasana hati yang tidak stabil dan hubungan yang tegang dengan orang lain." },
   { "id": 9, "name": "Bulimia Nervosa", "author": "John Doe", "image": "/image/image_4.png", "description": "Bulimia Nervosa adalah gangguan makan di mana seseorang terlibat dalam makan berlebihan diikuti dengan upaya untuk menghilangkan makanan melalui muntah atau penggunaan laksatif." },
@@ -254,25 +254,25 @@ export const alasan = [
     id: 1,
     name: 'Privasi Terjamin',
     images: '/image/privasi.png',
-    alt:'Image Privasi Terjamin',
+    alt: 'Image Privasi Terjamin',
   },
   {
     id: 2,
     name: 'Beragam Pilihan Topik',
     images: '/image/pilihan.png',
-    alt:'Image Pilihan Topik',
+    alt: 'Image Pilihan Topik',
   },
   {
     id: 3,
     name: 'Konsultasi Mudah & Realtime',
     images: '/image/topik.png',
-    alt:'Image Topik Terupdate',
+    alt: 'Image Topik Terupdate',
   },
   {
     id: 4,
     name: 'Layanan Lengkap',
     images: '/image/layanan.png',
-    alt:'Image Terpercaya',
+    alt: 'Image Terpercaya',
   }
 ]
 
@@ -281,33 +281,66 @@ export const artikel = [
     id: 1,
     name: 'Artikel 1',
     images: '/image/artikel.png',
-    alt:'Image Artikel 1',
+    alt: 'Image Artikel 1',
     tanggal: '30 Desember 2024',
   },
   {
     id: 2,
     name: 'Artikel 2',
     images: '/image/artikel.png',
-    alt:'Image Artikel 2',
+    alt: 'Image Artikel 2',
     tanggal: '30 Desember 2024',
   },
   {
     id: 3,
     name: 'Artikel 3',
     images: '/image/artikel.png',
-    alt:'Image Artikel 3',
+    alt: 'Image Artikel 3',
     tanggal: '30 Desember 2024',
   },
   {
     id: 4,
     name: 'Artikel 4',
     images: '/image/artikel.png',
-    alt:'Image Artikel 4',
+    alt: 'Image Artikel 4',
     tanggal: '30 Desember 2024',
   },
 ]
 
 export const TOPARTIKEL = artikel.slice(0, 3);
+
+export const psikolog = [
+  {
+    id: 1,
+    name: 'Neli Fauziyah',
+    photos: '/image/psikolog/photo.png',
+    rating: 4.6,
+    pengalaman: 2,
+    role: 'Konselor',
+    topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
+    jadwal: ['07.00 - 09.00', '10.00 - 12.00', '14.00 - 16.00']
+  },
+  {
+    id: 2,
+    name: 'Neli Fauziyah',
+    photos: '/image/psikolog/photo.png',
+    rating: 4.9,
+    pengalaman: 11,
+    role: 'Psikolog',
+    topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
+    jadwal: ['07.00 - 09.00', '10.00 - 12.00', '14.00 - 16.00']
+  },
+  {
+    id: 3,
+    name: 'Neli Fauziyah',
+    photos: '/image/psikolog/photo.png',
+    rating: 4.0,
+    pengalaman: 1,
+    role: 'Konselor',
+    topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
+    jadwal: ['07.00 - 09.00', '10.00 - 12.00', '14.00 - 16.00']
+  }
+]
 
 export const cara_konsultasi = [
   {
@@ -340,4 +373,30 @@ export const cara_konsultasi = [
     name: 'Konsul dengan Psikolog Kamu',
     images: '/image/cara-konsul/6.png',
   }
+]
+
+export const faq = [
+  {
+    id: 1,
+    name: 'Apakah data pribadi saya akan aman dan terjamin?',
+    detail: (
+      <p>
+        Jangan khawatir, melindungi privasi dan informasi pribadi kamu adalah prioritas utama PersonalityTalk. Semua data dan identitas hanya akan digunakan untuk kepentingan sesi konseling. Psikolog PersonalityTalk juga mematuhi Kode Etik Psikolog yang menjamin kerahasiaan selama sesi berlangsung. Hanya kamu dan Psikolog yang dapat mengakses rekaman percakapan untuk meninjau kemajuan konseling dan tujuan yang telah dicapai.
+        <br />
+        <br />
+        Namun, kami tetap mengumpulkan nama, email, nomor telepon, tempat tanggal lahir, serta domisili sebagai data sebaran klien PersonalityTalk.
+      </p>
+
+    )
+  },
+  {
+    id: 2,
+    name: 'Apa perbedaan Psikolog dengan Konselor?',
+    detail: 'Konselor biasanya memiliki gelar S1 Psikologi dan lisensi konseling, sedangkan Psikolog harus menyelesaikan S1 dan S2 Psikologi. Konselor fokus pada pendekatan terapi berbasis konseling psikologi dan memberi arahan, sementara Psikolog menangani klien sesuai keahlian, seperti psikologi sosial atau klinis, dengan pendekatan terapi dengan beragam teknik psikoterapi serta dapat memberikan saran dan rujukan untuk tindakan rekan medis.',
+  },
+  {
+    id: 3,
+    name: 'Berapa lama sesi konsultasi?',
+    detail: 'Dalam sekali konsultasi anda akan mendapatkan 60 Menit sesi konsultasi, dan tenang aja kamu dapat memperpanjang konsultasi, selain itu chat progress kamu dengan konsultasi tidak akan hilang.',
+  },
 ]
