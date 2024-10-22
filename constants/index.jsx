@@ -400,3 +400,9 @@ export const faq = [
     detail: 'Dalam sekali konsultasi anda akan mendapatkan 60 Menit sesi konsultasi, dan tenang aja kamu dapat memperpanjang konsultasi, selain itu chat progress kamu dengan konsultasi tidak akan hilang.',
   },
 ]
+
+export const steps = [
+  { number: 1, label: "Pilih Psikolog" },
+  { number: 2, label: "Pilih Jadwal" },
+  { number: 3, label: "Bayar" },
+];
