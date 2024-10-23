@@ -1,6 +1,4 @@
-import Image from "next/image";
-
-export default function Changepassword() {
+export default function page() {
   return (
     <div className="w-full">
       <div className="w-full flex justify-between items-start self-stretch">

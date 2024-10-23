@@ -1,152 +1,78 @@
-"use client";
-
-import { useState } from "react";
-import Biodata from "@/components/profile/biodata";
-import ChangePassword from "@/components/profile/changepassword";
-import Konsultasi from "@/components/profile/konsultasi";
-import Course from "@/components/profile/course";
 import Image from "next/image";
 
-const data = {
-  nama: "Raka Wijaya Saleh",
-  email: "raka@gmail.com",
-  tanggal: "14 September 2023",
-  role: "u",
-};
-
 export default function Profile() {
-  const [activeComponent, setActiveComponent] = useState("biodata");
-
   return (
-    <div className="mx-20 my-9 text-textcolor ">
-      <div>
-        <h1 className="text-h2 font-semibold">
-          Selamat datang kembali {data.nama}!
-        </h1>
+    <div className="w-full">
+      <div className="w-full flex justify-between items-start self-stretch">
+        <h3 className="text-h3 font-semibold">Biodata Diri</h3>
+        <div className="inline-flex bg-primary text-whitebg px-6 py-2 rounded-lg flex-start">
+          <Image src="/icons/pencil-white.svg" width={20} height={20} />
+          Edit Biodata
+        </div>
       </div>
-      <div className="w-full mt-6 flex gap-4">
-        <div className="inline-flex rounded-lg bg-primarylight p-9 grid justify-items-center border border-solid border-textsec">
-          <Image
-            src="/image/psikolog/1.png"
-            width={120}
-            height={120}
-            className="rounded-full"
-          />
-          <div className="mt-2 text-center">
-            <h3 className="text-h3 font-semibold">{data.nama}</h3>
-            <p className="text-center text-vs font-normal">{data.email}</p>
-            <p className="text-center text-vs font-normal">
-              Gabung Sejak : {data.tanggal}
-            </p>
-            <hr className="my-6 border-textsec" />
-            <ul className="text-left text-sm">
-              <li
-                className={`flex p-3 my-2 gap-2 self-stretch rounded-lg cursor-pointer ${
-                  activeComponent === "biodata"
-                    ? "bg-primary font-semibold text-whitebg"
-                    : ""
-                }`}
-                onClick={() => setActiveComponent("biodata")}
-              >
-                <Image
-                  src={
-                    activeComponent === "biodata"
-                      ? "/icons/user-white.svg"
-                      : "/icons/user-primary.svg"
-                  }
-                  height={15}
-                  width={15}
-                  className="mr-2"
-                />
-                Biodata Diri
-              </li>
-              <li
-                className={`flex p-3 my-2 gap-2 self-stretch rounded-lg cursor-pointer ${
-                  activeComponent === "changepassword"
-                    ? "bg-primary font-semibold text-whitebg"
-                    : ""
-                }`}
-                onClick={() => setActiveComponent("changepassword")}
-              >
-                <Image
-                 src={
-                  activeComponent === "changepassword"
-                    ? "/icons/key-white.svg"
-                    : "/icons/key-primary.svg"
-                }
-                  height={15}
-                  width={15}
-                  className="mr-2"
-                />
-                Ganti Password
-              </li>
-              <li
-                className={`flex p-3 my-2 gap-2 self-stretch rounded-lg cursor-pointer ${
-                  activeComponent === "konsultasi"
-                    ? "bg-primary font-semibold text-whitebg"
-                    : ""
-                }`}
-                onClick={() => setActiveComponent("konsultasi")}
-              >
-                <Image
-                  src={
-                    activeComponent === "konsultasi"
-                      ? "/icons/chat-white.svg"
-                      : "/icons/chat-primary.svg"
-                  }
-                  height={15}
-                  width={15}
-                  className="mr-2"
-                />
-                Konsultasi Saya
-              </li>
-              {data.role === "m" && (
-                <li
-                  className={`flex p-3 my-2 gap-2 self-stretch rounded-lg cursor-pointer ${
-                    activeComponent === "course"
-                      ? "bg-primary font-semibold text-whitebg"
-                      : ""
-                  }`}
-                  onClick={() => setActiveComponent("course")}
-                >
-                  <Image
-                    src={
-                      activeComponent === "course"
-                        ? "/icons/course-white.svg"
-                        : "/icons/course-primary.svg"
-                    }
-                    height={15}
-                    width={15}
-                    className="mr-2"
-                  />
-                  Course
-                </li>
-              )}
-            </ul>
+      <div className="my-2">
+        <label>Nama Lengkap</label>
+      </div>
+      <div>
+        <input
+          type="text"
+          value="Nama Lengkap"
+          className="border border-textcolor w-full rounded-lg p-3 "
+          disabled
+        />
+      </div>
+      <div className="my-2">
+        <label>Email</label>
+      </div>
+      <div>
+        <input
+          type="text"
+          value="Email"
+          className="border border-textcolor w-full rounded-lg p-3 "
+          disabled
+        />
+      </div>
+      <div className="flex gap-4">
+        <div className="flex-1">
+          <div className="my-2">
+            <label className="block">Gender</label>
+          </div>
+          <div>
+            <input
+              type="text"
+              value="Laki-Laki"
+              className="border border-textcolor rounded-lg p-3 w-full"
+              disabled
+            />
           </div>
         </div>
 
-        <div className="flex-1 rounded-lg bg-primarylight py-6 px-8 grid justify-items-center border border-solid border-textsec">
-          {activeComponent === "biodata" && <Biodata />}
-          {activeComponent === "changepassword" && <ChangePassword />}
-          {activeComponent === "konsultasi" && <Konsultasi />}
-          {activeComponent === "course" && <Course />}
-          {data.role !== "m" && activeComponent === "biodata" && (
-            <div className="flex justify-end w-full">
-              <div className="text-right">
-                <p>Apakah Kamu seorang mahasiswa?</p>
-                <div className="w-full inline-flex justify-center items-center bg-primary text-whitebg px-6 py-2 rounded-lg ml-auto">
-                  <Image
-                    src="/icons/arrow.png"
-                    width={15}
-                    height={15}
-                    className="mr-2"
-                  />
-                  <span>Klik disini</span>
-                </div>
-              </div>
-            </div>
-          )}
+        <div className="flex-1">
+          <div className="my-2">
+            <label className="block">Tanggal Lahir</label>
+          </div>
+          <div>
+            <input
+              type="text"
+              value="28 Februari 2004"
+              className="border border-textcolor rounded-lg p-3 w-full"
+              disabled
+            />
+          </div>
+        </div>
+
+        <div className="flex-1">
+          <div className="my-2">
+            <label className="block ">Nomor Telepon</label>
+          </div>
+          <div>
+            <input
+              type="text"
+              value="+62 813742427891"
+              className="border border-textcolor rounded-lg p-3 w-full"
+              disabled
+            />
+          </div>
         </div>
       </div>
     </div>
