@@ -51,7 +51,7 @@ export default function Register() {
       };
   
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BACKEND}/api/register`,
+        `${process.env.NEXT_PUBLIC_API_BACKEND}/user/register`,
         formData,
         {
           headers: {

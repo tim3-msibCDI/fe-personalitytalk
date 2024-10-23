@@ -3,11 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -17,44 +18,35 @@ export default function Login() {
     setError(null);
 
     try {
-      const formData = {
-        email,
-        password,
-      };
+      const formData = { email, password };
 
-      const response = await fetch("http://127.0.0.1:8000/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        if (response.status === 500) {
-          throw new Error("Server error, please try again later.");
-        } else if (response.status === 404) {
-          throw new Error("API endpoint not found.");
-        } else {
-          throw new Error(
-            "Failed to submit the data. Please check your input."
-          );
+      // Perform login request using axios
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BACKEND}/user/login`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      }
+      );
 
-      const responseData = await response.json();
-      const token = responseData.data.token;
+      // If login is successful
+      const token = response.data.data.token;
 
-      // Save token to sessionStorage or state
-      sessionStorage.setItem("authToken", token);
+      // Store token in cookies
+      Cookies.set("authToken", token, { expires: 7 }); // Set the token to expire in 7 days
+
+      // Redirect to home page
       window.location.href = "/";
     } catch (error) {
-      if (error.message === "Failed to fetch") {
-        setError(
-          "Unable to reach the server. Please check your network connection."
-        );
+      // Handle different error cases
+      if (error.response?.status === 500) {
+        setError("Server error, please try again later.");
+      } else if (error.response?.status === 404) {
+        setError("API endpoint not found.");
       } else {
-        setError(error.message);
+        setError("Failed to submit the data. Please check your input.");
       }
       console.error(error);
     } finally {
