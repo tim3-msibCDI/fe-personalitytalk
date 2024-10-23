@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import axios from "axios";
 
 export default function Register() {
   const [role, setRole] = useState("");
@@ -24,8 +25,8 @@ export default function Register() {
     event.preventDefault();
     setIsLoading(true);
     setError({});
-
-    // Validasi sederhana di frontend
+  
+    // Simple frontend validation
     if (password !== confirmPassword) {
       setError({
         confirmPassword: "Password dan Konfirmasi Password tidak sama",
@@ -33,7 +34,7 @@ export default function Register() {
       setIsLoading(false);
       return;
     }
-
+  
     try {
       const formData = {
         name,
@@ -48,32 +49,34 @@ export default function Register() {
           jurusan: major,
         }),
       };
-
-      const response = await fetch("http://127.0.0.1:8000/api/register/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        if (response.status === 500) {
-          // Menangani error 500
-          setServerError(
-            "Terjadi kesalahan pada server. Silakan coba lagi nanti."
-          );
-        } else {
-          setError(errorData.data || {});
+  
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BACKEND}/api/register`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
+      );
+  
+      if (response.status !== 200) {
+        // Handle the error response
+        setError(response.data.data || {});
         throw new Error("Gagal mengirim data");
       }
-
-      const data = await response.json();
+  
+      // Redirect to login page on successful registration
       window.location.href = "/login";
     } catch (error) {
       console.error("Submission error:", error);
+      if (error.response?.status === 500) {
+        setServerError(
+          "Terjadi kesalahan pada server. Silakan coba lagi nanti."
+        );
+      } else {
+        setError(error.response?.data?.data || {});
+      }
     } finally {
       setIsLoading(false);
     }
