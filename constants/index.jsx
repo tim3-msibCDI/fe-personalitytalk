@@ -318,7 +318,10 @@ export const psikolog = [
     pengalaman: 2,
     role: 'Konselor',
     topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
-    jadwal: ['07.00 - 09.00', '10.00 - 12.00', '14.00 - 16.00']
+    jadwal: [
+      { tanggal: '22 Oktober 2024', waktu: ['07.00 - 09.00', '10.00 - 12.00'] },
+      { tanggal: '23 Oktober 2024', waktu: ['14.00 - 16.00', '17.00 - 19.00'] }
+    ]
   },
   {
     id: 2,
@@ -328,7 +331,10 @@ export const psikolog = [
     pengalaman: 11,
     role: 'Psikolog',
     topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
-    jadwal: ['07.00 - 09.00', '10.00 - 12.00', '14.00 - 16.00']
+    jadwal: [
+      { tanggal: '22 Oktober 2024', waktu: ['07.00 - 09.00', '10.00 - 12.00'] },
+      { tanggal: '23 Oktober 2024', waktu: ['14.00 - 16.00', '17.00 - 19.00'] }
+    ]
   },
   {
     id: 3,
@@ -338,9 +344,13 @@ export const psikolog = [
     pengalaman: 1,
     role: 'Konselor',
     topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
-    jadwal: ['07.00 - 09.00', '10.00 - 12.00', '14.00 - 16.00']
+    jadwal: [
+      { tanggal: '22 Oktober 2024', waktu: ['07.00 - 09.00', '10.00 - 12.00'] },
+      { tanggal: '23 Oktober 2024', waktu: ['14.00 - 16.00', '17.00 - 19.00'] }
+    ]
   }
-]
+];
+
 
 export const cara_konsultasi = [
   {
