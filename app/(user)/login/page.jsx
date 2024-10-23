@@ -1,15 +1,14 @@
 "use client";
 
+import { useState } from "react";
+import { loginUser } from "@/api/user";
+import { setToken } from "@/lib/auth";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import axios from "axios";
-import Cookies from "js-cookie"; 
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -19,41 +18,18 @@ export default function Login() {
     setError(null);
 
     try {
-      const formData = {
-        email,
-        password,
-      };
-
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/user/login",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      const token = response.data.message.token;
-      Cookies.set("authToken", token, { expires: 7 }); 
+      const data = await loginUser(email, password);
+      const token = data.message.token;
+      setToken(token);
       window.location.href = "/";
     } catch (error) {
-      if (error.response) {
-        if (error.response.status === 500) {
-          setError("Server error, please try again later.");
-        } else if (error.response.status === 404) {
-          setError("API endpoint not found.");
-        } else {
-          setError("Failed to submit the data. Please check your input.");
-        }
-      } else if (error.request) {
-        // Request was made but no response was received
-        setError("Unable to reach the server. Please check your network connection.");
+      if (error.response && error.response.status === 500) {
+        setError("Server error, please try again later.");
+      } else if (error.response && error.response.status === 404) {
+        setError("API endpoint not found.");
       } else {
-        // Something happened in setting up the request
-        setError("An error occurred. Please try again.");
+        setError("Failed to submit the data. Please check your input.");
       }
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
