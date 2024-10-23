@@ -19,18 +19,69 @@ export default function Register() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({});
+  const [serverError, setServerError] = useState("");
 
+  const [isAgreed, setIsAgreed] = useState(false);
+  const [isDateSelected, setIsDateSelected] = useState(false);
+
+  function handleDateChange(e) {
+    setDateBirth(e.target.value);
+    if (e.target.value) {
+      setIsDateSelected(true);
+    } else {
+      setIsDateSelected(false);
+    }
+  }
+
+  function handleCheckboxChange(event) {
+    setIsAgreed(event.target.checked);
+  }
   // Function untuk handle submit
   async function onSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
     setError({});
+    setServerError(""); // Reset server error message
   
-    // Simple frontend validation
+    // Validasi sederhana di frontend
+    const newErrors = {};
+    if (!name) {
+      newErrors.name = "Nama Lengkap wajib diisi";
+    }
+    if (!email) {
+      newErrors.email = "Email wajib diisi";
+    }
+    if (!password) {
+      newErrors.password = "Password wajib diisi";
+    }
+    if (!confirmPassword) {
+      newErrors.confirmPassword = "Konfirmasi password wajib diisi";
+    }
+    if (!phoneNumber) {
+      newErrors.phone_number = "Nomor telepon wajib diisi";
+    }
+    if (!dateBirth) {
+      newErrors.date_birth = "Tanggal lahir wajib diisi";
+    }
+    if (!gender) {
+      newErrors.gender = "Jenis kelamin wajib dipilih";
+    }
+    if (!role) {
+      newErrors.role = "Role wajib dipilih";
+    }
+    if (role === "M" && !university) {
+      newErrors.universitas = "Universitas wajib diisi";
+    }
+    if (role === "M" && !major) {
+      newErrors.jurusan = "Jurusan wajib diisi";
+    }
+  
     if (password !== confirmPassword) {
-      setError({
-        confirmPassword: "Password dan Konfirmasi Password tidak sama",
-      });
+      newErrors.confirmPassword = "Password dan konfirmasi password tidak sama";
+    }
+  
+    if (Object.keys(newErrors).length > 0) {
+      setError(newErrors);
       setIsLoading(false);
       return;
     }
@@ -50,8 +101,9 @@ export default function Register() {
         }),
       };
   
+      // Menggunakan axios
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BACKEND}/user/register`,
+        "http://127.0.0.1:8000/api/user/register/",
         formData,
         {
           headers: {
@@ -60,27 +112,29 @@ export default function Register() {
         }
       );
   
-      if (response.status !== 200) {
-        // Handle the error response
-        setError(response.data.data || {});
+      // Memeriksa apakah request berhasil
+      if (response.status === 200 || response.status === 201) {
+        window.location.href = "/login"; // Redirect ke halaman login setelah berhasil
+      } else {
+        const errorData = response.data;
+        setError(errorData.data || {});
         throw new Error("Gagal mengirim data");
       }
-  
-      // Redirect to login page on successful registration
-      window.location.href = "/login";
     } catch (error) {
-      console.error("Submission error:", error);
-      if (error.response?.status === 500) {
-        setServerError(
-          "Terjadi kesalahan pada server. Silakan coba lagi nanti."
-        );
+      if (error.response && error.response.status === 500) {
+        // Menangani error 500
+        setServerError("Terjadi kesalahan pada server. Silakan coba lagi nanti.");
       } else {
-        setError(error.response?.data?.data || {});
+        setServerError(
+          error.response?.data?.message || "Terjadi kesalahan. Silakan coba lagi."
+        );
       }
+      console.error("Submission error:", error);
     } finally {
       setIsLoading(false);
     }
   }
+  
 
   return (
     <>
@@ -93,7 +147,7 @@ export default function Register() {
             height={0}
           />
         </div>
-        <div className="bg-primarylight rounded-lg w-553 pb-8">
+        <div className="bg-primarylight rounded-lg pb-8 w-553">
           <div className="grid justify-center mt-7">
             <Image
               src="/image/logo.webp"
@@ -103,7 +157,7 @@ export default function Register() {
             />
           </div>
 
-          <div className="text-textcolor mt-8">
+          <div className="mt-8">
             {serverError && (
               <div className="bg-red-500 text-white py-2 px-4 mb-4 rounded-lg">
                 {serverError}
@@ -120,8 +174,9 @@ export default function Register() {
                     placeholder="Masukan Nama Lengkap Anda"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
-                    required
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
+                      error.name ? "border-red-500" : "border-text2"
+                    }`}
                   />
                   {error.name && (
                     <span className="text-red-500 text-sm">{error.name}</span>
@@ -137,8 +192,9 @@ export default function Register() {
                     placeholder="Masukan Email Anda"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
-                    required
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
+                      error.email ? "border-red-500" : "border-text2"
+                    }`}
                   />
                   {error.email && (
                     <span className="text-red-500 text-sm">{error.email}</span>
@@ -154,8 +210,9 @@ export default function Register() {
                     placeholder="Masukan Password Anda"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
-                    required
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
+                      error.password ? "border-red-500" : "border-text2"
+                    }`}
                   />
                   {error.password && (
                     <span className="text-red-500 text-sm">
@@ -173,8 +230,9 @@ export default function Register() {
                     placeholder="Ulangi Password Anda"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
-                    required
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
+                      error.confirmPassword ? "border-red-500" : "border-text2"
+                    }`}
                   />
                   {error.confirmPassword && (
                     <span className="text-red-500 text-sm">
@@ -192,8 +250,9 @@ export default function Register() {
                     placeholder="Masukan nomor telepon anda"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
-                    required
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
+                      error.phone_number ? "border-red-500" : "border-text2"
+                    }`}
                   />
                   {error.phone_number && (
                     <span className="text-red-500 text-sm">
@@ -209,9 +268,14 @@ export default function Register() {
                   <input
                     type="date"
                     value={dateBirth}
-                    onChange={(e) => setDateBirth(e.target.value)}
-                    className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
-                    required
+                    onChange={handleDateChange}
+                    onFocus={() => setIsDateSelected(false)}
+                    onBlur={() => setIsDateSelected(!!dateBirth)}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
+                      isDateSelected ? "text-textcolor" : "text-textsec"
+                    } placeholder:text-textsec ${
+                      error.date_birth ? "border-red-500" : "border-text2"
+                    }`}
                   />
                   {error.date_birth && (
                     <span className="text-red-500 text-sm">
@@ -227,8 +291,9 @@ export default function Register() {
                   <select
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
-                    className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
-                    required
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
+                      gender === "" ? "text-textsec" : "text-textcolor"
+                    } ${error.gender ? "border-red-500" : "border-text2"}`}
                   >
                     <option value="">Pilih Jenis Kelamin</option>
                     <option value="M">Laki-laki</option>
@@ -246,8 +311,9 @@ export default function Register() {
                   <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
-                    required
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
+                      role === "" ? "text-textsec" : "text-textcolor"
+                    } ${error.role ? "border-red-500" : "border-text2"}`}
                   >
                     <option value="">Pilih Role</option>
                     <option value="M">Mahasiswa</option>
@@ -266,11 +332,12 @@ export default function Register() {
                       </label>
                       <input
                         type="text"
-                        placeholder="Masukan Universitas Anda"
+                        placeholder="Masukan universitas anda"
                         value={university}
                         onChange={(e) => setUniversity(e.target.value)}
-                        className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
-                        required
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
+                          error.universitas ? "border-red-500" : "border-text2"
+                        }`}
                       />
                       {error.universitas && (
                         <span className="text-red-500 text-sm">
@@ -285,11 +352,12 @@ export default function Register() {
                       </label>
                       <input
                         type="text"
-                        placeholder="Masukan Jurusan Anda"
+                        placeholder="Masukan jurusan anda"
                         value={major}
                         onChange={(e) => setMajor(e.target.value)}
-                        className="py-2 px-4 w-full rounded-lg text-s text-textsec mt-1 font-light border-solid border border-text2"
-                        required
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
+                          error.jurusan ? "border-red-500" : "border-text2"
+                        }`}
                       />
                       {error.jurusan && (
                         <span className="text-red-500 text-sm">
@@ -300,29 +368,44 @@ export default function Register() {
                   </>
                 )}
 
-                <div className="pt-5 flex">
+                <div className="py-5 flex">
                   <input
                     type="checkbox"
                     id="sdk"
                     name="sdk"
                     value="sdk"
-                    className="w-5 h-5 border-2 border-solid border-primary bg-primary text-primary"
+                    className="w-5 h-5 accent-primary border-primary text-whitebg"
+                    onChange={handleCheckboxChange}
                     required
                   />
-                  <label htmlFor="sdk" className="text-m font-light">
-                    Dengan ini, saya telah membaca dan menyetujui
-                    <Link href="/syarat-dan-ketentuan" className="underline">
-                      Syarat dan Ketentuan
+                  <label
+                    htmlFor="sdk"
+                    className="text-m font-light underline pl-2"
+                  >
+                    <Link href="/syarat-dan-ketentuan">
+                      Dengan ini, saya telah membaca dan menyetujui Syarat dan
+                      Ketentuan
                     </Link>
                   </label>
                 </div>
 
                 <button
-                  className="bg-primary text-whitebg text-s w-full py-2 px-4 mt-8 rounded-lg"
+                  className={`bg-primary hover:bg-primaryhover text-white py-2 w-full rounded-lg text-s font-medium 
+                    ${isLoading || !isAgreed ? "disabled:bg-hover" : ""}`}
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading || !isAgreed}
                 >
                   {isLoading ? "Loading..." : "Daftar"}
+                </button>
+                <button className="flex items-center px-4 py-2 bg-whitebg text-textcolor rounded-lg w-full justify-center text-s mt-3.5">
+                  <Image
+                    src="/image/icons/google.svg"
+                    alt="Google Logo"
+                    width={0}
+                    height={30}
+                    className="w-6 h-6 mr-2"
+                  />
+                  Lanjutkan dengan Akun Google
                 </button>
               </form>
             </div>

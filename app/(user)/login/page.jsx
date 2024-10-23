@@ -4,11 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
+import Cookies from "js-cookie"; 
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -18,11 +19,13 @@ export default function Login() {
     setError(null);
 
     try {
-      const formData = { email, password };
+      const formData = {
+        email,
+        password,
+      };
 
-      // Perform login request using axios
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BACKEND}/user/login`,
+        "http://127.0.0.1:8000/api/user/login",
         formData,
         {
           headers: {
@@ -31,22 +34,24 @@ export default function Login() {
         }
       );
 
-      // If login is successful
-      const token = response.data.data.token;
-
-      // Store token in cookies
-      Cookies.set("authToken", token, { expires: 7 }); // Set the token to expire in 7 days
-
-      // Redirect to home page
+      const token = response.data.message.token;
+      Cookies.set("authToken", token, { expires: 7 }); 
       window.location.href = "/";
     } catch (error) {
-      // Handle different error cases
-      if (error.response?.status === 500) {
-        setError("Server error, please try again later.");
-      } else if (error.response?.status === 404) {
-        setError("API endpoint not found.");
+      if (error.response) {
+        if (error.response.status === 500) {
+          setError("Server error, please try again later.");
+        } else if (error.response.status === 404) {
+          setError("API endpoint not found.");
+        } else {
+          setError("Failed to submit the data. Please check your input.");
+        }
+      } else if (error.request) {
+        // Request was made but no response was received
+        setError("Unable to reach the server. Please check your network connection.");
       } else {
-        setError("Failed to submit the data. Please check your input.");
+        // Something happened in setting up the request
+        setError("An error occurred. Please try again.");
       }
       console.error(error);
     } finally {
