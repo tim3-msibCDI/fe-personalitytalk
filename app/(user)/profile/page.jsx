@@ -3,13 +3,15 @@
 import { useState } from "react";
 import Biodata from "@/components/profile/biodata";
 import ChangePassword from "@/components/profile/changepassword";
+import Konsultasi from "@/components/profile/konsultasi";
+import Course from "@/components/profile/course";
 import Image from "next/image";
 
 const data = {
   nama: "Raka Wijaya Saleh",
   email: "raka@gmail.com",
   tanggal: "14 September 2023",
-  role: "m",
+  role: "u",
 };
 
 export default function Profile() {
@@ -78,9 +80,20 @@ export default function Profile() {
                 />
                 Ganti Password
               </li>
-              <li className="flex p-3 my-2 gap-2 self-stretch rounded-lg cursor-pointer">
+              <li
+                className={`flex p-3 my-2 gap-2 self-stretch rounded-lg cursor-pointer ${
+                  activeComponent === "konsultasi"
+                    ? "bg-primary font-semibold text-whitebg"
+                    : ""
+                }`}
+                onClick={() => setActiveComponent("konsultasi")}
+              >
                 <Image
-                  src="/icons/chat-primary.svg"
+                  src={
+                    activeComponent === "konsultasi"
+                      ? "/icons/chat-white.svg"
+                      : "/icons/chat-primary.svg"
+                  }
                   height={15}
                   width={15}
                   className="mr-2"
@@ -88,9 +101,20 @@ export default function Profile() {
                 Konsultasi Saya
               </li>
               {data.role === "m" && (
-                <li className="flex p-3 my-2 gap-2 self-stretch rounded-lg cursor-pointer">
+                <li
+                  className={`flex p-3 my-2 gap-2 self-stretch rounded-lg cursor-pointer ${
+                    activeComponent === "course"
+                      ? "bg-primary font-semibold text-whitebg"
+                      : ""
+                  }`}
+                  onClick={() => setActiveComponent("course")}
+                >
                   <Image
-                    src="/icons/course-primary.svg" // Change to the course icon
+                    src={
+                      activeComponent === "course"
+                        ? "/icons/course-white.svg"
+                        : "/icons/course-primary.svg"
+                    }
                     height={15}
                     width={15}
                     className="mr-2"
@@ -102,10 +126,11 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* Conditional rendering of components */}
         <div className="flex-1 rounded-lg bg-primarylight py-6 px-8 grid justify-items-center border border-solid border-textsec">
           {activeComponent === "biodata" && <Biodata />}
           {activeComponent === "changepassword" && <ChangePassword />}
+          {activeComponent === "konsultasi" && <Konsultasi />}
+          {activeComponent === "course" && <Course />}
           {data.role !== "m" && activeComponent === "biodata" && (
             <div className="flex justify-end w-full">
               <div className="text-right">
