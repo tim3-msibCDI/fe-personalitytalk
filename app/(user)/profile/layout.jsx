@@ -41,7 +41,7 @@ export default function ProfileUserLayout({ children }) {
 
         const userData = await response.json();
 
-        // Format tanggal dari yyyy/mm/dd menjadi format lebih readable (masih kurang created_at)
+        // Format tanggal dari yyyy/mm/dd menjadi format lebih readable (masih kurang)
         const formattedDate = formatDate(userData.data.date_birth);
 
         setUser({
