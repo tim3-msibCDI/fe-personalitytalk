@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { getUserDetail } from "@/lib/auth";
+import { useUser } from "@/constants/UserContext";
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -11,45 +11,9 @@ const formatDate = (dateString) => {
 };
 
 export default function Profile() {
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    gender: "",
-    dateBirth: "",
-    phoneNumber: "",
-    role: "",
-    universitas: "",
-    jurusan: "",
-  });
-  const [loading, setLoading] = useState(true);
+  const { user } = useUser(); 
 
-  useEffect(() => {
-    // Ambil data user dari API
-    const fetchUserProfile = async () => {
-      try {
-        const userData = await getUserDetail();
-        
-        // Format tanggal lahir
-        const formattedDate = formatDate(userData.dateBirth);
-        
-        // Simpan data user ke state
-        setUser({
-          ...userData,
-          dateBirth: formattedDate,
-        });
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserProfile();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>; // Tampilkan loading state saat data sedang diambil
-  }
+  const formattedDate = user.dateBirth ? formatDate(user.dateBirth) : "";
 
   return (
     <div className="w-full">
@@ -68,7 +32,7 @@ export default function Profile() {
       <div>
         <input
           type="text"
-          value={user.name}
+          value={user.nama}
           className="border border-textcolor w-full rounded-lg p-3"
           disabled
         />

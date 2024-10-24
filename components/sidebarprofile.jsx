@@ -3,9 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useUser } from "@/constants/UserContext";
 
-export default function SidebarProfile({ nama, email, tanggal, role }) {
+export default function SidebarProfile() {
   const pathname = usePathname();
+  const { user } = useUser();
 
   // Check if the current route is active
   const isActive = (href) => pathname === href;
@@ -19,10 +21,10 @@ export default function SidebarProfile({ nama, email, tanggal, role }) {
         className="rounded-full"
       />
       <div className="mt-2 text-center">
-        <h3 className="text-h3 font-semibold">{nama}</h3>
-        <p className="text-center text-vs font-normal">{email}</p>
+        <h3 className="text-h3 font-semibold">{user.nama}</h3>
+        <p className="text-center text-vs font-normal">{user.email}</p>
         <p className="text-center text-vs font-normal">
-          Gabung Sejak: {tanggal}
+          Gabung Sejak: {user.joined_at}
         </p>
         <hr className="my-6 border-textsec" />
         <ul className="text-left text-sm">
@@ -90,7 +92,7 @@ export default function SidebarProfile({ nama, email, tanggal, role }) {
           </li>
 
           {/* Course Link (Visible only for 'm' role) */}
-          {role === "m" && (
+          {user.role === "M" && (
             <li
               className={`flex p-3 my-2 gap-2 self-stretch rounded-lg cursor-pointer ${
                 isActive("/profile/course") ? "bg-primary font-semibold text-whitebg" : ""
