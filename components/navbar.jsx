@@ -76,19 +76,19 @@ export default function Navbar() {
 
       <div className="hidden md:flex mr-4 lg:mr-8 space-x-4">
         {user.nama ? (
-          <div className="relative group">
-            <button className="border border-primary bg-primary text-white text-sm md:text-base lg:text-m px-4 py-1.5 md:px-5 md:py-2 rounded-lg">
+          <div className="relative group text-s font-semibold">
+            <button className="border border-primary bg-primary text-whitebg px-4 py-1.5 md:px-5 md:py-2 rounded-lg">
               {user.nama} 
             </button>
-            <div className="absolute right-0 w-48 bg-white border border-gray-200 shadow-lg rounded-lg hidden group-hover:block">
-              <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <div className="absolute right-0 w-48 bg-primary border border-t-4 border-t-primarylight  text-whitebg shadow-lg rounded-lg hidden group-hover:block">
+              <Link href="/profile" className="block px-4 py-2 hover:bg-hover">
                 Profile
               </Link>
               <button
                 onClick={handleLogout}
-                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                className="block w-full text-left px-4 py-2 hover:bg-hover"
               >
-                Logout
+                Log Out
               </button>
             </div>
           </div>

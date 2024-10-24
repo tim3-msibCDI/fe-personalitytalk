@@ -390,7 +390,7 @@ export default function Register() {
                 </div>
 
                 <button
-                  className={`bg-primary hover:bg-primaryhover text-white py-2 w-full rounded-lg text-s font-medium 
+                  className={`bg-primary hover:bg-hover text-white py-2 w-full rounded-lg text-s font-medium 
                     ${isLoading || !isAgreed ? "disabled:bg-hover" : ""}`}
                   type="submit"
                   disabled={isLoading || !isAgreed}

@@ -85,7 +85,7 @@ export default function ChangePasswordPage() {
       <div className="w-full flex justify-end mt-6">
         <button
           onClick={handleSubmit}
-          className="bg-primary text-whitebg px-6 py-2 rounded-lg"
+          className="bg-primary text-whitebg px-6 py-2 rounded-lg hover:bg-hover"
           disabled={loading}
         >
           {loading ? "Menyimpan..." : "Simpan Perubahan"}

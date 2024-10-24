@@ -19,7 +19,7 @@ export default function Profile() {
     <div className="w-full">
       <div className="w-full flex justify-between items-start self-stretch">
         <h3 className="text-h3 font-semibold">Biodata Diri</h3>
-        <div className="inline-flex bg-primary text-whitebg px-6 py-2 rounded-lg flex-start">
+        <button className="inline-flex bg-primary text-whitebg px-6 py-2 rounded-lg flex-start hover:bg-hover">
           <Image
             src="/icons/pencil-white.svg"
             width={20}
@@ -27,7 +27,7 @@ export default function Profile() {
             alt="Edit Icon"
           />
           Edit Biodata
-        </div>
+        </button>
       </div>
 
       {/* Nama Lengkap */}
@@ -38,7 +38,7 @@ export default function Profile() {
         <input
           type="text"
           value={user.nama}
-          className="border border-textcolor w-full rounded-lg p-3"
+          className="border border-textcolor bg-whitebg w-full rounded-lg p-3"
           disabled
         />
       </div>
@@ -51,7 +51,7 @@ export default function Profile() {
         <input
           type="text"
           value={user.email}
-          className="border border-textcolor w-full rounded-lg p-3"
+          className="border border-textcolor bg-whitebg w-full rounded-lg p-3"
           disabled
         />
       </div>
@@ -66,7 +66,7 @@ export default function Profile() {
             <input
               type="text"
               value={user.gender}
-              className="border border-textcolor rounded-lg p-3 w-full"
+              className="border border-textcolor bg-whitebg rounded-lg p-3 w-full"
               disabled
             />
           </div>
@@ -81,7 +81,7 @@ export default function Profile() {
             <input
               type="text"
               value={user.dateBirth}
-              className="border border-textcolor rounded-lg p-3 w-full"
+              className="border border-textcolor bg-whitebg rounded-lg p-3 w-full"
               disabled
             />
           </div>
@@ -96,7 +96,7 @@ export default function Profile() {
             <input
               type="text"
               value={user.phoneNumber}
-              className="border border-textcolor rounded-lg p-3 w-full"
+              className="border border-textcolor bg-whitebg rounded-lg p-3 w-full"
               disabled
             />
           </div>
@@ -114,7 +114,7 @@ export default function Profile() {
               <input
                 type="text"
                 value={user.universitas}
-                className="border border-textcolor w-full rounded-lg p-3"
+                className="border border-textcolor bg-whitebg w-full rounded-lg p-3"
                 disabled
               />
             </div>
@@ -129,13 +129,30 @@ export default function Profile() {
               <input
                 type="text"
                 value={user.jurusan}
-                className="border border-textcolor w-full rounded-lg p-3"
+                className="border border-textcolor bg-whitebg w-full rounded-lg p-3"
                 disabled
               />
             </div>
           </div>
         </div>
       )}
+      {user.role ===
+        "U" && (
+          <div className="mt-4 flex justify-end w-full">
+            <div className="text-right">
+              <p>Apakah Kamu seorang mahasiswa?</p>
+              <button className="w-full inline-flex justify-center items-center bg-primary text-whitebg px-6 py-2 rounded-lg ml-auto hover:bg-hover">
+                <Image
+                  src="/icons/arrow.png"
+                  width={15}
+                  height={15}
+                  className="mr-2"
+                />
+                <span>Klik disini</span>
+              </button>
+            </div>
+          </div>
+        )}
     </div>
   );
 }

@@ -102,7 +102,7 @@ export default function Login() {
                   <p className="text-right">lupa kata sandi?</p>
                 </div>
                 <button
-                  className="bg-primary text-whitebg text-s w-full py-2 px-4 mt-8 rounded-lg"
+                  className="bg-primary text-whitebg text-s w-full py-2 px-4 mt-8 rounded-lg hover:bg-hover"
                   type="submit"
                   disabled={isLoading}
                 >
