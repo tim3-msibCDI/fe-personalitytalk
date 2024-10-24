@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import SidebarProfile from "@/components/sidebarprofile";
-import { getUserDetail } from "@/lib/auth";
+import { getUserDetail } from "@/api/user";
 
 export default function ProfileUserLayout({ children }) {
   const [user, setUser] = useState({

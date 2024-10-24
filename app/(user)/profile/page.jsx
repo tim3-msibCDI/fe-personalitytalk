@@ -11,7 +11,7 @@ const formatDate = (dateString) => {
 };
 
 export default function Profile() {
-  const { user } = useUser(); 
+  const { user } = useUser();
 
   const formattedDate = user.dateBirth ? formatDate(user.dateBirth) : "";
 
@@ -20,7 +20,12 @@ export default function Profile() {
       <div className="w-full flex justify-between items-start self-stretch">
         <h3 className="text-h3 font-semibold">Biodata Diri</h3>
         <div className="inline-flex bg-primary text-whitebg px-6 py-2 rounded-lg flex-start">
-          <Image src="/icons/pencil-white.svg" width={20} height={20} alt="Edit Icon" />
+          <Image
+            src="/icons/pencil-white.svg"
+            width={20}
+            height={20}
+            alt="Edit Icon"
+          />
           Edit Biodata
         </div>
       </div>
@@ -98,33 +103,38 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* Jika role = "M", tambahkan universitas dan jurusan */}
       {user.role === "M" && (
-        <>
-          <div className="my-2">
-            <label>Universitas</label>
-          </div>
-          <div>
-            <input
-              type="text"
-              value={user.universitas}
-              className="border border-textcolor w-full rounded-lg p-3"
-              disabled
-            />
+        <div className="flex gap-4">
+          {/* Universitas */}
+          <div className="flex-1">
+            <div className="my-2">
+              <label>Universitas</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                value={user.universitas}
+                className="border border-textcolor w-full rounded-lg p-3"
+                disabled
+              />
+            </div>
           </div>
 
-          <div className="my-2">
-            <label>Jurusan</label>
+          {/* Jurusan */}
+          <div className="flex-1">
+            <div className="my-2">
+              <label>Jurusan</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                value={user.jurusan}
+                className="border border-textcolor w-full rounded-lg p-3"
+                disabled
+              />
+            </div>
           </div>
-          <div>
-            <input
-              type="text"
-              value={user.jurusan}
-              className="border border-textcolor w-full rounded-lg p-3"
-              disabled
-            />
-          </div>
-        </>
+        </div>
       )}
     </div>
   );

@@ -3,8 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
-import { removeToken, isAuthenticated } from "@/lib/auth";
+import { removeToken } from "@/lib/auth";
 import { useUser } from "@/constants/UserContext";
 
 export default function Navbar() {
