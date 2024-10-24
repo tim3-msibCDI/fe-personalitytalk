@@ -65,7 +65,7 @@ export default function FormPilihPsikolog() {
 
             <div className="w-1/2">
                 {/* Card Pilih Psikolog */}
-                <div className="border bg-primarylight rounded-lg p-4 mb-6 shadow">
+                <div className="border bg-primarylight2 rounded-lg p-4 mb-6 shadow">
                     <div className="flex gap-4 overflow-x-scroll overflow-hidden w-full mb-5"
                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                         {weekDates.map((date, index) => (
@@ -119,7 +119,7 @@ export default function FormPilihPsikolog() {
                     </div>
 
                     {/* List Psikolog/Konselor */}
-                    <div className="mt-6">
+                    <div className="mt-6 max-h-[400px] overflow-y-scroll">
                         {psikolog.map((item, index) => (
                             <div key={index} className="flex gap-3 mb-4 border-b border-textcolor pb-4">
                                 {/* Foto Psikolog */}
@@ -172,7 +172,7 @@ export default function FormPilihPsikolog() {
                                             {item.topik.slice(0, 2).join(", ")} {/* Menampilkan dua topik awal */}
                                             {item.topik.length > 2 && <span className="ml-2">+{item.topik.length - 2}</span>} {/* Menampilkan jumlah sisa topik */}
                                         </p>
-                                        <button className="bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded ml-10"> {/* Menambah margin-left pada button */}
+                                        <button className="bg-primary text-white py-2 px-4 rounded ml-10"> {/* Menambah margin-left pada button */}
                                             Pilih Psikolog
                                         </button>
                                     </div>

@@ -348,6 +348,45 @@ export const psikolog = [
       { tanggal: '22 Oktober 2024', waktu: ['07.00 - 09.00', '10.00 - 12.00'] },
       { tanggal: '23 Oktober 2024', waktu: ['14.00 - 16.00', '17.00 - 19.00'] }
     ]
+  },
+  {
+    id: 4,
+    name: 'Neli Fauziyah',
+    photos: '/image/psikolog/photo.png',
+    rating: 5.0,
+    pengalaman: 9,
+    role: 'Konselor',
+    topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
+    jadwal: [
+      { tanggal: '22 Oktober 2024', waktu: ['07.00 - 09.00', '10.00 - 12.00'] },
+      { tanggal: '23 Oktober 2024', waktu: ['14.00 - 16.00', '17.00 - 19.00'] }
+    ]
+  },
+  {
+    id: 5,
+    name: 'Neli Fauziyah',
+    photos: '/image/psikolog/photo.png',
+    rating: 5.0,
+    pengalaman: 9,
+    role: 'Konselor',
+    topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
+    jadwal: [
+      { tanggal: '22 Oktober 2024', waktu: ['07.00 - 09.00', '10.00 - 12.00'] },
+      { tanggal: '23 Oktober 2024', waktu: ['14.00 - 16.00', '17.00 - 19.00'] }
+    ]
+  },
+  {
+    id: 6,
+    name: 'Neli Fauziyah',
+    photos: '/image/psikolog/photo.png',
+    rating: 5.0,
+    pengalaman: 9,
+    role: 'Konselor',
+    topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
+    jadwal: [
+      { tanggal: '22 Oktober 2024', waktu: ['07.00 - 09.00', '10.00 - 12.00'] },
+      { tanggal: '23 Oktober 2024', waktu: ['14.00 - 16.00', '17.00 - 19.00'] }
+    ]
   }
 ];
 
