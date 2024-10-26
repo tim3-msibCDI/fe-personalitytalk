@@ -7,7 +7,7 @@ import { psikolog } from "@/constants";
 const daysOfWeek = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
 
-export default function FormPilihPsikolog() {
+export default function FormPilihPsikolog({onSelectPsikolog}) {
     const [weekDates, setWeekDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedProfessional, setSelectedProfessional] = useState("Psikolog");
@@ -33,7 +33,7 @@ export default function FormPilihPsikolog() {
 
     return (
         <div className="flex justify-between gap-8 p-6">
-            <div className="w-1/2">
+            <div className="w-2/5">
                 <h1 className="text-h3 font-semibold text-textcolor mb-2">Jenis Profesional</h1>
                 <p className="text-s mb-6">Terdapat 2 Jenis profesional yang disediakan oleh PersonalityTalk</p>
 
@@ -63,7 +63,7 @@ export default function FormPilihPsikolog() {
                 </div>
             </div>
 
-            <div className="w-1/2">
+            <div className="w-3/5">
                 {/* Card Pilih Psikolog */}
                 <div className="border bg-primarylight2 rounded-lg p-4 mb-6 shadow">
                     <div className="flex gap-4 overflow-x-scroll overflow-hidden w-full mb-5"
@@ -172,7 +172,9 @@ export default function FormPilihPsikolog() {
                                             {item.topik.slice(0, 2).join(", ")} {/* Menampilkan dua topik awal */}
                                             {item.topik.length > 2 && <span className="ml-2">+{item.topik.length - 2}</span>} {/* Menampilkan jumlah sisa topik */}
                                         </p>
-                                        <button className="bg-primary text-white py-2 px-4 rounded ml-10"> {/* Menambah margin-left pada button */}
+                                        <button 
+                                        onClick={() => onSelectPsikolog(item.id)}
+                                        className="bg-primary text-white py-2 px-4 rounded ml-10"> {/* Menambah margin-left pada button */}
                                             Pilih Psikolog
                                         </button>
                                     </div>

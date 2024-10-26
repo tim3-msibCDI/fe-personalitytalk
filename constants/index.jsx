@@ -455,3 +455,75 @@ export const steps = [
   { number: 2, label: "Pilih Jadwal" },
   { number: 3, label: "Bayar" },
 ];
+
+export const jadwalPsikolog = [
+  {
+      name: "Dr. Andi Wijaya",
+      photos: '/image/psikolog/foto.png',
+      rating: 4.9,
+      pengalaman: 10,
+      role: "Psikolog",
+      harga: "250.000",
+      deskripsi: "Hai, saya Taufik Alif Shalahuddin, akrab dipanggil Alif. Sebagai psikolog klinis saya banyak menangani permasalahan umum, kepribadian, kecemasan, keluarga, komunikasi, dan percintaan. Saya memiliki prinsip bahwa setiap klien itu unik, tidak ada klien yang sulit, yang ada psikolog yang kurang terampil. Saya sangat terbantu dan sangat senang dengan semua yang saya lakukan.",
+      sipp: "123456789",
+      topik: ["Umum", "Percintaan", "Keluarga", "Sekolah", "Pekerjaan"],
+      review: [
+          {
+              id: 1,
+              comment: "Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu.",
+          },
+          {
+              id: 2,
+              comment: "Penjelasan yang mudah dipahami, sangat direkomendasikan.",
+          }
+      ],
+      jadwal: [
+        { 
+            tanggal: "2024-10-25",
+            waktu: [
+                { jam: "09:00 - 10:00" },
+                { jam: "10:00 - 11:00" },
+                { jam: "11:00 - 12:00" }
+            ]
+        },
+        { 
+            tanggal: "2024-10-26",
+            waktu: [
+                { jam: "13:00 - 14:00" },
+                { jam: "14:00 - 15:00" },
+                { jam: "15:00 - 16:00" }
+            ]
+        },
+        { 
+            tanggal: "2024-10-27",
+            waktu: [
+                { jam: "09:00 - 10:00" },
+                { jam: "10:00 - 11:00" }
+            ]
+        },
+        { 
+          tanggal: "2024-10-28",
+          waktu: [
+              { jam: "09:00 - 10:00" },
+              { jam: "10:00 - 11:00" },
+              { jam: "11:00 - 12:00" }
+          ]
+      },
+      { 
+          tanggal: "2024-10-29",
+          waktu: [
+              { jam: "13:00 - 14:00" },
+              { jam: "14:00 - 15:00" },
+              { jam: "15:00 - 16:00" }
+          ]
+      },
+      { 
+          tanggal: "2024-10-30",
+          waktu: [
+              { jam: "09:00 - 10:00" },
+              { jam: "10:00 - 11:00" }
+          ]
+      },
+    ]    
+  },
+];

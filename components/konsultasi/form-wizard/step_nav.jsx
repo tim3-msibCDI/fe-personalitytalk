@@ -1,4 +1,4 @@
-import { steps } from "@/constants"; // Import langkah dari konstanta
+import { steps } from "@/constants";
 
 export default function StepNavigation({ currentStep }) {
   return (
@@ -15,7 +15,7 @@ export default function StepNavigation({ currentStep }) {
             {/* Lingkaran Step */}
             <span
               className={`size-7 flex justify-center items-center shrink-0 
-              ${step.number === currentStep ? 'bg-primary text-whitebg' : 'bg-disable text-textcolor'} 
+              ${currentStep >= step.number ? 'bg-primary text-white' : 'bg-disable text-textcolor'} 
               font-bold text-h3 rounded-full w-10 h-10`}
             >
               {step.number}
