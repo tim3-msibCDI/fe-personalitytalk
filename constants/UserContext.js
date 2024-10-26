@@ -1,7 +1,9 @@
+// contexts/UserContext.js
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { getUserDetail } from "@/api/user";
+import { updateProfile } from "@/api/user"; // Import fungsi updateProfile
 
 const UserContext = createContext();
 
@@ -13,11 +15,10 @@ export const UserProvider = ({ children }) => {
     role: "",
     photoProfile: "",
     gender: "",
-    dateBirth:"",
+    dateBirth: "",
     phoneNumber: "",
     universitas: "",
-    jurusan:"",
-
+    jurusan: "",
   });
 
   useEffect(() => {
@@ -44,8 +45,23 @@ export const UserProvider = ({ children }) => {
     fetchUserProfile();
   }, []);
 
+  // Fungsi untuk memperbarui profil pengguna
+  const updateUserProfile = async (formData) => {
+    try {
+      const updatedUser = await updateProfile(formData); // Memanggil fungsi updateProfile
+      setUser((prevUser) => ({
+        ...prevUser,
+        ...updatedUser,
+      }));
+    } catch (error) {
+      console.error("Error updating user profile:", error);
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ user, setUser, updateUserProfile }}>
+      {children}
+    </UserContext.Provider>
   );
 };
 

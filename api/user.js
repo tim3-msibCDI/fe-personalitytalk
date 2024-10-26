@@ -4,6 +4,7 @@ import { getToken } from "@/lib/auth";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+// Fungsi Login user
 export const loginUser = async (email, password) => {
   const response = await axios.post(`${API_URL}/user/login`, { email, password }, {
     headers: {
@@ -13,6 +14,7 @@ export const loginUser = async (email, password) => {
   return response.data;
 };
 
+// Fungsi Register User
 export const registerUser = async (userData) => {
   const response = await axios.post(`${API_URL}/user/register`, userData, {
     headers: {
@@ -22,6 +24,7 @@ export const registerUser = async (userData) => {
   return response.data;
 };
 
+// Fungsi ambil info User (nama, photo profile, role)
 export const getUserInfo = async () => {
   const token = getToken();
   if (!token) {
@@ -40,7 +43,7 @@ export const getUserInfo = async () => {
   }
 };
 
-// Function to get detailed user profile
+// Fungsi untuk mendapatkan detail user
 export const getUserDetail = async () => {
   const token = getToken();
   if (!token) {
@@ -56,7 +59,7 @@ export const getUserDetail = async () => {
 
     const data = response.data.data;
 
-    // Structure the data for use in the frontend
+    // Structure data yang digunakan pada frontend
     return {
       name: data.name,
       email: data.email,
@@ -74,7 +77,31 @@ export const getUserDetail = async () => {
   }
 };
 
-// Function to change password
+// Fungsi untuk Update Profile User
+export const updateProfile = async (formData) => {
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  try {
+    const response = await axios.put(
+      `${API_URL}/user/profile/update`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to update profile");
+  }
+};
+
+// Fungsi untuk mengubah password
 export const changePassword = async (oldPassword, newPassword, confirmPassword) => {
   const token = getToken();
   if (!token) {
@@ -102,3 +129,4 @@ export const changePassword = async (oldPassword, newPassword, confirmPassword) 
     throw new Error("Failed to change password");
   }
 };
+

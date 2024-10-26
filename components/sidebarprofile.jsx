@@ -27,7 +27,7 @@ export default function SidebarProfile() {
           Gabung Sejak: {user.joined_at}
         </p>
         <hr className="my-6 border-textsec" />
-        <ul className="text-left text-sm">
+        <ul className="text-left text-sm mb-8">
           {/* Biodata Link */}
           <li
             className={`flex p-3 my-2 gap-2 self-stretch rounded-lg cursor-pointer ${
