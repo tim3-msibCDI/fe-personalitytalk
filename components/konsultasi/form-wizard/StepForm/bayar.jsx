@@ -36,13 +36,15 @@ export default function FormBayar() {
                         <p className="text-s text-textcolor mb-4">Lakukan pembayaran agar pemesanan sesi konsultasi kamu dapat dijadwalkan</p>
                         <div className="bg-primarylight2 rounded-md">
                             <div className="p-4">
-                                <div className="flex gap-6">
-                                    <Image className="mb-2"
-                                        src="/image/psikolog/photo.png"
-                                        alt="Image"
-                                        width={100}
-                                        height={50}
-                                    />
+                                <div className="flex gap-4">
+                                    <div className="w-28 h-28 rounded overflow-hidden">
+                                        <Image className="mb-2 object-cover w-full h-full"
+                                            src={selectedPsikolog.photos}
+                                            alt={`Photo ${selectedPsikolog.name}`}
+                                            width={100}
+                                            height={100}
+                                        />
+                                    </div>
                                     <div className="flex flex-col">
                                         <p className="text-m font-semibold">{selectedPsikolog.name}</p>
                                         {/* Rating, Pengalaman, dan Role */}
@@ -83,10 +85,19 @@ export default function FormBayar() {
                                 {/* Detail Konsultasi */}
                                 <div className="text-m gap-2">
                                     <p className="font-semibold mb-2">Detail Konsultasi</p>
-                                    <p className="mb-2">Topik Konsultasi : Umum</p>
-                                    <p className="mb-2">Durasi Konsultasi : 60 menit</p>
-                                    <p className="mb-2">Jadwal Konsultasi : Sabtu, 26 Oktober 2024</p>
-                                    <p className="mb-2">Waktu Konsultasi : 13.00 - 14.00</p>
+                                    <div className="grid grid-cols-2 gap-y-2 text-m text-textcolor">
+                                        <p>Topik Konsultasi</p>
+                                        <p>: Umum</p>
+
+                                        <p>Durasi Konsultasi</p>
+                                        <p>: 60 menit</p>
+
+                                        <p>Jadwal Konsultasi</p>
+                                        <p>: Sabtu, 26 Oktober 2024</p>
+
+                                        <p>Waktu Konsultasi</p>
+                                        <p>: 13.00 - 14.00</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

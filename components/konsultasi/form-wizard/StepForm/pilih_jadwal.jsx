@@ -53,66 +53,62 @@ export default function FormPilihJadwal() {
                 <div className="w-2/5 bg-primarylight2 rounded-md">
                     <div className="p-4">
                         <h3 className="text-h3 font-semibold text-textcolor mb-2">Detail Profil Psikolog</h3>
-                        <Image className="mb-2"
-                            src={selectedPsikolog.photos}
-                            alt={`Photo ${selectedPsikolog.name}`}
-                            width={1920}
-                            height={1080}
-                        />
-                        <p className="text-m font-semibold">{selectedPsikolog.name}</p>
-                        {/* Rating, Pengalaman, dan Role */}
-                        <div className="flex items-center gap-3 mt-2">
-                            <div className="flex items-center">
-                                <Image
-                                    src="/icons/bintang.png"
-                                    alt="Icon Star"
-                                    width={18}
-                                    height={18}
+                        <div className="flex flex-row gap-4">
+                            <div className="w-28 h-28 rounded overflow-hidden">
+                                <Image className="mb-2 object-cover w-full h-full"
+                                    src={selectedPsikolog.photos}
+                                    alt={`Photo ${selectedPsikolog.name}`}
+                                    width={100}
+                                    height={100}
                                 />
-                                <p className="ml-1">{selectedPsikolog.rating}</p>
                             </div>
-                            <span className="text-gray-400">|</span>
-                            <div className="flex items-center">
-                                <Image
-                                    src="/icons/i-konsultasi.png"
-                                    alt="Icon Konsultasi"
-                                    width={18}
-                                    height={18}
-                                />
-                                <p className="ml-1">{selectedPsikolog.pengalaman} tahun</p>
-                            </div>
-                            <span className="text-gray-400">|</span>
-                            <div className="flex items-center">
-                                <Image
-                                    src="/icons/role.png"
-                                    alt="Icon Role"
-                                    width={18}
-                                    height={18}
-                                />
-                                <p className="ml-1">{selectedPsikolog.role}</p>
+                            <div className="flex flex-col">
+                                <p className="text-m font-semibold">{selectedPsikolog.name}</p>
+                                {/* Rating, Pengalaman, dan Role */}
+                                <div className="flex items-center gap-3 mt-1">
+                                    <div className="flex items-center">
+                                        <Image
+                                            src="/icons/bintang.png"
+                                            alt="Icon Star"
+                                            width={18}
+                                            height={18}
+                                        />
+                                        <p className="ml-1">{selectedPsikolog.rating}</p>
+                                    </div>
+                                    <span className="text-gray-400">|</span>
+                                    <div className="flex items-center">
+                                        <Image
+                                            src="/icons/i-konsultasi.png"
+                                            alt="Icon Konsultasi"
+                                            width={18}
+                                            height={18}
+                                        />
+                                        <p className="ml-1">{selectedPsikolog.pengalaman} tahun</p>
+                                    </div>
+                                    <span className="text-gray-400">|</span>
+                                    <div className="flex items-center">
+                                        <Image
+                                            src="/icons/role.png"
+                                            alt="Icon Role"
+                                            width={18}
+                                            height={18}
+                                        />
+                                        <p className="ml-1">{selectedPsikolog.role}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="flex gap-2 mt-3">
+                                        <p className="text-s font-semibold">No SIPP</p>
+                                        <p className="text-s">{selectedPsikolog.sipp}</p>
+                                    </div>
+                                </div>
+                                <p className="mt-1 text-m font-bold">Rp. {selectedPsikolog.harga}/sesi</p>
                             </div>
                         </div>
-
-                        <p className="mt-4 text-m font-bold">Rp. {selectedPsikolog.harga}/sesi</p>
 
                         <hr className="my-4 border-1 border-black" />
 
                         <p className="text-justify">{selectedPsikolog.deskripsi}</p>
-
-                        <hr className="my-4 border-1 border-black" />
-
-                        <div>
-                            <div className="flex items-center gap-2">
-                                <Image
-                                    src="/icons/sipp.png"
-                                    alt="Icon SIPP"
-                                    width={24}
-                                    height={24}
-                                />
-                                <p className="text-m font-semibold">SIPP (Surat Izin Praktek Psikolog)</p>
-                            </div>
-                            <p className="text-s mt-2">{selectedPsikolog.sipp}</p>
-                        </div>
 
                         <hr className="my-4 border-1 border-black" />
 

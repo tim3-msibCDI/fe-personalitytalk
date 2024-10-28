@@ -7,7 +7,7 @@ import { psikolog } from "@/constants";
 const daysOfWeek = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
 
-export default function FormPilihPsikolog({onSelectPsikolog}) {
+export default function FormPilihPsikolog({ onSelectPsikolog }) {
     const [weekDates, setWeekDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedProfessional, setSelectedProfessional] = useState("Psikolog");
@@ -119,17 +119,19 @@ export default function FormPilihPsikolog({onSelectPsikolog}) {
                     </div>
 
                     {/* List Psikolog/Konselor */}
-                    <div className="mt-6 max-h-[400px] overflow-y-scroll">
+                    <div className="mt-6 max-h-[400px] overflow-y-scroll pr-4">
                         {psikolog.map((item, index) => (
                             <div key={index} className="flex gap-3 mb-4 border-b border-textcolor pb-4">
                                 {/* Foto Psikolog */}
-                                <Image
-                                    src={item.photos}
-                                    alt={`Foto ${item.name}`}
-                                    width={100}
-                                    height={50}
-                                    className="rounded"
-                                />
+                                <div className="w-24 h-24 rounded overflow-hidden">
+                                    <Image
+                                        src={item.photos}
+                                        alt={`Foto ${item.name}`}
+                                        width={100}
+                                        height={100}
+                                        className="object-cover w-full h-full"
+                                    />
+                                </div>
                                 {/* Informasi Psikolog */}
                                 <div className="flex flex-col w-full">
                                     <div className="flex justify-between items-center">
@@ -172,9 +174,9 @@ export default function FormPilihPsikolog({onSelectPsikolog}) {
                                             {item.topik.slice(0, 2).join(", ")} {/* Menampilkan dua topik awal */}
                                             {item.topik.length > 2 && <span className="ml-2">+{item.topik.length - 2}</span>} {/* Menampilkan jumlah sisa topik */}
                                         </p>
-                                        <button 
-                                        onClick={() => onSelectPsikolog(item.id)}
-                                        className="bg-primary text-white py-2 px-4 rounded ml-10"> {/* Menambah margin-left pada button */}
+                                        <button
+                                            onClick={() => onSelectPsikolog(item.id)}
+                                            className="bg-primary text-white py-2 px-4 rounded ml-10"> {/* Menambah margin-left pada button */}
                                             Pilih Psikolog
                                         </button>
                                     </div>

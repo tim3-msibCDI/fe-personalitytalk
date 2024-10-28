@@ -459,7 +459,7 @@ export const steps = [
 export const jadwalPsikolog = [
   {
       name: "Dr. Andi Wijaya",
-      photos: '/image/psikolog/foto.png',
+      photos: '/image/psikolog/photo.png',
       rating: 4.9,
       pengalaman: 10,
       role: "Psikolog",
