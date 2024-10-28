@@ -3,6 +3,7 @@ import { jadwalPsikolog } from "@/constants";
 import { useState } from "react";
 import Modal from "@/components/modals/modal";
 import SyaratKetentuan from "@/components/popup/snk";
+import Psikolog from "../psikolog";
 
 export default function FormBayar() {
     //State untuk modal
@@ -36,51 +37,7 @@ export default function FormBayar() {
                         <p className="text-s text-textcolor mb-4">Lakukan pembayaran agar pemesanan sesi konsultasi kamu dapat dijadwalkan</p>
                         <div className="bg-primarylight2 rounded-md">
                             <div className="p-4">
-                                <div className="flex gap-4">
-                                    <div className="w-28 h-28 rounded overflow-hidden">
-                                        <Image className="mb-2 object-cover w-full h-full"
-                                            src={selectedPsikolog.photos}
-                                            alt={`Photo ${selectedPsikolog.name}`}
-                                            width={100}
-                                            height={100}
-                                        />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <p className="text-m font-semibold">{selectedPsikolog.name}</p>
-                                        {/* Rating, Pengalaman, dan Role */}
-                                        <div className="flex items-center gap-3 mt-2">
-                                            <div className="flex items-center">
-                                                <Image
-                                                    src="/icons/bintang.png"
-                                                    alt="Icon Star"
-                                                    width={18}
-                                                    height={18}
-                                                />
-                                                <p className="ml-1">{selectedPsikolog.rating}</p>
-                                            </div>
-                                            <span className="text-gray-400">|</span>
-                                            <div className="flex items-center">
-                                                <Image
-                                                    src="/icons/i-konsultasi.png"
-                                                    alt="Icon Konsultasi"
-                                                    width={18}
-                                                    height={18}
-                                                />
-                                                <p className="ml-1">{selectedPsikolog.pengalaman} tahun</p>
-                                            </div>
-                                            <span className="text-gray-400">|</span>
-                                            <div className="flex items-center">
-                                                <Image
-                                                    src="/icons/role.png"
-                                                    alt="Icon Role"
-                                                    width={18}
-                                                    height={18}
-                                                />
-                                                <p className="ml-1">{selectedPsikolog.role}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <Psikolog/>
                                 <hr className="border-1 border-black mb-4 mt-2" />
                                 {/* Detail Konsultasi */}
                                 <div className="text-m gap-2">

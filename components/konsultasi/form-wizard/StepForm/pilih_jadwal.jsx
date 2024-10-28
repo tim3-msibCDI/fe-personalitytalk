@@ -205,7 +205,7 @@ export default function FormPilihJadwal() {
                             className={`mt-8 text-m w-full py-2 rounded-md font-semibold ${selectedTime ? 'bg-primary text-white' : 'bg-disable text-whitebg'}`}
                             disabled={!selectedTime}
                         >
-                            Bayar
+                            Pilih Jadwal
                         </button>
                     </div>
                 </div>
