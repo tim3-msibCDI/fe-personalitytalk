@@ -1,6 +1,36 @@
 import Image from "next/image";
 
 export default function AktivitasCard({name, status, date, time, }) {
+  const getStatusBgColor = () => {
+    switch (status) {
+      case "1":
+        return "bg-green-500";
+      case "2":
+        return "bg-yellow-500";
+      case "3":
+        return "bg-gray-500";
+      case "4":
+        return "bg-red-500";
+      default:
+        return "bg-primary";
+    }
+  };
+
+  const getKet = () => {
+    switch (status) {
+      case "1":
+        return "Selesai";
+      case "2":
+        return "Sedang Berlangsung";
+      case "3":
+        return "Dijadwalkan";
+      case "4":
+        return "bg-red-500";
+      default:
+        return "Status";
+    }
+  };
+
   return (
     <div className="w-full h-[124px] p-4 bg-primarylight rounded-lg border border-primary justify-between items-center inline-flex">
       <div className="justify-start items-center gap-3 flex">
@@ -14,9 +44,11 @@ export default function AktivitasCard({name, status, date, time, }) {
           <div className="text-textcolor text-base font-semibold">
             {name}
           </div>
-          <div className="h-5 px-4 py-2 bg-primary rounded-lg justify-center items-center gap-2.5 inline-flex">
+          <div
+            className={`h-5 px-4 py-2 ${getStatusBgColor()} rounded-lg justify-center items-center gap-2.5 inline-flex`}
+          >
             <div className="text-neutral-50 text-xs font-semibold  ">
-              {status}
+              {getKet()}
             </div>
           </div>
         </div>

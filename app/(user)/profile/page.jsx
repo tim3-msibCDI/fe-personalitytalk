@@ -91,7 +91,7 @@ export default function Profile() {
             name="nama"
             value={isEditing ? formData.nama : user.nama}
             onChange={handleChange}
-            className="border border-textcolor bg-whitebg w-full rounded-lg p-3"
+            className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
             disabled={!isEditing}
           />
         </div>
@@ -106,7 +106,7 @@ export default function Profile() {
             name="email"
             value={isEditing ? formData.email : user.email}
             onChange={handleChange}
-            className="border border-textcolor bg-whitebg w-full rounded-lg p-3"
+            className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
             disabled={!isEditing}
           />
         </div>
@@ -123,7 +123,7 @@ export default function Profile() {
                   name="gender"
                   value={formData.gender}
                   onChange={handleChange}
-                  className="border border-textcolor bg-whitebg rounded-lg p-3 w-full"
+                  className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
                 >
                   <option value="">Jenis Kelamin</option>
                   <option value="Perempuan">Perempuan</option>
@@ -134,7 +134,7 @@ export default function Profile() {
                   type="text"
                   name="gender"
                   value={user.gender === "F" ? "Perempuan" : "Laki-laki"}
-                  className="border border-textcolor bg-whitebg rounded-lg p-3 w-full"
+                  className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
                   disabled
                 />
               )}
@@ -152,7 +152,7 @@ export default function Profile() {
                 name="dateBirth"
                 value={isEditing ? formData.dateBirth : formattedDate}
                 onChange={handleChange}
-                className="border border-textcolor bg-whitebg rounded-lg p-3 w-full"
+                className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
                 disabled={!isEditing}
               />
             </div>
@@ -169,7 +169,7 @@ export default function Profile() {
                 name="phoneNumber"
                 value={isEditing ? formData.phoneNumber : user.phoneNumber}
                 onChange={handleChange}
-                className="border border-textcolor bg-whitebg rounded-lg p-3 w-full"
+                className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
                 disabled={!isEditing}
               />
             </div>
@@ -188,7 +188,7 @@ export default function Profile() {
                   name="universitas"
                   value={isEditing ? formData.universitas : user.universitas}
                   onChange={handleChange}
-                  className="border border-textcolor bg-whitebg w-full rounded-lg p-3"
+                  className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
                   disabled={!isEditing}
                 />
               </div>
@@ -204,7 +204,7 @@ export default function Profile() {
                   name="jurusan"
                   value={isEditing ? formData.jurusan : user.jurusan}
                   onChange={handleChange}
-                  className="border border-textcolor bg-whitebg w-full rounded-lg p-3"
+                  className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
                   disabled={!isEditing}
                 />
               </div>
@@ -231,17 +231,17 @@ export default function Profile() {
 
         {isEditing && (
           <div className="mt-4 flex justify-end w-full">
-            <div className="text-right">
+            <div className="text-center w-64">
               <p>Simpan Perubahan?</p>
               <button
-                className="bg-transparent border border-primary px-6 py-2 rounded-lg hover:bg-hover w-1/2"
+                className="bg-transparent border border-primary px-6 py-2 rounded-lg hover:bg-hover w-28 mr-2"
                 onClick={toggleEdit}
               >
                 Batal
               </button>
               <button
                 type="submit"
-                className=" bg-primary text-whitebg px-6 py-2 rounded-lg ml-auto hover:bg-hover w-1/2"
+                className=" bg-primary text-whitebg px-6 py-2 rounded-lg ml-auto hover:bg-hover w-28"
               >
                 Simpan
               </button>

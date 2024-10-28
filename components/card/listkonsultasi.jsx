@@ -4,25 +4,25 @@ export default function ListKonsultasi() {
   const aktivitasData = [
     {
       name: "Dr. Andi Setiawan",
-      status: "Selesai",
+      status: "3",
       date: "28 Okt 2024",
       time: "12:30",
     },
     {
       name: "Dr. Bella Anindya",
-      status: "Dalam Proses",
+      status: "2",
       date: "28 Okt 2024",
       time: "14:00",
     },
     {
       name: "Dr. Chandra Budi",
-      status: "Belum Dimulai",
+      status: "1",
       date: "29 Okt 2024",
       time: "10:00",
     },
     {
       name: "Dr. Diana Kartika",
-      status: "Selesai",
+      status: "3",
       date: "27 Okt 2024",
       time: "09:00",
     },

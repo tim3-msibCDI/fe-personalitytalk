@@ -13,7 +13,7 @@ export default function ProfileUserLayout({ children }) {
   }
 
   if (isError) {
-    return <div>Error loading user profile.</div>; // Handle error state gracefully
+    return <div>Error loading user profile.</div>; 
   }
 
   return (
