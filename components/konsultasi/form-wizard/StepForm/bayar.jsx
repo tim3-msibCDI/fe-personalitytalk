@@ -1,8 +1,14 @@
 import Image from "next/image";
 import { jadwalPsikolog } from "@/constants";
 import { useState } from "react";
+import Modal from "@/components/modals/modal";
+import SyaratKetentuan from "@/components/popup/snk";
 
 export default function FormBayar() {
+    //State untuk modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
     // State untuk menyimpan data psikolog yang dipilih
     const [selectedPsikolog, setSelectedPsikolog] = useState(jadwalPsikolog[0]); // Misalkan ambil psikolog pertama
@@ -147,8 +153,14 @@ export default function FormBayar() {
                                     type="checkbox"
                                     className="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary focus:ring-2"
                                 />
-                                <label htmlFor="checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    Saya telah membaca dan menyetujui Syarat & Ketentuan
+                                <label htmlFor="checkbox" className="ml-2 text-sm font-medium text-gray-900">
+                                    Saya telah membaca dan menyetujui{" "}
+                                    <span
+                                        className="text-primary cursor-pointer underline"
+                                        onClick={openModal}
+                                    >
+                                        Syarat & Ketentuan
+                                    </span>
                                 </label>
                             </div>
                         </div>
@@ -161,6 +173,10 @@ export default function FormBayar() {
                     </div>
                 </div>
             </div>
+            {/* Modal component */}
+            <Modal isOpen={isModalOpen} onClose={closeModal}>
+                <SyaratKetentuan onClose={closeModal} /> {/* Mengirim fungsi closeModal sebagai prop */}
+            </Modal>
         </div>
     );
 }

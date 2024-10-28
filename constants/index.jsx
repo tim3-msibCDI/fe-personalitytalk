@@ -527,3 +527,26 @@ export const jadwalPsikolog = [
     ]    
   },
 ];
+
+export const snk = [
+  {
+    id : 1,
+    desc : "Saya melakukan konsultasi atas kemauan sendiri",
+  },
+  {
+    id : 2,
+    desc : "Saya tidak sedang memiliki niatan melukai diri sendiri / bunuh diri",
+  },
+  {
+    id : 3,
+    desc : "Saya memahami bahwa saya perlu berpartisipasi aktif dalam diskusi bersama Konselor / Psikolog terkait cara penyelesaian masalah saya",
+  },
+  {
+    id : 4,
+    desc : "Proses Konsultasi dan Identitas saya akan dijaga keamanannya oleh PersonalityTalk."
+  },
+  {
+    id : 5,
+    desc : "Saya akan memberikan feedback setelah menyelesaikan proses konseling",
+  }
+]
