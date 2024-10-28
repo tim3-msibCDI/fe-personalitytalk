@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useUser } from "@/constants/UserContext";
-import { updateProfile } from "@/api/user";
+import { useUser } from "@/constants/useUser";
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -14,62 +13,48 @@ const formatDate = (dateString) => {
 export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
-  const { user, setUser } = useUser();
+  const { user, isLoading, isError, updateUserProfile, mutate } = useUser();
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error loading user data</p>;
 
   const formattedDate = user.dateBirth ? formatDate(user.dateBirth) : "";
 
-  // Fungsi untuk toggle mode edit
   const toggleEdit = () => {
     setIsEditing(!isEditing);
     setFormData(user);
   };
 
-  // Fungsi untuk menangani perubahan pada input form
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
-  // Fungsi untuk menangani submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Menyiapkan data yang akan dikirimkan
     const dataToSend = {
       name: formData.nama,
       email: formData.email,
-      gender: formData.gender,
+      gender: formData.gender === "Perempuan" ? "F" : "M",
       date_birth: formData.dateBirth,
       phone_number: formData.phoneNumber,
+      universitas: formData.universitas || "",
+      jurusan: formData.jurusan || "",
     };
 
-    if (formData.gender === "Perempuan") {
-      dataToSend.gender = "F";
-    } else if (formData.gender === "Laki-laki") {
-      dataToSend.gender = "M";
-    }
-
-    // Jika role adalah "M", tambahkan universitas dan jurusan ke data yang dikirim
-    if (user.role === "M") {
-      dataToSend.universitas = formData.universitas;
-      dataToSend.jurusan = formData.jurusan;
-    }
-
     try {
-      const response = await updateProfile(dataToSend);
-
-      if (response && response.data) {
-        // Update state user di context dengan data baru
-        setUser((prevUser) => ({
-          ...prevUser,
-          ...dataToSend,
-        }));
-        setIsEditing(false); // Kembali ke mode non-edit
-      } else {
-        console.error("Invalid response from updateProfile");
-      }
+      await updateUserProfile(dataToSend);
+      // Mutate the SWR cache to update UI immediately without refetching from server
+      mutate((prevUser) => ({ ...prevUser, ...dataToSend }), {
+        revalidate: false,
+      }).then((dataToSend) => {
+        setFormData(dataToSend); // Update formData with latest data
+        setIsEditing(false); // Exit editing mode
+      });
     } catch (error) {
       console.error("Error updating profile:", error);
     }
@@ -97,7 +82,6 @@ export default function Profile() {
       </div>
 
       <form onSubmit={handleSubmit}>
-        {/* Nama Lengkap */}
         <div className="my-2">
           <label>Nama Lengkap</label>
         </div>
@@ -142,8 +126,8 @@ export default function Profile() {
                   className="border border-textcolor bg-whitebg rounded-lg p-3 w-full"
                 >
                   <option value="">Jenis Kelamin</option>
-                  <option value="F">Perempuan</option>
-                  <option value="M">Laki-laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                  <option value="Laki-laki">Laki-laki</option>
                 </select>
               ) : (
                 <input
@@ -194,7 +178,6 @@ export default function Profile() {
 
         {user.role === "M" && (
           <div className="flex gap-4">
-            {/* Universitas */}
             <div className="flex-1">
               <div className="my-2">
                 <label>Universitas</label>
@@ -211,7 +194,6 @@ export default function Profile() {
               </div>
             </div>
 
-            {/* Jurusan */}
             <div className="flex-1">
               <div className="my-2">
                 <label>Jurusan</label>
@@ -250,7 +232,7 @@ export default function Profile() {
         {isEditing && (
           <div className="mt-4 flex justify-end w-full">
             <div className="text-right">
-              <p>Apakah Kamu seorang mahasiswa?</p>
+              <p>Simpan Perubahan?</p>
               <button
                 className="bg-transparent border border-primary px-6 py-2 rounded-lg hover:bg-hover w-1/2"
                 onClick={toggleEdit}

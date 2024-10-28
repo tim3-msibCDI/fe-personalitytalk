@@ -1,35 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import SidebarProfile from "@/components/sidebarprofile";
-import { getUserDetail } from "@/api/user";
+import { useUser } from "@/constants/useUser"; // Make sure this path is correct
 
 export default function ProfileUserLayout({ children }) {
-  const [user, setUser] = useState({
-    nama: "",
-    email: "",
-    tanggal: "",
-    role: "",
-  });
+  const { user, isLoading, isError } = useUser(); // Use the useUser hook
 
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const userDetails = await getUserDetail(); 
-        
-        setUser({
-          nama: userDetails.name,
-          email: userDetails.email,
-          tanggal: userDetails.joined_at,
-          role: userDetails.role,
-        });
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
-      }
-    };
+  // Handle loading and error states
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-    fetchUserProfile();
-  }, []);
+  if (isError) {
+    return <div>Error loading user profile.</div>; // Handle error state gracefully
+  }
 
   return (
     <div className="mx-20 my-9 text-textcolor">
@@ -42,7 +27,7 @@ export default function ProfileUserLayout({ children }) {
         {/* Sidebar Here */}
         <SidebarProfile />
 
-        <div className="flex-1 rounded-lg bg-primarylight py-6 px-8 grid justify-items-center border border-solid border-textsec">
+        <div className="flex-1 rounded-lg bg-primarylight2 py-6 px-8 grid justify-items-center border border-solid border-textsec">
           {children}
         </div>
       </div>

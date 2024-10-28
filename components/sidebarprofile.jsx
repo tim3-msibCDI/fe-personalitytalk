@@ -3,17 +3,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useUser } from "@/constants/UserContext";
+import { useUser } from "@/constants/useUser"; // Ganti dengan jalur yang benar ke useUser
 
 export default function SidebarProfile() {
   const pathname = usePathname();
-  const { user } = useUser();
+  const { user } = useUser(); // Mengambil data pengguna dari useUser
 
   // Check if the current route is active
   const isActive = (href) => pathname === href;
 
+  // Handle loading state or user being undefined
+  if (!user) {
+    return <div>Loading...</div>; // Or a placeholder while loading user data
+  }
+
   return (
-    <div className="inline-flex rounded-lg bg-primarylight p-9 grid justify-items-center border border-solid border-textsec">
+    <div className="inline-flex rounded-lg bg-primarylight2 p-9 grid justify-items-center border border-solid border-textsec">
       <Image
         src="/image/psikolog/1.png"
         width={120}

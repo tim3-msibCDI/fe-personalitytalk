@@ -1,21 +1,21 @@
-"use client"; // Tambahkan agar komponen berjalan di sisi client
+"use client"; // Ensure the component runs on the client side
 
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { removeToken } from "@/lib/auth";
-import { useUser } from "@/constants/UserContext";
+import { useUser } from "@/constants/UserContext"; // Ensure the path is correct
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { user } = useUser(); 
+  const { user } = useUser(); // Access the user data from the context
 
   const isActive = (href) => pathname === href;
 
-  // Fungsi untuk handle logout
+  // Function to handle logout
   const handleLogout = () => {
     removeToken();
-    window.location.href = "/"; // Redirect ke halaman utama setelah logout
+    window.location.href = "/"; // Redirect to the homepage after logout
   };
 
   return (
@@ -75,12 +75,12 @@ export default function Navbar() {
       </ul>
 
       <div className="hidden md:flex mr-4 lg:mr-8 space-x-4">
-        {user.nama ? (
+        {user?.nama ? ( // Use optional chaining to prevent errors if user is undefined
           <div className="relative group text-s font-semibold">
             <button className="border border-primary bg-primary text-whitebg px-4 py-1.5 md:px-5 md:py-2 rounded-lg">
               {user.nama} 
             </button>
-            <div className="absolute right-0 w-48 bg-primary border border-t-4 border-t-primarylight  text-whitebg shadow-lg rounded-lg hidden group-hover:block">
+            <div className="absolute right-0 w-48 bg-primary border border-t-4 border-t-primarylight text-whitebg shadow-lg rounded-lg hidden group-hover:block">
               <Link href="/profile" className="block px-4 py-2 hover:bg-hover">
                 Profile
               </Link>
