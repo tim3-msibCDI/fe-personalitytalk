@@ -1,8 +1,10 @@
 export default function Course() {
   return (
-    <div>
-      
-    </div>
+    <>
+      <div className="">
+
+      </div>
+    </>
   )
 }
 
