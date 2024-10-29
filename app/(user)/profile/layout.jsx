@@ -20,7 +20,7 @@ export default function ProfileUserLayout({ children }) {
     <div className="mx-20 my-9 text-textcolor">
       <div>
         <h1 className="text-h2 font-semibold">
-          Selamat datang kembali {user.nama}!
+          Selamat datang kembali {user.name}!
         </h1>
       </div>
       <div className="w-full mt-6 flex gap-4">

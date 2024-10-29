@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function AktivitasCard({name, status, date, time, }) {
+export default function AktivitasCard({name, status, date, time}) {
   const getStatusBgColor = () => {
     switch (status) {
       case "1":
@@ -32,7 +32,7 @@ export default function AktivitasCard({name, status, date, time, }) {
   };
 
   return (
-    <div className="w-full h-[124px] p-4 bg-primarylight rounded-lg border border-primary justify-between items-center inline-flex">
+    <div className="w-full h-[124px] p-4 bg-primarylight rounded-lg border border-primary justify-between items-center inline-flex mb-2">
       <div className="justify-start items-center gap-3 flex">
         <div className="h-20 rounded-lg justify-start items-center gap-2.5 flex">
           <img

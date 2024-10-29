@@ -1,12 +1,12 @@
 // hooks/useUser.js
 import useSWR from "swr";
-import { getUserDetail, updateProfile } from "@/api/user";
+import { getUserDetail, updateProfile, upgradeMahasiswa } from "@/api/user";
 
 const fetchUserDetail = async () => {
   try {
     const userDetails = await getUserDetail();
     return {
-      nama: userDetails.name,
+      name: userDetails.name,
       email: userDetails.email,
       joined_at: userDetails.joined_at,
       role: userDetails.role,
@@ -41,11 +41,31 @@ export const useUser = () => {
     }
   };
 
+  // Fungsi untuk memperbarui ke mahasiswa
+  const upgradeToMahasiswa = async (universitas, jurusan) => {
+    try {
+      await upgradeMahasiswa(universitas, jurusan); // Pastikan ini berhasil
+      mutate(
+        (prevData) => ({
+          ...prevData,
+          universitas,
+          jurusan,
+          role: "M", 
+        }),
+        { revalidate: true } // Revalidate ke server untuk data terbaru
+      );
+    } catch (error) {
+      console.error("Error upgrading to mahasiswa:", error);
+    }
+  };
+
+
   return {
     user: data,
     isLoading: !error && !data,
     isError: error,
     updateUserProfile,
+    upgradeToMahasiswa,
     mutate,
   };
 };

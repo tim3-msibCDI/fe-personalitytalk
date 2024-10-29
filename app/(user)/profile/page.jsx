@@ -13,7 +13,15 @@ const formatDate = (dateString) => {
 export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
-  const { user, isLoading, isError, updateUserProfile, mutate } = useUser();
+  const [isUpgrading, setIsUpgrading] = useState(false); // State untuk kontrol upgrade mahasiswa
+  const {
+    user,
+    isLoading,
+    isError,
+    updateUserProfile,
+    upgradeToMahasiswa,
+    mutate,
+  } = useUser();
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading user data</p>;
@@ -37,7 +45,7 @@ export default function Profile() {
     e.preventDefault();
 
     const dataToSend = {
-      name: formData.nama,
+      name: formData.name,
       email: formData.email,
       gender: formData.gender === "Perempuan" ? "F" : "M",
       date_birth: formData.dateBirth,
@@ -48,15 +56,39 @@ export default function Profile() {
 
     try {
       await updateUserProfile(dataToSend);
-      // Mutate the SWR cache to update UI immediately without refetching from server
       mutate((prevUser) => ({ ...prevUser, ...dataToSend }), {
         revalidate: false,
       }).then((dataToSend) => {
-        setFormData(dataToSend); // Update formData with latest data
-        setIsEditing(false); // Exit editing mode
+        setFormData(dataToSend);
+        setIsEditing(false);
       });
     } catch (error) {
       console.error("Error updating profile:", error);
+    }
+  };
+
+  const handleUpgradeMahasiswa = () => {
+    setIsUpgrading(true);
+  };
+
+  const toggleUpgradeMahasiswa = () => {
+    setIsUpgrading(!isUpgrading);
+    setFormData(user);
+  };
+
+  const handleUpgradeSubmit = async () => {
+    if (formData.universitas && formData.jurusan) {
+      try {
+        await upgradeToMahasiswa(formData.universitas, formData.jurusan);
+        setIsUpgrading(false);
+        await mutate();
+        console.log(formData.universitas, formData.jurusan)
+        user.role = "M";
+        user.universitas = formData.universitas
+        user.jurusan = formData.jurusan 
+      } catch (error) {
+        console.error("Error upgrading to mahasiswa:", error);
+      }
     }
   };
 
@@ -81,17 +113,19 @@ export default function Profile() {
         )}
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={isUpgrading ? handleUpgradeSubmit : handleSubmit}>
         <div className="my-2">
           <label>Nama Lengkap</label>
         </div>
         <div>
           <input
             type="text"
-            name="nama"
-            value={isEditing ? formData.nama : user.nama}
+            name="name"
+            value={isEditing ? formData.name : user.name}
             onChange={handleChange}
-            className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
+            className={`border border-textcolor w-full rounded-lg p-3 ${
+              isEditing ? "bg-white" : "bg-gray-100"
+            }`}
             disabled={!isEditing}
           />
         </div>
@@ -106,7 +140,9 @@ export default function Profile() {
             name="email"
             value={isEditing ? formData.email : user.email}
             onChange={handleChange}
-            className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
+            className={`border border-textcolor w-full rounded-lg p-3 ${
+              isEditing ? "bg-white" : "bg-gray-100"
+            }`}
             disabled={!isEditing}
           />
         </div>
@@ -123,7 +159,9 @@ export default function Profile() {
                   name="gender"
                   value={formData.gender}
                   onChange={handleChange}
-                  className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
+                  className={`border border-textcolor w-full rounded-lg p-3 ${
+                    isEditing ? "bg-white" : "bg-gray-100"
+                  }`}
                 >
                   <option value="">Jenis Kelamin</option>
                   <option value="Perempuan">Perempuan</option>
@@ -134,7 +172,7 @@ export default function Profile() {
                   type="text"
                   name="gender"
                   value={user.gender === "F" ? "Perempuan" : "Laki-laki"}
-                  className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
+                  className={`border border-textcolor w-full rounded-lg p-3 bg-gray-100`}
                   disabled
                 />
               )}
@@ -152,7 +190,9 @@ export default function Profile() {
                 name="dateBirth"
                 value={isEditing ? formData.dateBirth : formattedDate}
                 onChange={handleChange}
-                className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
+                className={`border border-textcolor w-full rounded-lg p-3 ${
+                  isEditing ? "bg-white" : "bg-gray-100"
+                }`}
                 disabled={!isEditing}
               />
             </div>
@@ -169,7 +209,9 @@ export default function Profile() {
                 name="phoneNumber"
                 value={isEditing ? formData.phoneNumber : user.phoneNumber}
                 onChange={handleChange}
-                className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
+                className={`border border-textcolor w-full rounded-lg p-3 ${
+                  isEditing ? "bg-white" : "bg-gray-100"
+                }`}
                 disabled={!isEditing}
               />
             </div>
@@ -188,7 +230,9 @@ export default function Profile() {
                   name="universitas"
                   value={isEditing ? formData.universitas : user.universitas}
                   onChange={handleChange}
-                  className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
+                  className={`border border-textcolor w-full rounded-lg p-3 ${
+                    isEditing ? "bg-white" : "bg-gray-100"
+                  }`}
                   disabled={!isEditing}
                 />
               </div>
@@ -204,7 +248,9 @@ export default function Profile() {
                   name="jurusan"
                   value={isEditing ? formData.jurusan : user.jurusan}
                   onChange={handleChange}
-                  className={`border border-textcolor w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"}`}
+                  className={`border border-textcolor w-full rounded-lg p-3 ${
+                    isEditing ? "bg-white" : "bg-gray-100"
+                  }`}
                   disabled={!isEditing}
                 />
               </div>
@@ -212,11 +258,15 @@ export default function Profile() {
           </div>
         )}
 
-        {user.role === "U" && !isEditing && (
+        {user.role === "U" && !isEditing && !isUpgrading && (
           <div className="mt-4 flex justify-end w-full">
             <div className="text-right">
               <p>Apakah Kamu seorang mahasiswa?</p>
-              <button className="w-full inline-flex justify-center items-center bg-primary text-whitebg px-6 py-2 rounded-lg ml-auto hover:bg-hover">
+              <button
+                type="button"
+                className="w-full inline-flex justify-center items-center bg-primary text-whitebg px-6 py-2 rounded-lg ml-auto hover:bg-hover"
+                onClick={handleUpgradeMahasiswa}
+              >
                 <Image
                   src="/icons/arrow.png"
                   width={15}
@@ -225,6 +275,40 @@ export default function Profile() {
                 />
                 <span>Klik disini</span>
               </button>
+            </div>
+          </div>
+        )}
+
+        {isUpgrading && (
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <div className="my-2">
+                <label>Universitas</label>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  name="universitas"
+                  value={formData.universitas || ""}
+                  onChange={handleChange}
+                  className="border border-textcolor w-full rounded-lg p-3 bg-white"
+                />
+              </div>
+            </div>
+
+            <div className="flex-1">
+              <div className="my-2">
+                <label>Jurusan</label>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  name="jurusan"
+                  value={formData.jurusan || ""}
+                  onChange={handleChange}
+                  className="border border-textcolor w-full rounded-lg p-3 bg-white"
+                />
+              </div>
             </div>
           </div>
         )}
@@ -241,7 +325,26 @@ export default function Profile() {
               </button>
               <button
                 type="submit"
-                className=" bg-primary text-whitebg px-6 py-2 rounded-lg ml-auto hover:bg-hover w-28"
+                className="bg-primary text-whitebg px-6 py-2 rounded-lg ml-auto hover:bg-hover w-28"
+              >
+                Simpan
+              </button>
+            </div>
+          </div>
+        )}
+        {isUpgrading && (
+          <div className="mt-4 flex justify-end w-full">
+            <div className="text-center w-64">
+              <p>Simpan Perubahan?</p>
+              <button
+                className="bg-transparent border border-primary px-6 py-2 rounded-lg hover:bg-hover w-28 mr-2"
+                onClick={toggleUpgradeMahasiswa}
+              >
+                Batal
+              </button>
+              <button
+                type="submit"
+                className="bg-primary text-whitebg px-6 py-2 rounded-lg ml-auto hover:bg-hover w-28"
               >
                 Simpan
               </button>

@@ -6,11 +6,15 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Fungsi Login user
 export const loginUser = async (email, password) => {
-  const response = await axios.post(`${API_URL}/user/login`, { email, password }, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await axios.post(
+    `${API_URL}/user/login`,
+    { email, password },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
   return response.data;
 };
 
@@ -102,7 +106,11 @@ export const updateProfile = async (formData) => {
 };
 
 // Fungsi untuk mengubah password
-export const changePassword = async (oldPassword, newPassword, confirmPassword) => {
+export const changePassword = async (
+  oldPassword,
+  newPassword,
+  confirmPassword
+) => {
   const token = getToken();
   if (!token) {
     throw new Error("No token found");
@@ -130,3 +138,26 @@ export const changePassword = async (oldPassword, newPassword, confirmPassword) 
   }
 };
 
+// Fungsi untuk upgrade ke mahasiswa
+export const upgradeMahasiswa = async (universitas, jurusan) => {
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  try {
+    const response = await axios.put(
+      `${API_URL}/user/profile/updateMahasiswa`,
+      { universitas, jurusan },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to upgrade to mahasiswa");
+  }
+};

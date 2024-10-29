@@ -27,7 +27,7 @@ export default function SidebarProfile() {
           className="rounded-full"
         />
         <div className="mt-2 text-center">
-          <h3 className="text-h3 font-semibold">{user.nama}</h3>
+          <h3 className="text-h3 font-semibold">{user.name}</h3>
           <p className="text-center text-vs font-normal">{user.email}</p>
           <p className="text-center text-vs font-normal">
             Gabung Sejak: {user.joined_at}

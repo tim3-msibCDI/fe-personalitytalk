@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { removeToken } from "@/lib/auth";
-import { useUser } from "@/constants/UserContext"; // Ensure the path is correct
+import { useUser } from "@/constants/useUser";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -75,10 +75,10 @@ export default function Navbar() {
       </ul>
 
       <div className="hidden md:flex mr-4 lg:mr-8 space-x-4">
-        {user?.nama ? ( // Use optional chaining to prevent errors if user is undefined
+        {user?.name ? ( // Use optional chaining to prevent errors if user is undefined
           <div className="relative group text-s font-semibold">
             <button className="border border-primary bg-primary text-whitebg px-4 py-1.5 md:px-5 md:py-2 rounded-lg">
-              {user.nama} 
+              {user.name} 
             </button>
             <div className="absolute right-0 w-48 bg-primary border border-t-4 border-t-primarylight text-whitebg shadow-lg rounded-lg hidden group-hover:block">
               <Link href="/profile" className="block px-4 py-2 hover:bg-hover">
