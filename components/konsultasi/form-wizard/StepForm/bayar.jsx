@@ -59,7 +59,7 @@ export default function FormBayar() {
                     {selectedPsikolog.status_pembayaran === null ? (
                         <PilihPembayaran />
                     ) : (
-                        <Pembayaran />
+                        <Pembayaran statusPembayaran={selectedPsikolog.status_pembayaran}/>
                     )}
                 </div>
             </div>
