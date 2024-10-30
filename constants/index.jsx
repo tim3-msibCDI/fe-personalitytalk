@@ -551,3 +551,15 @@ export const snk = [
     desc : "Saya akan memberikan feedback setelah menyelesaikan proses konseling",
   }
 ]
+
+export const chatData = [
+  { id: 1, sender: "User", message: "Halo, apa kabar?", time: "10:00" },
+  { id: 2, sender: "Psikolog", message: "Hai! Saya baik, bagaimana dengan Anda?", time: "10:01" },
+  { id: 3, sender: "User", message: "Saya juga baik, terima kasih!", time: "10:02" },
+  { id: 4, sender: "Psikolog", message: "Ada yang bisa dibantu?", time: "10:03" },
+  { id: 5, sender: "User", message: "Halo, apa kabar?", time: "10:04" },
+  { id: 6, sender: "Psikolog", message: "Hai! Saya baik, bagaimana dengan Anda?", time: "10:05" },
+  { id: 7, sender: "User", message: "Saya juga baik, terima kasih!", time: "10:06" },
+  { id: 8, sender: "User", message: "Saya juga baik, terima kasih!", time: "10:06" },
+  { id: 9, sender: "Psikolog", message: "Ada yang bisa dibantu?", time: "10:07" },
+];
