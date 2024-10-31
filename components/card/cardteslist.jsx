@@ -12,9 +12,10 @@ export default function Cardteslist() {
       </div>
       <div className="mx-20 my-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {tesmental.map((card, index) => (
+          {tesmental.map((card) => (
             <Cardtes
-              key={index}
+              key={card.id}
+              id={card.id}
               imageSrc={card.imageSrc}
               title={card.title}
               description={card.description}
