@@ -12,7 +12,6 @@ body {
   background-color: #fbfbfb;
 }
 
-/* Untuk semua scrollbar */
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -23,4 +22,14 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: #fb8312; 
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
