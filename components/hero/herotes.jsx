@@ -2,13 +2,16 @@ import Image from "next/image";
 
 export default function Herotes() {
   return (
-    <>
-      <div className="mx-20 my-8 flex">
+    <div
+      className="bg-primary flex items-center bg-cover bg-center"
+      style={{ backgroundImage: "url('/image/bg_tes.svg')" }}
+    >
+      <div className="mx-20 flex">
         <div className="w-1/2 flex justify-center p-14">
-          <Image src="/image/ilustrasi/tes.png" width={448} height={440} />
+          <Image src="/image/ilustrasi/tes.png" width={314} height={308} alt="Ilustrasi Tes" />
         </div>
-        <div className="w-1/2 flex flex-col justify-center items-center text-center">
-          <h1 className="text-h1 font-semibold text-primary mb-8">
+        <div className="w-1/2 flex flex-col justify-center items-center text-center p-8 rounded-lg text-whitebg">
+          <h1 className="text-h1 font-semibold mb-8">
             Tes Mental
           </h1>
           <p>
@@ -20,6 +23,6 @@ export default function Herotes() {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }

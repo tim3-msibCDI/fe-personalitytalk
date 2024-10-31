@@ -34,12 +34,11 @@ const cardData = [
 export default function Cardteslist() {
   return (
     <div>
-      <div className="flex my-8">
-        <div className="bg-primary flex flex-col justify-center items-center h-24 rounded-r-full px-20">
-          <h1 className="text-white text-h1 font-semibold text-center">
-            Pilihlah Tes Mental Yang Ingin Kamu Ketahui
-          </h1>
-        </div>
+      <div className="flex flex-col justify-center items-center text-textcolor mt-6">
+        <h1 className="text-h1 font-semibold text-center">
+          Pilihan Tes Mental
+        </h1>
+        <p className="text-m text-center">Pahami Kondisi Mentalmu, Ambil Kendali</p>
       </div>
       <div className="mx-20 my-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
