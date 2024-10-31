@@ -1,30 +1,23 @@
-import { penyakit } from "@/constants";
+import { tesmental } from '@/constants';
 
-export default function DetailPenyakit({ params }) {
-    const { penyakit: penyakitName } = params;
+export default function DetailTesMental({ params }) {
+  const { tesmental: tesMentalId } = params;
 
-    // Ubah tanda hubung menjadi spasi untuk pencarian
-    const formattedName = penyakitName.replace(/-/g, ' ');
+  // Cari tes berdasarkan ID
+  const detailTes = tesmental.find((item) => item.id === Number(tesMentalId));
 
-    // Cari penyakit berdasarkan nama yang ada di URL
-    const detailPenyakit = penyakit.find(
-        (item) => item.name.toLowerCase() === formattedName.toLowerCase()
-    );
+  // Jika tes tidak ditemukan
+  if (!detailTes) {
+    return <div>Tes tidak ditemukan</div>;
+  }
 
-    // Jika penyakit tidak ditemukan
-    if (!detailPenyakit) {
-        return <div>Penyakit tidak ditemukan</div>;
-    }
-
-    return (
-        <section className="px-8 py-4">
-            <div className="ml-20 mr-20 mt-10 mb-12">
-                <h5 className="mb-4">Informasi Kesehatan</h5>
-                <h1 className="text-3xl font-bold mb-4">{detailPenyakit.name}</h1>
-                <p className="mb-4">Ditulis oleh <strong>{detailPenyakit.author}</strong></p>
-                <img src={detailPenyakit.image} alt={detailPenyakit.name} className="w-full mb-4" />
-                <p>{detailPenyakit.description}</p>
-            </div>
-        </section>
-    );
+  return (
+    <section className="px-8 py-4">
+      <div className="ml-20 mr-20 mt-10 mb-12">
+        <h5 className="mb-4">Tes Mental</h5>
+        <h1 className="text-3xl font-bold mb-4">{detailTes.title}</h1>
+        <p>{detailTes.description}</p>
+      </div>
+    </section>
+  );
 }

@@ -4,7 +4,7 @@ import { tesmental } from "@/constants";
 export default function Cardteslist() {
   return (
     <div>
-      <div className="flex flex-col justify-center items-center text-textcolor mt-6">
+      <div className="flex flex-col justify-center items-center text-textcolor mt-12">
         <h1 className="text-h1 font-semibold text-center">
           Pilihan Tes Mental
         </h1>
