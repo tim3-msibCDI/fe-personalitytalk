@@ -13,7 +13,8 @@ const formatDate = (dateString) => {
 export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
-  const [isUpgrading, setIsUpgrading] = useState(false); // State untuk kontrol upgrade mahasiswa
+  const [isUpgrading, setIsUpgrading] = useState(false);
+  const [upgradeErrors, setUpgradeErrors] = useState({});
   const {
     user,
     isLoading,
@@ -39,6 +40,13 @@ export default function Profile() {
       ...formData,
       [name]: value,
     });
+
+    if (isUpgrading && (name === "universitas" || name === "jurusan")) {
+      setUpgradeErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: value ? "" : `Field ${name} wajib diisi`,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -74,23 +82,36 @@ export default function Profile() {
   const toggleUpgradeMahasiswa = () => {
     setIsUpgrading(!isUpgrading);
     setFormData(user);
+    setUpgradeErrors({});
   };
 
   const handleUpgradeSubmit = async () => {
-    if (formData.universitas && formData.jurusan) {
-      try {
-        await upgradeToMahasiswa(formData.universitas, formData.jurusan);
-        setIsUpgrading(false);
-        await mutate();
-        console.log(formData.universitas, formData.jurusan)
-        user.role = "M";
-        user.universitas = formData.universitas
-        user.jurusan = formData.jurusan 
-      } catch (error) {
-        console.error("Error upgrading to mahasiswa:", error);
-      }
+    const errors = {};
+    if (!formData.universitas) errors.universitas = "Universitas wajib diisi";
+    if (!formData.jurusan) errors.jurusan = "Jurusan wajib diisi";
+
+    setUpgradeErrors(errors);
+
+    // Prevent submission if there are errors
+    if (Object.keys(errors).length > 0) return;
+
+    try {
+      await upgradeToMahasiswa(formData.universitas, formData.jurusan);
+      setIsUpgrading(false);
+      user.role = "M";
+      user.universitas = formData.universitas;
+      user.jurusan = formData.jurusan;
+      await mutate();
+    } catch (error) {
+      console.error("Error upgrading to mahasiswa:", error);
     }
   };
+
+  // Button disable logic for upgrade
+  const isUpgradeButtonDisabled =
+    !formData.universitas ||
+    !formData.jurusan ||
+    Object.values(upgradeErrors).some((error) => error);
 
   return (
     <div className="w-full">
@@ -293,6 +314,9 @@ export default function Profile() {
                   onChange={handleChange}
                   className="border border-textcolor w-full rounded-lg p-3 bg-white"
                 />
+                {upgradeErrors.universitas && (
+                  <p className="text-red-500">{upgradeErrors.universitas}</p>
+                )}
               </div>
             </div>
 
@@ -308,6 +332,9 @@ export default function Profile() {
                   onChange={handleChange}
                   className="border border-textcolor w-full rounded-lg p-3 bg-white"
                 />
+                {upgradeErrors.jurusan && (
+                  <p className="text-red-500">{upgradeErrors.jurusan}</p>
+                )}
               </div>
             </div>
           </div>
@@ -345,6 +372,7 @@ export default function Profile() {
               <button
                 type="submit"
                 className="bg-primary text-whitebg px-6 py-2 rounded-lg ml-auto hover:bg-hover w-28"
+                disabled={isUpgradeButtonDisabled}
               >
                 Simpan
               </button>

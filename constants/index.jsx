@@ -344,3 +344,71 @@ export const tesmental = [
     arrowSrc: "/icons/arrow_right.svg"
   },
 ];
+
+export const coursesData = [
+  {
+    id: 1,
+    name: "Course 1",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at sapien a odio gravida lobortis. Proin venenatis, sem a gravida tristique, leo erat tristique.consectetur adipiscing elit. Quisque at sapien a odio gravida lobortis. Proin venenatis, sem a gravida tristique, leo erat tristiq ",
+    rating: 4.9,
+    price: "Rp 9.999.999",
+    imageUrl: "/image/psikolog/4.png"
+  },
+  {
+    id: 2,
+    name: "Course 2",
+    description: "Proin venenatis, sem a gravida tristique.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at sapien a odio gravida lobortis. Proin venenatis, sem a gravida tristique, leo erat tristique.consectetur adipiscing elit. Quisque at sapien a odio gravida lobortis. Proin venenatis, sem a gravida tristique, leo erat tristiq ",
+    rating: 4.8,
+    price: "Rp 8.499.999",
+    imageUrl: "/image/psikolog/4.png"
+  },
+  {
+    id: 3,
+    name: "Course 2",
+    description: "Proin venenatis, sem a gravida tristique Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at sapien a odio gravida lobortis. Proin venenatis, sem a gravida tristique, leo erat tristique.consectetur adipiscing elit. Quisque at sapien a odio gravida lobortis. Proin venenatis, sem a gravida tristique, leo erat tristiq .",
+    rating: 4.8,
+    price: "Rp 8.499.999",
+    imageUrl: "/image/psikolog/4.png"
+  },
+  {
+    id: 4,
+    name: "Course 2",
+    description: "Proin venenatis, sem a gravida tristique Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at sapien a odio gravida lobortis. Proin venenatis, sem a gravida tristique, leo erat tristique.consectetur adipiscing elit. Quisque at sapien a odio gravida lobortis. Proin venenatis, sem a gravida tristique, leo erat tristiq .",
+    rating: 4.8,
+    price: "Rp 8.499.999",
+    imageUrl: "/image/psikolog/4.png"
+  },
+  {
+    id: 5,
+    name: "Course 2",
+    description: "Proin venenatis, sem a gravida tristique. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at sapien a odio gravida lobortis. Proin venenatis, sem a gravida tristique, leo erat tristique.consectetur adipiscing elit. Quisque at sapien a odio gravida lobortis. Proin venenatis, sem a gravida tristique, leo erat tristiq ",
+    rating: 4.8,
+    price: "Rp 8.499.999",
+    imageUrl: "/image/psikolog/4.png"
+  },
+  {
+    id: 6,
+    name: "Course 2",
+    description: "Proin venenatis, sem a gravida tristique. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at sapien a odio gravida lobortis. Proin venenatis, sem a gravida tristique, leo erat tristique.consectetur adipiscing elit. Quisque at sapien a odio gravida lobortis. Proin venenatis, sem a gravida tristique, leo erat tristiq ",
+    rating: 4.8,
+    price: "Rp 8.499.999",
+    imageUrl: "/image/psikolog/4.png"
+  },
+  {
+    id: 7,
+    name: "Course 2",
+    description: "Proin venenatis, sem a gravida tristique. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at sapien a odio gravida lobortis. Proin venenatis, sem a gravida tristique, leo erat tristique.consectetur adipiscing elit. Quisque at sapien a odio gravida lobortis. Proin venenatis, sem a gravida tristique, leo erat tristiq ",
+    rating: 4.8,
+    price: "Rp 8.499.999",
+    imageUrl: "/image/psikolog/4.png"
+  },
+  {
+    id: 8,
+    name: "Course 2",
+    description: "Proin venenatis, sem a gravida tristique.",
+    rating: 4.8,
+    price: "Rp 8.499.999",
+    imageUrl: "/image/psikolog/4.png"
+  },
+  // Add more data as needed
+];

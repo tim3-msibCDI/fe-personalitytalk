@@ -1,7 +1,9 @@
 import Image from "next/image";
 import CourseBox from "@/components/card/coursebox";
-import Countlist from "@/components/user/about/countlist";
+import CardCourse from "@/components/card/cardcourse";
 import CourseList from "@/components/card/courselist";
+import ListCourse from "@/components/card/listcourse";
+import { coursesData } from "@/constants";
 
 export default function Course() {
   return (
@@ -92,7 +94,7 @@ export default function Course() {
         <p className="text-m">Temukan Kursus Apapun, Kembangkan Potensimu</p>
       </div>
       <div className="py-9">
-        
+        <ListCourse courses={coursesData} />
       </div>
     </>
   );
