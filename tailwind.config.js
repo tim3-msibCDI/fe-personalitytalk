@@ -21,7 +21,8 @@ module.exports = {
         success : "#40D046",
         fail : "#EF0000",
         wait : "#FFC107",
-        hover : "#FFAA2A"
+        hover : "#FFAA2A",
+        disable : "#E4CBB3",
       },
       fontSize: {
         h1: "2rem",

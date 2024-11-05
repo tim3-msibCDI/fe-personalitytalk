@@ -314,33 +314,104 @@ export const tesmental = [
   {
     id: 1,
     imageSrc: "/icons/v-tes.svg",
-    title: "Personality Test 1",
+    title: "Personality",
     description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
     buttonText: "Selengkapnya",
-    arrowSrc: "/icons/arrow_right.svg"
+    arrowSrc: "/icons/arrow_right.svg",
+    questions: [
+      {
+        id: 1,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+      },
+      {
+        id: 2,
+        question: "Apa yang paling Anda suka?",
+        options: [
+          { option: "A", text: "Saya suka berada di linkungan ramai." },
+          { option: "B", text: "Saya lebih suka sendirian." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+      },
+      {
+        id: 3,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+      },
+    ]
   },
   {
     id: 2,
     imageSrc: "/icons/v-tes.svg",
-    title: "Personality Test 2",
+    title: "Mentality",
     description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
     buttonText: "Selengkapnya",
-    arrowSrc: "/icons/arrow_right.svg"
+    arrowSrc: "/icons/arrow_right.svg",
+    questions: [
+      {
+        id: 1,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+        correctAnswer: "A"
+      },
+    ]
   },
   {
     id: 3,
     imageSrc: "/icons/v-tes.svg",
-    title: "Personality Test 3",
+    title: "Personality",
     description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
     buttonText: "Selengkapnya",
-    arrowSrc: "/icons/arrow_right.svg"
+    arrowSrc: "/icons/arrow_right.svg",
+    questions: [
+      {
+        id: 1,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+        correctAnswer: "A"
+      },
+    ]
   },
   {
     id: 4,
     imageSrc: "/icons/v-tes.svg",
-    title: "Personality Test 4",
+    title: "Mentality",
     description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
     buttonText: "Selengkapnya",
-    arrowSrc: "/icons/arrow_right.svg"
+    arrowSrc: "/icons/arrow_right.svg",
+    questions: [
+      {
+        id: 1,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+        correctAnswer: "A"
+      },
+    ]
   },
 ];
