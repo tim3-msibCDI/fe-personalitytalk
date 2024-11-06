@@ -68,8 +68,12 @@ export const layanan = [
 
 export const penyakit = [
   { "id": 1, "name": "Agoraphobia", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
+  { "id": 1, "name": "Agoraphobia", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
   { "id": 2, "name": "Anorexia Nervosa", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
   { "id": 3, "name": "Antisocial Personality Disorder", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
+  { "id": 4, "name": "Anxiety Disorder", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
+  { "id": 5, "name": "Autism Spectrum Disorder (ASD)", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
+  { "id": 6, "name": "Bipolar Disorder", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
   { "id": 4, "name": "Anxiety Disorder", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
   { "id": 5, "name": "Autism Spectrum Disorder (ASD)", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
   { "id": 6, "name": "Bipolar Disorder", "author": "John Doe", "image": "/image/image_4.png", "description": "Agoraphobia adalah jenis kecemasan yang membuat seseorang takut berada di tempat-tempat yang sulit atau tidak mungkin untuk melarikan diri atau mendapatkan bantuan." },
@@ -282,6 +286,7 @@ export const artikel = [
     name: 'Artikel 1',
     images: '/image/artikel.png',
     alt: 'Image Artikel 1',
+    alt: 'Image Artikel 1',
     tanggal: '30 Desember 2024',
     kategori: 'Percintaan',
     description: 'Kali ini yuk kita main lebih jauh ke dunia industri dan organisasi yang lagi trend juga nih saat ini. Kita kupas dua topik dulu yaa yaitu tentang quiet quitting dan hustle culture. Nah hustle culture itu erat kaitannya dengan petuah semua orang tentunya, "jika mau sukses ya bekerja keraslah", "kesuksesanmu sama besarnya dengan usahamu" dan semacamanya ya bestalk yaitu yang menganggap bahwa kesuksesan akan tercapai jika benar-benar mendedikasikan hidup untuk pekerjaan dan bekerja sekeras-kerasnya hingga menempatkan pekerjaan di atas segalanya. Pokoknya life is all about work and make money come to you',
@@ -291,6 +296,7 @@ export const artikel = [
     name: 'Artikel 2',
     images: '/image/artikel.png',
     alt: 'Image Artikel 2',
+    alt: 'Image Artikel 2',
     tanggal: '30 Desember 2024',
     kategori: 'Keluarga',
     description: 'Kali ini yuk kita main lebih jauh ke dunia industri dan organisasi yang lagi trend juga nih saat ini. Kita kupas dua topik dulu yaa yaitu tentang quiet quitting dan hustle culture. Nah hustle culture itu erat kaitannya dengan petuah semua orang tentunya, "jika mau sukses ya bekerja keraslah", "kesuksesanmu sama besarnya dengan usahamu" dan semacamanya ya bestalk yaitu yang menganggap bahwa kesuksesan akan tercapai jika benar-benar mendedikasikan hidup untuk pekerjaan dan bekerja sekeras-kerasnya hingga menempatkan pekerjaan di atas segalanya. Pokoknya life is all about work and make money come to you',
@@ -299,6 +305,7 @@ export const artikel = [
     id: 3,
     name: 'Artikel 3',
     images: '/image/artikel.png',
+    alt: 'Image Artikel 3',
     alt: 'Image Artikel 3',
     tanggal: '30 Desember 2024',
     kategori: 'Keluarga',
@@ -371,109 +378,257 @@ export const artikel = [
 
 export const TOPARTIKEL = artikel.slice(0, 3);
 
-
-export const tesmental = [
+export const psikolog = [
   {
     id: 1,
-    imageSrc: "/icons/v-tes.svg",
-    title: "Personality",
-    description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
-    buttonText: "Selengkapnya",
-    arrowSrc: "/icons/arrow_right.svg",
-    questions: [
-      {
-        id: 1,
-        question: "Apa yang paling menggambarkan kepribadian Anda?",
-        options: [
-          { option: "A", text: "Saya suka bekerja dalam tim." },
-          { option: "B", text: "Saya lebih suka bekerja sendiri." },
-          { option: "C", text: "Saya sangat suka berpetualang." },
-          { option: "D", text: "Saya orang yang sangat tenang." }
-        ],
-      },
-      {
-        id: 2,
-        question: "Apa yang paling Anda suka?",
-        options: [
-          { option: "A", text: "Saya suka berada di linkungan ramai." },
-          { option: "B", text: "Saya lebih suka sendirian." },
-          { option: "C", text: "Saya sangat suka berpetualang." },
-          { option: "D", text: "Saya orang yang sangat tenang." }
-        ],
-      },
-      {
-        id: 3,
-        question: "Apa yang paling menggambarkan kepribadian Anda?",
-        options: [
-          { option: "A", text: "Saya suka bekerja dalam tim." },
-          { option: "B", text: "Saya lebih suka bekerja sendiri." },
-          { option: "C", text: "Saya sangat suka berpetualang." },
-          { option: "D", text: "Saya orang yang sangat tenang." }
-        ],
-      },
+    name: 'Neli Fauziyah',
+    photos: '/image/psikolog/photo.png',
+    rating: 4.6,
+    pengalaman: 2,
+    role: 'Konselor',
+    topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
+    jadwal: [
+      { tanggal: '22 Oktober 2024', waktu: ['07.00 - 09.00', '10.00 - 12.00'] },
+      { tanggal: '23 Oktober 2024', waktu: ['14.00 - 16.00', '17.00 - 19.00'] }
     ]
   },
   {
     id: 2,
-    imageSrc: "/icons/v-tes.svg",
-    title: "Mentality",
-    description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
-    buttonText: "Selengkapnya",
-    arrowSrc: "/icons/arrow_right.svg",
-    questions: [
-      {
-        id: 1,
-        question: "Apa yang paling menggambarkan kepribadian Anda?",
-        options: [
-          { option: "A", text: "Saya suka bekerja dalam tim." },
-          { option: "B", text: "Saya lebih suka bekerja sendiri." },
-          { option: "C", text: "Saya sangat suka berpetualang." },
-          { option: "D", text: "Saya orang yang sangat tenang." }
-        ],
-        correctAnswer: "A"
-      },
+    name: 'Neli Fauziyah',
+    photos: '/image/psikolog/photo.png',
+    rating: 4.9,
+    pengalaman: 11,
+    role: 'Psikolog',
+    topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
+    jadwal: [
+      { tanggal: '22 Oktober 2024', waktu: ['07.00 - 09.00', '10.00 - 12.00'] },
+      { tanggal: '23 Oktober 2024', waktu: ['14.00 - 16.00', '17.00 - 19.00'] }
     ]
   },
   {
     id: 3,
-    imageSrc: "/icons/v-tes.svg",
-    title: "Personality",
-    description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
-    buttonText: "Selengkapnya",
-    arrowSrc: "/icons/arrow_right.svg",
-    questions: [
-      {
-        id: 1,
-        question: "Apa yang paling menggambarkan kepribadian Anda?",
-        options: [
-          { option: "A", text: "Saya suka bekerja dalam tim." },
-          { option: "B", text: "Saya lebih suka bekerja sendiri." },
-          { option: "C", text: "Saya sangat suka berpetualang." },
-          { option: "D", text: "Saya orang yang sangat tenang." }
-        ],
-        correctAnswer: "A"
-      },
+    name: 'Neli Fauziyah',
+    photos: '/image/psikolog/photo.png',
+    rating: 4.0,
+    pengalaman: 1,
+    role: 'Konselor',
+    topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
+    jadwal: [
+      { tanggal: '22 Oktober 2024', waktu: ['07.00 - 09.00', '10.00 - 12.00'] },
+      { tanggal: '23 Oktober 2024', waktu: ['14.00 - 16.00', '17.00 - 19.00'] }
     ]
   },
   {
     id: 4,
-    imageSrc: "/icons/v-tes.svg",
-    title: "Mentality",
-    description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
-    buttonText: "Selengkapnya",
-    arrowSrc: "/icons/arrow_right.svg",
-    questions: [
-      {
-        id: 1,
-        question: "Apa yang paling menggambarkan kepribadian Anda?",
-        options: [
-          { option: "A", text: "Saya suka bekerja dalam tim." },
-          { option: "B", text: "Saya lebih suka bekerja sendiri." },
-          { option: "C", text: "Saya sangat suka berpetualang." },
-          { option: "D", text: "Saya orang yang sangat tenang." }
-        ],
-        correctAnswer: "A"
-      },
+    name: 'Neli Fauziyah',
+    photos: '/image/psikolog/photo.png',
+    rating: 5.0,
+    pengalaman: 9,
+    role: 'Konselor',
+    topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
+    jadwal: [
+      { tanggal: '22 Oktober 2024', waktu: ['07.00 - 09.00', '10.00 - 12.00'] },
+      { tanggal: '23 Oktober 2024', waktu: ['14.00 - 16.00', '17.00 - 19.00'] }
     ]
   },
+  {
+    id: 5,
+    name: 'Neli Fauziyah',
+    photos: '/image/psikolog/photo.png',
+    rating: 5.0,
+    pengalaman: 9,
+    role: 'Konselor',
+    topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
+    jadwal: [
+      { tanggal: '22 Oktober 2024', waktu: ['07.00 - 09.00', '10.00 - 12.00'] },
+      { tanggal: '23 Oktober 2024', waktu: ['14.00 - 16.00', '17.00 - 19.00'] }
+    ]
+  },
+  {
+    id: 6,
+    name: 'Neli Fauziyah',
+    photos: '/image/psikolog/photo.png',
+    rating: 5.0,
+    pengalaman: 9,
+    role: 'Konselor',
+    topik: ['kepribadian', 'umum', 'percintaan', 'pekerjaan', 'keluarga'],
+    jadwal: [
+      { tanggal: '22 Oktober 2024', waktu: ['07.00 - 09.00', '10.00 - 12.00'] },
+      { tanggal: '23 Oktober 2024', waktu: ['14.00 - 16.00', '17.00 - 19.00'] }
+    ]
+  }
+];
+
+
+export const cara_konsultasi = [
+  {
+    id: 1,
+    name: 'Pilih Topik Konsultasi',
+    images: '/image/cara-konsul/1.png',
+  },
+  {
+    id: 2,
+    name: 'Login / Register',
+    images: '/image/cara-konsul/2.png',
+  },
+  {
+    id: 3,
+    name: 'Pilih Psikolog',
+    images: '/image/cara-konsul/3.png',
+  },
+  {
+    id: 4,
+    name: 'Pilih Waktu Konsultasi',
+    images: '/image/cara-konsul/4.png',
+  },
+  {
+    id: 5,
+    name: 'Pilih Metode Pembayaran',
+    images: '/image/cara-konsul/5.png',
+  },
+  {
+    id: 6,
+    name: 'Konsul dengan Psikolog Kamu',
+    images: '/image/cara-konsul/6.png',
+  }
+]
+
+export const faq = [
+  {
+    id: 1,
+    name: 'Apakah data pribadi saya akan aman dan terjamin?',
+    detail: (
+      <p>
+        Jangan khawatir, melindungi privasi dan informasi pribadi kamu adalah prioritas utama PersonalityTalk. Semua data dan identitas hanya akan digunakan untuk kepentingan sesi konseling. Psikolog PersonalityTalk juga mematuhi Kode Etik Psikolog yang menjamin kerahasiaan selama sesi berlangsung. Hanya kamu dan Psikolog yang dapat mengakses rekaman percakapan untuk meninjau kemajuan konseling dan tujuan yang telah dicapai.
+        <br />
+        <br />
+        Namun, kami tetap mengumpulkan nama, email, nomor telepon, tempat tanggal lahir, serta domisili sebagai data sebaran klien PersonalityTalk.
+      </p>
+
+    )
+  },
+  {
+    id: 2,
+    name: 'Apa perbedaan Psikolog dengan Konselor?',
+    detail: 'Konselor biasanya memiliki gelar S1 Psikologi dan lisensi konseling, sedangkan Psikolog harus menyelesaikan S1 dan S2 Psikologi. Konselor fokus pada pendekatan terapi berbasis konseling psikologi dan memberi arahan, sementara Psikolog menangani klien sesuai keahlian, seperti psikologi sosial atau klinis, dengan pendekatan terapi dengan beragam teknik psikoterapi serta dapat memberikan saran dan rujukan untuk tindakan rekan medis.',
+  },
+  {
+    id: 3,
+    name: 'Berapa lama sesi konsultasi?',
+    detail: 'Dalam sekali konsultasi anda akan mendapatkan 60 Menit sesi konsultasi, dan tenang aja kamu dapat memperpanjang konsultasi, selain itu chat progress kamu dengan konsultasi tidak akan hilang.',
+  },
+]
+
+export const steps = [
+  { number: 1, label: "Pilih Psikolog" },
+  { number: 2, label: "Pilih Jadwal" },
+  { number: 3, label: "Bayar" },
+];
+
+export const jadwalPsikolog = [
+  {
+      name: "Dr. Andi Wijaya",
+      photos: '/image/psikolog/photo.png',
+      rating: 4.9,
+      pengalaman: 10,
+      status_pembayaran: null,
+      role: "Psikolog",
+      harga: "250.000",
+      deskripsi: "Hai, saya Taufik Alif Shalahuddin, akrab dipanggil Alif. Sebagai psikolog klinis saya banyak menangani permasalahan umum, kepribadian, kecemasan, keluarga, komunikasi, dan percintaan. Saya memiliki prinsip bahwa setiap klien itu unik, tidak ada klien yang sulit, yang ada psikolog yang kurang terampil. Saya sangat terbantu dan sangat senang dengan semua yang saya lakukan.",
+      sipp: "123456789",
+      topik: ["Umum", "Percintaan", "Keluarga", "Sekolah", "Pekerjaan"],
+      review: [
+          {
+              id: 1,
+              comment: "Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu.",
+          },
+          {
+              id: 2,
+              comment: "Penjelasan yang mudah dipahami, sangat direkomendasikan.",
+          }
+      ],
+      jadwal: [
+        { 
+            tanggal: "2024-10-25",
+            waktu: [
+                { jam: "09:00 - 10:00" },
+                { jam: "10:00 - 11:00" },
+                { jam: "11:00 - 12:00" }
+            ]
+        },
+        { 
+            tanggal: "2024-10-26",
+            waktu: [
+                { jam: "13:00 - 14:00" },
+                { jam: "14:00 - 15:00" },
+                { jam: "15:00 - 16:00" }
+            ]
+        },
+        { 
+            tanggal: "2024-10-27",
+            waktu: [
+                { jam: "09:00 - 10:00" },
+                { jam: "10:00 - 11:00" }
+            ]
+        },
+        { 
+          tanggal: "2024-10-28",
+          waktu: [
+              { jam: "09:00 - 10:00" },
+              { jam: "10:00 - 11:00" },
+              { jam: "11:00 - 12:00" }
+          ]
+      },
+      { 
+          tanggal: "2024-10-29",
+          waktu: [
+              { jam: "13:00 - 14:00" },
+              { jam: "14:00 - 15:00" },
+              { jam: "15:00 - 16:00" }
+          ]
+      },
+      { 
+          tanggal: "2024-10-30",
+          waktu: [
+              { jam: "09:00 - 10:00" },
+              { jam: "10:00 - 11:00" }
+          ]
+      },
+    ]    
+  },
+];
+
+export const snk = [
+  {
+    id : 1,
+    desc : "Saya melakukan konsultasi atas kemauan sendiri",
+  },
+  {
+    id : 2,
+    desc : "Saya tidak sedang memiliki niatan melukai diri sendiri / bunuh diri",
+  },
+  {
+    id : 3,
+    desc : "Saya memahami bahwa saya perlu berpartisipasi aktif dalam diskusi bersama Konselor / Psikolog terkait cara penyelesaian masalah saya",
+  },
+  {
+    id : 4,
+    desc : "Proses Konsultasi dan Identitas saya akan dijaga keamanannya oleh PersonalityTalk."
+  },
+  {
+    id : 5,
+    desc : "Saya akan memberikan feedback setelah menyelesaikan proses konseling",
+  }
+]
+
+export const chatData = [
+  { id: 1, sender: "User", message: "Halo, apa kabar?", time: "10:00" },
+  { id: 2, sender: "Psikolog", message: "Hai! Saya baik, bagaimana dengan Anda?", time: "10:01" },
+  { id: 3, sender: "User", message: "Saya juga baik, terima kasih!", time: "10:02" },
+  { id: 4, sender: "Psikolog", message: "Ada yang bisa dibantu?", time: "10:03" },
+  { id: 5, sender: "User", message: "Halo, apa kabar?", time: "10:04" },
+  { id: 6, sender: "Psikolog", message: "Hai! Saya baik, bagaimana dengan Anda?", time: "10:05" },
+  { id: 7, sender: "User", message: "Saya juga baik, terima kasih!", time: "10:06" },
+  { id: 8, sender: "User", message: "Saya juga baik, terima kasih!", time: "10:06" },
+  { id: 9, sender: "Psikolog", message: "Ada yang bisa dibantu?", time: "10:07" },
 ];

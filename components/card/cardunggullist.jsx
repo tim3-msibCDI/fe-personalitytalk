@@ -3,25 +3,41 @@ import CardUnggul from "./cardunggul";
 const CardUnggulList = () => {
   const cardData = [
     {
-      path: "/icons/tes-mental.png", 
-      text: "86% Pengguna merasa puas dengan layanan konsultasi",
+      path: "/icons/konsultasi/puas.png", 
+      text: (
+        <>
+          <span className="font-bold">86%</span> Pengguna merasa puas dengan layanan konsultasi
+        </>
+      ),
     },
     {
-      path: "/icons/tes-mental.png",
-      text: "Topik yang disediakan sangat beragam",
+      path: "/icons/konsultasi/beragam.png",
+      text: (
+        <>
+          Topik yang disediakan sangat <span className="font-bold">beragam</span>
+        </>
+      ),
     },
     {
-      path: "/icons/tes-mental.png",
-      text: "Telah dipercaya oleh 8K+ Pengguna",
+      path: "/icons/konsultasi/pengguna.png",
+      text: (
+        <>
+          Telah dipercaya oleh <span className="font-bold">8K+</span> Pengguna
+        </>
+      ),
     },
     {
-      path: "/icons/tes-mental.png",
-      text: "Ditangani oleh Psikolog & Konselor Bersertifikat",
+      path: "/icons/konsultasi/psikolog.png",
+      text: (
+        <>
+          Ditangani oleh <span className="font-bold">Psikolog & Konselor Bersertifikat</span>
+        </>
+      ),
     },
   ];
 
   return (
-    <div>
+    <div className="grid grid-cols-2 gap-x-4">
       {cardData.map((item, index) => (
         <CardUnggul key={index} path={item.path} text={item.text} />
       ))}

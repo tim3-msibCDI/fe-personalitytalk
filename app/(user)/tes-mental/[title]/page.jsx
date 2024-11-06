@@ -47,7 +47,7 @@ export default function DetailTesMental({ params }) {
             />
           </div>
           <div className="w-1/2 flex flex-col justify-center items-center text-center p-8 rounded-lg text-whitebg">
-            <div className="ml-20 mr-20 mt-10 mb-12 flex flex-col justify-center items-center">
+            <div className="ml-4 lg:ml-8 mr-4 lg:mr-8 mt-10 mb-12 flex flex-col justify-center items-center">
               <h1 className="text-h1 font-bold mb-4">{detailTes.title} Test</h1>
               <div>
                 <button
