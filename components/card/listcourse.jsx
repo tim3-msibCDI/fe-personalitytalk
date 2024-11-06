@@ -27,6 +27,7 @@ const ListCourse = ({ courses }) => {
         {currentCards.map((course) => (
           <CardCourse
             key={course.id}
+            id={course.id}
             name={course.name}
             description={course.description}
             rating={course.rating}
