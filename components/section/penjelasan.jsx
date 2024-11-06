@@ -5,12 +5,12 @@ import Image from 'next/image';
 import { slides, description } from '@/constants';
 
 export default function Penjelasan() {
-    // Ubah slide setiap 5 detik
+    // Ubah slide setiap 3 detik
     const [currentSlide, setCurrentSlide] = useState(0);
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-        }, 5000);
+        }, 3000);
         return () => clearInterval(interval);
     }, []);
     // Ubah slide dengan dot
@@ -19,7 +19,7 @@ export default function Penjelasan() {
     };
 
     return (
-        <section className="py-12 px-6 md:px-12 ml-20 mb-20">
+        <section className="py-12 px-6 md:px-12 mb-20 ml-4 lg:ml-8">
             <div className="mb-8">
                 <h1 className="text-h1 font-bold mb-4 text-center md:text-left">Apa itu PersonalityTalk?</h1>
             </div>
@@ -42,7 +42,7 @@ export default function Penjelasan() {
                         ))}
                     </div>
                 </div>
-                <div className="md:col-span-2 items-center mr-20">
+                <div className="md:col-span-2 items-center mr-4 lg:mr-8">
                     <p className="text-justify text-m text-gray-700">{description}</p>
                 </div>
             </div>

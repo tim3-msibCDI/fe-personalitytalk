@@ -253,25 +253,25 @@ export const alasan = [
   {
     id: 1,
     name: 'Privasi Terjamin',
-    images: '/image/privasi.png',
+    images: '/image/ilustrasi/3-1-homepage.svg',
     alt: 'Image Privasi Terjamin',
   },
   {
     id: 2,
     name: 'Beragam Pilihan Topik',
-    images: '/image/pilihan.png',
+    images: '/image/ilustrasi/3-2-homepage.svg',
     alt: 'Image Pilihan Topik',
   },
   {
     id: 3,
     name: 'Konsultasi Mudah & Realtime',
-    images: '/image/topik.png',
+    images: '/image/ilustrasi/3-3-homepage.svg',
     alt: 'Image Topik Terupdate',
   },
   {
     id: 4,
     name: 'Layanan Lengkap',
-    images: '/image/layanan.png',
+    images: '/image/ilustrasi/3-4-homepage.svg',
     alt: 'Image Terpercaya',
   }
 ]

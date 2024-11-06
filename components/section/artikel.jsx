@@ -3,8 +3,11 @@
 import { artikel, TOPARTIKEL } from "@/constants";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Artikel() {
+    const router = useRouter();
+
     // Gunakan state untuk memantau apakah tombol 'Lihat Artikel Lainnya' diklik
     const [showAll, setShowAll] = useState(false);
 
@@ -20,7 +23,7 @@ export default function Artikel() {
                 </p>
             </div>
             {/* Card Artikel */}
-            <div className="flex flex-wrap justify-center gap-8 bg-">
+            <div className="flex flex-wrap justify-center gap-12 bg-">
                 {displayedArticles.map((item) => (
                     <div
                         key={item.id}
@@ -44,7 +47,7 @@ export default function Artikel() {
             {artikel.length > 3 && !showAll && (
                 <div className="flex justify-center mt-8">
                     <button
-                        onClick={() => setShowAll(true)}
+                        onClick={() => router.push("/article")}
                         className="flex items-center bg-primary text-h3 text-white py-2 px-4 rounded-md"
                     >
                         Lihat Artikel Lainnya

@@ -3,9 +3,9 @@ import { layanan } from '@/constants';
 
 export default function Keunggulan() {
     return (
-        <section id="keunggulan" className="flex flex-col md:flex-row items-center py-12 px-6 md:px-12 gap-20">
+        <section id="keunggulan" className="flex flex-col md:flex-row items-center py-12 px-6 md:px-12 gap-20 ml-4 lg:ml-8">
             {/* Konten Kiri */}
-            <div className="md:w-2/3 ml-20">
+            <div className="md:w-2/3">
                 <h1 className="text-h1 font-bold mb-4">
                     Selesaikan masalah kamu bersama PersonalityTalk
                 </h1>
@@ -27,12 +27,12 @@ export default function Keunggulan() {
                 </div>
             </div>
             {/* Konten Kanan */}
-            <div className="flex justify-center mr-20">
+            <div className="flex justify-center mr-4 lg:mr-8">
                 <Image
-                    src="/image/doctors.png"
+                    src="/image/ilustrasi/1-homepage.svg"
                     alt="Icon Dokter"
-                    width={403.34}
-                    height={258}
+                    width={640}
+                    height={404}
                     className="rounded-lg"
                 />
             </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Layanan() {
     return (
-        <section id="layanan" className="flex flex-col items-center ml-20 mr-20 scroll-mt-20">
+        <section id="layanan" className="flex flex-col items-center py-12 px-6 mr-4 lg:mr-8 ml-4 lg:ml-8 scroll-mt-20">
             {/* Header */}
             <div className="text-center">
                 <h2 className="font-bold text-black text-3xl">Layanan PersonalityTalk</h2>
@@ -57,7 +57,7 @@ export default function Layanan() {
                         </Link>
                         {/* Border diantara layanan */}
                         {index < layanan.length - 1 && (
-                            <hr className="my-8 border-t border-gray-400" />
+                            <hr className="my-8 border-t border-gray-400 ml-4 lg:ml-8 mr-4 lg:mr-8" />
                         )}
                     </div>
                 ))}

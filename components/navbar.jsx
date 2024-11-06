@@ -20,7 +20,7 @@ export default function Navbar() {
 
   return (
     <nav className="flex justify-between items-center py-4 px-6 md:px-8 lg:px-12 bg-white shadow-lg text-m sticky top-0 z-50">
-      <div className="text-m font-bold">
+      <div className="text-m font-bold ml-4 lg:ml-8">
         <Link href="/">
           <Image
             src="/image/logo.webp"
