@@ -65,8 +65,8 @@ export default function TesForm({ params }) {
               key={option.option}
               onClick={() => setSelectedAnswer(option.option)}
               className={`${
-                selectedAnswer === option.option ? 'bg-primary' : 'bg-primarylight'
-              } p-2 px-4 text-start text-m rounded-xl hover:bg-primarylight`}
+                selectedAnswer === option.option ? 'bg-primary text-whitebg' : 'bg-primarylight'
+              } p-2 px-4 text-start text-m rounded-xl`}
             >
               {option.option}. {option.text}
             </button>
@@ -94,8 +94,10 @@ export default function TesForm({ params }) {
           ) : (
           <button
             onClick={() => handleNavigation(1)}
-            disabled={parseInt(questionId, 10) === detailTes.questions.length}
-            className="bg-primary text-whitebg py-2 px-4 rounded-lg disabled:opacity-100"
+            disabled={!selectedAnswer}
+              className={`${
+                selectedAnswer ? 'bg-primary' : 'bg-disable'
+              } py-2 px-4 rounded-lg text-whitebg`}
           >
             Selanjutnya
           </button>
