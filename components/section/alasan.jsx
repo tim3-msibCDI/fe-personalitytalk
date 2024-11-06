@@ -3,7 +3,7 @@ import { alasan } from '@/constants';
 
 export default function Alasan() {
     return (
-        <section className="bg-primary mb-20">
+        <section className="bg-primary mb-10">
             {/* Header */}
             <div className="mb-8 mt-20 flex items-center">
                 <div className="flex-grow flex justify-start">
@@ -27,7 +27,7 @@ export default function Alasan() {
                 </div>
             </div>
             {/* Konten */}
-            <div className="grid grid-cols-4 gap-8 ml-20 mr-20 justify-center items-center">
+            <div className="grid grid-cols-4 gap-8 mr-4 lg:mr-8 justify-center items-center">
                 {alasan.map((item, index) => (
                     <div key={item.id} className="flex flex-col items-center justify-center space-y-2 p-4 rounded-lg text-center mb-8">
                         <Image className="mb-4"

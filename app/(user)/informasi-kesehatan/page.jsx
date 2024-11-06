@@ -74,7 +74,7 @@ export default function Informasi() {
             Cari
           </button>
         </div>
-        <div className="grid grid-cols-3 gap-32 ml-20 mr-20">
+        <div className="grid grid-cols-3 gap-32 ml-4 lg:ml-8 mr-4 lg:mr-8">
           {columns.map((column, colIndex) => (
             <div key={colIndex}>
               {column.map((item, index) => (

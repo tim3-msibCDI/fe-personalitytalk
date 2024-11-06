@@ -1,13 +1,14 @@
 "use client";
 
+import { useState } from "react";
+import { loginUser } from "@/api/user";
+import { setToken } from "@/lib/auth";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -17,46 +18,18 @@ export default function Login() {
     setError(null);
 
     try {
-      const formData = {
-        email,
-        password,
-      };
-
-      const response = await fetch("http://127.0.0.1:8000/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        if (response.status === 500) {
-          throw new Error("Server error, please try again later.");
-        } else if (response.status === 404) {
-          throw new Error("API endpoint not found.");
-        } else {
-          throw new Error(
-            "Failed to submit the data. Please check your input."
-          );
-        }
-      }
-
-      const responseData = await response.json();
-      const token = responseData.data.token;
-
-      // Save token to sessionStorage or state
-      sessionStorage.setItem("authToken", token);
+      const data = await loginUser(email, password);
+      const token = data.message.token;
+      setToken(token);
       window.location.href = "/";
     } catch (error) {
-      if (error.message === "Failed to fetch") {
-        setError(
-          "Unable to reach the server. Please check your network connection."
-        );
+      if (error.response && error.response.status === 500) {
+        setError("Server error, please try again later.");
+      } else if (error.response && error.response.status === 404) {
+        setError("API endpoint not found.");
       } else {
-        setError(error.message);
+        setError("Failed to submit the data. Please check your input.");
       }
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -129,7 +102,7 @@ export default function Login() {
                   <p className="text-right">lupa kata sandi?</p>
                 </div>
                 <button
-                  className="bg-primary text-whitebg text-s w-full py-2 px-4 mt-8 rounded-lg"
+                  className="bg-primary text-whitebg text-s w-full py-2 px-4 mt-8 rounded-lg hover:bg-hover"
                   type="submit"
                   disabled={isLoading}
                 >
