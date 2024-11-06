@@ -1,5 +1,6 @@
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
+import Footerrmhs from "@/components/footerrmhs";
 import { UserProvider } from "@/constants/UserContext";
 
 export const metadata = {
@@ -12,7 +13,8 @@ export default function UserLayout({ children }) {
     <UserProvider>
       <Navbar />
       {children}
-      <Footer />
+      <Footerrmhs />
+    <Footer />
     </UserProvider>
   );
 }

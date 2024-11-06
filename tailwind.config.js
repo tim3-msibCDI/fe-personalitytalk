@@ -11,8 +11,8 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         primary: "#FB8312",
-        primarylight: "#FDD9B7",
-        primarylight2: "#FFE7D1",
+        primarylight: "#FDCFA3",
+        primarylight2: "#FDDFC3",
         whitebg: "#FBFBFB",
         textcolor: "#252525",
         textsec: "#8D8D8D",
@@ -21,6 +21,7 @@ module.exports = {
         success : "#40D046",
         fail : "#EF0000",
         wait : "#FFC107",
+        disable : "#E4CBB3",
         hover : "#FFAA2A"
       },
       fontSize: {
@@ -46,5 +47,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 };

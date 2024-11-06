@@ -5,7 +5,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 
 * {
-  font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -32,4 +32,54 @@ body {
 .scrollbar-hidden {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+
+/* Custom radio button styles */
+.radio-custom {
+    appearance: none; /* Menghilangkan gaya default radio button */
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #cccccc; /* Border abu-abu */
+    border-radius: 50%;
+    position: relative;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .radio-custom:checked {
+    border-color: #FB8312; /* Border warna oranye */
+    background-color: #ffffff;
+  }
+  
+  .radio-custom:checked::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: #FB8312; /* Warna oranye di dalam radio */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
