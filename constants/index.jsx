@@ -567,6 +567,43 @@ export const chatData = [
 export const coursesData = [
   {
     id: 1,
+    imageSrc: "/icons/v-tes.svg",
+    title: "Personality",
+    description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
+    buttonText: "Selengkapnya",
+    arrowSrc: "/icons/arrow_right.svg",
+    questions: [
+      {
+        id: 1,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+      },
+      {
+        id: 2,
+        question: "Apa yang paling Anda suka?",
+        options: [
+          { option: "A", text: "Saya suka berada di linkungan ramai." },
+          { option: "B", text: "Saya lebih suka sendirian." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+      },
+      {
+        id: 3,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+      },
+    ]
     name: "Recruitment & Selection With Behavior Based Selection Tools",
     description:
       "Profiling calon karyawan dilakukan untuk mengungkap karakter asli, nilai-nilai, cara berpikir, tipe kepemimpinan, sikap kerja dalam tim, serta mengukur intelegensi, dan psikogram psikologi.",
@@ -581,6 +618,24 @@ export const coursesData = [
     rating: 4.8,
     price: "8499999",
     imageUrl: "/image/psikolog/4.png",
+    imageSrc: "/icons/v-tes.svg",
+    title: "Mentality",
+    description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
+    buttonText: "Selengkapnya",
+    arrowSrc: "/icons/arrow_right.svg",
+    questions: [
+      {
+        id: 1,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+        correctAnswer: "A"
+      },
+    ]
   },
   {
     id: 3,
@@ -590,6 +645,24 @@ export const coursesData = [
     rating: 4.9,
     price: "9999999",
     imageUrl: "/image/psikolog/4.png",
+    imageSrc: "/icons/v-tes.svg",
+    title: "Personality",
+    description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
+    buttonText: "Selengkapnya",
+    arrowSrc: "/icons/arrow_right.svg",
+    questions: [
+      {
+        id: 1,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+        correctAnswer: "A"
+      },
+    ]
   },
   {
     id: 4,
@@ -630,5 +703,23 @@ export const coursesData = [
     rating: 4.8,
     price: "8499999",
     imageUrl: "/image/psikolog/4.png",
+    imageSrc: "/icons/v-tes.svg",
+    title: "Mentality",
+    description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
+    buttonText: "Selengkapnya",
+    arrowSrc: "/icons/arrow_right.svg",
+    questions: [
+      {
+        id: 1,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+        correctAnswer: "A"
+      },
+    ]
   },
 ];
