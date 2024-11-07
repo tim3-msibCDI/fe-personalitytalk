@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useSearchParams, useRouter } from "next/navigation";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { coursesData } from "@/constants";
 import { useState } from "react";
 
 export default function PaymentCourse() {
   const searchParams = useSearchParams();
   const courseId = searchParams.get("id");
-  const router = useRouter();
 
   // Sample vouchers data
   const vouchers = [
@@ -16,7 +16,9 @@ export default function PaymentCourse() {
     { code: "SAVE20", amount: 20000 },
   ];
 
-  const course = coursesData.find((course) => course.id.toString() === courseId);
+  const course = coursesData.find(
+    (course) => course.id.toString() === courseId
+  );
   const [voucherCode, setVoucherCode] = useState("");
   const [discount, setDiscount] = useState(0);
 
@@ -38,17 +40,13 @@ export default function PaymentCourse() {
   };
 
   // Calculate total cost after discount
-  const totalCost = (price - discount) || 0;
+  const totalCost = price - discount || 0;
 
-  // Redirect to summary page with total cost
-  const handlePayment = () => {
-    router.push({
-      pathname: "/payment-summary",
-      query: {
-        courseId,
-        totalCost,
-      },
-    });
+  const handlePaymentClick = () => {
+    localStorage.setItem(
+      "paymentData",
+      JSON.stringify({ courseId, totalCost })
+    );
   };
 
   return (
@@ -119,7 +117,10 @@ export default function PaymentCourse() {
           <div className="flex w-full justify-between px-3">
             <p>Total Harga Konsultasi</p>
             <p className="font-semibold">
-              {Number(price).toLocaleString("id-ID", { style: "currency", currency: "IDR" })}
+              {Number(price).toLocaleString("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              })}
             </p>
           </div>
 
@@ -127,7 +128,11 @@ export default function PaymentCourse() {
             <div className="flex w-full justify-between px-3">
               <p>Diskon Voucher</p>
               <p className="font-semibold">
-                - {Number(discount).toLocaleString("id-ID", { style: "currency", currency: "IDR" })}
+                -{" "}
+                {Number(discount).toLocaleString("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                })}
               </p>
             </div>
           )}
@@ -136,7 +141,10 @@ export default function PaymentCourse() {
           <div className="flex w-full justify-between px-3">
             <p className="font-semibold">Total Biaya</p>
             <p className="font-semibold">
-              {totalCost.toLocaleString("id-ID", { style: "currency", currency: "IDR" })}
+              {totalCost.toLocaleString("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              })}
             </p>
           </div>
           <div className="px-3">
@@ -150,12 +158,13 @@ export default function PaymentCourse() {
               Saya telah membaca dan menyetujui Syarat & Ketentuan
             </span>
           </div>
-          <button
-            onClick={handlePayment}
-            className="w-full bg-primary text-white font-semibold py-2 rounded-lg mt-4"
+          <Link
+            href={`/course/${courseId}/payment/detail`}
+            onClick={handlePaymentClick}
+            className="w-full bg-primary text-white font-semibold py-2 rounded-lg mt-4 block text-center"
           >
             Bayar
-          </button>
+          </Link>
         </div>
       </div>
     </div>

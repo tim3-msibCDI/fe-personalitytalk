@@ -37,20 +37,9 @@ export default async function DetailCoursePage({ params }) {
         name={course.name}
         description={course.description}
         rating={course.rating}
+        price={course.price}
+        id={course.id}
       />
-
-      {/* Price and Enroll Button */}
-      <div className="w-full flex flex-col items-end mt-4">
-        <p className="text-h2">
-          Rp. {Number(course.price).toLocaleString("id-ID")}
-        </p>
-        <Link
-          href={`/course/${course.id}/payment?id=${course.id}`}
-          className="rounded-lg bg-primary text-white text-h3 font-medium py-2 px-6 mt-2"
-        >
-          + Ikuti Kelas
-        </Link>
-      </div>
 
       {/* Divider */}
       <div className="py-9">
