@@ -1,66 +1,96 @@
-// DetailCoursePage.js
+// pages/Course.js
 
-import { coursesData } from "@/constants";
 import Image from "next/image";
-import Link from "next/link";
-import CourseSummary from "@/components/course/coursesummary";
-import CourseDetails from "@/components/course/coursedetails";
+import CourseList from "@/components/card/CourseList";
+import ListCourse from "@/components/card/ListCourse";
+import { coursesData } from "@/constants";
 
-export async function generateStaticParams() {
-  return coursesData.map((course) => ({
-    id: course.id.toString(),
-  }));
-}
-
-export default async function DetailCoursePage({ params }) {
-  const course = coursesData.find(
-    (course) => course.id.toString() === params.id
-  );
-
-  if (!course) {
-    return <div>Course not found</div>;
-  }
-
+export default function Course() {
   return (
-    <div className="py-9 px-20">
-      <Link href="/course" className="flex items-center gap-4">
+    <>
+      {/* Hero Section */}
+      <div className="flex px-20 py-9">
         <Image
-          src="/icons/arrow_back.png"
-          alt="icon kembali"
-          width={9}
-          height={14}
+          src="/image/ilustrasi/course1.png"
+          alt="Hero image"
+          width={500}
+          height={500}
+          className="ml-20"
         />
-        <p className="text-m font-bold">Kembali</p>
-      </Link>
-
-      {/* Course Summary Section */}
-      <CourseSummary
-        imageUrl={course.imageUrl}
-        name={course.name}
-        description={course.description}
-        rating={course.rating}
-      />
-
-      {/* Price and Enroll Button */}
-      <div className="w-full flex flex-col items-end mt-4">
-        <p className="text-h2">
-          Rp. {Number(course.price).toLocaleString("id-ID")}
-        </p>
-        <Link
-          href={`/course/${course.id}/payment?id=${course.id}`}
-          className="rounded-lg bg-primary text-white text-h3 font-medium py-2 px-6 mt-2"
-        >
-          + Ikuti Kelas
-        </Link>
+        <div className="text-textcolor mr-20 ml-9 my-auto">
+          <h1 className="text-h1 font-semibold mb-6">Online Course</h1>
+          <p>
+            Platform pembelajaran online yang dirancang untuk memudahkan Anda
+            mengakses kursus dari berbagai bidang, kapan saja dan di mana saja.
+            Kami menyediakan beragam kursus dari para ahli profesional untuk
+            membantu Anda mengembangkan keterampilan baru atau memperdalam
+            pengetahuan yang sudah dimiliki.
+          </p>
+        </div>
       </div>
 
-      {/* Divider */}
+      {/* Feature List */}
+      <div className="bg-primary p-6">
+        <div className="flex justify-center">
+          {/* Feature boxes */}
+          <div className="box flex flex-col items-center w-[289px]">
+            <Image
+              src="/image/ilustrasi/modul.png"
+              alt="Modul"
+              width={160}
+              height={150}
+            />
+            <p className="text-h3 text-whitebg font-medium py-4">Modul Belajar</p>
+          </div>
+          <div className="box flex flex-col items-center w-[289px]">
+            <Image
+              src="/image/ilustrasi/video.png"
+              alt="Video"
+              width={130}
+              height={110}
+            />
+            <p className="text-h3 text-whitebg font-medium py-4 mb-5">
+              Video Belajar
+            </p>
+          </div>
+          <div className="box flex flex-col items-center w-[294px]">
+            <Image
+              src="/image/ilustrasi/kuis.png"
+              alt="Kuis"
+              width={130}
+              height={110}
+            />
+            <p className="text-h3 text-whitebg font-medium py-4">Kuis dan Penilaian</p>
+          </div>
+          <div className="box flex flex-col items-center w-[289px]">
+            <Image
+              src="/image/ilustrasi/sertifikasi.png"
+              alt="Sertifikasi"
+              width={160}
+              height={160}
+            />
+            <p className="text-h3 text-whitebg font-medium py-4">Sertifikasi</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Recommended Courses */}
+      <div className="px-20 py-9 text-textcolor text-center">
+        <h1 className="text-h1 font-semibold">Recommendation Courses</h1>
+        <p className="text-m">Rekomendasi Kursus untuk Kemajuan Perkembanganmu</p>
+      </div>
       <div className="py-9">
-        <hr className="border-t-1 border-text2" />
+        <CourseList courses={coursesData} />
       </div>
 
-      {/* Course Details Section */}
-      <CourseDetails />
-    </div>
+      {/* All Courses */}
+      <div className="px-20 py-9 text-textcolor text-center">
+        <h1 className="text-h1 font-semibold">All Courses</h1>
+        <p className="text-m">Temukan Kursus Apapun, Kembangkan Potensimu</p>
+      </div>
+      <div className="py-9">
+        <ListCourse courses={coursesData} />
+      </div>
+    </>
   );
 }
