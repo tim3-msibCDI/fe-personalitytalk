@@ -286,7 +286,6 @@ export const artikel = [
     name: 'Artikel 1',
     images: '/image/artikel.png',
     alt: 'Image Artikel 1',
-    alt: 'Image Artikel 1',
     tanggal: '30 Desember 2024',
     kategori: 'Percintaan',
     description: 'Kali ini yuk kita main lebih jauh ke dunia industri dan organisasi yang lagi trend juga nih saat ini. Kita kupas dua topik dulu yaa yaitu tentang quiet quitting dan hustle culture. Nah hustle culture itu erat kaitannya dengan petuah semua orang tentunya, "jika mau sukses ya bekerja keraslah", "kesuksesanmu sama besarnya dengan usahamu" dan semacamanya ya bestalk yaitu yang menganggap bahwa kesuksesan akan tercapai jika benar-benar mendedikasikan hidup untuk pekerjaan dan bekerja sekeras-kerasnya hingga menempatkan pekerjaan di atas segalanya. Pokoknya life is all about work and make money come to you',

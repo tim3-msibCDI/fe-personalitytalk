@@ -17,9 +17,11 @@ export default function SyaratKetentuan({ onClose }) {
             </div>
             <div className="px-6 py-3">
                 <p className="text-s font-semibold mb-2">Syarat Konsultasi</p>
-                <ul className="list-disc list-inside text-s font-light">
+                <ul className="list-disc space-y-1">
                     {snk.map((item) => (
-                        <li key={item.id}>{item.desc}</li>
+                        <li key={item.id} className="leading-relaxed text-sm font-light ml-4"> {/* Add margin to align text properly */}
+                            {item.desc}
+                        </li>
                     ))}
                 </ul>
             </div>

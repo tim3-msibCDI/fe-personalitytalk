@@ -25,7 +25,7 @@ export default function FormBayar() {
             <div className="flex gap-8 mt-6">
                 {/* Konten Kiri */}
                 <div className="w-2/5">
-                    <div className="p-4">
+                    <div className="py-4">
                         <h3 className="text-h3 font-semibold text-textcolor mb-2">Pemesanan</h3>
                         <p className="text-s text-textcolor mb-4">Lakukan pembayaran agar pemesanan sesi konsultasi kamu dapat dijadwalkan</p>
                         <div className="bg-primarylight2 rounded-md">

@@ -12,7 +12,7 @@ export default function Terkait() {
     const psikologTampil = lihatSemua ? psikolog : psikolog.slice(0, 2);
 
     return (
-        <div className="mr-20 ml-20 px-8 mb-10">
+        <div className="mr-4 lg:mr-8 ml-4 lg:ml-8 px-14 mb-10">
             <hr className="border-t border-gray-300 mb-4" />
             {/* Kontainer untuk judul dan tombol Lihat Semua */}
             <div className="flex justify-between items-center mb-4">
