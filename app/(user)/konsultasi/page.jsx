@@ -18,7 +18,7 @@ export default function Konsultasi() {
 
     return (
         <>
-            <div className="px-6 md:px-8 lg:px-12 ml-12 py-9 flex">
+            <div className="px-6 md:px-8 lg:px-12 ml-4 lg:ml-8 mr-4 lg:mr-8 py-9 flex">
                 <div className="w-3/5">
                     <h1 className="text-h1 font-bold text-textcolor py-4 pr-16">
                         {ajakan}

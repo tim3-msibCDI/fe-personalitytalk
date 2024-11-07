@@ -16,7 +16,7 @@ export default function ChatContent() {
   }, [chatData]);
 
   return (
-    <div className="px-6 md:px-8 lg:px-12 ml-12 py-5 mr-4 md:mr-8 overflow-y-auto h-[400px]">
+    <div className="px-6 md:px-8 lg:px-12 ml-4 lg:ml-8 py-5 mr-2 md:mr-4 overflow-y-auto h-[400px]">
       <div className="space-y-2">
         {chatData.map((chat) => (
           <div 

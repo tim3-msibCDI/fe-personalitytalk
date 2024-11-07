@@ -18,7 +18,7 @@ export default function FAQ() {
                     Frequently Asked Question
                 </h1>
             </div>
-            <div className="ml-12 mr-12">
+            <div className="ml-4 lg:ml-8 mr-4 lg:mr-8">
                 {faq.map((item, index) => (
                     <div key={item.id} className="mb-4 border-2 border-orange-500 rounded-md">
                         <div 

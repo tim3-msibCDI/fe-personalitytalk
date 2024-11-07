@@ -10,7 +10,7 @@ export default function ChatNavigation() {
 
     return (
         <div className="bg-primarylight2">
-            <div className="px-6 md:px-8 lg:px-12 ml-12 py-5 flex justify-between">
+            <div className="px-6 md:px-8 lg:px-12 ml-4 lg:ml-8 mr-4 lg:mr-8 py-5 flex justify-between">
                 <div className="flex items-center gap-4">
                     {/* Tombol back */}
                     <div>
@@ -39,7 +39,7 @@ export default function ChatNavigation() {
                         </div>
                     </div>
                 </div>
-                <div className="flex gap-4 mr-4 md:mr-8">
+                <div className="flex gap-4">
                     <button className="bg-disable flex items-center text-whitebg text-m font-semibold gap-2 px-4 rounded-lg">
                         <Image
                             src="/icons/white-catatan.png"

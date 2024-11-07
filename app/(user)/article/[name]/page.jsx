@@ -52,7 +52,7 @@ export default function DetailArtikel({ params }) {
     ];
 
     return (
-        <div className="flex gap-8 py-4 px-6 md:px-8 lg:px-12 min-h-screen">
+        <div className="flex gap-8 py-4 px-6 md:px-8 lg:px-12 ml-4 lg:ml-8 min-h-screen">
             <div className="w-2/3">
                 <div>
                     <p className="text-m">{article.kategori}</p>

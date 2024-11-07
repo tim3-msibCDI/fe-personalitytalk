@@ -68,7 +68,7 @@ export default function DetailTesMental({ params }) {
           </div>
         </div>
       </div>
-      <div className="mt-4 py-4 px-6 md:px-8 lg:px-12">
+      <div className="mt-4 py-4 px-6 md:px-8 lg:px-12 ml-4 lg:ml-8 mr-4 lg:mr-8">
         <hr className="border border-1 border-text2" />
         {/* Header Name */}
         <div className="mt-4 text-h2 font-bold">

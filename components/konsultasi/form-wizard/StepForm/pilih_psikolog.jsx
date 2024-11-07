@@ -32,7 +32,7 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
     }, []);
 
     return (
-        <div className="flex justify-between gap-8 p-6">
+        <div className="flex justify-between gap-8 py-6">
             <div className="w-2/5">
                 <h1 className="text-h3 font-semibold text-textcolor mb-2">Jenis Profesional</h1>
                 <p className="text-s mb-6">Terdapat 2 Jenis profesional yang disediakan oleh PersonalityTalk</p>

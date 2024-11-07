@@ -11,7 +11,7 @@ export default function FormBayar() {
     const [selectedPsikolog, setSelectedPsikolog] = useState(jadwalPsikolog[0]);
 
     return (
-        <div className="p-6">
+        <div className="py-6">
             {/* Tombol Back */}
             <div className="flex items-center gap-4">
                 <Image
