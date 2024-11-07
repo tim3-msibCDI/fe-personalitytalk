@@ -154,7 +154,7 @@ export default function Article() {
                     )}
                 </div>
             </div>
-            <div className="flex flex-wrap gap-x-10 gap-y-5 mt-10">
+            <div className="flex flex-wrap gap-x-10 gap-y-5 mt-2">
                 {currentItems.map((item) => (
                     <Link
                         key={item.id}
