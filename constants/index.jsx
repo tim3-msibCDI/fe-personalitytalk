@@ -636,3 +636,72 @@ export const chatData = [
   { id: 8, sender: "User", message: "Saya juga baik, terima kasih!", time: "10:06" },
   { id: 9, sender: "Psikolog", message: "Ada yang bisa dibantu?", time: "10:07" },
 ];
+
+export const coursesData = [
+  {
+    id: 1,
+    name: "Recruitment & Selection With Behavior Based Selection Tools",
+    description:
+      "Profiling calon karyawan dilakukan untuk mengungkap karakter asli, nilai-nilai, cara berpikir, tipe kepemimpinan, sikap kerja dalam tim, serta mengukur intelegensi, dan psikogram psikologi.",
+    rating: 4.9,
+    price: "9999999",
+    imageUrl: "/image/psikolog/4.png",
+  },
+  {
+    id: 2,
+    name: "Course 2",
+    description: "Proin venenatis, sem a gravida tristique.",
+    rating: 4.8,
+    price: "8499999",
+    imageUrl: "/image/psikolog/4.png",
+  },
+  {
+    id: 3,
+    name: "Course 3",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    rating: 4.9,
+    price: "9999999",
+    imageUrl: "/image/psikolog/4.png",
+  },
+  {
+    id: 4,
+    name: "Course 2",
+    description: "Proin venenatis, sem a gravida tristique.",
+    rating: 4.8,
+    price: "8499999",
+    imageUrl: "/image/psikolog/4.png",
+  },
+  {
+    id: 5,
+    name: "Course 1",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    rating: 4.9,
+    price: "9999999",
+    imageUrl: "/image/psikolog/4.png",
+  },
+  {
+    id: 6,
+    name: "Course 2",
+    description: "Proin venenatis, sem a gravida tristique.",
+    rating: 4.8,
+    price: "8499999",
+    imageUrl: "/image/psikolog/4.png",
+  },
+  {
+    id: 7,
+    name: "Course 1",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    rating: 4.9,
+    price: "9999999",
+    imageUrl: "/image/psikolog/4.png",
+  },
+  {
+    id: 8,
+    name: "Course 2",
+    description: "Proin venenatis, sem a gravida tristique.",
+    rating: 4.8,
+    price: "8499999",
+    imageUrl: "/image/psikolog/4.png",
+  },
+];
