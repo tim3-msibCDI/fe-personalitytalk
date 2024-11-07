@@ -30,7 +30,7 @@ export default function CourseUserPage() {
             Riwayat Transaksi
           </li>
         </ul>
-        <div className={`bg-primarylight p-2 ${
+        <div className={`bg-primarylight p-2 max-h-[26rem] overflow-y-auto ${
               activeTab === "konsultasi" ? "rounded-tr-lg rounded-br-lg" : "rounded-lg"
             }`}>
           {activeTab === "konsultasi" && <ListKonsultasi />}

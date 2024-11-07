@@ -28,8 +28,9 @@ export default async function DetailCoursePage({ params }) {
         />
         <p className="text-m font-bold">Kembali</p>
       </Link>
-      <div className="flex gap-8 mt-6">
-        <div className="w-1/3">
+      <div className="flex gap-[20px] mt-6 p-4">
+        {/* Fixed width for image container */}
+        <div className="w-[252px]">
           <Image
             src={course.imageUrl}
             alt="course image"
@@ -38,29 +39,37 @@ export default async function DetailCoursePage({ params }) {
             className="rounded-lg"
           />
         </div>
-        <div>
-          <h1 className="text-h2 font-bold">{course.name}</h1>
-          <p className="py-3">{course.description}</p>
-          <div className="flex">
-            <Image
-              src="/icons/star-black.svg"
-              alt="Star"
-              width={15}
-              height={15}
-            />
-            <p className="ml-2 text-h3">{course.rating}/5.0</p>
+
+        {/* Flexible width for details container */}
+        <div className="flex-1 flex flex-col justify-between">
+          <div>
+            <h1 className="text-h2 font-bold">{course.name}</h1>
+            <p className="py-3">{course.description}</p>
+            <div className="flex items-center">
+              <Image
+                src="/icons/star-black.svg"
+                alt="Star"
+                width={15}
+                height={15}
+              />
+              <p className="ml-2 text-h3">{course.rating}/5.0</p>
+            </div>
           </div>
-          <p className="w-full flex justify-end p-1 text-h2">Rp. {Number(course.price).toLocaleString("id-ID")}</p>
-          <div className="flex justify-end w-full my-1">
+
+          <div className="w-full flex flex-col items-end">
+            <p className="text-h2">
+              Rp. {Number(course.price).toLocaleString("id-ID")}
+            </p>
             <Link
               href={`/course/${course.id}/payment?id=${course.id}`}
-              className="rounded-lg bg-primary text-white text-h3 font-medium py-2 px-6"
+              className="rounded-lg bg-primary text-white text-h3 font-medium py-2 px-6 mt-2"
             >
               + Ikuti Kelas
             </Link>
           </div>
         </div>
       </div>
+
       <div className="py-9">
         <hr className="border-t-1 border-text2" />
       </div>

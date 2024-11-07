@@ -17,7 +17,7 @@ export default function Footerrmhs() {
             <h2 className="text-h2 font-medium">
               Apakah Anda Mahasiswa Psikologi?
             </h2>
-            <p className="text-m font-light">
+            <p className="text-m font-[300]">
               PersonalityTalk adalah solusi alternatif pembelajaran praktis
               seputar ilmu psikologi <br />dan terapannya.
             </p>

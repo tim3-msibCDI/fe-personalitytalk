@@ -9,6 +9,32 @@
   font-family: "Poppins", sans-serif;
 }
 
+body {
+  background-color: #fbfbfb;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Warna track scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fb8312; 
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 /* Custom radio button styles */
 .radio-custom {
     appearance: none; /* Menghilangkan gaya default radio button */

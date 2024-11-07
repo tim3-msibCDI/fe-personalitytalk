@@ -12,7 +12,8 @@ export default function UserLayout({ children }) {
     <UserProvider>
       <Navbar />
       {children}
-      <Footer />
+      <Footerrmhs />
+    <Footer />
     </UserProvider>
   );
 }
