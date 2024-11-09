@@ -19,7 +19,7 @@ export default function Login() {
 
     try {
       const data = await loginUser(email, password);
-      const token = data.message.token;
+      const token = data.data.token;
       setToken(token);
       window.location.href = "/";
     } catch (error) {
