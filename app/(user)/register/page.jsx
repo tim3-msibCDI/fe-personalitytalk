@@ -103,7 +103,7 @@ export default function Register() {
   
       // Menggunakan axios
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/user/register/",
+        "https://3988-182-2-37-102.ngrok-free.app/api/user/register/",
         formData,
         {
           headers: {

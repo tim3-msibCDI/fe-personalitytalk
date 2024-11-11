@@ -735,3 +735,94 @@ export const tesmental = [
     ]
   },
 ];
+
+export const PSIKOLOG_MENU = [
+  {id: 1, title: "Dashboard", url: "/psikolog/dashboard", icon:"/icons/sidebar/psikolog/dashboard.svg", iconhover:"/icons/sidebar/psikolog/dashboard(white).svg"},
+  {id: 2, title: "Chat Psikolog", url:"/psikolog/chat", icon:"/icons/sidebar/psikolog/chat.svg", iconhover:"/icons/sidebar/psikolog/chat(white).svg"},
+  {id: 3, title: "Buat Jadwal", url:"/psikolog/buat-jadwal", icon:"/icons/sidebar/psikolog/buat-jadwal.svg", iconhover:"/icons/sidebar/psikolog/buat-jadwal(white).svg"},
+  {id: 4, title: "Lihat Jadwal", url:"/psikolog/lihat-jadwal", icon:"/icons/sidebar/psikolog/lihat-jadwal.svg", iconhover:"/icons/sidebar/psikolog/lihat-jadwal(white).svg"},
+  {id: 5, title: "Transaksi", url:"/psikolog/transaksi", icon:"/icons/sidebar/psikolog/transaksi.svg", iconhover:"/icons/sidebar/psikolog/transaksi(white).svg"},
+];
+
+export const ADMIN_MENU = [
+  { 
+    id: 1, 
+    title: "Dashboard", 
+    url: "/admin/dashboard", 
+    icon: "/icons/sidebar/admin/brown/dashboard.svg", 
+    iconhover: "/icons/sidebar/admin/white/dashboard.svg", 
+  },
+  { 
+    id: 2, 
+    title: "Pengguna", 
+    icon: "/icons/sidebar/admin/brown/pengguna.svg", 
+    iconhover: "/icons/sidebar/admin/white/pengguna.svg", 
+    subMenu: [
+      { title: "Umum", url: "/admin/pengguna/umum", icon: "/icons/sidebar/admin/brown/umum.svg", iconhover: "/icons/sidebar/admin/white/umum.svg"},
+      { title: "Mahasiswa", url: "/admin/pengguna/mahasiswa", icon: "/icons/sidebar/admin/brown/mahasiswa.svg", iconhover: "/icons/sidebar/admin/white/mahasiswa.svg"},
+    ]
+  },
+  { 
+    id: 3, 
+    title: "Psikolog", 
+    icon: "/icons/sidebar/admin/brown/psikolog.svg", 
+    iconhover: "/icons/sidebar/admin/white/psikolog.svg",
+    subMenu: [
+      { title: "Daftar Psikolog", url: "/admin/psikolog/daftar-psikolog", icon: "/icons/sidebar/admin/brown/daftar-psikolog.svg", iconhover: "/icons/sidebar/admin/white/daftar-psikolog.svg"},
+      { title: "Daftar Konselor", url: "/admin/psikolog/daftar-konselor", icon: "/icons/sidebar/admin/brown/daftar-konselor.svg", iconhover: "/icons/sidebar/admin/white/daftar-konselor.svg"},
+      { title: "Kelola Psikolog", url: "/admin/psikolog/kelola-psikolog", icon: "/icons/sidebar/admin/brown/kelola-psikolog.svg", iconhover: "/icons/sidebar/admin/white/kelola-psikolog.svg"},
+      { title: "Harga Psikolog", url: "/admin/psikolog/harga-psikolog",  icon: "/icons/sidebar/admin/brown/harga-psikolog.svg", iconhover: "/icons/sidebar/admin/white/harga-psikolog.svg"},
+    ]
+  },
+  { 
+    id: 4, 
+    title: "Konsultasi", 
+    icon: "/icons/sidebar/admin/brown/konsultasi.svg", 
+    iconhover: "/icons/sidebar/admin/white/konsultasi.svg",
+    subMenu: [
+      { title: "Topik Konsultasi", url: "/admin/konsultasi/topik-konsultasi" , icon: "/icons/sidebar/admin/brown/topik-konsultasi.svg", iconhover: "/icons/sidebar/admin/white/topik-konsultasi.svg"},
+      { title: "Jadwal Konsultasi", url: "/admin/konsultasi/jadwal-konsultasi", icon: "/icons/sidebar/admin/brown/jadwal-konsultasi.svg", iconhover: "/icons/sidebar/admin/white/jadwal-konsultasi.svg"},
+      { title: "Riwayat Konsultasi", url: "/admin/konsultasi/riwayat-konsultasi", icon: "/icons/sidebar/admin/brown/riwayat-konsultasi.svg", iconhover: "/icons/sidebar/admin/white/riwayat-konsultasi.svg"},
+    ]
+  },
+  { 
+    id: 5, 
+    title: "Keuangan", 
+    icon: "/icons/sidebar/admin/brown/keuangan.svg", 
+    iconhover: "/icons/sidebar/admin/white/keuangan.svg",
+    subMenu: [
+      { title: "Rekening", url: "/admin/keuangan/rekening", icon: "/icons/sidebar/admin/brown/rekening.svg", iconhover: "/icons/sidebar/admin/white/rekening.svg"},
+      { title: "Transaksi", url: "/admin/keuangan/transaksi", icon: "/icons/sidebar/admin/brown/transaksi.svg", iconhover: "/icons/sidebar/admin/white/transaksi.svg"},
+      { title: "Voucher", url: "/admin/keuangan/voucher", icon: "/icons/sidebar/admin/brown/voucher.svg", iconhover: "/icons/sidebar/admin/white/voucher.svg"},
+    ]
+  },
+  { 
+    id: 6, 
+    title: "Artikel", 
+    icon: "/icons/sidebar/admin/brown/artikel.svg", 
+    iconhover: "/icons/sidebar/admin/white/artikel.svg",
+    subMenu: [
+      { title: "Artikel", url: "/admin/artikel/artikel", icon: "/icons/sidebar/admin/brown/artikel.svg", iconhover: "/icons/sidebar/admin/white/artikel.svg"},
+      { title: "Kategori Artikel", url: "/admin/artikel/kategori-artikel" , icon: "/icons/sidebar/admin/brown/kategori-artikel.svg", iconhover: "/icons/sidebar/admin/white/kategori-artikel.svg"},
+      { title: "Informasi Kesehatan", url: "/admin/artikel/informasi-kesehatan" , icon: "/icons/sidebar/admin/brown/informasi-kesehatan.svg", iconhover: "/icons/sidebar/admin/white/informasi-kesehatan.svg"},
+    ]
+  },
+  { 
+    id: 7, 
+    title: "Lainnya", 
+    icon: "/icons/sidebar/admin/brown/lainnya.svg", 
+    iconhover: "/icons/sidebar/admin/white/lainnya.svg",
+    subMenu: [
+      { title: "Mitra", url: "/admin/lainnya/mitra" , icon: "/icons/sidebar/admin/brown/mitra.svg", iconhover: "/icons/sidebar/admin/white/mitra.svg"},
+      { title: "Tes Mental", url: "/admin/lainnya/tes-mental" , icon: "/icons/sidebar/admin/brown/tes-mental.svg", iconhover: "/icons/sidebar/admin/white/tes-mental.svg"},
+      { title: "Course", url: "/admin/lainnya/course" , icon: "/icons/sidebar/admin/brown/course.svg", iconhover: "/icons/sidebar/admin/white/course.svg"},
+    ]
+  },
+  { 
+    id: 8, 
+    title: "Pengaturan", 
+    url: "/admin/pengaturan", 
+    icon: "/icons/sidebar/admin/brown/pengaturan.svg", 
+    iconhover: "/icons/sidebar/admin/white/pengaturan.svg",
+  }
+];
