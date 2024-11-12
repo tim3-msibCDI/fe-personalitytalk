@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
+import { registerUser } from "@/api/user";
 
 export default function Register() {
   const [role, setRole] = useState("");
@@ -42,7 +43,7 @@ export default function Register() {
     setIsLoading(true);
     setError({});
     setServerError(""); // Reset server error message
-  
+
     // Validasi sederhana di frontend
     const newErrors = {};
     if (!name) {
@@ -75,19 +76,19 @@ export default function Register() {
     if (role === "M" && !major) {
       newErrors.jurusan = "Jurusan wajib diisi";
     }
-  
+
     if (password !== confirmPassword) {
       newErrors.confirmPassword = "Password dan konfirmasi password tidak sama";
     }
-  
+
     if (Object.keys(newErrors).length > 0) {
       setError(newErrors);
       setIsLoading(false);
       return;
     }
-  
+
     try {
-      const formData = {
+      const userData = {
         name,
         email,
         password,
@@ -100,19 +101,15 @@ export default function Register() {
           jurusan: major,
         }),
       };
-  
-      // Menggunakan axios
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/user/register/",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-  
-      // Memeriksa apakah request berhasil
+
+      const response = await registerUser(userData);
+
+      // const response = await axios.post(`https://3988-182-2-37-102.ngrok-free.app/api/user/register`, userData, {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // });
+
       if (response.status === 200 || response.status === 201) {
         window.location.href = "/login"; // Redirect ke halaman login setelah berhasil
       } else {
@@ -123,10 +120,13 @@ export default function Register() {
     } catch (error) {
       if (error.response && error.response.status === 500) {
         // Menangani error 500
-        setServerError("Terjadi kesalahan pada server. Silakan coba lagi nanti.");
+        setServerError(
+          "Terjadi kesalahan pada server. Silakan coba lagi nanti."
+        );
       } else {
         setServerError(
-          error.response?.data?.message || "Terjadi kesalahan. Silakan coba lagi."
+          error.response?.data?.message ||
+            "Terjadi kesalahan. Silakan coba lagi."
         );
       }
       console.error("Submission error:", error);
@@ -134,12 +134,11 @@ export default function Register() {
       setIsLoading(false);
     }
   }
-  
 
   return (
     <>
       <div className="flex flex-row mt-16 mb-24 justify-center">
-        <div className="mr-20 my-auto">
+        <div className="mr-20 my-auto hidden lg:flex">
           <Image
             src="/image/login/rafiki.png"
             alt="Login Image"

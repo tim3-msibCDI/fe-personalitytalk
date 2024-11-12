@@ -38,8 +38,21 @@ export default async function DetailCoursePage({ params }) {
         description={course.description}
         rating={course.rating}
         price={course.price}
-        id={course.id}
-      />
+        showPrice={true}
+      >
+        <Link
+          href={`/course/${course.id}/payment?id=${course.id}`}
+          className="rounded-lg bg-primary text-white text-h3 font-medium py-2 px-6 mt-2"
+        >
+          Daftar Sekarang
+        </Link>
+        <Link
+          href={`/course/${course.id}/class`}
+          className="rounded-lg bg-primary text-white text-h3 font-medium py-2 px-6 mt-2"
+        >
+          Masuk Kelas
+        </Link>
+      </CourseSummary>
 
       {/* Divider */}
       <div className="py-9">

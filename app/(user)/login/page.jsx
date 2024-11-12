@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { loginUser } from "@/api/user";
 import { setToken } from "@/lib/auth";
+import Modal from "@/components/modals/modal"; 
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,6 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -19,7 +21,7 @@ export default function Login() {
 
     try {
       const data = await loginUser(email, password);
-      const token = data.message.token;
+      const token = data.data.token;
       setToken(token);
       window.location.href = "/";
     } catch (error) {
@@ -30,6 +32,7 @@ export default function Login() {
       } else {
         setError("Failed to submit the data. Please check your input.");
       }
+      setIsModalOpen(true); // Open modal on error
     } finally {
       setIsLoading(false);
     }
@@ -37,8 +40,22 @@ export default function Login() {
 
   return (
     <>
+      {/* Modal for displaying error messages */}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className="p-4">
+          <h2 className="text-xl font-semibold mb-2">Error</h2>
+          <p>{error}</p>
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="mt-4 px-4 py-2 bg-primary text-white rounded-lg"
+          >
+            Close
+          </button>
+        </div>
+      </Modal>
+
       <div className="flex flex-row mt-16 mb-24 justify-center">
-        <div className="mr-20">
+        <div className="mr-20 hidden lg:flex">
           <Image
             src="/image/login/rafiki.png"
             alt="Login Image"
@@ -48,58 +65,31 @@ export default function Login() {
         </div>
         <div className="bg-primarylight rounded-lg size-553">
           <div className="grid justify-center mt-7">
-            <Image
-              src="/image/logo.webp"
-              alt="Logo"
-              width={187.32}
-              height={0}
-            />
+            <Image src="/image/logo.webp" alt="Logo" width={187.32} height={0} />
           </div>
 
           <div className="text-textcolor mt-8">
             <div className="mx-6">
-              {/* Display the error notification if exists */}
-              {error && (
-                <div className="mb-4 p-3 text-white bg-red-500 rounded-lg">
-                  {error}
-                </div>
-              )}
-
               <form onSubmit={onSubmit}>
-                <div className="">
-                  <div>
-                    <label className="text-m font-normal text-textcolor">
-                      Email
-                    </label>
-                  </div>
-                  <div>
-                    <input
-                      type="email"
-                      placeholder="Masukan Email Anda"
-                      id="email"
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="py-2 px-4 w-full rounded-lg text-s tracking- text-textsec mt-1 font-light"
-                    />
-                  </div>
+                <div>
+                  <label className="text-m font-normal text-textcolor">Email</label>
+                  <input
+                    type="email"
+                    placeholder="Masukan Email Anda"
+                    id="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="py-2 px-4 w-full rounded-lg text-s tracking- text-textsec mt-1 font-light"
+                  />
                 </div>
                 <div className="pt-5">
-                  <div>
-                    <label className="text-m font-normal text-textcolor">
-                      Password
-                    </label>
-                  </div>
-                  <div>
-                    <input
-                      type="password"
-                      placeholder="Masukan Password Anda"
-                      id="password"
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="py-2 px-4 w-full rounded-lg text-s tracking- text-textsec mt-1 font-light"
-                    />
-                  </div>
-                </div>
-                <div className="text-fail text-s font-light p-1">
-                  <p className="text-right">lupa kata sandi?</p>
+                  <label className="text-m font-normal text-textcolor">Password</label>
+                  <input
+                    type="password"
+                    placeholder="Masukan Password Anda"
+                    id="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="py-2 px-4 w-full rounded-lg text-s tracking- text-textsec mt-1 font-light"
+                  />
                 </div>
                 <button
                   className="bg-primary text-whitebg text-s w-full py-2 px-4 mt-8 rounded-lg hover:bg-hover"
@@ -120,13 +110,11 @@ export default function Login() {
                 </button>
               </form>
 
-              <div className="flex flex-row justify-center mt-7 ">
-                <div className="text-textcolor mr-5 py-2 ">
-                  Belum punya akun?
-                </div>
-                <button className="rounded-lg px-4 py-2 text-s font-medium bg-whitebg border border-primary text-primary">
-                  <Link href="/register">Daftar Disini</Link>
-                </button>
+              <div className="flex flex-row justify-center mt-7">
+                <div className="text-textcolor mr-5 py-2">Belum punya akun?</div>
+                <Link href="/register" className="rounded-lg px-4 py-2 text-s font-medium bg-whitebg border border-primary text-primary">
+                  Daftar Disini
+                </Link>
               </div>
             </div>
           </div>

@@ -8,19 +8,19 @@ export default function Profile() {
           <h3 className="text-h3 font-medium">Tentang Kami</h3>
           <h1 className="text-h1 font-semibold mt-2">PersonalityTalk</h1>
         </div>
-        <div className="flex mx-28 mt-12">
+        <div className="lg:flex mx-28 mt-12">
           <Image
             src="/image/about1.png"
             alt="About"
             width={386.702}
             height={262}
-            className="rounded-lg"
+            className="rounded-lg mx-auto"
           />
-          <div className="ml-20">
-            <h2 className="text-h2 font-semibold mb-8">
+          <div className="lg:ml-20 lg:mt-0 mt-4">
+            <h2 className="text-h2 font-semibold mb-8 lg:text-left text-center">
               Apa itu PersonalityTalk?
             </h2>
-            <p className="text-m font-light tracking-wide mr-10">
+            <p className="text-m font-light tracking-wide mr-10 lg:text-left text-center">
               PersonalityTalk adalah lembaga yang bergerak di bidang jasa
               training, coaching, dan consulting dalam bidang psikologi. Berdiri
               sejak tahun 2014, Alhamdulillah PersonalityTalk telah membantu

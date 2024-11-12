@@ -1,6 +1,5 @@
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
-import { UserProvider } from "@/constants/UserContext";
 
 export const metadata = {
   title: "Personality Talk",
@@ -9,10 +8,10 @@ export const metadata = {
 
 export default function UserLayout({ children }) {
   return (
-    <UserProvider>
+    <>
       <Navbar />
       {children}
-    <Footer />
-    </UserProvider>
+      <Footer />
+    </>
   );
 }

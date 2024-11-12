@@ -1,9 +1,8 @@
-// contexts/UserContext.js
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { getUserDetail } from "@/api/user";
-import { updateProfile } from "@/api/user"; // Import fungsi updateProfile
+import { updateProfile } from "@/api/user"; 
 
 const UserContext = createContext();
 
@@ -25,6 +24,7 @@ export const UserProvider = ({ children }) => {
     const fetchUserProfile = async () => {
       try {
         const userDetails = await getUserDetail();
+        console.log("Fetched User Details:", userDetails);
         setUser({
           nama: userDetails.name,
           email: userDetails.email,

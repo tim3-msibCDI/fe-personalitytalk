@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useUser } from "@/constants/useUser";
+import { getUserDetail } from "@/api/user";
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);

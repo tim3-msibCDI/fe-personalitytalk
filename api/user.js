@@ -2,7 +2,9 @@ import axios from "axios";
 
 import { getToken } from "@/lib/auth";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://3988-182-2-37-102.ngrok-free.app/api";
 
 // Fungsi Login user
 export const loginUser = async (email, password) => {
@@ -25,7 +27,7 @@ export const registerUser = async (userData) => {
       "Content-Type": "application/json",
     },
   });
-  return response.data;
+  return response;
 };
 
 // Fungsi ambil info User (nama, photo profile, role)
@@ -41,7 +43,7 @@ export const getUserInfo = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data;
+    return response;
   } catch (error) {
     throw new Error("Failed to fetch user data");
   }
@@ -61,9 +63,9 @@ export const getUserDetail = async () => {
       },
     });
 
+    // Access the actual user data within the `data` property
     const data = response.data.data;
 
-    // Structure data yang digunakan pada frontend
     return {
       name: data.name,
       email: data.email,
@@ -77,6 +79,7 @@ export const getUserDetail = async () => {
       jurusan: data.mahasiswa_details?.jurusan || "",
     };
   } catch (error) {
+    console.error("Error fetching user data:", error.message);
     throw new Error("Failed to fetch user data");
   }
 };

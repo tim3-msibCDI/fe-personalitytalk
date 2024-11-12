@@ -1,7 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 
-const CourseSummary = ({ imageUrl, name, description, rating, price, id }) => {
+const CourseSummary = ({ imageUrl, name, description, rating, price, children, showPrice = true }) => {
   return (
     <div className="flex gap-[20px] mt-6 p-4">
       {/* Image Section */}
@@ -31,20 +30,19 @@ const CourseSummary = ({ imageUrl, name, description, rating, price, id }) => {
           </div>
         </div>
 
-        {/* Price and Button Section */}
-        <div className="w-full flex flex-col items-end mt-4">
-          <p className="text-h2">
+        {/* Price Section - Display only if showPrice is true */}
+        {showPrice && price !== undefined && (
+          <p className="text-h2 mt-4 flex flex-col items-end">
             {Number(price).toLocaleString("id-ID", {
               style: "currency",
               currency: "IDR",
             })}
           </p>
-          <Link
-            href={`/course/${id}/payment?id=${id}`}
-            className="rounded-lg bg-primary text-white text-h3 font-medium py-2 px-6 mt-2"
-          >
-            + Ikuti Kelas
-          </Link>
+        )}
+
+        {/* Button Section */}
+        <div className="w-full flex flex-col items-end">
+          {children}
         </div>
       </div>
     </div>
