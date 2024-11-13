@@ -34,41 +34,43 @@ export default function SidebarMenu({ menuType }) {
         <div className="mt-5 text-s text-textdarkchoco">
           {menu.map((item) => (
             <div key={item.id}>
-              <div
-                className={`cursor-pointer py-3 px-6 group flex gap-3 items-center
-                  ${!item.subMenu && activeMenu === item.id ? 'bg-primary text-white font-semibold' : ''}`}
-                onClick={() => handleMenuClick(item.id, item.subMenu)}
-              >
-                <Image
-                  src={
-                    !item.subMenu && activeMenu === item.id
-                      ? item.iconhover
-                      : item.icon
-                  }
-                  alt={item.title}
-                  width={20}
-                  height={20}
-                  className="transition-all duration-300"
-                />
-                <span className="transition-all duration-300">{item.title}</span>
-
-                {item.subMenu && (
+              <Link href={item.url} passHref>
+                <div
+                  className={`cursor-pointer py-3 px-6 group flex gap-3 items-center
+                    ${!item.subMenu && activeMenu === item.id ? 'bg-primary text-white font-semibold' : ''}`}
+                  onClick={() => handleMenuClick(item.id, item.subMenu)}
+                >
                   <Image
-                    src="/icons/sidebar/arrow.svg"
-                    alt="Dropdown Icon"
-                    width={16}
-                    height={16}
-                    className={`ml-auto transition-transform duration-300 ${
-                      activeDropdown === item.id ? "rotate-180" : ""
-                    }`}
+                    src={
+                      !item.subMenu && activeMenu === item.id
+                        ? item.iconhover
+                        : item.icon
+                    }
+                    alt={item.title}
+                    width={20}
+                    height={20}
+                    className="transition-all duration-300"
                   />
-                )}
-              </div>
+                  <span className="transition-all duration-300">{item.title}</span>
+
+                  {item.subMenu && (
+                    <Image
+                      src="/icons/sidebar/arrow.svg"
+                      alt="Dropdown Icon"
+                      width={16}
+                      height={16}
+                      className={`ml-auto transition-transform duration-300 ${
+                        activeDropdown === item.id ? "rotate-180" : ""
+                      }`}
+                    />
+                  )}
+                </div>
+              </Link>
 
               {item.subMenu && activeDropdown === item.id && (
                 <div className="mt-2">
                   {item.subMenu.map((subItem, subIndex) => (
-                    <Link key={subIndex} href={subItem.url}>
+                    <Link key={subIndex} href={subItem.url} passHref>
                       <div
                         onClick={() => handleSubMenuClick(subIndex)}
                         className={`flex gap-3 pl-12 py-2 px-6 cursor-pointer transition-all duration-300 

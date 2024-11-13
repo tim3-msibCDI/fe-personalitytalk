@@ -737,11 +737,11 @@ export const tesmental = [
 ];
 
 export const PSIKOLOG_MENU = [
-  {id: 1, title: "Dashboard", url: "/psikolog/dashboard", icon:"/icons/sidebar/psikolog/dashboard.svg", iconhover:"/icons/sidebar/psikolog/dashboard(white).svg"},
-  {id: 2, title: "Chat Psikolog", url:"/psikolog/chat", icon:"/icons/sidebar/psikolog/chat.svg", iconhover:"/icons/sidebar/psikolog/chat(white).svg"},
-  {id: 3, title: "Buat Jadwal", url:"/psikolog/buat-jadwal", icon:"/icons/sidebar/psikolog/buat-jadwal.svg", iconhover:"/icons/sidebar/psikolog/buat-jadwal(white).svg"},
-  {id: 4, title: "Lihat Jadwal", url:"/psikolog/lihat-jadwal", icon:"/icons/sidebar/psikolog/lihat-jadwal.svg", iconhover:"/icons/sidebar/psikolog/lihat-jadwal(white).svg"},
-  {id: 5, title: "Transaksi", url:"/psikolog/transaksi", icon:"/icons/sidebar/psikolog/transaksi.svg", iconhover:"/icons/sidebar/psikolog/transaksi(white).svg"},
+  {id: 1, title: "Dashboard", headername: "Dashboard", url: "/psikolog/dashboard", icon:"/icons/sidebar/psikolog/dashboard.svg", iconhover:"/icons/sidebar/psikolog/dashboard(white).svg"},
+  {id: 2, title: "Chat Psikolog", headername: "Chat Konsultasi", url:"/psikolog/chat", icon:"/icons/sidebar/psikolog/chat.svg", iconhover:"/icons/sidebar/psikolog/chat(white).svg"},
+  {id: 3, title: "Buat Jadwal", headername: "Buat Jadwal Konsultasi", url:"/psikolog/buat-jadwal", icon:"/icons/sidebar/psikolog/buat-jadwal.svg", iconhover:"/icons/sidebar/psikolog/buat-jadwal(white).svg"},
+  {id: 4, title: "Lihat Jadwal", headername: "Lihat Jadwal Konsultasi", url:"/psikolog/lihat-jadwal", icon:"/icons/sidebar/psikolog/lihat-jadwal.svg", iconhover:"/icons/sidebar/psikolog/lihat-jadwal(white).svg"},
+  {id: 5, title: "Transaksi", headername: "Transaksi", url:"/psikolog/transaksi", icon:"/icons/sidebar/psikolog/transaksi.svg", iconhover:"/icons/sidebar/psikolog/transaksi(white).svg"},
 ];
 
 export const ADMIN_MENU = [

@@ -16,7 +16,7 @@ export default function Sidebar() {
   if (!menuType) return null;
 
   return (
-    <aside>
+    <aside className="h-screen border-r">
       <SidebarMenu menuType={menuType} />
     </aside>
   );
