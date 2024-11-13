@@ -31,7 +31,7 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <header className="px-4 py-7">
+    <header className="px-4 mt-7">
       <h1 className="font-semibold text-h1">{headerTitle}</h1>
     </header>
   );

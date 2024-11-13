@@ -826,3 +826,10 @@ export const ADMIN_MENU = [
     iconhover: "/icons/sidebar/admin/white/pengaturan.svg",
   }
 ];
+
+export const dashboard = [
+  { value: 1, label: 'Total Client', icon: '/icons/psikolog/dashboard/client.svg' },
+  { value: 4, label: 'Total Konsultasi', icon: '/icons/psikolog/dashboard/konsultasi.svg' },
+  { value: 5, label: 'Jadwal Konsultasi', icon: '/icons/psikolog/dashboard/jadwal.svg' },
+  { value: '4.6/5.0', label: 'Kepuasan Client', icon: '/icons/psikolog/dashboard/kepuasan.svg' }
+];
