@@ -7,7 +7,7 @@ export default function PsikologDashboard() {
             {dashboard.map((item, index) => (
                 <div 
                     key={index} 
-                    className="flex items-center border border-gray-300 rounded-lg p-4 shadow-md bg-primarylight2"
+                    className="flex items-center rounded-lg p-4 shadow-md bg-primarylight2"
                 >
                     <div className="w-12 h-12 mr-4">
                         <img

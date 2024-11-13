@@ -4,7 +4,7 @@ import { getToken } from "@/lib/auth";
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
-  "https://3988-182-2-37-102.ngrok-free.app/api";
+  "https://9505-182-2-41-165.ngrok-free.app/api";
 
 // Fungsi Login user
 export const loginUser = async (email, password) => {
