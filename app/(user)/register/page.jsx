@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { registerUser } from "@/api/user";
 import Modal from "@/components/modals/modal";
+import Loading from "@/components/loading/loading";
 
 export default function Register() {
   const [role, setRole] = useState("");
@@ -80,6 +81,11 @@ export default function Register() {
       newErrors.confirmPassword = "Password dan konfirmasi password tidak sama";
     }
 
+    if (password.length > 0 && password.length <= 8) {
+      newErrors.password = "Password baru harus memiliki minimal 8 karakter."
+      newErrors.confirmPassword = ""
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setError(newErrors);
       setIsLoading(false);
@@ -125,6 +131,8 @@ export default function Register() {
 
   return (
     <>
+      {/* Loading */}
+      {isLoading && <Loading />}
       {/* Modal for displaying error messages */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="p-6">
@@ -404,9 +412,9 @@ export default function Register() {
                   className={`bg-primary hover:bg-hover text-white py-2 w-full rounded-lg text-s font-medium 
                     ${isLoading || !isAgreed ? "disabled:bg-hover" : ""}`}
                   type="submit"
-                  disabled={isLoading || !isAgreed}
+                  disabled={!isAgreed}
                 >
-                  {isLoading ? "Loading..." : "Daftar"}
+                  Daftar
                 </button>
                 <button className="flex items-center px-4 py-2 bg-whitebg text-textcolor rounded-lg w-full justify-center text-s mt-3.5">
                   <Image
