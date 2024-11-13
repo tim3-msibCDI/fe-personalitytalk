@@ -3,8 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import axios from "axios";
 import { registerUser } from "@/api/user";
+import Modal from "@/components/modals/modal";
 
 export default function Register() {
   const [role, setRole] = useState("");
@@ -20,7 +20,7 @@ export default function Register() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({});
-  const [serverError, setServerError] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [isAgreed, setIsAgreed] = useState(false);
   const [isDateSelected, setIsDateSelected] = useState(false);
@@ -104,32 +104,21 @@ export default function Register() {
 
       const response = await registerUser(userData);
 
-      // const response = await axios.post(`https://3988-182-2-37-102.ngrok-free.app/api/user/register`, userData, {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // });
-
       if (response.status === 200 || response.status === 201) {
         window.location.href = "/login"; // Redirect ke halaman login setelah berhasil
       } else {
         const errorData = response.data;
-        setError(errorData.data || {});
-        throw new Error("Gagal mengirim data");
+        setError(errorData.data.message);
       }
     } catch (error) {
       if (error.response && error.response.status === 500) {
-        // Menangani error 500
-        setServerError(
-          "Terjadi kesalahan pada server. Silakan coba lagi nanti."
-        );
+        setError("Terjadi kesalahan pada server. Silakan coba lagi nanti.");
       } else {
-        setServerError(
+        setError(
           error.response?.data?.message ||
             "Terjadi kesalahan. Silakan coba lagi."
         );
       }
-      console.error("Submission error:", error);
     } finally {
       setIsLoading(false);
     }
@@ -137,6 +126,35 @@ export default function Register() {
 
   return (
     <>
+      {/* Modal for displaying error messages */}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className="p-6">
+          <div className="pb-6 flex justify-items-end">
+            <button onClick={() => setIsModalOpen(false)} className="ml-auto">
+              <Image
+                src="/icons/close.svg"
+                alt="Login Image"
+                width={25}
+                height={25}
+                className="bg-primary rounded-md"
+              />
+            </button>
+          </div>
+          <div>
+            <Image
+              src="/icons/sad.png"
+              alt="Icons Sad"
+              width={111}
+              height={111}
+              className="rounded-md mx-auto"
+            />
+          </div>
+          <p className="lg:text-h3 text-m font-medium text-center py-6 lg:pb-16 pb-10">
+            {error}
+          </p>
+        </div>
+      </Modal>
+
       <div className="flex flex-row mt-16 mb-24 justify-center">
         <div className="mr-20 my-auto hidden lg:flex">
           <Image
@@ -146,7 +164,7 @@ export default function Register() {
             height={0}
           />
         </div>
-        <div className="bg-primarylight rounded-lg pb-8 w-553">
+        <div className="bg-primarylight rounded-lg pb-8 w-553 lg:mx-2 mx-4">
           <div className="grid justify-center mt-7">
             <Image
               src="/image/logo.webp"
@@ -157,11 +175,6 @@ export default function Register() {
           </div>
 
           <div className="mt-8">
-            {serverError && (
-              <div className="bg-red-500 text-white py-2 px-4 mb-4 rounded-lg">
-                {serverError}
-              </div>
-            )}
             <div className="mx-6">
               <form onSubmit={onSubmit}>
                 <div>

@@ -18,7 +18,7 @@ export default function SidebarProfile() {
   }
 
   return (
-    <div className="max-w-72 bg-primarylight2 rounded-lg p-9 border border-solid border-textsec flex flex-col justify-between">
+    <div className="lg:max-w-72 bg-primarylight2 rounded-lg p-9 border border-solid border-textsec flex flex-col justify-between">
       <div className="grid justify-items-center">
         <Image
           src="/image/psikolog/1.png"
@@ -32,17 +32,17 @@ export default function SidebarProfile() {
           <p className="text-center text-vs font-normal">
             Gabung Sejak: {user.joined_at}
           </p>
-          <hr className="my-6 border-textsec" />
-          <ul className="text-left text-sm">
+          <hr className="border-t-1 border-text2 my-4 lg:block flex w-full" />
+          <ul className="text-left text-sm flex lg:block">
             {/* Biodata Link */}
             <li
-              className={`flex p-3 my-2 gap-2 self-stretch rounded-lg cursor-pointer ${
+              className={`flex p-3 my-2 gap-2 rounded-lg cursor-pointer ${
                 isActive("/profile")
-                  ? "bg-primary font-semibold text-whitebg"
+                  ? "bg-primary font-semibold text-white"
                   : ""
               }`}
             >
-              <Link href="/profile" className="flex items-center gap-2">
+              <Link href="/profile" className="flex items-center">
                 <Image
                   src={
                     isActive("/profile")
@@ -51,15 +51,15 @@ export default function SidebarProfile() {
                   }
                   height={15}
                   width={15}
-                  className="mr-2"
+                  className="mr-0 lg:mr-2"
                 />
-                Biodata Diri
+                <span className="hidden lg:inline">Biodata Diri</span>
               </Link>
             </li>
 
             {/* Change Password Link */}
             <li
-              className={`flex p-3 my-2 gap-2 self-stretch rounded-lg cursor-pointer ${
+              className={`flex p-3 my-2 gap-2 rounded-lg cursor-pointer ${
                 isActive("/profile/change-password")
                   ? "bg-primary font-semibold text-whitebg"
                   : ""
@@ -67,7 +67,7 @@ export default function SidebarProfile() {
             >
               <Link
                 href="/profile/change-password"
-                className="flex items-center gap-2"
+                className="flex items-center"
               >
                 <Image
                   src={
@@ -77,15 +77,15 @@ export default function SidebarProfile() {
                   }
                   height={15}
                   width={15}
-                  className="mr-2"
+                  className="mr-0 lg:mr-2"
                 />
-                Ganti Password
+                <span className="hidden lg:inline">Ganti Password</span>
               </Link>
             </li>
 
             {/* Konsultasi Link */}
             <li
-              className={`flex p-3 my-2 gap-2 self-stretch rounded-lg cursor-pointer ${
+              className={`flex p-3 my-2 gap-2 rounded-lg cursor-pointer ${
                 isActive("/profile/konsultasi")
                   ? "bg-primary font-semibold text-whitebg"
                   : ""
@@ -93,7 +93,7 @@ export default function SidebarProfile() {
             >
               <Link
                 href="/profile/konsultasi"
-                className="flex items-center gap-2"
+                className="flex items-center"
               >
                 <Image
                   src={
@@ -103,22 +103,25 @@ export default function SidebarProfile() {
                   }
                   height={15}
                   width={15}
-                  className="mr-2"
+                  className="mr-0 lg:mr-2"
                 />
-                Konsultasi Saya
+                <span className="hidden lg:inline">Konsultasi Saya</span>
               </Link>
             </li>
 
             {/* Course Link (Visible only for 'm' role) */}
             {user.role === "M" && (
               <li
-                className={`flex p-3 my-2 gap-2 self-stretch rounded-lg cursor-pointer ${
+                className={`flex p-3 my-2 gap-2 rounded-lg cursor-pointer ${
                   isActive("/profile/course")
                     ? "bg-primary font-semibold text-whitebg"
                     : ""
                 }`}
               >
-                <Link href="/profile/course" className="flex items-center gap-2">
+                <Link
+                  href="/profile/course"
+                  className="flex items-center gap-2"
+                >
                   <Image
                     src={
                       isActive("/profile/course")
@@ -127,9 +130,9 @@ export default function SidebarProfile() {
                     }
                     height={15}
                     width={15}
-                    className="mr-2"
+                    className="mr-0 lg:mr-2"
                   />
-                  Course
+                  <span className="hidden lg:inline">Course</span>
                 </Link>
               </li>
             )}

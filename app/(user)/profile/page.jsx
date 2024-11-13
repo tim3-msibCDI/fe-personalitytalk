@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useUser } from "@/constants/useUser";
 import { getUserDetail } from "@/api/user";
 
+import Modal from "@/components/modals/modal";
+
 const formatDate = (dateString) => {
   const date = new Date(dateString);
   const options = { year: "numeric", month: "long", day: "numeric" };
@@ -15,6 +17,7 @@ export default function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
   const [isUpgrading, setIsUpgrading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [upgradeErrors, setUpgradeErrors] = useState({});
   const {
     user,
@@ -103,12 +106,13 @@ export default function Profile() {
       user.universitas = formData.universitas;
       user.jurusan = formData.jurusan;
       await mutate();
+
+      setIsModalOpen(true);
     } catch (error) {
       console.error("Error upgrading to mahasiswa:", error);
     }
   };
 
-  // Button disable logic for upgrade
   const isUpgradeButtonDisabled =
     !formData.universitas ||
     !formData.jurusan ||
@@ -116,6 +120,11 @@ export default function Profile() {
 
   return (
     <div className="w-full">
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <p>Profil berhasil diperbarui!</p>
+        </Modal>
+      )}
       <div className="w-full flex justify-between items-start self-stretch">
         <h3 className="text-h3 font-semibold pb-3">Biodata Diri</h3>
         {!isEditing && (
@@ -169,7 +178,7 @@ export default function Profile() {
           />
         </div>
 
-        <div className="flex gap-4">
+        <div className="lg:flex gap-4">
           {/* Gender */}
           <div className="flex-1">
             <div className="my-2">
@@ -241,7 +250,7 @@ export default function Profile() {
         </div>
 
         {user.role === "M" && (
-          <div className="flex gap-4">
+          <div className="lg:flex gap-4">
             <div className="flex-1">
               <div className="my-2">
                 <label>Universitas</label>

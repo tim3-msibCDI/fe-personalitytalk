@@ -41,6 +41,7 @@ export const getUserInfo = async () => {
     const response = await axios.get(`${API_URL}/user/info`, {
       headers: {
         Authorization: `Bearer ${token}`,
+        "ngrok-skip-browser-warning": "69420",
       },
     });
     return response;
@@ -60,6 +61,7 @@ export const getUserDetail = async () => {
     const response = await axios.get(`${API_URL}/user/profile/detail`, {
       headers: {
         Authorization: `Bearer ${token}`,
+        "ngrok-skip-browser-warning": "69420",
       },
     });
 
@@ -99,6 +101,7 @@ export const updateProfile = async (formData) => {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
+          "ngrok-skip-browser-warning": "69420",
         },
       }
     );
@@ -131,6 +134,7 @@ export const changePassword = async (
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
+          "ngrok-skip-browser-warning": "69420",
         },
       }
     );
@@ -156,11 +160,37 @@ export const upgradeMahasiswa = async (universitas, jurusan) => {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
+          "ngrok-skip-browser-warning": "69420",
         },
       }
     );
     return response.data;
   } catch (error) {
     throw new Error("Failed to upgrade to mahasiswa");
+  }
+};
+
+// Fungsi untuk Logout User
+export const logoutUser = async () => {
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  try {
+    const response = await axios.post(
+      `${API_URL}/user/logout`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "ngrok-skip-browser-warning": "69420",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error logging out:", error.message);
+    throw new Error("Failed to log out");
   }
 };

@@ -32,7 +32,7 @@ export default function Login() {
       } else {
         setError(error.response.data.message+ " Harap masukkan password yang benar.");
       }
-      setIsModalOpen(true); // Open modal on error
+      setIsModalOpen(true); 
     } finally {
       setIsLoading(false);
     }
@@ -120,16 +120,6 @@ export default function Login() {
                   disabled={isLoading}
                 >
                   {isLoading ? "Loading..." : "Login"}
-                </button>
-                <button className="flex items-center px-4 py-2 bg-whitebg text-textcolor rounded-lg w-full justify-center text-s mt-3.5">
-                  <Image
-                    src="/image/icons/google.svg"
-                    alt="Google Logo"
-                    width={0}
-                    height={30}
-                    className="w-6 h-6 mr-2"
-                  />
-                  Lanjutkan dengan Akun Google
                 </button>
               </form>
 
