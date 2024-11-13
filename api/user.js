@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { getToken } from "@/lib/auth";
+import { getToken, removeToken } from "@/lib/auth";
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
@@ -173,10 +173,7 @@ export const upgradeMahasiswa = async (universitas, jurusan) => {
 // Fungsi untuk Logout User
 export const logoutUser = async () => {
   const token = getToken();
-  if (!token) {
-    throw new Error("No token found");
-  }
-
+  
   try {
     const response = await axios.post(
       `${API_URL}/user/logout`,
@@ -188,6 +185,8 @@ export const logoutUser = async () => {
         },
       }
     );
+    // Remove the token after successful logout
+    removeToken();
     return response.data;
   } catch (error) {
     console.error("Error logging out:", error.message);

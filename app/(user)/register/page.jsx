@@ -42,7 +42,6 @@ export default function Register() {
     event.preventDefault();
     setIsLoading(true);
     setError({});
-    setServerError(""); // Reset server error message
 
     // Validasi sederhana di frontend
     const newErrors = {};

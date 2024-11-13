@@ -4,7 +4,6 @@ import { getUserDetail, updateProfile, upgradeMahasiswa } from "@/api/user";
 const fetchUserDetail = async () => {
   try {
     const userDetails = await getUserDetail();
-    console.log(userDetails);
     return {
       name: userDetails.name,
       email: userDetails.email,
