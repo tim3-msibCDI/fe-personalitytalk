@@ -4,6 +4,7 @@ import { artikel } from "@/constants";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import BannerKonsultasi from "@/components/banner";
 
 export default function DetailArtikel({ params }) {
     const { name } = params;
@@ -52,76 +53,79 @@ export default function DetailArtikel({ params }) {
     ];
 
     return (
-        <div className="flex gap-8 py-4 px-6 md:px-8 lg:px-12 min-h-screen">
-            <div className="w-2/3">
-                <div>
-                    <p className="text-m">{article.kategori}</p>
-                    <h1 className="text-h1 font-semibold">{article.name}</h1>
-                    <p className="text-s mb-5">{article.tanggal}</p>
-                    <div className="w-full h-[300px] mb-5">
-                        <img
-                            src={article.images}
-                            alt={article.alt}
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
-                    <p className="text-justify">{article.description}</p>
-                </div>
-                <div className="mt-10">
-                    <h2 className="text-h2 font-semibold">Bagikan artikel ini:</h2>
-                    <div className="flex flex-row gap-4 mt-3">
-                        {socialMediaIcons.map((icon) => (
+        <div className="py-4 px-6 md:px-8 lg:px-12 ml-4 lg:ml-8">
+            <div className="flex gap-8 min-h-screen mb-10">
+                <div className="w-2/3">
+                    <div>
+                        <p className="text-m">{article.kategori}</p>
+                        <h1 className="text-h1 font-semibold">{article.name}</h1>
+                        <p className="text-s mb-5">{article.tanggal}</p>
+                        <div className="w-full h-[300px] mb-5">
                             <img
-                                key={icon.name}
-                                src={hoveredIcon === icon.name ? icon.hoverSrc : icon.defaultSrc}
-                                alt={icon.name}
-                                onMouseEnter={() => setHoveredIcon(icon.name)}
-                                onMouseLeave={() => setHoveredIcon(null)}
-                                className="cursor-pointer"
+                                src={article.images}
+                                alt={article.alt}
+                                className="w-full h-full object-cover"
                             />
+                        </div>
+                        <p className="text-justify">{article.description}</p>
+                    </div>
+                    <div className="mt-10">
+                        <h2 className="text-h2 font-semibold">Bagikan artikel ini:</h2>
+                        <div className="flex flex-row gap-4 mt-3">
+                            {socialMediaIcons.map((icon) => (
+                                <img
+                                    key={icon.name}
+                                    src={hoveredIcon === icon.name ? icon.hoverSrc : icon.defaultSrc}
+                                    alt={icon.name}
+                                    onMouseEnter={() => setHoveredIcon(icon.name)}
+                                    onMouseLeave={() => setHoveredIcon(null)}
+                                    className="cursor-pointer"
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Garis Vertikal */}
+                <div className="flex justify-center items-center">
+                    <div className="w-px bg-gradient-to-b from-transparent via-neutral-500 to-transparent opacity-50 dark:via-neutral-400 self-stretch"></div>
+                </div>
+
+                {/* Konten Artikel Lainnya dengan Centering */}
+                <div className="w-1/3 flex flex-col justify-center">
+                    <div className="flex justify-center items-center">
+                        <img src="/image/ilustrasi/detail_artikel.svg" alt="Ilustrasi" />
+                    </div>
+                    <div className="mt-5 flex justify-center">
+                        <h2 className="text-h2 font-semibold">Artikel Lainnya</h2>
+                    </div>
+                    <div className="mt-8 flex flex-col gap-3">
+                        {relatedArticles.map((item) => (
+                            <Link
+                                key={item.id}
+                                href={`/article/${item.name.replace(/\s+/g, '-').toLowerCase()}`}
+                            >
+                                <div className="flex gap-4 items-start">
+                                    <div className="w-16 h-16">
+                                        <Image
+                                            src={item.images}
+                                            alt={item.alt}
+                                            width={100}
+                                            height={100}
+                                            className="w-full h-full object-cover rounded-md"
+                                        />
+                                    </div>
+                                    <div className="self-start">
+                                        <h5 className="text-m font-bold text-textcolor">{item.name}</h5>
+                                        <p className="text-s text-textcolor">{item.tanggal}</p>
+                                    </div>
+                                </div>
+                            </Link>
                         ))}
                     </div>
                 </div>
             </div>
-
-            {/* Garis Vertikal */}
-            <div className="flex justify-center items-center">
-                <div className="w-px bg-gradient-to-b from-transparent via-neutral-500 to-transparent opacity-50 dark:via-neutral-400 self-stretch"></div>
-            </div>
-
-            {/* Konten Artikel Lainnya dengan Centering */}
-            <div className="w-1/3 flex flex-col justify-center">
-                <div className="flex justify-center items-center">
-                    <img src="/image/ilustrasi/detail_artikel.svg" alt="Ilustrasi" />
-                </div>
-                <div className="mt-5 flex justify-center">
-                    <h2 className="text-h2 font-semibold">Artikel Lainnya</h2>
-                </div>
-                <div className="mt-8 flex flex-col gap-3">
-                    {relatedArticles.map((item) => (
-                        <Link
-                            key={item.id}
-                            href={`/article/${item.name.replace(/\s+/g, '-').toLowerCase()}`}
-                        >
-                            <div className="flex gap-4 items-start">
-                                <div className="w-16 h-16">
-                                    <Image
-                                        src={item.images}
-                                        alt={item.alt}
-                                        width={100}
-                                        height={100}
-                                        className="w-full h-full object-cover rounded-md"
-                                    />
-                                </div>
-                                <div className="self-start">
-                                    <h5 className="text-m font-bold text-textcolor">{item.name}</h5>
-                                    <p className="text-s text-textcolor">{item.tanggal}</p>
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            </div>
+            <BannerKonsultasi/>
         </div>
     );
 }

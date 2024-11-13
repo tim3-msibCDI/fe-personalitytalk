@@ -37,7 +37,7 @@ export default function FormPilihJadwal() {
     };
 
     return (
-        <div className="p-6">
+        <div className="py-6">
             {/* Tombol Back */}
             <div className="flex items-center gap-4">
                 <Image

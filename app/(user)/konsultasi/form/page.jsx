@@ -29,7 +29,7 @@ export default function FormPage() {
   };
 
   return (
-    <div className="px-6 md:px-8 lg:px-12 py-9">
+    <div className="px-6 md:px-8 lg:px-12 py-9 ml-4 lg:ml-8 mr-4 lg:mr-8">
       {/* Step Navigation */}
       <StepNavigation currentStep={currentStep} />
 

@@ -290,7 +290,6 @@ export const artikel = [
     name: 'Artikel 1',
     images: '/image/artikel.png',
     alt: 'Image Artikel 1',
-    alt: 'Image Artikel 1',
     tanggal: '30 Desember 2024',
     kategori: 'Percintaan',
     description: 'Kali ini yuk kita main lebih jauh ke dunia industri dan organisasi yang lagi trend juga nih saat ini. Kita kupas dua topik dulu yaa yaitu tentang quiet quitting dan hustle culture. Nah hustle culture itu erat kaitannya dengan petuah semua orang tentunya, "jika mau sukses ya bekerja keraslah", "kesuksesanmu sama besarnya dengan usahamu" dan semacamanya ya bestalk yaitu yang menganggap bahwa kesuksesan akan tercapai jika benar-benar mendedikasikan hidup untuk pekerjaan dan bekerja sekeras-kerasnya hingga menempatkan pekerjaan di atas segalanya. Pokoknya life is all about work and make money come to you',
@@ -300,7 +299,6 @@ export const artikel = [
     name: 'Artikel 2',
     images: '/image/artikel.png',
     alt: 'Image Artikel 2',
-    alt: 'Image Artikel 2',
     tanggal: '30 Desember 2024',
     kategori: 'Keluarga',
     description: 'Kali ini yuk kita main lebih jauh ke dunia industri dan organisasi yang lagi trend juga nih saat ini. Kita kupas dua topik dulu yaa yaitu tentang quiet quitting dan hustle culture. Nah hustle culture itu erat kaitannya dengan petuah semua orang tentunya, "jika mau sukses ya bekerja keraslah", "kesuksesanmu sama besarnya dengan usahamu" dan semacamanya ya bestalk yaitu yang menganggap bahwa kesuksesan akan tercapai jika benar-benar mendedikasikan hidup untuk pekerjaan dan bekerja sekeras-kerasnya hingga menempatkan pekerjaan di atas segalanya. Pokoknya life is all about work and make money come to you',
@@ -309,7 +307,6 @@ export const artikel = [
     id: 3,
     name: 'Artikel 3',
     images: '/image/artikel.png',
-    alt: 'Image Artikel 3',
     alt: 'Image Artikel 3',
     tanggal: '30 Desember 2024',
     kategori: 'Keluarga',
@@ -635,6 +632,210 @@ export const chatData = [
   { id: 7, sender: "User", message: "Saya juga baik, terima kasih!", time: "10:06" },
   { id: 8, sender: "User", message: "Saya juga baik, terima kasih!", time: "10:06" },
   { id: 9, sender: "Psikolog", message: "Ada yang bisa dibantu?", time: "10:07" },
+];
+
+export const tesmental = [
+  {
+    id: 1,
+    imageSrc: "/icons/v-tes.svg",
+    title: "Personality",
+    description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
+    buttonText: "Selengkapnya",
+    arrowSrc: "/icons/arrow_right.svg",
+    questions: [
+      {
+        id: 1,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+      },
+      {
+        id: 2,
+        question: "Apa yang paling Anda suka?",
+        options: [
+          { option: "A", text: "Saya suka berada di linkungan ramai." },
+          { option: "B", text: "Saya lebih suka sendirian." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+      },
+      {
+        id: 3,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+      },
+    ]
+  },
+  {
+    id: 2,
+    imageSrc: "/icons/v-tes.svg",
+    title: "Mentality",
+    description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
+    buttonText: "Selengkapnya",
+    arrowSrc: "/icons/arrow_right.svg",
+    questions: [
+      {
+        id: 1,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+        correctAnswer: "A"
+      },
+    ]
+  },
+  {
+    id: 3,
+    imageSrc: "/icons/v-tes.svg",
+    title: "Personality",
+    description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
+    buttonText: "Selengkapnya",
+    arrowSrc: "/icons/arrow_right.svg",
+    questions: [
+      {
+        id: 1,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+        correctAnswer: "A"
+      },
+    ]
+  },
+  {
+    id: 4,
+    imageSrc: "/icons/v-tes.svg",
+    title: "Mentality",
+    description: "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
+    buttonText: "Selengkapnya",
+    arrowSrc: "/icons/arrow_right.svg",
+    questions: [
+      {
+        id: 1,
+        question: "Apa yang paling menggambarkan kepribadian Anda?",
+        options: [
+          { option: "A", text: "Saya suka bekerja dalam tim." },
+          { option: "B", text: "Saya lebih suka bekerja sendiri." },
+          { option: "C", text: "Saya sangat suka berpetualang." },
+          { option: "D", text: "Saya orang yang sangat tenang." }
+        ],
+        correctAnswer: "A"
+      },
+    ]
+  },
+];
+
+export const PSIKOLOG_MENU = [
+  {id: 1, title: "Dashboard", headername: "Dashboard", url: "/psikolog/dashboard", icon:"/icons/sidebar/psikolog/dashboard.svg", iconhover:"/icons/sidebar/psikolog/dashboard(white).svg"},
+  {id: 2, title: "Chat Psikolog", headername: "Chat Konsultasi", url:"/psikolog/chat", icon:"/icons/sidebar/psikolog/chat.svg", iconhover:"/icons/sidebar/psikolog/chat(white).svg"},
+  {id: 3, title: "Buat Jadwal", headername: "Buat Jadwal Konsultasi", url:"/psikolog/buat-jadwal", icon:"/icons/sidebar/psikolog/buat-jadwal.svg", iconhover:"/icons/sidebar/psikolog/buat-jadwal(white).svg"},
+  {id: 4, title: "Lihat Jadwal", headername: "Lihat Jadwal Konsultasi", url:"/psikolog/lihat-jadwal", icon:"/icons/sidebar/psikolog/lihat-jadwal.svg", iconhover:"/icons/sidebar/psikolog/lihat-jadwal(white).svg"},
+  {id: 5, title: "Transaksi", headername: "Transaksi", url:"/psikolog/transaksi", icon:"/icons/sidebar/psikolog/transaksi.svg", iconhover:"/icons/sidebar/psikolog/transaksi(white).svg"},
+];
+
+export const ADMIN_MENU = [
+  { 
+    id: 1, 
+    title: "Dashboard", 
+    url: "/admin/dashboard", 
+    icon: "/icons/sidebar/admin/brown/dashboard.svg", 
+    iconhover: "/icons/sidebar/admin/white/dashboard.svg", 
+  },
+  { 
+    id: 2, 
+    title: "Pengguna", 
+    icon: "/icons/sidebar/admin/brown/pengguna.svg", 
+    iconhover: "/icons/sidebar/admin/white/pengguna.svg", 
+    subMenu: [
+      { title: "Umum", url: "/admin/pengguna/umum", icon: "/icons/sidebar/admin/brown/umum.svg", iconhover: "/icons/sidebar/admin/white/umum.svg"},
+      { title: "Mahasiswa", url: "/admin/pengguna/mahasiswa", icon: "/icons/sidebar/admin/brown/mahasiswa.svg", iconhover: "/icons/sidebar/admin/white/mahasiswa.svg"},
+    ]
+  },
+  { 
+    id: 3, 
+    title: "Psikolog", 
+    icon: "/icons/sidebar/admin/brown/psikolog.svg", 
+    iconhover: "/icons/sidebar/admin/white/psikolog.svg",
+    subMenu: [
+      { title: "Daftar Psikolog", url: "/admin/psikolog/daftar-psikolog", icon: "/icons/sidebar/admin/brown/daftar-psikolog.svg", iconhover: "/icons/sidebar/admin/white/daftar-psikolog.svg"},
+      { title: "Daftar Konselor", url: "/admin/psikolog/daftar-konselor", icon: "/icons/sidebar/admin/brown/daftar-konselor.svg", iconhover: "/icons/sidebar/admin/white/daftar-konselor.svg"},
+      { title: "Kelola Psikolog", url: "/admin/psikolog/kelola-psikolog", icon: "/icons/sidebar/admin/brown/kelola-psikolog.svg", iconhover: "/icons/sidebar/admin/white/kelola-psikolog.svg"},
+      { title: "Harga Psikolog", url: "/admin/psikolog/harga-psikolog",  icon: "/icons/sidebar/admin/brown/harga-psikolog.svg", iconhover: "/icons/sidebar/admin/white/harga-psikolog.svg"},
+    ]
+  },
+  { 
+    id: 4, 
+    title: "Konsultasi", 
+    icon: "/icons/sidebar/admin/brown/konsultasi.svg", 
+    iconhover: "/icons/sidebar/admin/white/konsultasi.svg",
+    subMenu: [
+      { title: "Topik Konsultasi", url: "/admin/konsultasi/topik-konsultasi" , icon: "/icons/sidebar/admin/brown/topik-konsultasi.svg", iconhover: "/icons/sidebar/admin/white/topik-konsultasi.svg"},
+      { title: "Jadwal Konsultasi", url: "/admin/konsultasi/jadwal-konsultasi", icon: "/icons/sidebar/admin/brown/jadwal-konsultasi.svg", iconhover: "/icons/sidebar/admin/white/jadwal-konsultasi.svg"},
+      { title: "Riwayat Konsultasi", url: "/admin/konsultasi/riwayat-konsultasi", icon: "/icons/sidebar/admin/brown/riwayat-konsultasi.svg", iconhover: "/icons/sidebar/admin/white/riwayat-konsultasi.svg"},
+    ]
+  },
+  { 
+    id: 5, 
+    title: "Keuangan", 
+    icon: "/icons/sidebar/admin/brown/keuangan.svg", 
+    iconhover: "/icons/sidebar/admin/white/keuangan.svg",
+    subMenu: [
+      { title: "Rekening", url: "/admin/keuangan/rekening", icon: "/icons/sidebar/admin/brown/rekening.svg", iconhover: "/icons/sidebar/admin/white/rekening.svg"},
+      { title: "Transaksi", url: "/admin/keuangan/transaksi", icon: "/icons/sidebar/admin/brown/transaksi.svg", iconhover: "/icons/sidebar/admin/white/transaksi.svg"},
+      { title: "Voucher", url: "/admin/keuangan/voucher", icon: "/icons/sidebar/admin/brown/voucher.svg", iconhover: "/icons/sidebar/admin/white/voucher.svg"},
+    ]
+  },
+  { 
+    id: 6, 
+    title: "Artikel", 
+    icon: "/icons/sidebar/admin/brown/artikel.svg", 
+    iconhover: "/icons/sidebar/admin/white/artikel.svg",
+    subMenu: [
+      { title: "Artikel", url: "/admin/artikel/artikel", icon: "/icons/sidebar/admin/brown/artikel.svg", iconhover: "/icons/sidebar/admin/white/artikel.svg"},
+      { title: "Kategori Artikel", url: "/admin/artikel/kategori-artikel" , icon: "/icons/sidebar/admin/brown/kategori-artikel.svg", iconhover: "/icons/sidebar/admin/white/kategori-artikel.svg"},
+      { title: "Informasi Kesehatan", url: "/admin/artikel/informasi-kesehatan" , icon: "/icons/sidebar/admin/brown/informasi-kesehatan.svg", iconhover: "/icons/sidebar/admin/white/informasi-kesehatan.svg"},
+    ]
+  },
+  { 
+    id: 7, 
+    title: "Lainnya", 
+    icon: "/icons/sidebar/admin/brown/lainnya.svg", 
+    iconhover: "/icons/sidebar/admin/white/lainnya.svg",
+    subMenu: [
+      { title: "Mitra", url: "/admin/lainnya/mitra" , icon: "/icons/sidebar/admin/brown/mitra.svg", iconhover: "/icons/sidebar/admin/white/mitra.svg"},
+      { title: "Tes Mental", url: "/admin/lainnya/tes-mental" , icon: "/icons/sidebar/admin/brown/tes-mental.svg", iconhover: "/icons/sidebar/admin/white/tes-mental.svg"},
+      { title: "Course", url: "/admin/lainnya/course" , icon: "/icons/sidebar/admin/brown/course.svg", iconhover: "/icons/sidebar/admin/white/course.svg"},
+    ]
+  },
+  { 
+    id: 8, 
+    title: "Pengaturan", 
+    url: "/admin/pengaturan", 
+    icon: "/icons/sidebar/admin/brown/pengaturan.svg", 
+    iconhover: "/icons/sidebar/admin/white/pengaturan.svg",
+  }
+];
+
+export const dashboard = [
+  { value: 1, label: 'Total Client', icon: '/icons/psikolog/dashboard/client.svg' },
+  { value: 4, label: 'Total Konsultasi', icon: '/icons/psikolog/dashboard/konsultasi.svg' },
+  { value: 5, label: 'Jadwal Konsultasi', icon: '/icons/psikolog/dashboard/jadwal.svg' },
+  { value: '4.6/5.0', label: 'Kepuasan Client', icon: '/icons/psikolog/dashboard/kepuasan.svg' }
 ];
 
 export const coursesData = [

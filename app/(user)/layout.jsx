@@ -1,17 +1,21 @@
+"use client";
+
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
-
-export const metadata = {
-  title: "Personality Talk",
-  description: "Layanan Konsultasi Psikologi Profesional Online",
-};
+import { UserProvider } from "@/constants/UserContext";
+import { usePathname } from "next/navigation";
 
 export default function UserLayout({ children }) {
+  const pathname = usePathname();
+
+  // Cek apakah halaman saat ini adalah "/konsultasi/chat"
+  const isChatPage = pathname === "/konsultasi/chat";
+
   return (
     <>
       <Navbar />
       {children}
-      <Footer />
+      {!isChatPage && <Footer />} {/* Sembunyikan Footer jika di halaman Chat */}
     </>
   );
 }

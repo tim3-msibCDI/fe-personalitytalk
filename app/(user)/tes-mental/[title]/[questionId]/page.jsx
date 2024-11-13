@@ -54,7 +54,7 @@ export default function TesForm({ params }) {
 
   return (
     <section className="p-6">
-      <div className="p-4">
+      <div className="p-6 ml-4 lg:ml-8 mr-4 lg:mr-8">
         <h3 className="text-h3 font-semibold mb-2">
           Pertanyaan {questionId}/{detailTes.questions.length}
         </h3>

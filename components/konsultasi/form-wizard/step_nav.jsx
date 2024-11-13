@@ -2,7 +2,7 @@ import { steps } from "@/constants";
 
 export default function StepNavigation({ currentStep }) {
   return (
-    <ul className="relative flex flex-row gap-x-2 p-6">
+    <ul className="relative flex flex-row gap-x-2 py-6">
       {steps.map((step, index) => (
         <li
           key={step.number}

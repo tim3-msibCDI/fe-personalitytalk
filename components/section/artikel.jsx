@@ -23,7 +23,7 @@ export default function Artikel() {
                 </p>
             </div>
             {/* Card Artikel */}
-            <div className="flex flex-wrap justify-center gap-12 bg-">
+            <div className="flex flex-wrap justify-center gap-12">
                 {displayedArticles.map((item) => (
                     <div
                         key={item.id}

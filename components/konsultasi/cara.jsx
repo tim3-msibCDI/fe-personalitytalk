@@ -21,7 +21,7 @@ export default function Cara() {
       </div>
 
       {/* Layout dua kolom */}
-      <div className="flex space-x-8 ml-12">
+      <div className="flex space-x-8 ml-4 lg:ml-8">
         {/* Kolom kanan (Daftar konsultasi) */}
         <div className="flex flex-col w-1/3 space-y-4">
           <div className="mt-4">

@@ -80,7 +80,7 @@ export default function Article() {
     }, []);
 
     return (
-        <div className="py-4 px-6 md:px-8 lg:px-12">
+        <div className="py-4 px-6 md:px-8 lg:px-12 ml-4 lg:ml-8 mr-8 lg:mr-12">
             <div className="flex justify-center p-4">
                 <Image
                     src="/image/ilustrasi/article.svg"
@@ -154,7 +154,7 @@ export default function Article() {
                     )}
                 </div>
             </div>
-            <div className="flex flex-wrap gap-x-10 gap-y-5 mt-10">
+            <div className="flex flex-wrap gap-x-10 gap-5 mt-2">
                 {currentItems.map((item) => (
                     <Link
                         key={item.id}
@@ -165,7 +165,7 @@ export default function Article() {
                         <Image
                             src={item.images}
                             alt={item.alt}
-                            width={400}
+                            width={330}
                             height={200}
                             className="rounded-t-lg"
                         />
