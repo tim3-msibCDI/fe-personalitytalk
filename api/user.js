@@ -193,3 +193,16 @@ export const logoutUser = async () => {
     throw new Error("Failed to log out");
   }
 };
+
+export const loginAdmin = async (email, password) => {
+  const response = await axios.post(
+    `${API_URL}/admin/login`,
+    { email, password },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data;
+};
