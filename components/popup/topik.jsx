@@ -1,25 +1,26 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getToken } from "@/lib/auth"; // Import getToken dari lib/auth.js
+import { getToken } from "@/lib/auth";
 
 export default function Topik({ onClose }) {
     const router = useRouter();
     const [topics, setTopics] = useState([]);
-    const [isLoading, setIsLoading] = useState(true); // Add loading state
+    const [selectedTopic, setSelectedTopic] = useState(null); // State untuk menyimpan topik yang dipilih
+    const [isLoading, setIsLoading] = useState(true);
 
-    // Redirect to login if not authenticated
+    // Redirect ke login jika tidak ada token
     useEffect(() => {
-        const token = getToken(); // Mengambil token menggunakan fungsi getToken
+        const token = getToken();
         if (!token) {
             router.push("/login");
         }
     }, [router]);
 
+    // Mengambil data topik dari API
     useEffect(() => {
         const fetchTopics = async () => {
             try {
-                const token = getToken(); // Ambil token dari cookies menggunakan getToken
-
+                const token = getToken();
                 if (!token) throw new Error("No authentication token available");
 
                 const response = await fetch(
@@ -45,14 +46,32 @@ export default function Topik({ onClose }) {
             } catch (error) {
                 console.error("Error fetching topics:", error);
             } finally {
-                setIsLoading(false); // Stop loading once data is fetched or error occurs
+                setIsLoading(false);
             }
         };
 
         fetchTopics();
     }, []);
 
-    if (isLoading) return null; // Show loading state or empty until data is fetched
+    // Fungsi untuk menangani pilihan topik
+    const handleSelectTopic = (topic) => {
+        setSelectedTopic(topic); // Set selected topic state
+
+        // Menyimpan ID topik yang dipilih ke localStorage
+        localStorage.setItem("selectedTopic", topic.id); // Simpan topic.id
+    };
+
+    // Fungsi untuk mengarahkan ke form jika topik sudah dipilih
+    const handleProceed = () => {
+        if (selectedTopic) {
+            // Pastikan topik sudah disimpan di localStorage sebelum mengarahkan
+            router.push("/konsultasi/form");
+        } else {
+            alert("Silakan pilih salah satu topik sebelum melanjutkan.");
+        }
+    };
+
+    if (isLoading) return null;
 
     return (
         <div className="modal-container">
@@ -69,6 +88,7 @@ export default function Topik({ onClose }) {
                             name="topik"
                             value={topic.topic_name}
                             className="radio-custom"
+                            onChange={() => handleSelectTopic(topic)} // Memanggil handleSelectTopic untuk menyimpan ID topik
                         />
                         <label htmlFor={topic.id} className="text-s">{topic.topic_name}</label>
                     </div>
@@ -83,7 +103,7 @@ export default function Topik({ onClose }) {
                 </button>
                 <button
                     className="bg-primary text-whitebg px-16 py-2 rounded-lg"
-                    onClick={() => router.push("/konsultasi/form")}
+                    onClick={handleProceed} // Mengarahkan ke form setelah topik dipilih
                 >
                     Pilih Topik
                 </button>
