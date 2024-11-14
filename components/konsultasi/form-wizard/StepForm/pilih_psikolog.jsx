@@ -99,6 +99,17 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
         .map((date) => selectedProfessional === "Psikolog" ? date.psikologData : date.konselorData)
         .flat(); // Flat untuk menggabungkan array konselor dan psikolog yang ada
 
+    // Pastikan onSelectPsikolog adalah fungsi yang valid
+    if (typeof onSelectPsikolog !== "function") {
+        console.error("onSelectPsikolog harus berupa fungsi.");
+    }
+    
+    //Simpan id psikolog di localstorage
+    const handleSelectPsikolog = (item) => {
+        localStorage.setItem("selectedPsikologId", item.id);
+        onSelectPsikolog(item);
+    }
+
     return (
         <div className="flex justify-between gap-8 py-6">
             <div className="w-2/5">
@@ -222,10 +233,10 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                                         </div>
                                     </div>
                                     <button
-                                        onClick={() => onSelectPsikolog(item)}
+                                        onClick={() => handleSelectPsikolog(item)}
                                          className="bg-primary text-white py-2 px-4 rounded"
                                     >
-                                        Pilih Psikolog
+                                        Pilih {selectedProfessional}
                                     </button>
                                 </div>
                             </div>

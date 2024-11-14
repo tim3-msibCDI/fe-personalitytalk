@@ -9,16 +9,27 @@ import { steps } from "@/constants";
 
 export default function FormPage() {
   const [currentStep, setCurrentStep] = useState(1);
+  const [selectedPsikolog, setSelectedPsikolog] = useState(null);
 
   // Fungsi untuk menghandle perubahan langkah
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
+  // Fungsi untuk menangani pemilihan psikolog
+  const handleSelectPsikolog = (psikolog) => {
+    setSelectedPsikolog(psikolog);
+    // Simpan id psikolog di localStorage
+    localStorage.setItem("selectedPsikologId", psikolog.id);
+    
+    // Setelah memilih psikolog, lanjutkan ke langkah berikutnya
+    nextStep();
+  };
+
   // Render komponen form berdasarkan langkah saat ini
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
-        return <FormPilihPsikolog />;
+        return <FormPilihPsikolog onSelectPsikolog={handleSelectPsikolog} />;
       case 2:
         return <FormPilihJadwal />;
       case 3:
@@ -36,24 +47,6 @@ export default function FormPage() {
       {/* Form Step */}
       <div className="mt-6">
         {renderStepContent()}
-      </div>
-
-      {/* Tombol Next & Previous */}
-      <div className="flex justify-between mt-4">
-        <button 
-          onClick={prevStep} 
-          disabled={currentStep === 1} 
-          className="btn btn-outline"
-        >
-          Sebelumnya
-        </button>
-        <button 
-          onClick={nextStep} 
-          disabled={currentStep === steps.length} 
-          className="btn btn-primary"
-        >
-          Selanjutnya
-        </button>
       </div>
     </div>
   );
