@@ -103,7 +103,7 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
     if (typeof onSelectPsikolog !== "function") {
         console.error("onSelectPsikolog harus berupa fungsi.");
     }
-    
+
     //Simpan id psikolog di localstorage
     const handleSelectPsikolog = (item) => {
         localStorage.setItem("selectedPsikologId", item.id);
@@ -201,7 +201,7 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                                             {item.available_schedule_count} jadwal tersedia
                                         </p>
                                     </div>
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex items-center gap-3 mt-1">
                                         <div className="flex items-center">
                                             <Image
                                                 src="/icons/bintang.png"
@@ -209,7 +209,7 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                                                 width={18}
                                                 height={18}
                                             />
-                                            <span className="text-sm">4.5</span>
+                                            <span className="ml-1 text-s">4.5</span>
                                         </div>
                                         <span className="text-gray-400">|</span>
                                         <div className="flex items-center">
@@ -219,7 +219,7 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                                                 width={18}
                                                 height={18}
                                             />
-                                            <p className="ml-1">{item.years_of_experience} tahun</p>
+                                            <p className="ml-1 text-s">{item.years_of_experience} tahun</p>
                                         </div>
                                         <span className="text-gray-400">|</span>
                                         <div className="flex items-center">
@@ -229,15 +229,22 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                                                 width={18}
                                                 height={18}
                                             />
-                                            <p className="ml-1">{selectedProfessional}</p>
+                                            <p className="ml-1 text-s">{item.category}</p>
                                         </div>
                                     </div>
-                                    <button
-                                        onClick={() => handleSelectPsikolog(item)}
-                                         className="bg-primary text-white py-2 px-4 rounded"
-                                    >
-                                        Pilih {selectedProfessional}
-                                    </button>
+                                    <div className="flex justify-between items-center">
+                                        <div className="flex gap-5">
+                                            {item.topics.map((topic, index) => (
+                                                <span key={index} className="text-s">{topic}</span>
+                                            ))}
+                                        </div>
+                                        <button
+                                            onClick={() => handleSelectPsikolog(item)}
+                                            className="bg-primary text-white py-2 px-4 rounded"
+                                        >
+                                            Pilih {selectedProfessional}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         ))}
