@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getToken } from "@/lib/auth";
 
-export default function FormPilihJadwal() {
+export default function FormPilihJadwal({ onBack }) {
     const router = useRouter();
 
     // State for selected psychologist details and schedule
@@ -79,7 +79,7 @@ export default function FormPilihJadwal() {
     return (
         <div className="py-6">
             {/* Tombol Back */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 cursor-pointer" onClick={onBack}>
                 <Image
                     src="/icons/arrow_back.png"
                     alt="icon kembali"

@@ -29,11 +29,11 @@ export default function FormPage() {
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
-        return <FormPilihPsikolog onSelectPsikolog={handleSelectPsikolog} />;
+        return <FormPilihPsikolog onSelectPsikolog={handleSelectPsikolog}/>;
       case 2:
-        return <FormPilihJadwal />;
+        return <FormPilihJadwal onBack={prevStep}/>;
       case 3:
-        return <FormBayar />;
+        return <FormBayar/>;
       default:
         return null;
     }
