@@ -167,16 +167,20 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                     {/* Tombol Psikolog dan Konselor */}
                     <div className="flex justify-between gap-4 text-h3 font-semibold mb-4">
                         <button
-                            onClick={() => setSelectedProfessional("Psikolog")}
-                            className={`py-2 w-full rounded 
-                                ${selectedProfessional === "Psikolog" ? 'bg-primary text-white' : 'border border-primary text-primary'}`}
+                            onClick={() => {
+                                setSelectedProfessional("Psikolog");
+                                localStorage.setItem("selectedProfessional", "Psikolog");
+                            }}
+                            className={`py-2 w-full rounded ${selectedProfessional === "Psikolog" ? 'bg-primary text-white' : 'border border-primary text-primary'}`}
                         >
                             Psikolog
                         </button>
                         <button
-                            onClick={() => setSelectedProfessional("Konselor")}
-                            className={`py-2 w-full rounded 
-                                ${selectedProfessional === "Konselor" ? 'bg-primary text-white' : 'border border-primary text-primary'}`}
+                            onClick={() => {
+                                setSelectedProfessional("Konselor");
+                                localStorage.setItem("selectedProfessional", "Konselor");
+                            }}
+                            className={`py-2 w-full rounded ${selectedProfessional === "Konselor" ? 'bg-primary text-white' : 'border border-primary text-primary'}`}
                         >
                             Konselor
                         </button>
