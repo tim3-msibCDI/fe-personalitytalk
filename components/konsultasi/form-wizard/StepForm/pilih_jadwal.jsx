@@ -88,156 +88,162 @@ export default function FormPilihJadwal({ onBack }) {
                 />
                 <p className="text-m font-bold">Kembali</p>
             </div>
-            <div className="flex gap-8 mt-6">
-                {/* Konten Kanan */}
-                <div className="w-2/5 bg-primarylight2 rounded-md">
-                    <div className="p-4">
-                        <h3 className="text-h3 font-semibold text-textcolor mb-4">Detail Profil Psikolog</h3>
-                        <div className="flex flex-row gap-4">
-                            <div className="w-28 h-28 rounded overflow-hidden">
-                                <Image className="mb-2 object-cover w-full h-full"
-                                    src={`https://3616-114-10-44-25.ngrok-free.app/${selectedPsikolog?.photo_profile}`}
-                                    alt={`Photo ${selectedPsikolog?.name}`}
-                                    width={100}
-                                    height={100}
-                                />
-                            </div>
-                            <div className="flex flex-col">
-                                <p className="text-m font-semibold">{selectedPsikolog?.name}</p>
-                                {/* Rating, Pengalaman, dan Role */}
-                                <div className="flex items-center gap-3 mt-1">
-                                    <div className="flex items-center">
-                                        <Image
-                                            src="/icons/bintang.png"
-                                            alt="Icon Star"
-                                            width={18}
-                                            height={18}
-                                        />
-                                        <p className="ml-1">4.8</p>
-                                    </div>
-                                    <span className="text-gray-400">|</span>
-                                    <div className="flex items-center">
-                                        <Image
-                                            src="/icons/i-konsultasi.png"
-                                            alt="Icon Konsultasi"
-                                            width={18}
-                                            height={18}
-                                        />
-                                        <p className="ml-1">{selectedPsikolog?.years_of_experience} tahun</p>
-                                    </div>
-                                    <span className="text-gray-400">|</span>
-                                    <div className="flex items-center">
-                                        <Image
-                                            src="/icons/role.png"
-                                            alt="Icon Role"
-                                            width={18}
-                                            height={18}
-                                        />
-                                        <p className="ml-1">{selectedPsikolog?.category_name}</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div className="flex gap-2 mt-3">
-                                        <p className="text-s font-semibold">No SIPP</p>
-                                        <p className="text-s">{selectedPsikolog?.sipp}</p>
-                                    </div>
-                                </div>
-                                <p className="mt-1 text-m font-bold">
-                                    {selectedPsikolog ? formatPrice(selectedPsikolog?.price) : "Rp 0,00"}/sesi
-                                </p>
-                            </div>
-                        </div>
-
-                        <hr className="my-4 border-1 border-gray-400" />
-
-                        <p className="text-justify">{selectedPsikolog?.description}</p>
-
-                        <hr className="my-4 border-1 border-gray-400" />
-                        <div>
-                            <div className="flex items-center gap-2">
-                                <Image
-                                    src="/icons/topik_detail.png"
-                                    alt="Icon Topik"
-                                    width={24}
-                                    height={24}
-                                />
-                                <p className="text-m font-semibold">Topik</p>
-                            </div>
-                            <div className="mt-2">
-                                <ul className="flex flex-wrap items-center gap-4">
-                                    {selectedPsikolog?.topics?.map((topic, index) => (
-                                        <li
-                                            key={index}
-                                            className="bg-primarylight px-3 py-1 rounded-md text-primary"
-                                        >
-                                            {topic}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+    
+            {/* Loading */}
+            {isLoading ? (
+                <div className="mt-4 text-center">
+                    <p className="text-m text-gray-500">Memuat data, harap tunggu...</p>
                 </div>
-                {/* Konten Kiri */}
-                <div className="w-3/5 h-fit bg-primarylight2 rounded-md">
-                    <div className="p-4">
-                        <h3 className="text-h3 font-semibold">Jadwal {selectedPsikolog?.category_name}</h3>
-                        <p className="text-m">Pilih jadwal untuk sesi Konsultasi kamu</p>
-
-                        {/* Tanggal dan Hari */}
-                        <div className="flex gap-4 overflow-x-scroll w-full mt-4 mb-2"
-                            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                            {isLoading ? (
-                                <p className="text-m text-gray-500">Loading jadwal...</p>
-                            ) : weeklySchedule?.length > 0 ? (
-                                weeklySchedule.map((schedule, index) => {
-                                    // Pisahkan bagian hari dan tanggal
-                                    const [day, ...dateParts] = schedule.date.split(" ");
-                                    const date = dateParts.join(" ");
-
-                                    return (
-                                        <div
-                                            key={index}
-                                            className={`flex flex-col items-center cursor-pointer py-2 px-4 w-24 rounded-md ${selectedDate === schedule ? 'bg-primary text-white' : 'bg-primarylight text-black'}`}
-                                            onClick={() => setSelectedDate(schedule)}
-                                        >
-                                            <p className="text-s px-2 whitespace-nowrap text-center">{date}</p>
-                                            <p className="text-m font-semibold text-center">{day}</p>
+            ) : (
+                <div className="flex gap-8 mt-6">
+                    {/* Konten Kanan */}
+                    <div className="w-2/5 bg-primarylight2 rounded-md">
+                        <div className="p-4">
+                            <h3 className="text-h3 font-semibold text-textcolor mb-4">Detail Profil Psikolog</h3>
+                            <div className="flex flex-row gap-4">
+                                <div className="w-28 h-28 rounded overflow-hidden">
+                                    <Image className="mb-2 object-cover w-full h-full"
+                                        src={`https://3616-114-10-44-25.ngrok-free.app/${selectedPsikolog?.photo_profile}`}
+                                        alt={`Photo ${selectedPsikolog?.name}`}
+                                        width={100}
+                                        height={100}
+                                    />
+                                </div>
+                                <div className="flex flex-col">
+                                    <p className="text-m font-semibold">{selectedPsikolog?.name}</p>
+                                    {/* Rating, Pengalaman, dan Role */}
+                                    <div className="flex items-center gap-3 mt-1">
+                                        <div className="flex items-center">
+                                            <Image
+                                                src="/icons/bintang.png"
+                                                alt="Icon Star"
+                                                width={18}
+                                                height={18}
+                                            />
+                                            <p className="ml-1">{selectedPsikolog?.rating}</p>
                                         </div>
-                                    );
-                                })
-                            ) : (
-                                <p className="text-m text-gray-500">Tidak ada jadwal tersedia.</p>
-                            )}
-                        </div>
-
-                        {/* Tampilkan waktu untuk tanggal yang dipilih */}
-                        {selectedDate && (
-                            <div className="mt-6">
-                                <h4 className="text-h3 font-semibold mb-2">Pilih Waktu Konsultasi</h4>
-                                <ul className="grid grid-cols-2 gap-4">
-                                    {selectedDate.schedules.map((timeSlot, timeIndex) => (
-                                        <li
-                                            key={timeIndex}
-                                            className={`py-2 rounded-md text-center text-m font-semibold cursor-pointer ${selectedTime === timeSlot ? 'bg-primary text-white' : 'bg-primarylight'}`}
-                                            onClick={() => setSelectedTime(timeSlot)}
-                                        >
-                                            {timeSlot.time_slot}
-                                        </li>
-                                    ))}
-                                </ul>
+                                        <span className="text-gray-400">|</span>
+                                        <div className="flex items-center">
+                                            <Image
+                                                src="/icons/i-konsultasi.png"
+                                                alt="Icon Konsultasi"
+                                                width={18}
+                                                height={18}
+                                            />
+                                            <p className="ml-1">{selectedPsikolog?.years_of_experience} tahun</p>
+                                        </div>
+                                        <span className="text-gray-400">|</span>
+                                        <div className="flex items-center">
+                                            <Image
+                                                src="/icons/role.png"
+                                                alt="Icon Role"
+                                                width={18}
+                                                height={18}
+                                            />
+                                            <p className="ml-1">{selectedPsikolog?.category_name}</p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="flex gap-2 mt-3">
+                                            <p className="text-s font-semibold">No SIPP</p>
+                                            <p className="text-s">{selectedPsikolog?.sipp}</p>
+                                        </div>
+                                    </div>
+                                    <p className="mt-1 text-m font-bold">
+                                        {selectedPsikolog ? formatPrice(selectedPsikolog?.price) : "Rp 0,00"}/sesi
+                                    </p>
+                                </div>
                             </div>
-                        )}
-
-                        <button
-                            className={`mt-8 text-m w-full py-2 rounded-md font-semibold ${selectedTime ? 'bg-primary text-white' : 'bg-disable text-whitebg'}`}
-                            disabled={!selectedTime}
-                        >
-                            Pilih Jadwal
-                        </button>
+    
+                            <hr className="my-4 border-1 border-gray-400" />
+    
+                            <p className="text-justify">{selectedPsikolog?.description}</p>
+    
+                            <hr className="my-4 border-1 border-gray-400" />
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <Image
+                                        src="/icons/topik_detail.png"
+                                        alt="Icon Topik"
+                                        width={24}
+                                        height={24}
+                                    />
+                                    <p className="text-m font-semibold">Topik</p>
+                                </div>
+                                <div className="mt-2">
+                                    <ul className="flex flex-wrap items-center gap-4">
+                                        {selectedPsikolog?.topics?.map((topic, index) => (
+                                            <li
+                                                key={index}
+                                                className="bg-primarylight px-3 py-1 rounded-md text-primary"
+                                            >
+                                                {topic}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Konten Kiri */}
+                    <div className="w-3/5 h-fit bg-primarylight2 rounded-md">
+                        <div className="p-4">
+                            <h3 className="text-h3 font-semibold">Jadwal {selectedPsikolog?.category_name}</h3>
+                            <p className="text-m">Pilih jadwal untuk sesi Konsultasi kamu</p>
+    
+                            {/* Tanggal dan Hari */}
+                            <div className="flex gap-4 overflow-x-scroll w-full mt-4 mb-2"
+                                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                                {weeklySchedule?.length > 0 ? (
+                                    weeklySchedule.map((schedule, index) => {
+                                        // Pisahkan bagian hari dan tanggal
+                                        const [day, ...dateParts] = schedule.date.split(" ");
+                                        const date = dateParts.join(" ");
+    
+                                        return (
+                                            <div
+                                                key={index}
+                                                className={`flex flex-col items-center cursor-pointer py-2 px-4 w-24 rounded-md ${selectedDate === schedule ? 'bg-primary text-white' : 'bg-primarylight text-black'}`}
+                                                onClick={() => setSelectedDate(schedule)}
+                                            >
+                                                <p className="text-s px-2 whitespace-nowrap text-center">{date}</p>
+                                                <p className="text-m font-semibold text-center">{day}</p>
+                                            </div>
+                                        );
+                                    })
+                                ) : (
+                                    <p className="text-m text-gray-500">Tidak ada jadwal tersedia.</p>
+                                )}
+                            </div>
+    
+                            {/* Tampilkan waktu untuk tanggal yang dipilih */}
+                            {selectedDate && (
+                                <div className="mt-6">
+                                    <h4 className="text-h3 font-semibold mb-2">Pilih Waktu Konsultasi</h4>
+                                    <ul className="grid grid-cols-2 gap-4">
+                                        {selectedDate.schedules.map((timeSlot, timeIndex) => (
+                                            <li
+                                                key={timeIndex}
+                                                className={`py-2 rounded-md text-center text-m font-semibold cursor-pointer ${selectedTime === timeSlot ? 'bg-primary text-white' : 'bg-primarylight'}`}
+                                                onClick={() => setSelectedTime(timeSlot)}
+                                            >
+                                                {timeSlot.time_slot}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+    
+                            <button
+                                className={`mt-8 text-m w-full py-2 rounded-md font-semibold ${selectedTime ? 'bg-primary text-white' : 'bg-disable text-whitebg'}`}
+                                disabled={!selectedTime}
+                            >
+                                Pilih Jadwal
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
-    );
+    );    
 }

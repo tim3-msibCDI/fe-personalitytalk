@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { getToken } from "@/lib/auth";
+import TidakTersedia from "../../tidak-tersedia";
 
 export default function FormPilihPsikolog({ onSelectPsikolog }) {
     const router = useRouter();
@@ -182,73 +183,77 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                     </div>
 
                     {/* Daftar Psikolog/Konselor */}
-                    <div className="mt-6 max-h-[400px] overflow-y-auto pr-4">
-                        {filteredData.map((item, index) => (
-                            <div key={index} className="flex gap-3 mb-4 border-b border-textcolor pb-4">
-                                <div className="w-24 h-24 rounded overflow-hidden">
-                                    <Image
-                                        src={`https://3616-114-10-44-25.ngrok-free.app/${item.photo_profile}`}
-                                        alt={`Foto ${item.name}`}
-                                        width={100}
-                                        height={100}
-                                        className="object-cover w-full h-full"
-                                    />
+                    {filteredData.length === 0 ? (
+                        <TidakTersedia />
+                    ) : (
+                        <div className="mt-6 max-h-[400px] overflow-y-auto pr-4">
+                            {filteredData.map((item, index) => (
+                                <div key={index} className="flex gap-3 mb-4 border-b border-textcolor pb-4">
+                                    <div className="w-24 h-24 rounded overflow-hidden">
+                                        <Image
+                                            src={`https://3616-114-10-44-25.ngrok-free.app/${item.photo_profile}`}
+                                            alt={`Foto ${item.name}`}
+                                            width={100}
+                                            height={100}
+                                            className="object-cover w-full h-full"
+                                        />
+                                    </div>
+                                    <div className="flex flex-col w-full">
+                                        <div className="flex justify-between items-center">
+                                            <p className="font-semibold">{item.name}</p>
+                                            <p className="text-sm text-primary">
+                                                {item.available_schedule_count} jadwal tersedia
+                                            </p>
+                                        </div>
+                                        <div className="flex items-center gap-3 mt-1">
+                                            <div className="flex items-center">
+                                                <Image
+                                                    src="/icons/bintang.png"
+                                                    alt="Icon Star"
+                                                    width={18}
+                                                    height={18}
+                                                />
+                                                <span className="ml-1 text-s">{item.rating}</span>
+                                            </div>
+                                            <span className="text-gray-400">|</span>
+                                            <div className="flex items-center">
+                                                <Image
+                                                    src="/icons/i-konsultasi.png"
+                                                    alt="Icon Konsultasi"
+                                                    width={18}
+                                                    height={18}
+                                                />
+                                                <p className="ml-1 text-s">{item.years_of_experience} tahun</p>
+                                            </div>
+                                            <span className="text-gray-400">|</span>
+                                            <div className="flex items-center">
+                                                <Image
+                                                    src="/icons/role.png"
+                                                    alt="Icon Role"
+                                                    width={18}
+                                                    height={18}
+                                                />
+                                                <p className="ml-1 text-s">{item.category}</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <div className="flex gap-5">
+                                                {item.topics.map((topic, index) => (
+                                                    <span key={index} className="text-s">{topic}</span>
+                                                ))}
+                                            </div>
+                                            <button
+                                                onClick={() => handleSelectPsikolog(item)}
+                                                className="bg-primary text-white py-2 px-4 rounded"
+                                            >
+                                                Pilih {selectedProfessional}
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="flex flex-col w-full">
-                                    <div className="flex justify-between items-center">
-                                        <p className="font-semibold">{item.name}</p>
-                                        <p className="text-sm text-primary">
-                                            {item.available_schedule_count} jadwal tersedia
-                                        </p>
-                                    </div>
-                                    <div className="flex items-center gap-3 mt-1">
-                                        <div className="flex items-center">
-                                            <Image
-                                                src="/icons/bintang.png"
-                                                alt="Icon Star"
-                                                width={18}
-                                                height={18}
-                                            />
-                                            <span className="ml-1 text-s">4.5</span>
-                                        </div>
-                                        <span className="text-gray-400">|</span>
-                                        <div className="flex items-center">
-                                            <Image
-                                                src="/icons/i-konsultasi.png"
-                                                alt="Icon Konsultasi"
-                                                width={18}
-                                                height={18}
-                                            />
-                                            <p className="ml-1 text-s">{item.years_of_experience} tahun</p>
-                                        </div>
-                                        <span className="text-gray-400">|</span>
-                                        <div className="flex items-center">
-                                            <Image
-                                                src="/icons/role.png"
-                                                alt="Icon Role"
-                                                width={18}
-                                                height={18}
-                                            />
-                                            <p className="ml-1 text-s">{item.category}</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-between items-center">
-                                        <div className="flex gap-5">
-                                            {item.topics.map((topic, index) => (
-                                                <span key={index} className="text-s">{topic}</span>
-                                            ))}
-                                        </div>
-                                        <button
-                                            onClick={() => handleSelectPsikolog(item)}
-                                            className="bg-primary text-white py-2 px-4 rounded"
-                                        >
-                                            Pilih {selectedProfessional}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
