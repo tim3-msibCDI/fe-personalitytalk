@@ -11,6 +11,8 @@ export default function FormPilihJadwal({ onBack, onNext }) {
     const [weeklySchedule, setWeeklySchedule] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
+    const [reviews, setReviews] = useState([]);
+    const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
     const [isLoading, setIsLoading] = useState(true); // Loading state
 
     useEffect(() => {
@@ -55,6 +57,9 @@ export default function FormPilihJadwal({ onBack, onNext }) {
             setSelectedPsikolog(result.data.psikolog);
             setWeeklySchedule(result.data.weekly_schedule);
 
+            // Set reviews data
+            setReviews(result.data.psikolog.list_top_ratings);
+
             // Automatically select the first available date
             if (result.data.weekly_schedule.length > 0) {
                 setSelectedDate(result.data.weekly_schedule[0]);
@@ -85,6 +90,20 @@ export default function FormPilihJadwal({ onBack, onNext }) {
             onNext();
         }
     };
+
+    //Fungsi navigasi review
+    const handlePrevReview = () => {
+        setCurrentReviewIndex((prevIndex) =>
+            prevIndex === 0 ? reviews.length - 1 : prevIndex - 1
+        );
+    };
+
+    const handleNextReview = () => {
+        setCurrentReviewIndex((prevIndex) =>
+            prevIndex === reviews.length - 1 ? 0 : prevIndex + 1
+        );
+    };
+
 
     return (
         <div className="py-6">
@@ -193,6 +212,48 @@ export default function FormPilihJadwal({ onBack, onNext }) {
                                     </ul>
                                 </div>
                             </div>
+
+                            <hr className="my-4 border-1 border-black" />
+
+                            <div>
+                                <div className="flex items-center gap-2 mb-2">
+                                    <Image
+                                        src="/icons/bintang.png"
+                                        alt="Icon Star"
+                                        width={24}
+                                        height={24}
+                                    />
+                                    <p className="text-m font-semibold">Review</p>
+                                </div>
+                                {reviews.length > 0 ? (
+                                    <div className="flex items-center justify-between mb-3">
+                                        {/* Tombol Previous */}
+                                        <button onClick={handlePrevReview}>
+                                            <Image
+                                                src="/icons/kiri.png"
+                                                alt="Icon Previous"
+                                                width={11}
+                                                height={30}
+                                            />
+                                        </button>
+                                        {/* Review saat ini */}
+                                        <p className="mx-4 bg-primarylight rounded text-s px-4 py-2 w-[380px] h-[100px] overflow-y-auto">
+                                            {reviews[currentReviewIndex].review}
+                                        </p>
+                                        {/* Tombol Next */}
+                                        <button onClick={handleNextReview}>
+                                            <Image
+                                                src="/icons/kanan.png"
+                                                alt="Icon Next"
+                                                width={11}
+                                                height={30}
+                                            />
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <p>Belum ada review</p>
+                                )}
+                            </div>
                         </div>
                     </div>
                     {/* Konten Kiri */}
@@ -252,8 +313,8 @@ export default function FormPilihJadwal({ onBack, onNext }) {
 
                             <button
                                 className={`mt-8 text-m w-full py-2 rounded-md font-semibold ${selectedTime
-                                        ? "bg-primary text-white"
-                                        : "bg-disable text-whitebg"
+                                    ? "bg-primary text-white"
+                                    : "bg-disable text-whitebg"
                                     }`}
                                 onClick={handleSelectSchedule}
                                 disabled={!selectedTime}
