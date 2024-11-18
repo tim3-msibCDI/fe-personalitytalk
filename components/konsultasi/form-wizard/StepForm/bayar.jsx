@@ -4,17 +4,27 @@ import { getToken } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import Modal from "@/components/modals/modal";
 import SyaratKetentuan from "@/components/popup/snk";
+import VoucherGagal from "@/components/popup/voucher-gagal";
 
 export default function FormBayar({ onBack }) {
     const router = useRouter();
     const [selectedPsikolog, setSelectedPsikolog] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     //State untuk modal
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
+
+    //State untuk modal voucher
+    const [isVoucherGagalOpen, setIsVoucherGagalOpen] = useState(false);
+    const openVoucherGagalModal = () => {
+        console.log("Modal VoucherGagal dibuka"); // Debug log
+        setIsVoucherGagalOpen(true);
+    };    
+    const closeVoucherGagalModal = () => setIsVoucherGagalOpen(false);
 
     //State untuk mengubah warna button ketika sudah menginput
     const [inputValue, setInputValue] = useState("");
@@ -97,29 +107,28 @@ export default function FormBayar({ onBack }) {
                 },
             });
 
-            if (!response.ok) {
-                throw new Error("Gagal redeem voucher");
-            }
-
             const result = await response.json();
-            if (result.success) {
-                console.log("Voucher redeemed:", result.data);
-                // state voucherData
-                setVoucherData(result.data);
-            } else {
-                console.error("Redeem voucher gagal:", result.message);
+            console.log("Redeem Response:", result);
+
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || "Gagal redeem voucher");
             }
+            console.log("Voucher redeemed:", result.data);
+            // state voucherData
+            setVoucherData(result.data);
         } catch (error) {
-            console.error(error.message);
+            console.error("Redeem Error:", error.message);
+            setErrorMessage(error.message || "Terjadi kesalahan saat redeem voucher");
+            setIsVoucherGagalOpen(true);
         }
-    };
+    };   
 
     useEffect(() => {
         fetchData();
     }, []);
 
     if (loading) return <p>Memuat data...</p>;
-    if (error) return <p>Error: {error}</p>;
+    if (error && !isVoucherGagalOpen) return <p>Error: {error}</p>;
 
     //Fungsi kalkulasi durasi konsultasi
     function calculateDuration(consultationTime) {
@@ -263,7 +272,7 @@ export default function FormBayar({ onBack }) {
                             </div>
                             <div className="flex justify-between">
                                 <p>Total Diskon Voucher</p>
-                                <p><b>{voucherData ? formatPrice(voucherData?.discount_value) : "0,00"}</b></p>
+                                <p><b>{voucherData ? formatPrice(voucherData?.discount_value) : "Rp 0,00"}</b></p>
                             </div>
                         </div>
                         <hr className="border-1 border-black mb-4 mt-2" />
@@ -300,6 +309,10 @@ export default function FormBayar({ onBack }) {
                     {/* Modal component */}
                     <Modal isOpen={isModalOpen} onClose={closeModal}>
                         <SyaratKetentuan onClose={closeModal} /> {/* Mengirim fungsi closeModal sebagai prop */}
+                    </Modal>
+                    {/* Modal Gagal */}
+                    <Modal isOpen={isVoucherGagalOpen} onClose={closeVoucherGagalModal}>
+                        <VoucherGagal onClose={closeVoucherGagalModal} message={errorMessage} /> {/* Mengirim fungsi closeModal sebagai prop */}
                     </Modal>
                 </div>
             </div>
