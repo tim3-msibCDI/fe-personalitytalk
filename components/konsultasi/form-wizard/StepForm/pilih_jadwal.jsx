@@ -213,7 +213,7 @@ export default function FormPilihJadwal({ onBack, onNext }) {
                                 </div>
                             </div>
 
-                            <hr className="my-4 border-1 border-black" />
+                            <hr className="my-4 border-1 border-gray-400" />
 
                             <div>
                                 <div className="flex items-center gap-2 mb-2">

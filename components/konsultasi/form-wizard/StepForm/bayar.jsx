@@ -1,15 +1,26 @@
 import Image from "next/image";
-import PilihPembayaran from "../pilih_bayar";
-import Pembayaran from "../pembayaran";
 import { useState, useEffect } from "react";
 import { getToken } from "@/lib/auth";
 import { useRouter } from "next/navigation";
+import Modal from "@/components/modals/modal";
+import SyaratKetentuan from "@/components/popup/snk";
 
 export default function FormBayar({ onBack }) {
     const router = useRouter();
     const [selectedPsikolog, setSelectedPsikolog] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    //State untuk modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
+    //State untuk mengubah warna button ketika sudah menginput
+    const [inputValue, setInputValue] = useState("");
+
+    //Simpan voucher
+    const [voucherData, setVoucherData] = useState(null);
 
     useEffect(() => {
         const token = getToken();
@@ -48,13 +59,58 @@ export default function FormBayar({ onBack }) {
             }
 
             const { data } = await response.json();
-            console.log("Data dari API:", data);
             setSelectedPsikolog(data);
         } catch (err) {
             console.error(err);
             setError(err.message);
         } finally {
             setLoading(false);
+        }
+    };
+
+    // Fungsi tuk redeem voucher
+    const redeemVoucher = async () => {
+        try {
+            const token = getToken();
+            if (!token) {
+                throw new Error("Token tidak tersedia");
+            }
+
+            const psi_id = localStorage.getItem("selectedPsikologId");
+            if (!psi_id) {
+                throw new Error("Psi_id tidak tersedia di localStorage");
+            }
+
+            if (!inputValue) {
+                throw new Error("Kode voucher belum diisi");
+            }
+
+            // Susun URL dengan query string
+            const url = `${process.env.NEXT_PUBLIC_API_URL}/consultation/voucher-redeem?code=${inputValue}&psi_id=${psi_id}`;
+
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": "69420",
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Gagal redeem voucher");
+            }
+
+            const result = await response.json();
+            if (result.success) {
+                console.log("Voucher redeemed:", result.data);
+                // state voucherData
+                setVoucherData(result.data);
+            } else {
+                console.error("Redeem voucher gagal:", result.message);
+            }
+        } catch (error) {
+            console.error(error.message);
         }
     };
 
@@ -68,30 +124,39 @@ export default function FormBayar({ onBack }) {
     //Fungsi kalkulasi durasi konsultasi
     function calculateDuration(consultationTime) {
         if (!consultationTime) return 0;
-    
+
         try {
             // Memisahkan waktu mulai dan waktu selesai
             const [startTime, endTime] = consultationTime.split(" - ");
-    
+
             // Memecah jam dan menit dari waktu mulai
             const [startHour, startMinute] = startTime.split(":").map(Number);
-    
+
             // Memecah jam dan menit dari waktu selesai
             const [endHour, endMinute] = endTime.split(":").map(Number);
-    
+
             // Mengubah waktu ke dalam format Date
             const startDate = new Date(0, 0, 0, startHour, startMinute);
             const endDate = new Date(0, 0, 0, endHour, endMinute);
-    
+
             // Menghitung durasi dalam menit
             const duration = (endDate - startDate) / (1000 * 60);
-    
+
             return duration > 0 ? duration : 0; // Pastikan durasi tidak negatif
         } catch (error) {
             console.error("Error saat menghitung durasi:", error);
             return 0; // Kembalikan 0 jika ada error
         }
-    }    
+    }
+
+    // Format harga
+    const formatPrice = (price) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 2
+        }).format(price).replace('Rp', 'Rp ');
+    };
 
     return (
         <div className="py-6">
@@ -100,6 +165,7 @@ export default function FormBayar({ onBack }) {
                 <p className="text-m font-bold">Kembali</p>
             </div>
             <div className="flex gap-8 mt-6">
+                {/* Detail Konsultasi */}
                 <div className="w-2/5">
                     <div className="py-4">
                         <h3 className="text-h3 font-semibold text-textcolor mb-2">Pemesanan</h3>
@@ -153,6 +219,88 @@ export default function FormBayar({ onBack }) {
                             </div>
                         </div>
                     </div>
+                </div>
+                {/* Masukkan voucher, snk */}
+                <div className="w-3/5">
+                    <div className="bg-primarylight2 rounded-lg p-4 mb-6">
+                        <h3 className="text-h3 font-semibold mb-4">Pembayaran</h3>
+                        <p className="text-m mb-4">Metode Pembayaran yang tersedia: <b>Transfer BANK BSI</b></p>
+
+                        <hr className="border-1 border-black mb-4 mt-2" />
+                        {/* Voucher */}
+                        <div>
+                            <label htmlFor="voucher" className="block mb-2 text-m font-semibold text-textcolor">
+                                Voucher
+                            </label>
+                            <div className="flex flex-1 gap-2">
+                                <input
+                                    type="text"
+                                    id="voucher"
+                                    aria-describedby="voucher-text-explanation"
+                                    className="bg-gray-50 border border-gray-300 text-text2 text-s rounded-lg block w-full p-2.5"
+                                    placeholder="Masukkan Voucher Anda"
+                                    value={inputValue}
+                                    onChange={(e) => setInputValue(e.target.value)}
+                                />
+                                <button
+                                    onClick={redeemVoucher}
+                                    className={`rounded-lg text-whitebg text-s px-4 ${inputValue ? "bg-primary" : "bg-disable"}`}
+                                    disabled={!inputValue}
+                                >
+                                    Reedem
+                                </button>
+                            </div>
+                        </div>
+                        {/* Harga */}
+                        <div className="text-m mt-3 space-y-2">
+                            <div className="flex justify-between">
+                                <p>Total Harga Konsultasi</p>
+                                <p>
+                                    <b>
+                                        {voucherData ? formatPrice(voucherData.consul_fee) : formatPrice(selectedPsikolog.price)}
+                                    </b>
+                                </p>
+                            </div>
+                            <div className="flex justify-between">
+                                <p>Total Diskon Voucher</p>
+                                <p><b>{voucherData ? formatPrice(voucherData?.discount_value) : "0,00"}</b></p>
+                            </div>
+                        </div>
+                        <hr className="border-1 border-black mb-4 mt-2" />
+                        <div className="text-h3 font-semibold flex justify-between">
+                            <p>Total Biaya</p>
+                            <p>{voucherData ? formatPrice(voucherData?.final_amount) : formatPrice(selectedPsikolog.price)}</p>
+                        </div>
+                        {/* SNK */}
+                        <div className="mt-4">
+                            <div className="flex items-center mb-4">
+                                <input
+                                    id="checkbox"
+                                    type="checkbox"
+                                    className="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary focus:ring-2"
+                                />
+                                <label htmlFor="checkbox" className="ml-2 text-sm font-medium text-gray-900">
+                                    Saya telah membaca dan menyetujui{" "}
+                                    <span
+                                        className="text-primary cursor-pointer underline"
+                                        onClick={openModal}
+                                    >
+                                        Syarat & Ketentuan
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        {/* Button bayar */}
+                        <button
+                            className={`text-m w-full py-2 rounded-md font-semibold text-whitebg ${inputValue ? "bg-primary" : "bg-disable"}`}
+                        >
+                            Bayar
+                        </button>
+                    </div>
+                    {/* Modal component */}
+                    <Modal isOpen={isModalOpen} onClose={closeModal}>
+                        <SyaratKetentuan onClose={closeModal} /> {/* Mengirim fungsi closeModal sebagai prop */}
+                    </Modal>
                 </div>
             </div>
         </div>
