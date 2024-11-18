@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getToken } from "@/lib/auth";
 
-export default function FormPilihJadwal({ onBack }) {
+export default function FormPilihJadwal({ onBack, onNext }) {
     const router = useRouter();
 
     // State for selected psychologist details and schedule
@@ -76,6 +76,16 @@ export default function FormPilihJadwal({ onBack }) {
         }).format(price).replace('Rp', 'Rp ');
     };
 
+    const handleSelectSchedule = () => {
+        if (selectedTime) {
+            //Simpan psch_id ke localstorage
+            localStorage.setItem("selectedPschId", selectedTime.psch_id);
+
+            //Pindah ke langkah berikutnya
+            onNext();
+        }
+    };
+
     return (
         <div className="py-6">
             {/* Tombol Back */}
@@ -88,7 +98,7 @@ export default function FormPilihJadwal({ onBack }) {
                 />
                 <p className="text-m font-bold">Kembali</p>
             </div>
-    
+
             {/* Loading */}
             {isLoading ? (
                 <div className="mt-4 text-center">
@@ -103,7 +113,7 @@ export default function FormPilihJadwal({ onBack }) {
                             <div className="flex flex-row gap-4">
                                 <div className="w-28 h-28 rounded overflow-hidden">
                                     <Image className="mb-2 object-cover w-full h-full"
-                                        src={`https://3616-114-10-44-25.ngrok-free.app/${selectedPsikolog?.photo_profile}`}
+                                        src={`https://3fcd-114-10-19-172.ngrok-free.app/${selectedPsikolog?.photo_profile}`}
                                         alt={`Photo ${selectedPsikolog?.name}`}
                                         width={100}
                                         height={100}
@@ -154,11 +164,11 @@ export default function FormPilihJadwal({ onBack }) {
                                     </p>
                                 </div>
                             </div>
-    
+
                             <hr className="my-4 border-1 border-gray-400" />
-    
+
                             <p className="text-justify">{selectedPsikolog?.description}</p>
-    
+
                             <hr className="my-4 border-1 border-gray-400" />
                             <div>
                                 <div className="flex items-center gap-2">
@@ -190,7 +200,7 @@ export default function FormPilihJadwal({ onBack }) {
                         <div className="p-4">
                             <h3 className="text-h3 font-semibold">Jadwal {selectedPsikolog?.category_name}</h3>
                             <p className="text-m">Pilih jadwal untuk sesi Konsultasi kamu</p>
-    
+
                             {/* Tanggal dan Hari */}
                             <div className="flex gap-4 overflow-x-scroll w-full mt-4 mb-2"
                                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
@@ -199,11 +209,14 @@ export default function FormPilihJadwal({ onBack }) {
                                         // Pisahkan bagian hari dan tanggal
                                         const [day, ...dateParts] = schedule.date.split(" ");
                                         const date = dateParts.join(" ");
-    
+
                                         return (
                                             <div
                                                 key={index}
-                                                className={`flex flex-col items-center cursor-pointer py-2 px-4 w-24 rounded-md ${selectedDate === schedule ? 'bg-primary text-white' : 'bg-primarylight text-black'}`}
+                                                className={`flex flex-col items-center cursor-pointer py-2 px-4 w-24 rounded-md ${selectedDate === schedule
+                                                    ? "bg-primary text-white"
+                                                    : "bg-primarylight text-black"
+                                                    }`}
                                                 onClick={() => setSelectedDate(schedule)}
                                             >
                                                 <p className="text-s px-2 whitespace-nowrap text-center">{date}</p>
@@ -215,7 +228,7 @@ export default function FormPilihJadwal({ onBack }) {
                                     <p className="text-m text-gray-500">Tidak ada jadwal tersedia.</p>
                                 )}
                             </div>
-    
+
                             {/* Tampilkan waktu untuk tanggal yang dipilih */}
                             {selectedDate && (
                                 <div className="mt-6">
@@ -224,7 +237,10 @@ export default function FormPilihJadwal({ onBack }) {
                                         {selectedDate.schedules.map((timeSlot, timeIndex) => (
                                             <li
                                                 key={timeIndex}
-                                                className={`py-2 rounded-md text-center text-m font-semibold cursor-pointer ${selectedTime === timeSlot ? 'bg-primary text-white' : 'bg-primarylight'}`}
+                                                className={`py-2 rounded-md text-center text-m font-semibold cursor-pointer ${selectedTime === timeSlot
+                                                    ? "bg-primary text-white"
+                                                    : "bg-primarylight"
+                                                    }`}
                                                 onClick={() => setSelectedTime(timeSlot)}
                                             >
                                                 {timeSlot.time_slot}
@@ -233,9 +249,13 @@ export default function FormPilihJadwal({ onBack }) {
                                     </ul>
                                 </div>
                             )}
-    
+
                             <button
-                                className={`mt-8 text-m w-full py-2 rounded-md font-semibold ${selectedTime ? 'bg-primary text-white' : 'bg-disable text-whitebg'}`}
+                                className={`mt-8 text-m w-full py-2 rounded-md font-semibold ${selectedTime
+                                        ? "bg-primary text-white"
+                                        : "bg-disable text-whitebg"
+                                    }`}
+                                onClick={handleSelectSchedule}
                                 disabled={!selectedTime}
                             >
                                 Pilih Jadwal
@@ -245,5 +265,5 @@ export default function FormPilihJadwal({ onBack }) {
                 </div>
             )}
         </div>
-    );    
+    );
 }

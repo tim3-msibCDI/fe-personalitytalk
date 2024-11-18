@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-      domains: ['3616-114-10-44-25.ngrok-free.app'], // Ganti dengan hostname ngrok Anda
+      domains: ['3fcd-114-10-19-172.ngrok-free.app'],
     },
   };
   

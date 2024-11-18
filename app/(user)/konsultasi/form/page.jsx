@@ -31,9 +31,9 @@ export default function FormPage() {
       case 1:
         return <FormPilihPsikolog onSelectPsikolog={handleSelectPsikolog}/>;
       case 2:
-        return <FormPilihJadwal onBack={prevStep}/>;
+        return <FormPilihJadwal onBack={prevStep} onNext={nextStep}/>;
       case 3:
-        return <FormBayar/>;
+        return <FormBayar onBack={prevStep}/>;
       default:
         return null;
     }

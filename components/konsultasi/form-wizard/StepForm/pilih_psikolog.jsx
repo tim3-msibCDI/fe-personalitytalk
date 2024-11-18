@@ -186,6 +186,21 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                         </button>
                     </div>
 
+                    {/* Search */}
+                    <div>
+                        <form className="w-full">
+                            <div className="relative">
+                                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg className="w-4 h-4 text-text2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                    </svg>
+                                </div>
+                                <input type="search" id="default-search"
+                                    className="block w-full p-4 ps-10 text-sm text-text2 border border-text2 rounded-lg bg-whitebg focus:ring-primary focus:border-primary" placeholder="Cari Nama Psikolog" required />
+                            </div>
+                        </form>
+                    </div>
+                    
                     {/* Daftar Psikolog/Konselor */}
                     {filteredData.length === 0 ? (
                         <TidakTersedia />
@@ -195,7 +210,7 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                                 <div key={index} className="flex gap-3 mb-4 border-b border-textcolor pb-4">
                                     <div className="w-24 h-24 rounded overflow-hidden">
                                         <Image
-                                            src={`https://3616-114-10-44-25.ngrok-free.app/${item.photo_profile}`}
+                                            src={`https://3fcd-114-10-19-172.ngrok-free.app/${item.photo_profile}`}
                                             alt={`Foto ${item.name}`}
                                             width={100}
                                             height={100}
