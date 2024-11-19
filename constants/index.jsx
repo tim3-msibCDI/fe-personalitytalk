@@ -906,3 +906,34 @@ export const coursesData = [
     imageUrl: "/image/psikolog/4.png",
   },
 ];
+
+export const transfer = [
+  {
+    id : 1,
+    desc : "Pengecekan pembayaran dilakukan manual oleh admin PersonalityTalk.",
+  },
+  {
+    id : 2,
+    desc : "Proses pengecekan membutuhkan waktu ± 5 Menit.",
+  },
+  {
+    id : 3,
+    desc : "Pastikan transfer dengan nomor rekening dan atas nama rekening sesuai dengan yang tertera pada Detail Pemesanan.",
+  },
+  {
+    id : 4,
+    desc : "Lakukan pembayaran sesuai dengan total pembayaran."
+  },
+  {
+    id : 5,
+    desc : "Pastikan nama pengirim rekening dan nama bank pengirim sesuai dengan bukti transfer.",
+  },
+  {
+    id: 6,
+    desc : "Upload bukti Transfer yang telah dilakukan."
+  },
+  {
+    id: 7,
+    desc : "Jika terjadi kendala hubungi nomor admin PersonalityTalk dengan nomor whatsapp +6281xxxxxxxxx."
+  }
+]

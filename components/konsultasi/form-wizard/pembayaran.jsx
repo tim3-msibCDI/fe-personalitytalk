@@ -88,7 +88,7 @@ export default function Pembayaran({ statusPembayaran }) {
                                 <p>Selesaikan Pembayaran sebelum waktu habis</p>
                                 <p className="font-semibold mt-2">04.00</p>
                             </div>
-                            <div className="px-4 py-2">
+                            <div className="px-4 py-3">
                                 <form className="space-y-2">
                                     {/* Input Nama Rekening */}
                                     <div>

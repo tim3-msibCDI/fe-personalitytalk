@@ -1,4 +1,4 @@
-import { snk } from "@/constants";
+import { transfer } from "@/constants";
 import Image from "next/image";
 
 export default function InfoTransfer({ onClose }) {
@@ -16,8 +16,8 @@ export default function InfoTransfer({ onClose }) {
                 />
             </div>
             <div className="px-6 py-3">
-                <ul className="list-disc space-y-1">
-                    {snk.map((item) => (
+                <ul className="list-disc space-y-1 text-justify py-2 px-1">
+                    {transfer.map((item) => (
                         <li key={item.id} className="leading-relaxed text-sm font-light ml-4">
                             {item.desc}
                         </li>
