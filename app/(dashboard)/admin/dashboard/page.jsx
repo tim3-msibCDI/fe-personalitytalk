@@ -1,5 +1,7 @@
 export default function AdminDashboard() {
     return(
-        <div>Dashboard Admin</div>
+        <div className="p-6">
+            Dashboard Admin
+        </div>
     );
 }
