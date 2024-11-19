@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { chatData } from "@/constants";
+import ChatSelesai from "./chat-selesai";
 
 export default function ChatContent() {
   const chatEndRef = useRef(null);
@@ -36,6 +37,7 @@ export default function ChatContent() {
         {/* Elemen referensi untuk scroll ke bagian bawah */}
         <div ref={chatEndRef} />
       </div>
+      <ChatSelesai/>
     </div>
   );
 }

@@ -5,7 +5,7 @@ export default function Catatan({ onClose }) {
         <div className="modal-container">
             <div className="bg-primary text-whitebg px-6 py-4 rounded-t-lg flex justify-between items-center">
                 <div className="flex flex-col">
-                    <p className="text-m font-semibold">Tambah Catatan</p>
+                    <p className="text-m font-semibold">Tambah Keluhan</p>
                     <p className="text-s font-light">Berikan catatan keluhan kepada psikolog untuk 
                     dibaca sebelum memulai Konsultasi</p>
                 </div>

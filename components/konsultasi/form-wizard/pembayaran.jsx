@@ -167,7 +167,7 @@ export default function Pembayaran({ statusPembayaran }) {
                                     width={24}
                                     height={24}
                                 />
-                                <span>Tambah Catatan</span>
+                                <span>Tambah Keluhan</span>
                             </button>
                             {/* Button Chat Psikolog */}
                             <button
