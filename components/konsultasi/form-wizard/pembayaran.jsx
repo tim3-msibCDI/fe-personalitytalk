@@ -10,19 +10,45 @@ export default function Pembayaran({ statusPembayaran }) {
     const openCatatanModal = () => setCatatanModalOpen(true);
     const closeCatatanModal = () => setCatatanModalOpen(false);
 
+    const [formValues, setFormValues] = useState({
+        nama: "",
+        rekening: "",
+        bukti: null,
+    });
+
+    const handleInputChange = (field, value) => {
+        setFormValues((prev) => ({ ...prev, [field]: value }));
+    };
+
+    const isFormComplete = () => {
+        const { nama, rekening, bukti } = formValues;
+        return nama && rekening && bukti;
+    };
+
+    const handleProsesLanjut = () => {
+        console.log("Form values:", formValues);
+        alert("Proses lanjut berhasil!");
+    };
+
     return (
         <div className="flex flex-row gap-8">
             {/* Rincian */}
             <div className="w-3/5">
                 {/* Detail Pemesanan */}
-                <div className="bg-primarylight2 p-4 rounded-lg h-[205px] w-full max-w-[500px] flex flex-col justify-center">
+                <div className="bg-primarylight2 p-4 rounded-lg h-auto w-full max-w-[500px] flex flex-col justify-center">
                     <p className="text-m font-semibold text-left mb-4">Detail Pemesanan</p>
                     <div className="grid grid-cols-2 gap-y-2 text-m text-textcolor">
                         <p>No. Pemesanan</p>
                         <p>: 1222332545</p>
 
                         <p>Metode Pembayaran</p>
-                        <p>: QRIS</p>
+                        <p>: BANK BSI</p>
+
+                        <p>Atas Nama</p>
+                        <p>: PT. Personality Talk</p>
+
+                        <p>No. Rekening</p>
+                        <p>: 1222332545</p>
 
                         {statusPembayaran === 2 && (
                             <>
@@ -36,7 +62,7 @@ export default function Pembayaran({ statusPembayaran }) {
                     </div>
                 </div>
                 {/* Rincian nota */}
-                <div className="bg-primarylight2 justify-start p-4 rounded-lg mt-4 h-[205px] w-full max-w-[500px] flex flex-col justify-center">
+                <div className="bg-primarylight2 justify-start p-4 rounded-lg mt-4 h-auto w-full max-w-[500px] flex flex-col justify-center">
                     <p className="text-m font-semibold text-left mb-4">Rincian Nota</p>
                     <div className="grid grid-cols-2 gap-y-2 text-m text-textcolor">
                         <p>Total Harga Konsultasi</p>
@@ -54,13 +80,77 @@ export default function Pembayaran({ statusPembayaran }) {
             <div className="w-2/5">
                 {statusPembayaran === 1 ? (
                     <>
-                        <div className="bg-primary p-4 rounded-t-lg text-m text-whitebg flex justify-center">
+                        <div className="bg-primary px-4 py-3 rounded-t-lg text-m text-whitebg flex justify-center">
                             <p className="font-semibold">Pembayaran</p>
                         </div>
                         <div className="bg-primarylight2 rounded-b-lg text-s text-textcolor">
-                            <div className="p-4 flex flex-col items-center text-center">
+                            <div className="px-4 py-2 flex flex-col items-center text-center text-s">
                                 <p>Selesaikan Pembayaran sebelum waktu habis</p>
-                                <p className="font-semibold">04.00</p>
+                                <p className="font-semibold mt-2">04.00</p>
+                            </div>
+                            <div className="px-4 py-2">
+                                <form className="space-y-2">
+                                    {/* Input Nama Rekening */}
+                                    <div>
+                                        <label
+                                            htmlFor="nama"
+                                            className="block text-s text-textcolor"
+                                        >
+                                            Pemilik Rekening
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="nama"
+                                            placeholder="Masukkan Nama Rekening"
+                                            className="bg-gray-50 border border-gray-300 text-text2 text-s rounded-lg block w-full p-2"
+                                            value={formValues.nama}
+                                            onChange={(e) => handleInputChange("nama", e.target.value)}
+                                        />
+                                    </div>
+                                    {/* Input Bank */}
+                                    <div>
+                                        <label
+                                            htmlFor="rekening"
+                                            className="block text-s text-textcolor"
+                                        >
+                                            Nomor Rekening
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="rekening"
+                                            placeholder="Masukkan Nomor Rekening"
+                                            className="bg-gray-50 border border-gray-300 text-text2 text-s rounded-lg block w-full p-2"
+                                            value={formValues.rekening}
+                                            onChange={(e) => handleInputChange("rekening", e.target.value)}
+                                        />
+                                    </div>
+                                    {/* Input Bukti Transfer */}
+                                    <div>
+                                        <label
+                                            htmlFor="bukti"
+                                            className="block text-s text-textcolor"
+                                        >
+                                            Upload Bukti Pembayaran
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id="bukti"
+                                            accept=".jpg,.jpeg,.png,.pdf"
+                                            className="bg-gray-50 border border-gray-300 text-text2 text-s rounded-lg block w-full p-2"
+                                            onChange={(e) => handleInputChange("bukti", e.target.files[0])}
+                                        />
+                                    </div>
+                                    {/* Button Proses Lanjut */}
+                                    <button
+                                        type="button"
+                                        disabled={!isFormComplete()}
+                                        className={`w-full py-2 rounded-md font-semibold text-whitebg ${isFormComplete() ? "bg-primary" : "bg-disable"
+                                            }`}
+                                        onClick={handleProsesLanjut}
+                                    >
+                                        Proses Lanjut
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </>

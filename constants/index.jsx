@@ -532,7 +532,7 @@ export const jadwalPsikolog = [
       photos: '/image/psikolog/photo.png',
       rating: 4.9,
       pengalaman: 10,
-      status_pembayaran: null,
+      status_pembayaran: 1,
       role: "Psikolog",
       harga: "250.000",
       deskripsi: "Hai, saya Taufik Alif Shalahuddin, akrab dipanggil Alif. Sebagai psikolog klinis saya banyak menangani permasalahan umum, kepribadian, kecemasan, keluarga, komunikasi, dan percintaan. Saya memiliki prinsip bahwa setiap klien itu unik, tidak ada klien yang sulit, yang ada psikolog yang kurang terampil. Saya sangat terbantu dan sangat senang dengan semua yang saya lakukan.",

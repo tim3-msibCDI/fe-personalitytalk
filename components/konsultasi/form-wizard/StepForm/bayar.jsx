@@ -20,12 +20,12 @@ export default function FormBayar({ onBack }) {
 
     //State untuk modal voucher
     const [isVoucherGagalOpen, setIsVoucherGagalOpen] = useState(false);
-    const openVoucherGagalModal = () => {
-        console.log("Modal VoucherGagal dibuka"); // Debug log
-        setIsVoucherGagalOpen(true);
-    };    
+    const openVoucherGagalModal = () => setIsVoucherGagalOpen(true);
     const closeVoucherGagalModal = () => setIsVoucherGagalOpen(false);
 
+    //State untuk checkbox syarat dan ketentuan
+    const [isTermsChecked, setIsTermsChecked] = useState(false);
+    
     //State untuk mengubah warna button ketika sudah menginput
     const [inputValue, setInputValue] = useState("");
 
@@ -167,6 +167,21 @@ export default function FormBayar({ onBack }) {
         }).format(price).replace('Rp', 'Rp ');
     };
 
+    //Simpan voucher code ke localstorag
+    const handleVoucherInput = (value) => {
+        setInputValue(value);
+        localStorage.setItem("voucher_code", value);
+    }
+
+    const handleSubmit = () => {
+        const psi_id = localStorage.getItem("selectedPsikologId");
+        const psch_id = localStorage.getItem("selectedPschId");
+        const topic_id = localStorage.getItem("selectedTopic");
+
+        localStorage.setItem("voucher_code", inputValue);
+        console.log("Data berhasil disimpan")
+    }
+
     return (
         <div className="py-6">
             <div className="flex items-center gap-4 cursor-pointer" onClick={onBack}>
@@ -185,7 +200,7 @@ export default function FormBayar({ onBack }) {
                                     <div className="w-28 h-28 rounded overflow-hidden">
                                         <Image
                                             className="object-cover w-full h-full"
-                                            src={`https://3fcd-114-10-19-172.ngrok-free.app/${selectedPsikolog.photo_profile}`}
+                                            src={`https://8188-36-71-83-22.ngrok-free.app/${selectedPsikolog.photo_profile}`}
                                             alt={`Photo ${selectedPsikolog.psikolog_name}`}
                                             width={100}
                                             height={100}
@@ -301,7 +316,11 @@ export default function FormBayar({ onBack }) {
                         </div>
                         {/* Button bayar */}
                         <button
-                            className={`text-m w-full py-2 rounded-md font-semibold text-whitebg ${inputValue ? "bg-primary" : "bg-disable"}`}
+                            onClick={handleSubmit}
+                            className={`text-m w-full py-2 rounded-md font-semibold text-whitebg ${
+                                isTermsChecked ? "bg-primary" : "bg-disable"
+                            }`}
+                            disabled={!isTermsChecked}
                         >
                             Bayar
                         </button>
