@@ -14,6 +14,7 @@ export default function SidebarMenu({ menuType }) {
 
   const handleMenuClick = (id, hasSubMenu) => {
     setActiveMenu(id);
+
     setActiveDropdown(hasSubMenu ? (id === activeDropdown ? null : id) : null); 
     setActiveSubMenu(null);
   };
