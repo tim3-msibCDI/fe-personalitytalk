@@ -8,6 +8,7 @@ import { SkeletonTable } from "./skeleton-table";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
+import Pagination from "./pagenation";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
@@ -55,6 +56,8 @@ export default function Table() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+  const totalPages = Math.ceil(data.data.length / itemsPerPage);
 
   const tableHead =
     pathname === "/admin/artikel/artikel"
@@ -160,50 +163,19 @@ export default function Table() {
         ]
       : [];
 
-  // Navigasi pagination
-  const handleNext = () => {
-    if (currentPage < Math.ceil(data.data.length / itemsPerPage)) {
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
-
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-    }
-  };
-
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-max bg-primarylight2 border border-text2 text-center text-s">
+      <table className="w-full min-w-max bg-primarylight2 border border-text2 text-center text-s p-5">
         <TableHead heads={tableHead} />
         <TableBody rows={paginatedData} columns={columns} />
       </table>
-      <div className="flex justify-between mt-4">
-        <button
-          onClick={handlePrevious}
-          disabled={currentPage === 1}
-          className={`px-4 py-2 rounded ${
-            currentPage === 1 ? "bg-gray-300" : "bg-blue-500 hover:bg-blue-600"
-          } text-white`}
-        >
-          Previous
-        </button>
-        <span>
-          Page {currentPage} of {Math.ceil(data.data.length / itemsPerPage)}
-        </span>
-        <button
-          onClick={handleNext}
-          disabled={currentPage === Math.ceil(data.data.length / itemsPerPage)}
-          className={`px-4 py-2 rounded ${
-            currentPage === Math.ceil(data.data.length / itemsPerPage)
-              ? "bg-gray-300"
-              : "bg-blue-500 hover:bg-blue-600"
-          } text-white`}
-        >
-          Next
-        </button>
-      </div>
+
+      {/* Komponen Pagination */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </div>
   );
 }
