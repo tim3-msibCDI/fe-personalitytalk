@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
 import Pagination from "./pagenation";
+import { ShowButton, EditButton, DeleteButton } from "./ActionButtons";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
@@ -30,8 +31,8 @@ const fetcher = async (url) => {
 
 export default function Table() {
   const pathname = usePathname();
-  const [currentPage, setCurrentPage] = useState(1); // Halaman saat ini
-  const itemsPerPage = 10; // Jumlah item per halaman
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   // Tentukan endpoint berdasarkan path
   let endpoint;
@@ -40,13 +41,16 @@ export default function Table() {
   } else if (pathname === "/admin/artikel/kategori-artikel") {
     endpoint = "/article/categories";
   } else if (pathname === "/admin/pengguna/umum") {
-    endpoint = "/user/all";
+    endpoint = "/admin/users";
   } else {
     endpoint = null;
   }
 
-  // Ambil semua data tanpa pagination dari backend
-  const { data, error } = useSWR(endpoint ? `${API_URL}${endpoint}` : null, fetcher);
+  // Ambil data dari backend
+  const { data, error } = useSWR(
+    endpoint ? `${API_URL}${endpoint}` : null,
+    fetcher
+  );
 
   if (error) return <div>Error: {error.message}</div>;
   if (!data) return <SkeletonTable />;
@@ -65,7 +69,15 @@ export default function Table() {
       : pathname === "/admin/artikel/kategori-artikel"
       ? ["No", "Nama Kategori", "Tindakan"]
       : pathname === "/admin/pengguna/umum"
-      ? ["No", "Nama Pengguna", "Email", "Tanggal Bergabung", "Tindakan"]
+      ? [
+          "No",
+          "Nama Pengguna",
+          "Nomor Telepon",
+          "Tanggal Lahir",
+          "Gender",
+          "Foto Profil",
+          "Tindakan",
+        ]
       : [];
 
   const columns =
@@ -93,30 +105,11 @@ export default function Table() {
             key: "actions",
             render: (_, row) => (
               <div className="space-x-2">
-                <button className="bg-green-300 px-2 py-1 rounded hover:bg-green-400 w-8 h-8">
-                  <Image
-                    src="/icons/dashboard/eye-green.svg"
-                    width={15}
-                    height={15}
-                    alt="View"
-                  />
-                </button>
-                <button className="bg-orange-300 px-2 py-1 rounded hover:bg-orange-400 w-8 h-8">
-                  <Image
-                    src="/icons/dashboard/edit-yellow.svg"
-                    width={15}
-                    height={15}
-                    alt="Edit"
-                  />
-                </button>
-                <button className="bg-red-300 px-2 py-1 rounded hover:bg-red-400 w-8 h-8">
-                  <Image
-                    src="/icons/dashboard/trash-red.svg"
-                    width={15}
-                    height={15}
-                    alt="Delete"
-                  />
-                </button>
+                <ShowButton onClick={() => console.log("Show clicked", row)} />
+                <EditButton onClick={() => console.log("Edit clicked", row)} />
+                <DeleteButton
+                  onClick={() => console.log("Delete clicked", row)}
+                />
               </div>
             ),
           },
@@ -133,30 +126,53 @@ export default function Table() {
             key: "actions",
             render: (_, row) => (
               <div className="space-x-2">
-                <button className="bg-green-300 px-2 py-1 rounded hover:bg-green-400 w-8 h-8">
-                  <Image
-                    src="/icons/dashboard/eye-green.svg"
-                    width={15}
-                    height={15}
-                    alt="View"
-                  />
-                </button>
-                <button className="bg-orange-300 px-2 py-1 rounded hover:bg-orange-400 w-8 h-8">
-                  <Image
-                    src="/icons/dashboard/edit-yellow.svg"
-                    width={15}
-                    height={15}
-                    alt="Edit"
-                  />
-                </button>
-                <button className="bg-red-300 px-2 py-1 rounded hover:bg-red-400 w-8 h-8">
-                  <Image
-                    src="/icons/dashboard/trash-red.svg"
-                    width={15}
-                    height={15}
-                    alt="Delete"
-                  />
-                </button>
+                <ShowButton onClick={() => console.log("Show clicked", row)} />
+                <EditButton onClick={() => console.log("Edit clicked", row)} />
+                <DeleteButton
+                  onClick={() => console.log("Delete clicked", row)}
+                />
+              </div>
+            ),
+          },
+        ]
+      : pathname === "/admin/pengguna/umum"
+      ? [
+          {
+            key: "index",
+            render: (_, __, index) =>
+              (currentPage - 1) * itemsPerPage + index + 1,
+          },
+          { key: "name" },
+          { key: "phone_number" },
+          { key: "date_birth" },
+          {
+            key: "gender",
+            render: (gender) => (gender === "M" ? "Laki-laki" : "Perempuan"),
+          },
+          {
+            key: "photo_profile",
+            render: (photo) =>
+              photo ? (
+                <Image
+                  src={`${API_REAL}/${photo}`}
+                  alt="Foto Profil"
+                  width={40}
+                  height={40}
+                  className="w-10 h-10 object-cover rounded-full"
+                />
+              ) : (
+                <span>Tidak ada</span>
+              ),
+          },
+          {
+            key: "actions",
+            render: (_, row) => (
+              <div className="space-x-2">
+                <ShowButton onClick={() => console.log("Show clicked", row)} />
+                <EditButton onClick={() => console.log("Edit clicked", row)} />
+                <DeleteButton
+                  onClick={() => console.log("Delete clicked", row)}
+                />
               </div>
             ),
           },
