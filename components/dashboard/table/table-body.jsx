@@ -1,4 +1,21 @@
 export default function TableBody({ rows, columns }) {
+  // Jika rows kosong, tampilkan fallback
+  if (rows.length === 0) {
+    return (
+      <tbody>
+        <tr>
+          <td
+            colSpan={columns.length}
+            className="text-center py-4 text-gray-500"
+          >
+            Tidak ada data tersedia.
+          </td>
+        </tr>
+      </tbody>
+    );
+  }
+
+  // Jika rows berisi data, tampilkan baris
   return (
     <tbody>
       {rows.map((row, index) => (

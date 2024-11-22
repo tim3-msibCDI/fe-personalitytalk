@@ -1,14 +1,14 @@
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination = ({ currentPage, totalPages, onPageChange, nextPageUrl, prevPageUrl }) => {
     const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
   
     return (
       <div className="flex items-center justify-center mt-4 space-x-2 text-m py-5">
         {/* Tombol Previous */}
         <button
-          onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
+          onClick={() => prevPageUrl && onPageChange(currentPage - 1)}
+          disabled={!prevPageUrl}
           className={`w-8 h-8 rounded ${
-            currentPage === 1
+            !prevPageUrl
               ? "bg-orange-200 text-orange-400"
               : "bg-primary text-white hover:bg-orange-600"
           }`}
@@ -33,10 +33,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   
         {/* Tombol Next */}
         <button
-          onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
+          onClick={() => nextPageUrl && onPageChange(currentPage + 1)}
+          disabled={!nextPageUrl}
           className={`w-8 h-8 rounded ${
-            currentPage === totalPages
+            !nextPageUrl
               ? "bg-orange-200 text-orange-400"
               : "bg-orange-500 text-white hover:bg-orange-600"
           }`}
@@ -48,3 +48,4 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   };
   
   export default Pagination;
+  

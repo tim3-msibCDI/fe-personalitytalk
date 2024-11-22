@@ -9,9 +9,7 @@ export default function Topbar() {
       window.location.href = "/admin/login";
     } catch (error) {
       console.error("Logout failed:", error.message);
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
   return (
     <div className="bg-whitebg py-4 px-6 shadow">
