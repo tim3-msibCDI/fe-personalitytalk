@@ -25,7 +25,7 @@ export default function FormBayar({ onBack }) {
 
     //State untuk checkbox syarat dan ketentuan
     const [isTermsChecked, setIsTermsChecked] = useState(false);
-    
+
     //State untuk mengubah warna button ketika sudah menginput
     const [inputValue, setInputValue] = useState("");
 
@@ -121,7 +121,71 @@ export default function FormBayar({ onBack }) {
             setErrorMessage(error.message || "Terjadi kesalahan saat redeem voucher");
             setIsVoucherGagalOpen(true);
         }
-    };   
+    };
+
+    const createTransaction = async () => {
+        try {
+            const token = getToken();
+            if (!token) {
+                throw new Error("Token tidak tersedia");
+            }
+
+            // Ambil data dari localStorage
+            const psi_id = localStorage.getItem("selectedPsikologId");
+            const psch_id = localStorage.getItem("selectedPschId");
+            const topic_id = localStorage.getItem("selectedTopic");
+            const voucher_code = localStorage.getItem("voucher_code");
+
+            if (!psi_id || !psch_id || !topic_id) {
+                throw new Error("Data ID tidak lengkap di localStorage");
+            }
+
+            // Susun body untuk API
+            const body = {
+                psi_id,
+                psch_id,
+                topic_id,
+                voucher_code,
+                payment_method_id: 2,
+            };
+
+            // Panggil API
+            const url = `${process.env.NEXT_PUBLIC_API_URL}/consultation/create-transaction`;
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": "69420",
+                },
+                body: JSON.stringify(body),
+            });
+
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || "Gagal membuat transaksi");
+            }
+
+            // Simpan data transaksi ke localStorage
+            const transactionData = {
+                psi_id,
+                psch_id,
+                topic_id,
+                voucher_code,
+                payment_method_id: 2,
+                no_pemesanan: result.data.transaction.no_pemesanan, // Tambahkan no_pemesanan dari response API
+            };
+
+            localStorage.setItem("transactionData", JSON.stringify(transactionData));
+
+            return result.data.transaction.no_pemesanan; // Return no_pemesanan dari API
+        } catch (err) {
+            console.error("Create Transaction Error:", err.message);
+            setErrorMessage(err.message || "Terjadi kesalahan saat membuat transaksi");
+            throw err;
+        }
+    };
 
     useEffect(() => {
         fetchData();
@@ -173,14 +237,24 @@ export default function FormBayar({ onBack }) {
         localStorage.setItem("voucher_code", value);
     }
 
-    const handleSubmit = () => {
-        const psi_id = localStorage.getItem("selectedPsikologId");
-        const psch_id = localStorage.getItem("selectedPschId");
-        const topic_id = localStorage.getItem("selectedTopic");
+    const handleSubmit = async () => {
+        try {
+            const noPemesanan = await createTransaction();
 
-        localStorage.setItem("voucher_code", inputValue);
-        console.log("Data berhasil disimpan")
-    }
+            if (!noPemesanan) {
+                throw new Error("No pemesanan tidak tersedia");
+            }
+
+            // Simpan no_pemesanan di localStorage untuk fallback
+            localStorage.setItem("no_pemesanan", noPemesanan);
+
+            // Navigasi ke halaman berdasarkan no_pemesanan
+            router.push(`/konsultasi/${noPemesanan}`);
+        } catch (error) {
+            console.error("Error saat submit:", error.message);
+            setErrorMessage(error.message || "Terjadi kesalahan saat proses pembayaran");
+        }
+    };
 
     return (
         <div className="py-6">
@@ -200,7 +274,7 @@ export default function FormBayar({ onBack }) {
                                     <div className="w-28 h-28 rounded overflow-hidden">
                                         <Image
                                             className="object-cover w-full h-full"
-                                            src={`https://8188-36-71-83-22.ngrok-free.app/${selectedPsikolog.photo_profile}`}
+                                            src={`https://38e2-114-10-9-62.ngrok-free.app/${selectedPsikolog.photo_profile}`}
                                             alt={`Photo ${selectedPsikolog.psikolog_name}`}
                                             width={100}
                                             height={100}
@@ -302,6 +376,8 @@ export default function FormBayar({ onBack }) {
                                     id="checkbox"
                                     type="checkbox"
                                     className="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary focus:ring-2"
+                                    checked={isTermsChecked} // Kontrol berdasarkan state
+                                    onChange={(e) => setIsTermsChecked(e.target.checked)} // Update state saat checkbox berubah
                                 />
                                 <label htmlFor="checkbox" className="ml-2 text-sm font-medium text-gray-900">
                                     Saya telah membaca dan menyetujui{" "}
@@ -317,9 +393,8 @@ export default function FormBayar({ onBack }) {
                         {/* Button bayar */}
                         <button
                             onClick={handleSubmit}
-                            className={`text-m w-full py-2 rounded-md font-semibold text-whitebg ${
-                                isTermsChecked ? "bg-primary" : "bg-disable"
-                            }`}
+                            className={`text-m w-full py-2 rounded-md font-semibold text-whitebg ${isTermsChecked ? "bg-primary" : "bg-disable"
+                                }`}
                             disabled={!isTermsChecked}
                         >
                             Bayar

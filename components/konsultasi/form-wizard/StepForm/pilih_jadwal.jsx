@@ -132,7 +132,7 @@ export default function FormPilihJadwal({ onBack, onNext }) {
                             <div className="flex flex-row gap-4">
                                 <div className="w-28 h-28 rounded overflow-hidden">
                                     <Image className="mb-2 object-cover w-full h-full"
-                                        src={`https://8188-36-71-83-22.ngrok-free.app/${selectedPsikolog?.photo_profile}`}
+                                        src={`https://38e2-114-10-9-62.ngrok-free.app/${selectedPsikolog?.photo_profile}`}
                                         alt={`Photo ${selectedPsikolog?.name}`}
                                         width={100}
                                         height={100}
@@ -142,16 +142,20 @@ export default function FormPilihJadwal({ onBack, onNext }) {
                                     <p className="text-m font-semibold">{selectedPsikolog?.name}</p>
                                     {/* Rating, Pengalaman, dan Role */}
                                     <div className="flex items-center gap-3 mt-1">
-                                        <div className="flex items-center">
-                                            <Image
-                                                src="/icons/bintang.png"
-                                                alt="Icon Star"
-                                                width={18}
-                                                height={18}
-                                            />
-                                            <p className="ml-1">{selectedPsikolog?.rating}</p>
-                                        </div>
-                                        <span className="text-gray-400">|</span>
+                                        {selectedPsikolog?.rating && selectedPsikolog?.rating > 0 && (
+                                            <>
+                                                <div className="flex items-center">
+                                                    <Image
+                                                        src="/icons/bintang.png"
+                                                        alt="Icon Star"
+                                                        width={18}
+                                                        height={18}
+                                                    />
+                                                    <span className="ml-1">{selectedPsikolog?.rating}</span>
+                                                </div>
+                                                <span className="text-gray-400">|</span>
+                                            </>
+                                        )}
                                         <div className="flex items-center">
                                             <Image
                                                 src="/icons/i-konsultasi.png"
@@ -251,7 +255,30 @@ export default function FormPilihJadwal({ onBack, onNext }) {
                                         </button>
                                     </div>
                                 ) : (
-                                    <p>Belum ada review</p>
+                                    <div className="flex items-center justify-between mb-3">
+                                        {/* Tombol Previous */}
+                                        <button onClick={handlePrevReview}>
+                                            <Image
+                                                src="/icons/kiri.png"
+                                                alt="Icon Previous"
+                                                width={11}
+                                                height={30}
+                                            />
+                                        </button>
+                                        {/* Review saat ini */}
+                                        <p className="mx-4 bg-primarylight rounded text-s px-4 py-2 w-[380px] h-[100px] overflow-y-auto flex justify-center items-center">
+                                            Belum ada review
+                                        </p>
+                                        {/* Tombol Next */}
+                                        <button onClick={handleNextReview}>
+                                            <Image
+                                                src="/icons/kanan.png"
+                                                alt="Icon Next"
+                                                width={11}
+                                                height={30}
+                                            />
+                                        </button>
+                                    </div>
                                 )}
                             </div>
                         </div>

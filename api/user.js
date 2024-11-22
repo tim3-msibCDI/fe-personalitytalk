@@ -1,10 +1,10 @@
 import axios from "axios";
 
-import { getToken } from "@/lib/auth";
+import { getToken, removeToken } from "@/lib/auth";
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
-  "https://8188-36-71-83-22.ngrok-free.app/api";
+  "https://38e2-114-10-9-62.ngrok-free.app/api";
 
 // Fungsi Login user
 export const loginUser = async (email, password) => {
@@ -173,10 +173,7 @@ export const upgradeMahasiswa = async (universitas, jurusan) => {
 // Fungsi untuk Logout User
 export const logoutUser = async () => {
   const token = getToken();
-  if (!token) {
-    throw new Error("No token found");
-  }
-
+  
   try {
     const response = await axios.post(
       `${API_URL}/user/logout`,
@@ -188,6 +185,45 @@ export const logoutUser = async () => {
         },
       }
     );
+    // Remove the token after successful logout
+    removeToken();
+    return response.data;
+  } catch (error) {
+    console.error("Error logging out:", error.message);
+    throw new Error("Failed to log out");
+  }
+};
+
+export const loginAdmin = async (email, password) => {
+  const response = await axios.post(
+    `${API_URL}/admin/login`,
+    { email, password },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data;
+};
+
+// Fungsi untuk Logout User
+export const logoutAdmin = async () => {
+  const token = getToken();
+  
+  try {
+    const response = await axios.post(
+      `${API_URL}/admin/logout`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "ngrok-skip-browser-warning": "69420",
+        },
+      }
+    );
+    // Remove the token after successful logout
+    removeToken();
     return response.data;
   } catch (error) {
     console.error("Error logging out:", error.message);

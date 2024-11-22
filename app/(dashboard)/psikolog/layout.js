@@ -1,9 +1,9 @@
-import Header from "@/components/psikolog/header";
+import HeaderPsikolog from "@/components/dashboard/section/header-psikolog";
 
 export default function PsikologLayout({ children }) {
     return (
         <div>
-            <Header />
+            <HeaderPsikolog />
             <div>{children}</div>
         </div>
     );

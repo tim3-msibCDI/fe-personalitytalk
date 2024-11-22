@@ -3,19 +3,30 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { removeToken } from "@/lib/auth";
 import { useUser } from "@/constants/useUser";
+import { isAuthenticated } from "@/lib/auth";
+import { logoutUser } from "@/api/user";
+import { useState } from "react";
+import Loading from "./loading/loading";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { user } = useUser(); // Access the user data from the context
+  const { user } = useUser();
+  const [loading, setLoading] = useState(false); // Loading state for logout
 
   const isActive = (href) => pathname === href;
 
   // Function to handle logout
-  const handleLogout = () => {
-    removeToken();
-    window.location.href = "/"; // Redirect to the homepage after logout
+  const handleLogout = async () => {
+    try {
+      setLoading(true); // Start loading animation
+      await logoutUser();
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Logout failed:", error.message);
+    } finally {
+      setLoading(false); // Stop loading animation after logout process
+    }
   };
 
   return (
@@ -36,7 +47,9 @@ export default function Navbar() {
           <Link
             href="/konsultasi"
             className={`${
-              isActive("/konsultasi") ? "font-semibold underline underline-offset-8" : ""
+              isActive("/konsultasi")
+                ? "font-semibold underline underline-offset-8"
+                : ""
             }`}
           >
             Konsultasi
@@ -46,7 +59,9 @@ export default function Navbar() {
           <Link
             href="/course"
             className={`${
-              isActive("/course") ? "font-semibold underline underline-offset-8" : ""
+              isActive("/course")
+                ? "font-semibold underline underline-offset-8"
+                : ""
             }`}
           >
             Course
@@ -56,7 +71,9 @@ export default function Navbar() {
           <Link
             href="/tes-mental"
             className={`${
-              isActive("/tes-mental") ? "font-semibold underline underline-offset-8" : ""
+              isActive("/tes-mental")
+                ? "font-semibold underline underline-offset-8"
+                : ""
             }`}
           >
             Tes Mental
@@ -66,7 +83,9 @@ export default function Navbar() {
           <Link
             href="/about"
             className={`${
-              isActive("/about") ? "font-semibold underline underline-offset-8" : ""
+              isActive("/about")
+                ? "font-semibold underline underline-offset-8"
+                : ""
             }`}
           >
             About Us
@@ -75,10 +94,10 @@ export default function Navbar() {
       </ul>
 
       <div className="hidden md:flex mr-4 lg:mr-8 space-x-4">
-        {user?.name ? ( // Use optional chaining to prevent errors if user is undefined
+        {isAuthenticated() && user?.name ? (
           <div className="relative group text-s font-semibold">
             <button className="border border-primary bg-primary text-whitebg px-4 py-1.5 md:px-5 md:py-2 rounded-lg">
-              {user.name} 
+              {user.name}
             </button>
             <div className="absolute right-0 w-48 bg-primary border border-t-4 border-t-primarylight text-whitebg shadow-lg rounded-lg hidden group-hover:block">
               <Link href="/profile" className="block px-4 py-2 hover:bg-hover">
@@ -110,10 +129,11 @@ export default function Navbar() {
         )}
       </div>
 
+      {loading && <Loading />}
+
       {/* Responsive mobile menu */}
       <div className="md:hidden flex items-center">
         <button className="text-primary focus:outline-none">
-          {/* Burger icon */}
           <svg
             className="w-6 h-6"
             fill="none"

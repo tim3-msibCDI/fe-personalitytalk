@@ -200,7 +200,7 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                             </div>
                         </form>
                     </div>
-                    
+
                     {/* Daftar Psikolog/Konselor */}
                     {filteredData.length === 0 ? (
                         <TidakTersedia />
@@ -210,7 +210,7 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                                 <div key={index} className="flex gap-3 mb-4 border-b border-textcolor pb-4">
                                     <div className="w-24 h-24 rounded overflow-hidden">
                                         <Image
-                                            src={`https://8188-36-71-83-22.ngrok-free.app/${item.photo_profile}`}
+                                            src={`https://38e2-114-10-9-62.ngrok-free.app/${item.photo_profile}`}
                                             alt={`Foto ${item.name}`}
                                             width={100}
                                             height={100}
@@ -225,16 +225,20 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                                             </p>
                                         </div>
                                         <div className="flex items-center gap-3 mt-1">
-                                            <div className="flex items-center">
-                                                <Image
-                                                    src="/icons/bintang.png"
-                                                    alt="Icon Star"
-                                                    width={18}
-                                                    height={18}
-                                                />
-                                                <span className="ml-1 text-s">{item.rating}</span>
-                                            </div>
-                                            <span className="text-gray-400">|</span>
+                                            {item.rating && item.rating > 0 && (
+                                                <>
+                                                    <div className="flex items-center">
+                                                        <Image
+                                                            src="/icons/bintang.png"
+                                                            alt="Icon Star"
+                                                            width={18}
+                                                            height={18}
+                                                        />
+                                                        <span className="ml-1 text-s">{item.rating}</span>
+                                                    </div>
+                                                    <span className="text-gray-400">|</span>
+                                                </>
+                                            )}
                                             <div className="flex items-center">
                                                 <Image
                                                     src="/icons/i-konsultasi.png"

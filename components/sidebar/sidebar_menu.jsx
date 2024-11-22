@@ -14,6 +14,7 @@ export default function SidebarMenu({ menuType }) {
 
   const handleMenuClick = (id, hasSubMenu) => {
     setActiveMenu(id);
+
     setActiveDropdown(hasSubMenu ? (id === activeDropdown ? null : id) : null); 
     setActiveSubMenu(null);
   };
@@ -34,54 +35,87 @@ export default function SidebarMenu({ menuType }) {
         <div className="mt-5 text-s text-textdarkchoco">
           {menu.map((item) => (
             <div key={item.id}>
-              <Link href={item.url} passHref>
+              {item.url ? ( // Check if item.url exists
+                <Link href={item.url} passHref>
+                  <div
+                    className={`cursor-pointer py-3 px-6 group flex gap-3 items-center
+                      ${!item.subMenu && activeMenu === item.id ? 'bg-primary text-white font-semibold' : ''}`}
+                    onClick={() => handleMenuClick(item.id, item.subMenu)}
+                  >
+                    <Image
+                      src={
+                        !item.subMenu && activeMenu === item.id
+                          ? item.iconhover
+                          : item.icon
+                      }
+                      alt={item.title}
+                      width={20}
+                      height={20}
+                      className="transition-all duration-300"
+                    />
+                    <span className="transition-all duration-300">{item.title}</span>
+
+                    {item.subMenu && (
+                      <Image
+                        src="/icons/sidebar/arrow.svg"
+                        alt="Dropdown Icon"
+                        width={16}
+                        height={16}
+                        className={`ml-auto transition-transform duration-300 ${
+                          activeDropdown === item.id ? "rotate-180" : ""
+                        }`}
+                      />
+                    )}
+                  </div>
+                </Link>
+              ) : (
                 <div
-                  className={`cursor-pointer py-3 px-6 group flex gap-3 items-center
-                    ${!item.subMenu && activeMenu === item.id ? 'bg-primary text-white font-semibold' : ''}`}
+                  className="cursor-pointer py-3 px-6 group flex gap-3 items-center"
                   onClick={() => handleMenuClick(item.id, item.subMenu)}
                 >
                   <Image
-                    src={
-                      !item.subMenu && activeMenu === item.id
-                        ? item.iconhover
-                        : item.icon
-                    }
+                    src={item.icon}
                     alt={item.title}
                     width={20}
                     height={20}
                     className="transition-all duration-300"
                   />
-                  <span className="transition-all duration-300">{item.title}</span>
-
-                  {item.subMenu && (
-                    <Image
-                      src="/icons/sidebar/arrow.svg"
-                      alt="Dropdown Icon"
-                      width={16}
-                      height={16}
-                      className={`ml-auto transition-transform duration-300 ${
-                        activeDropdown === item.id ? "rotate-180" : ""
-                      }`}
-                    />
-                  )}
+                  <span>{item.title}</span>
                 </div>
-              </Link>
+              )}
 
               {item.subMenu && activeDropdown === item.id && (
                 <div className="mt-2">
                   {item.subMenu.map((subItem, subIndex) => (
-                    <Link key={subIndex} href={subItem.url} passHref>
+                    subItem.url ? ( // Check if subItem.url exists
+                      <Link key={subIndex} href={subItem.url} passHref>
+                        <div
+                          onClick={() => handleSubMenuClick(subIndex)}
+                          className={`flex gap-3 pl-12 py-2 px-6 cursor-pointer transition-all duration-300 
+                            ${activeSubMenu === subIndex ? 'bg-primary text-white font-semibold' : ''}`}
+                        >
+                          <Image
+                            src={
+                              activeSubMenu === subIndex
+                                ? subItem.iconhover
+                                : subItem.icon
+                            }
+                            alt={subItem.title}
+                            width={20}
+                            height={20}
+                            className="transition-all duration-300"
+                          />
+                          <span>{subItem.title}</span>
+                        </div>
+                      </Link>
+                    ) : (
                       <div
+                        key={subIndex}
                         onClick={() => handleSubMenuClick(subIndex)}
-                        className={`flex gap-3 pl-12 py-2 px-6 cursor-pointer transition-all duration-300 
-                          ${activeSubMenu === subIndex ? 'bg-primary text-white font-semibold' : ''}`}
+                        className="flex gap-3 pl-12 py-2 px-6 cursor-pointer transition-all duration-300"
                       >
                         <Image
-                          src={
-                            activeSubMenu === subIndex
-                              ? subItem.iconhover
-                              : subItem.icon
-                          }
+                          src={subItem.icon}
                           alt={subItem.title}
                           width={20}
                           height={20}
@@ -89,7 +123,7 @@ export default function SidebarMenu({ menuType }) {
                         />
                         <span>{subItem.title}</span>
                       </div>
-                    </Link>
+                    )
                   ))}
                 </div>
               )}
@@ -100,3 +134,4 @@ export default function SidebarMenu({ menuType }) {
     </div>
   );
 }
+

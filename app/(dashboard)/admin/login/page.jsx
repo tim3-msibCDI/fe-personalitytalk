@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { loginUser } from "@/api/user";
+import { loginAdmin } from "@/api/user";
 import { setToken } from "@/lib/auth";
 import Modal from "@/components/modals/modal";
+import Loading from "@/components/loading/loading";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -14,25 +15,31 @@ export default function Login() {
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const router = useRouter()
+
   async function onSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
     setError(null);
 
     try {
-      const data = await loginUser(email, password);
-      const token = data.data.token;
+      const data = await loginAdmin(email, password);
+      const token = data.data.token; //Ambil token dari response token
       setToken(token);
-      window.location.href = "/";
+      router.push('/admin/dashboard')
     } catch (error) {
       if (error.response && error.response.status === 500) {
         setError("Server error, please try again later.");
       } else if (error.response && error.response.status === 404) {
-        setError(error.response.data.message + " Silahkan daftar terlebih dahulu");
+        setError(
+          "Percobaan Login Gagal."
+        );
       } else {
-        setError(error.response.data.message+ " Harap masukkan password yang benar.");
+        setError(
+          "Percobaan Login Gagal."
+        );
       }
-      setIsModalOpen(true); 
+      setIsModalOpen(true); // Open modal on error
     } finally {
       setIsLoading(false);
     }
@@ -40,11 +47,12 @@ export default function Login() {
 
   return (
     <>
+      {/* Loading */}
+      {isLoading && <Loading />}
       {/* Modal for displaying error messages */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="p-6">
-          <div
-            className="pb-6 flex justify-items-end">
+          <div className="pb-6 flex justify-items-end">
             <button onClick={() => setIsModalOpen(false)} className="ml-auto">
               <Image
                 src="/icons/close.svg"
@@ -64,7 +72,9 @@ export default function Login() {
               className="rounded-md mx-auto"
             />
           </div>
-          <p className="lg:text-h3 text-m font-medium text-center py-6 lg:pb-16 pb-10">{error}</p>
+          <p className="lg:text-h3 text-m font-medium text-center py-6 lg:pb-16 pb-10">
+            {error}
+          </p>
         </div>
       </Modal>
 
@@ -117,23 +127,10 @@ export default function Login() {
                 <button
                   className="bg-primary text-whitebg text-s w-full py-2 px-4 mt-8 rounded-lg hover:bg-hover"
                   type="submit"
-                  disabled={isLoading}
                 >
-                  {isLoading ? "Loading..." : "Login"}
+                  Login
                 </button>
               </form>
-
-              <div className="flex flex-row justify-center mt-7">
-                <div className="text-textcolor mr-5 py-2">
-                  Belum punya akun?
-                </div>
-                <Link
-                  href="/register"
-                  className="rounded-lg px-4 py-2 text-s font-medium bg-whitebg border border-primary text-primary"
-                >
-                  Daftar Disini
-                </Link>
-              </div>
             </div>
           </div>
         </div>
