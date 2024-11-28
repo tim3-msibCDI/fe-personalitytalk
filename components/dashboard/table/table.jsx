@@ -32,6 +32,8 @@ const fetcher = async (url) => {
 export default function Table() {
   const pathname = usePathname();
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filter, setFilter] = useState("");
 
   // Tentukan endpoint berdasarkan path
   let endpoint;
@@ -41,6 +43,8 @@ export default function Table() {
     endpoint = `/admin/mahasiswa?page=${currentPage}`;
   } else if (pathname === "/admin/psikolog/daftar-psikolog") {
     endpoint = `/admin/psikolog?page=${currentPage}`;
+  } else if (pathname === "/admin/psikolog/kelola-psikolog") {
+    endpoint = `/admin/psikolog/psikolog-regis`;
   } else if (pathname === "/admin/artikel/informasi-kesehatan") {
     endpoint = `/admin/diseases?page=${currentPage}`;
   } else {
@@ -61,21 +65,21 @@ export default function Table() {
     pathname === "/admin/pengguna/umum"
       ? [
           "No",
+          "Foto Profil",
           "Nama Pengguna",
           "Nomor Telepon",
           "Tanggal Lahir",
           "Gender",
-          "Foto Profil",
           "Tindakan",
         ]
       : pathname === "/admin/pengguna/mahasiswa"
       ? [
           "No",
+          "Foto Profil",
           "Nama Pengguna",
           "No Telpon",
           "Universitas",
           "Prodi",
-          "Foto Profil",
           "Tindakan",
         ]
       : pathname === "/admin/psikolog/daftar-psikolog"
@@ -98,6 +102,27 @@ export default function Table() {
             key: "index",
             render: (_, __, index) => data.data.from - 1 + index + 1,
           },
+          {
+            key: "photo_profile",
+            render: (photo) =>
+              photo ? (
+                <Image
+                  src={`${API_REAL}/${photo}`}
+                  alt="Foto Profil"
+                  width={60}
+                  height={60}
+                  className="mx-auto"
+                />
+              ) : (
+                <Image
+                  src="/image/default-profile.jpg"
+                  alt="Foto Profil"
+                  width={60}
+                  height={60}
+                  className="mx-auto"
+                />
+              ),
+          },
           { key: "name" },
           { key: "phone_number" },
           { key: "date_birth" },
@@ -106,21 +131,6 @@ export default function Table() {
             render: (gender) => (gender === "M" ? "Laki-laki" : "Perempuan"),
           },
           {
-            key: "photo_profile",
-            render: (photo) =>
-              photo ? (
-                <Image
-                  src={`${API_REAL}/${photo}`}
-                  alt="Foto Profil"
-                  width={40}
-                  height={40}
-                  className="w-10 h-10 object-cover rounded-full"
-                />
-              ) : (
-                <span>Tidak ada</span>
-              ),
-          },
-          {
             key: "actions",
             render: (_, row) => (
               <div className="space-x-2">
@@ -139,6 +149,27 @@ export default function Table() {
             key: "index",
             render: (_, __, index) => data.data.from - 1 + index + 1,
           },
+          {
+            key: "photo_profile",
+            render: (photo) =>
+              photo ? (
+                <Image
+                  src={`${API_REAL}/${photo}`}
+                  alt="Foto Profil"
+                  width={60}
+                  height={60}
+                  className="mx-auto"
+                />
+              ) : (
+                <Image
+                  src="/image/default-profile.jpg"
+                  alt="Foto Profil"
+                  width={60}
+                  height={60}
+                  className="mx-auto"
+                />
+              ),
+          },
           { key: "name" },
           { key: "phone_number" },
           {
@@ -148,21 +179,6 @@ export default function Table() {
           {
             key: "mahasiswa.jurusan",
             render: (_, row) => row.mahasiswa?.jurusan || "Tidak ada",
-          },
-          {
-            key: "photo_profile",
-            render: (photo) =>
-              photo ? (
-                <Image
-                  src={`${API_REAL}/${photo}`}
-                  alt="Foto Profil"
-                  width={40}
-                  height={40}
-                  className="w-10 h-10 object-cover rounded-full"
-                />
-              ) : (
-                <span>Tidak ada</span>
-              ),
           },
           {
             key: "actions",
@@ -177,36 +193,18 @@ export default function Table() {
             ),
           },
         ]
-      : pathname === "/admin/pengguna/mahasiswa"
+      : pathname === "/admin/psikolog/daftar-psikolog"
       ? [
           {
             key: "index",
             render: (_, __, index) => data.data.from - 1 + index + 1,
           },
           { key: "name" },
-          { key: "phone_number" },
+          { key: "sipp" },
+          { key: "practice_start_date" },
           {
-            key: "mahasiswa.universitas",
-            render: (_, row) => row.mahasiswa?.universitas || "Tidak ada",
-          },
-          {
-            key: "mahasiswa.jurusan",
-            render: (_, row) => row.mahasiswa?.jurusan || "Tidak ada",
-          },
-          {
-            key: "photo_profile",
-            render: (photo) =>
-              photo ? (
-                <Image
-                  src={`${API_REAL}/${photo}`}
-                  alt="Foto Profil"
-                  width={40}
-                  height={40}
-                  className="w-10 h-10 object-cover rounded-full"
-                />
-              ) : (
-                <span>Tidak ada</span>
-              ),
+            key: "topics",
+            render: (_, row) => (row.topics ? row.topics.join(", ") : "-"), // Gabungkan array dengan koma
           },
           {
             key: "actions",
@@ -245,6 +243,13 @@ export default function Table() {
 
   return (
     <div className="overflow-x-auto">
+      {/* Filter dan Search */}
+      <div className="flex items-center space-x-4 mb-4">
+        <FilterDropdown value={filter} onChange={setFilter} />
+        <SearchBar value={searchQuery} onChange={setSearchQuery} />
+      </div>
+
+      {/* Table */}
       <table className="w-full min-w-max bg-primarylight2 border border-text2 text-center text-s p-5">
         <TableHead heads={tableHead} />
         <TableBody rows={data.data.data} columns={columns} />
@@ -259,5 +264,31 @@ export default function Table() {
         onPageChange={(page) => setCurrentPage(page)}
       />
     </div>
+  );
+}
+
+function SearchBar({ value, onChange }) {
+  return (
+    <input
+      type="text"
+      placeholder="Cari Nama Mahasiswa"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className="w-full p-2 border border-gray-300 rounded-lg"
+    />
+  );
+}
+
+function FilterDropdown({ value, onChange }) {
+  return (
+    <select
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className="p-2 border border-gray-300 rounded-lg"
+    >
+      <option value="">Filter</option>
+      <option value="L">Laki-laki</option>
+      <option value="P">Perempuan</option>
+    </select>
   );
 }

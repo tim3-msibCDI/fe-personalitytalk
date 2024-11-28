@@ -1,7 +1,7 @@
 "use client"
 
 import { usePathname } from "next/navigation";
-import Header from "@/components/dashboard/section/header";
+import HeaderAdmin from "@/components/dashboard/section/header-admin";
 import Topbar from "@/components/dashboard/section/topbar";
 
 export default function AdminLayout({ children }) {
@@ -16,7 +16,7 @@ export default function AdminLayout({ children }) {
   return (
     <div className="default-layout">
       <Topbar />  
-      <Header />
+      <HeaderAdmin />
       <div className="p-6">{children}</div>
     </div>
   );
