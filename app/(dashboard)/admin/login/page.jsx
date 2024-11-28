@@ -25,6 +25,8 @@ export default function Login() {
     try {
       const data = await loginAdmin(email, password);
       const token = data.data.token; //Ambil token dari response token
+      const name = data.data.name; 
+      localStorage.setItem("userName", name);
       setToken(token);
       router.push('/admin/dashboard')
     } catch (error) {
