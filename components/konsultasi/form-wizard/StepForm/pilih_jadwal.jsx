@@ -77,7 +77,8 @@ export default function FormPilihJadwal({ onBack, onNext }) {
         return new Intl.NumberFormat('id-ID', {
             style: 'currency',
             currency: 'IDR',
-            minimumFractionDigits: 2
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2
         }).format(price).replace('Rp', 'Rp ');
     };
 
@@ -132,7 +133,7 @@ export default function FormPilihJadwal({ onBack, onNext }) {
                             <div className="flex flex-row gap-4">
                                 <div className="w-28 h-28 rounded overflow-hidden">
                                     <Image className="mb-2 object-cover w-full h-full"
-                                        src={`https://38e2-114-10-9-62.ngrok-free.app/${selectedPsikolog?.photo_profile}`}
+                                        src={`https://a5da-114-10-44-77.ngrok-free.app/${selectedPsikolog?.photo_profile}`}
                                         alt={`Photo ${selectedPsikolog?.name}`}
                                         width={100}
                                         height={100}
