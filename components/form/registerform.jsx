@@ -45,7 +45,7 @@ export default function RegisterForm() {
 
       console.log(formData)
 
-      const response = await fetch('https://38e2-114-10-9-62.ngrok-free.app/api/register/user', {
+      const response = await fetch('https://a5da-114-10-44-77.ngrok-free.app/api/register/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-      domains: ['38e2-114-10-9-62.ngrok-free.app'],
+      domains: ['a5da-114-10-44-77.ngrok-free.app'],
     },
   };
   
