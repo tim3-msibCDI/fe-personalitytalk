@@ -11,7 +11,7 @@ export default function Psikolog({ data }) {
         category, // atau role
         rating,
         experience, // atau pengalaman
-        status_pembayaran,
+        status,
     } = data;
 
     return (
@@ -20,7 +20,7 @@ export default function Psikolog({ data }) {
             <div className="w-28 h-28 rounded overflow-hidden">
                 <Image
                     className="object-cover w-full h-full"
-                    src={photo || "/default-psikolog.png"} // Placeholder jika photo kosong
+                    src={photo}
                     alt={`Photo ${name}`}
                     width={100}
                     height={100}
@@ -33,16 +33,20 @@ export default function Psikolog({ data }) {
                 {/* Rating, Pengalaman, dan Role */}
                 <div className="flex items-center gap-3 mt-2">
                     {/* Rating */}
-                    <div className="flex items-center">
-                        <Image
-                            src="/icons/bintang.png"
-                            alt="Icon Star"
-                            width={18}
-                            height={18}
-                        />
-                        <p className="ml-1">{rating || "0.0"}</p>
-                    </div>
-                    <span className="text-gray-400">|</span>
+                    {rating && rating > 0 && (
+                        <>
+                            <div className="flex items-center">
+                                <Image
+                                    src="/icons/bintang.png"
+                                    alt="Icon Star"
+                                    width={18}
+                                    height={18}
+                                />
+                                <p className="ml-1">{rating}</p>
+                            </div>
+                            <span className="text-gray-400">|</span>
+                        </>
+                    )}
                     {/* Pengalaman */}
                     <div className="flex items-center">
                         <Image
@@ -67,20 +71,24 @@ export default function Psikolog({ data }) {
                 </div>
 
                 {/* Status Pembayaran */}
-                {status_pembayaran && (
+                {status && (
                     <div className="mt-3 flex items-center">
                         <div
-                            className={`px-4 py-2 rounded-md text-white font-semibold text-sm ${
-                                status_pembayaran === 1
+                            className={`px-4 py-2 rounded-md text-white font-semibold text-sm ${status === "pending"
                                     ? "bg-wait"
-                                    : status_pembayaran === 2
-                                    ? "bg-success"
-                                    : "bg-fail"
-                            }`}
+                                    : status === "pending_confirmation"
+                                        ? "bg-text2"
+                                        : status === "completed"
+                                            ? "bg-success"
+                                            : status === "failed"
+                                                ? "bg-fail"
+                                                : "bg-gray-300"
+                                }`}
                         >
-                            {status_pembayaran === 1 && "Menunggu pembayaran"}
-                            {status_pembayaran === 2 && "Transaksi berhasil"}
-                            {status_pembayaran === 3 && "Transaksi gagal"}
+                            {status === "pending" && "Menunggu Pembayaran"}
+                            {status === "pending_confirmation" && "Menunggu Konfirmasi"}
+                            {status === "completed" && "Transaksi Berhasil"}
+                            {status === "failed" && "Transaksi Gagal"}
                         </div>
                     </div>
                 )}
