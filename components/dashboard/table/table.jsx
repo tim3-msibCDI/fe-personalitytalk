@@ -36,17 +36,26 @@ export default function Table() {
   const [filter, setFilter] = useState("");
 
   // Tentukan endpoint berdasarkan path
+  let searchPlaceholder = "Cari Data";
   let endpoint;
   if (pathname === "/admin/pengguna/umum") {
     endpoint = `/admin/users?page=${currentPage}`;
+    searchPlaceholder = "Cari Data Pengguna";
   } else if (pathname === "/admin/pengguna/mahasiswa") {
     endpoint = `/admin/mahasiswa?page=${currentPage}`;
+    searchPlaceholder = "Cari Data Mahasiswa";
   } else if (pathname === "/admin/psikolog/daftar-psikolog") {
     endpoint = `/admin/psikolog?page=${currentPage}`;
+    searchPlaceholder = "Cari Data Psikolog";
   } else if (pathname === "/admin/psikolog/kelola-psikolog") {
     endpoint = `/admin/psikolog/psikolog-regis`;
+    searchPlaceholder = "Cari Data Psikolog";
   } else if (pathname === "/admin/artikel/informasi-kesehatan") {
     endpoint = `/admin/diseases?page=${currentPage}`;
+    searchPlaceholder = "Cari Informasi Kesehatan";
+  } else if (pathname === "/admin/konsultasi/topik-konsultasi") {
+    endpoint = `/admin/diseases?page=${currentPage}`;
+    searchPlaceholder = "Cari Informasi Kesehatan"; //belum dibetulkan
   } else {
     endpoint = null;
   }
@@ -246,7 +255,11 @@ export default function Table() {
       {/* Filter dan Search */}
       <div className="flex items-center space-x-4 mb-4">
         <FilterDropdown value={filter} onChange={setFilter} />
-        <SearchBar value={searchQuery} onChange={setSearchQuery} />
+        <SearchBar
+          value={searchQuery}
+          onChange={setSearchQuery}
+          placeholder={searchPlaceholder}
+        />
       </div>
 
       {/* Table */}
@@ -267,17 +280,28 @@ export default function Table() {
   );
 }
 
-function SearchBar({ value, onChange }) {
+function SearchBar({ value, onChange, placeholder }) {
   return (
-    <input
-      type="text"
-      placeholder="Cari Nama Mahasiswa"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="w-full p-2 border border-gray-300 rounded-lg"
-    />
+    <div className="relative w-full">
+      {/* Ikon Search */}
+      <img
+        src="/icons/dashboard/search.svg"
+        alt="Search"
+        className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
+      />
+
+      {/* Input */}
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full p-2 pl-10 border border-gray-300 rounded-lg"
+      />
+    </div>
   );
 }
+
 
 function FilterDropdown({ value, onChange }) {
   return (
