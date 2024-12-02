@@ -3,6 +3,7 @@ import Modal from "@/components/modals/modal";
 import Catatan from "@/components/popup/catatan";
 import { useState } from "react";
 import { getToken } from "@/lib/auth";
+import { useRouter } from "next/navigation";
 
 export default function Pembayaran({ status }) {
     const [isCatatanModalOpen, setCatatanModalOpen] = useState(false);
@@ -12,6 +13,8 @@ export default function Pembayaran({ status }) {
         bukti: null,
     });
     const [isLoading, setIsLoading] = useState(false);
+
+    const router = useRouter();
 
     const openCatatanModal = () => setCatatanModalOpen(true);
     const closeCatatanModal = () => setCatatanModalOpen(false);
@@ -74,6 +77,10 @@ export default function Pembayaran({ status }) {
         }
     };
 
+    const handlePesanLagi = () => {
+        router.push("/konsultasi"); // Navigasi ke halaman /konsultasi
+    };
+
     return (
         <div className="flex flex-row gap-8">
             {/* Batas Waktu */}
@@ -100,7 +107,7 @@ export default function Pembayaran({ status }) {
                                             id="nama"
                                             placeholder="Masukkan Nama Rekening"
                                             className={`bg-gray-50 border border-gray-300 ${formValues.nama ? "text-black" : "text-text2"
-                                            } text-s rounded-lg block w-full p-2`}
+                                                } text-s rounded-lg block w-full p-2`}
                                             value={formValues.nama}
                                             onChange={(e) => handleInputChange("nama", e.target.value)}
                                         />
@@ -115,7 +122,7 @@ export default function Pembayaran({ status }) {
                                             id="rekening"
                                             placeholder="Masukkan Nama Bank"
                                             className={`bg-gray-50 border border-gray-300 ${formValues.rekening ? "text-black" : "text-text2"
-                                            } text-s rounded-lg block w-full p-2`}
+                                                } text-s rounded-lg block w-full p-2`}
                                             value={formValues.rekening}
                                             onChange={(e) => handleInputChange("rekening", e.target.value)}
                                         />
@@ -130,7 +137,7 @@ export default function Pembayaran({ status }) {
                                             id="bukti"
                                             accept=".jpg,.jpeg,.png,.pdf"
                                             className={`bg-gray-50 border border-gray-300 ${formValues.bukti ? "text-black" : "text-text2"
-                                            } text-s rounded-lg block w-full p-2`}
+                                                } text-s rounded-lg block w-full p-2`}
                                             onChange={(e) => {
                                                 const file = e.target.files[0];
                                                 if (file) {
@@ -154,7 +161,7 @@ export default function Pembayaran({ status }) {
                                             }`}
                                         onClick={handleProsesLanjut}
                                     >
-                                        {isLoading ? "Mengirim..." : "Proses Lanjut"}
+                                        {isLoading ? "Mengirim..." : "Kirim Bukti"}
                                     </button>
                                 </form>
                             </div>
@@ -186,7 +193,16 @@ export default function Pembayaran({ status }) {
                             <span>Chat Psikolog</span>
                         </button>
                     </div>
-                ) : status === "failed" ? null : null}
+                ) : status === "failed" ? (
+                    <div className="flex flex-col space-y-4">
+                        <button
+                            onClick={handlePesanLagi}
+                            className="flex items-center justify-center space-x-2 p-3 text-white bg-primary rounded-lg text-m font-semibold"
+                        >
+                            Pesan Lagi
+                        </button>
+                    </div>
+                ) : null}
             </div>
             {/* Modal untuk Tambah Catatan */}
             <Modal isOpen={isCatatanModalOpen} onClose={closeCatatanModal}>
