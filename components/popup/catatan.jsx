@@ -37,10 +37,6 @@ export default function Catatan({ onClose }) {
                 return;
             }
 
-            // Log data sebelum dikirim
-            console.log("ID Transaksi:", idTransaction);
-            console.log("Patient Complaint:", complaint);
-
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/consultation/submit-complaint`, {
                 method: "POST",
                 headers: {

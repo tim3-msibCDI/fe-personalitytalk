@@ -36,7 +36,6 @@ export default function Konsultasi() {
 
                 // Ambil no_pemesanan dari path
                 const no_pemesanan = pathname.split("/").pop();
-                console.log("No. Pemesanan dari URL:", no_pemesanan);
 
                 // Ambil transactionData dari localStorage
                 const transactionData = JSON.parse(localStorage.getItem("transactionData"));
@@ -49,9 +48,6 @@ export default function Konsultasi() {
 
                 // Ambil id_transaction dari data transaksi
                 const { id_transaction, no_pemesanan: stored_no_pemesanan } = transactionData;
-
-                console.log("ID transaksi:", id_transaction);
-                console.log("No. Pemesanan dari LocalStorage:", stored_no_pemesanan);
 
                 // Cocokkan no_pemesanan dengan data URL
                 if (no_pemesanan !== stored_no_pemesanan) {
@@ -80,7 +76,6 @@ export default function Konsultasi() {
 
                 // Ambil dan proses hasil JSON
                 const result = await response.json();
-                console.log("Response JSON:", result);
 
                 if (!result.success) {
                     throw new Error(result.message || "Gagal mengambil detail transaksi.");

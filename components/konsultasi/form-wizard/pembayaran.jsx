@@ -176,7 +176,7 @@ export default function Pembayaran({ status }) {
                             <span>Tambah Keluhan</span>
                         </button>
                         {/* Button Chat Psikolog */}
-                        <button className="flex items-center justify-center space-x-2 p-3 bg-disable text-whitebg text-m font-semibold rounded-lg hover:bg-primary">
+                        <button className="flex items-center justify-center space-x-2 p-3 bg-primary text-whitebg text-m font-semibold rounded-lg">
                             <Image
                                 src="/icons/konsultasi.png"
                                 alt="Chat Psikolog Icon"

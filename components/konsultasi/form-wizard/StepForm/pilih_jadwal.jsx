@@ -51,7 +51,6 @@ export default function FormPilihJadwal({ onBack, onNext }) {
             }
 
             const result = await response.json();
-            console.log("API response:", result);
 
             // Set psychologist details and weekly schedule data
             setSelectedPsikolog(result.data.psikolog);

@@ -50,11 +50,6 @@ export default function FormBayar({ onBack }) {
       const psch_id = localStorage.getItem("selectedPschId");
       const topic_id = localStorage.getItem("selectedTopic");
 
-      // Tambahkan console.log untuk memeriksa nilai dari setiap ID
-      console.log("PSI ID:", psi_id);
-      console.log("PSCH ID:", psch_id);
-      console.log("TOPIC ID:", topic_id);
-
       if (!psi_id || !psch_id || !topic_id) {
         throw new Error("Data ID tidak lengkap di localStorage");
       }
@@ -113,8 +108,6 @@ export default function FormBayar({ onBack }) {
         body.voucher_code = voucher_code;
       }
   
-      console.log("Mengirim data ke API:", body);
-  
       const url = `${process.env.NEXT_PUBLIC_API_URL}/consultation/create-transaction`;
       const response = await fetch(url, {
         method: "POST",
@@ -144,9 +137,6 @@ export default function FormBayar({ onBack }) {
         id_transaction,
         no_pemesanan,
     }));
-  
-      console.log("Transaksi berhasil dibuat, ID Transaksi disimpan di localStorage:", id_transaction);
-      console.log("No pemesanan:", no_pemesanan);
   
       return { no_pemesanan, id_transaction };
     } catch (err) {
@@ -187,12 +177,10 @@ export default function FormBayar({ onBack }) {
       });
 
       const result = await response.json();
-      console.log("Redeem Response:", result);
 
       if (!response.ok || !result.success) {
         throw new Error(result.message || "Gagal redeem voucher");
       }
-      console.log("Voucher redeemed:", result.data);
       // state voucherData
       setVoucherData(result.data);
     } catch (error) {
