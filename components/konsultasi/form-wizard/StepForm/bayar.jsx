@@ -283,7 +283,7 @@ export default function FormBayar({ onBack }) {
                   <div className="w-28 h-28 rounded overflow-hidden">
                     <Image
                       className="object-cover w-full h-full"
-                      src={`http://a5da-114-10-44-77.ngrok-free.app/${selectedPsikolog.photo_profile}`}
+                      src={`https://fdf0-36-79-78-130.ngrok-free.app/${selectedPsikolog.photo_profile}`}
                       alt={`Photo ${selectedPsikolog.psikolog_name}`}
                       width={100}
                       height={100}

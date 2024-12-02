@@ -112,7 +112,6 @@ export default function Konsultasi() {
         category,
         rating,
         years_of_experience,
-        price,
         topic,
         consultation_date,
         consultation_time,
@@ -180,7 +179,7 @@ export default function Konsultasi() {
                             <Psikolog
                                 data={{
                                     name: psikolog_name,
-                                    photo: `https://a5da-114-10-44-77.ngrok-free.app/${photo_profile}`,
+                                    photo: `https://fdf0-36-79-78-130.ngrok-free.app/${photo_profile}`,
                                     category,
                                     rating,
                                     experience: years_of_experience,
@@ -240,7 +239,7 @@ export default function Konsultasi() {
                                         <p>Waktu Pemesanan</p>
                                         <p>: {booking_date}</p>
 
-                                        {status === "completed" && (
+                                        {(status === "pending_confirmation" || status === "completed") && (
                                             <>
                                                 <p>Waktu Pembayaran</p>
                                                 <p>: {payment_date}</p>
