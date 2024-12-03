@@ -10,6 +10,11 @@ import { useState } from "react";
 import Image from "next/image";
 import Pagination from "./pagenation";
 import { ShowButton, EditButton, DeleteButton } from "./button/button";
+import Filter from "./filter";
+import SearchBar from "./search-bar";
+import Modal from "@/components/modals/modal";
+
+import { deleteUser } from "@/api/manage-user";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
@@ -34,6 +39,27 @@ export default function Table() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("");
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const handleDeleteClick = (row) => {
+    setSelectedRow(row);
+    setModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (selectedRow) {
+      const result = await deleteUser(selectedRow.id);
+      console.log(result.message);
+      // Tambahkan logika untuk refresh data jika diperlukan
+    }
+    setModalOpen(false);
+  };
+
+  const cancelDelete = () => {
+    setSelectedRow(null);
+    setModalOpen(false);
+  };
 
   // Tentukan endpoint berdasarkan path
   let searchPlaceholder = "Cari Data";
@@ -102,6 +128,8 @@ export default function Table() {
         ]
       : pathname === "/admin/artikel/informasi-kesehatan"
       ? ["No", "Nama Penyakit", "Tindakan"]
+      : pathname === "/admin/konsultasi/topik-konsultasi"
+      ? ["No", "Nama Penyakit", "Tindakan"]
       : [];
 
   const columns =
@@ -145,9 +173,7 @@ export default function Table() {
               <div className="space-x-2">
                 <ShowButton onClick={() => console.log("Show clicked", row)} />
                 <EditButton onClick={() => console.log("Edit clicked", row)} />
-                <DeleteButton
-                  onClick={() => console.log("Delete clicked", row)}
-                />
+                <DeleteButton onClick={() => handleDeleteClick(row)} />
               </div>
             ),
           },
@@ -250,11 +276,21 @@ export default function Table() {
         ]
       : [];
 
+  const filterOptions = [
+    { value: "data1", label: "Data 1" },
+    { value: "data2", label: "Data 2" },
+    { value: "data3", label: "Data 3" },
+  ];
+
   return (
     <div className="overflow-x-auto">
       {/* Filter dan Search */}
       <div className="flex items-center space-x-4 mb-4">
-        <FilterDropdown value={filter} onChange={setFilter} />
+        <Filter
+          options={filterOptions} // Mengirim data dummy sebagai options
+          selectedOption={filter}
+          onChange={(value) => setFilter(value)} // Mengubah filter state
+        />
         <SearchBar
           value={searchQuery}
           onChange={setSearchQuery}
@@ -276,43 +312,30 @@ export default function Table() {
         prevPageUrl={data.data.prev_page_url}
         onPageChange={(page) => setCurrentPage(page)}
       />
+
+      <Modal isOpen={isModalOpen} onClose={cancelDelete}>
+        <div className="p-6">
+          <div className="my-24">
+            <h2 className="text-lg font-semibold text-textcolor text-center">
+              Apakah Anda yakin akan menghapus data ini?
+            </h2>
+            <div className="flex justify-center space-x-4 mt-4">
+              <button
+                className="px-8 py-2 text-primary border border-primary rounded-md"
+                onClick={cancelDelete}
+              >
+                Batal
+              </button>
+              <button
+                className="px-8 py-2 bg-primary text-whitebg rounded-md"
+                onClick={confirmDelete}
+              >
+                Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
-  );
-}
-
-function SearchBar({ value, onChange, placeholder }) {
-  return (
-    <div className="relative w-full">
-      {/* Ikon Search */}
-      <img
-        src="/icons/dashboard/search.svg"
-        alt="Search"
-        className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5"
-      />
-
-      {/* Input */}
-      <input
-        type="text"
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full p-2 pl-10 border border-gray-300 rounded-lg"
-      />
-    </div>
-  );
-}
-
-
-function FilterDropdown({ value, onChange }) {
-  return (
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="p-2 border border-gray-300 rounded-lg"
-    >
-      <option value="">Filter</option>
-      <option value="L">Laki-laki</option>
-      <option value="P">Perempuan</option>
-    </select>
   );
 }

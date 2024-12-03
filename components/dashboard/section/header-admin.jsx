@@ -54,10 +54,25 @@ export default function HeaderAdmin() {
         </ul>
       </nav>
 
-      {/* Header Title */}
-      <h1 className="font-semibold text-h1">
-        {breadcrumbs[breadcrumbs.length - 1]?.title || "Dashboard"}
-      </h1>
+      {/* Header Title dan Tombol */}
+      <div className="flex justify-between items-center">
+        <h1 className="font-semibold text-h1">
+          {breadcrumbs[breadcrumbs.length - 1]?.title || "Dashboard"}
+        </h1>
+
+        {/* Tombol Tambah Data */}
+        <Link
+          href="/path-to-add-data" // Ganti dengan URL untuk menambahkan data
+          className="px-4 py-2 text-white bg-primary rounded-lg flex items-center space-x-2 hover:bg-primarydark"
+        >
+          <img
+            src="/icons/dashboard/add-data.svg" // Ganti dengan path ikon Anda
+            alt="Tambah"
+            className="w-4 h-4"
+          />
+          <span>Tambah Data</span>
+        </Link>
+      </div>
     </header>
   );
 }
