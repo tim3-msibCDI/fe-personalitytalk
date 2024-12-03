@@ -73,7 +73,7 @@ export default function DetailArtikel({ params }) {
             <div className="flex gap-8 min-h-screen mb-10">
                 <div className="w-2/3">
                     <div>
-                        <p className="text-m">{article.kategori || "Kategori"}</p>
+                        <p className="text-m">{article.category || " "}</p>
                         <h1 className="text-h1 font-semibold">{article.article_title}</h1>
                         <p className="text-s mb-5">{article.publication_date}</p>
                         <div className="w-full h-[300px] mb-5">
