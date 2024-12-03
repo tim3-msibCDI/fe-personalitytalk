@@ -1,50 +1,18 @@
 "use client";
 
-import { artikel } from "@/constants";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import BannerKonsultasi from "@/components/banner";
 
 export default function DetailArtikel({ params }) {
-    const { name } = params;
-
-    // Cari artikel berdasarkan nama di URL
-    const article = artikel.find((item) => item.name.replace(/\s+/g, '-').toLowerCase() === name);
-
-    if (!article) return <p>Artikel tidak ditemukan</p>;
-
-    // State untuk artikel terkait
+    const [article, setArticle] = useState(null);
     const [relatedArticles, setRelatedArticles] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    useEffect(() => {
-        // Filter artikel lain dengan kategori yang sama, selain artikel yang sedang ditampilkan
-        let filteredArticles = artikel.filter(
-            (item) => item.kategori === article.kategori && item.name !== article.name
-        );
-
-        // Jika jumlah artikel terkait kurang dari 5, tambahkan artikel lainnya secara acak
-        if (filteredArticles.length < 5) {
-            const remainingArticles = artikel.filter(
-                (item) => item.kategori !== article.kategori && item.name !== article.name
-            );
-
-            // Tambahkan artikel lainnya secara random di klien
-            const randomArticles = remainingArticles
-                .sort(() => 0.5 - Math.random()) // Acak urutan
-                .slice(0, 5 - filteredArticles.length); // Ambil artikel secukupnya untuk memenuhi 5 artikel
-
-            filteredArticles = [...filteredArticles, ...randomArticles];
-        }
-
-        // Set hanya 5 artikel terkait
-        setRelatedArticles(filteredArticles.slice(0, 5));
-    }, [article]);
-
-    // State untuk mengatur ikon sosial media
+    // State untuk ikon sosial media
     const [hoveredIcon, setHoveredIcon] = useState(null);
-
-    // Daftar ikon sosial media dengan gambar berwarna hitam dan berwarna
     const socialMediaIcons = [
         { name: "instagram", defaultSrc: "/image/sosmed/b-instagram.svg", hoverSrc: "/image/sosmed/instagram.svg" },
         { name: "facebook", defaultSrc: "/image/sosmed/b-facebook.svg", hoverSrc: "/image/sosmed/facebook.svg" },
@@ -52,22 +20,68 @@ export default function DetailArtikel({ params }) {
         { name: "whatsapp", defaultSrc: "/image/sosmed/b-whatsapp.svg", hoverSrc: "/image/sosmed/whatsapp.svg" }
     ];
 
+    useEffect(() => {
+        const fetchArticle = async () => {
+            try {
+                const articleId = localStorage.getItem("selectedArticleId"); // Mendapatkan ID dari localStorage
+                if (!articleId) {
+                    setError("Artikel tidak ditemukan di localStorage.");
+                    setLoading(false);
+                    return;
+                }
+
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/articles/${articleId}`,
+                    {
+                        headers: {
+                            "ngrok-skip-browser-warning": "69420",
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+                if (!response.ok) {
+                    throw new Error("Gagal memuat data artikel.");
+                }
+
+                const data = await response.json();
+                if (data.success) {
+                    setArticle(data.data.article);
+                    setRelatedArticles(data.data.related_articles);
+                } else {
+                    throw new Error(data.message || "Gagal memuat data artikel.");
+                }
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchArticle();
+    }, []);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+
     return (
         <div className="py-4 px-6 md:px-8 lg:px-12 ml-4 lg:ml-8">
             <div className="flex gap-8 min-h-screen mb-10">
                 <div className="w-2/3">
                     <div>
-                        <p className="text-m">{article.kategori}</p>
-                        <h1 className="text-h1 font-semibold">{article.name}</h1>
-                        <p className="text-s mb-5">{article.tanggal}</p>
+                        <p className="text-m">{article.kategori || "Kategori"}</p>
+                        <h1 className="text-h1 font-semibold">{article.article_title}</h1>
+                        <p className="text-s mb-5">{article.publication_date}</p>
                         <div className="w-full h-[300px] mb-5">
                             <img
-                                src={article.images}
-                                alt={article.alt}
+                                src={`https://4ab6-180-254-243-79.ngrok-free.app/${article.article_img}`}
+                                alt={article.article_title}
                                 className="w-full h-full object-cover"
                             />
                         </div>
-                        <p className="text-justify">{article.description}</p>
+                        <div
+                            className="text-justify"
+                            dangerouslySetInnerHTML={{ __html: article.content }}
+                        />
                     </div>
                     <div className="mt-10">
                         <h2 className="text-h2 font-semibold">Bagikan artikel ini:</h2>
@@ -103,21 +117,21 @@ export default function DetailArtikel({ params }) {
                         {relatedArticles.map((item) => (
                             <Link
                                 key={item.id}
-                                href={`/article/${item.name.replace(/\s+/g, '-').toLowerCase()}`}
+                                href={`/article/${item.article_title.replace(/\s+/g, '-').toLowerCase()}`}
                             >
-                                <div className="flex gap-4 items-start">
-                                    <div className="w-16 h-16">
+                                <div className="flex gap-4">
+                                    <div className="w-16 h-16 aspect-square overflow-hidden flex-shrink-0">
                                         <Image
-                                            src={item.images}
-                                            alt={item.alt}
+                                            src={`https://4ab6-180-254-243-79.ngrok-free.app/${item.article_img}`}
+                                            alt={item.article_title}
                                             width={100}
                                             height={100}
                                             className="w-full h-full object-cover rounded-md"
                                         />
                                     </div>
                                     <div className="self-start">
-                                        <h5 className="text-m font-bold text-textcolor">{item.name}</h5>
-                                        <p className="text-s text-textcolor">{item.tanggal}</p>
+                                        <h5 className="text-m font-bold text-textcolor">{item.article_title}</h5>
+                                        <p className="text-s text-textcolor">{item.publication_date}</p>
                                     </div>
                                 </div>
                             </Link>
@@ -125,7 +139,7 @@ export default function DetailArtikel({ params }) {
                     </div>
                 </div>
             </div>
-            <BannerKonsultasi/>
+            <BannerKonsultasi />
         </div>
     );
 }
