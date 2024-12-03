@@ -7,29 +7,56 @@ export default function Catatan({ onClose }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
 
-    // Ambil data dari localstorage saat komponen dimuat
-    useEffect(() => {
-        const savedComplaint = localStorage.getItem("savedComplaint");
-        const savedIsDisabled = localStorage.getItem("isDisabled");
+    // Ambil id_transaction dari localStorage
+    const transactionData = JSON.parse(localStorage.getItem("transactionData"));
+    const idTransaction = transactionData?.id_transaction || null;
 
-        if (savedComplaint) setComplaint(savedComplaint);
-        if (savedIsDisabled) setIsDisabled(savedIsDisabled === "true");
-    }, []);
+    useEffect(() => {
+        if (!idTransaction) return;
+
+        const fetchComplaint = async () => {
+            try {
+                const token = getToken();
+                if (!token) {
+                    alert("Anda perlu login untuk mengakses halaman ini.");
+                    router.push("/login");
+                    return;
+                }
+
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/consultation/detail-complaint/${idTransaction}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                            "ngrok-skip-browser-warning": "69420",
+                        },
+                    }
+                );
+
+                const responseData = await response.json();
+                if (response.ok && responseData.data) {
+                    setComplaint(responseData.data); // Isi keluhan dari API
+                    setIsDisabled(true); // Nonaktifkan tombol jika data sudah ada
+                }
+            } catch (error) {
+                console.error("Error fetching complaint data:", error);
+            }
+        };
+
+        fetchComplaint();
+    }, [idTransaction]);
 
     const handleSubmit = async () => {
-        // Ambil id_transaction dari localStorage
-        const transactionData = JSON.parse(localStorage.getItem("transactionData"));
-        if (!transactionData || !transactionData.id_transaction) {
-            alert("ID transaksi tidak ditemukan di localStorage!");
+        if (!idTransaction) {
+            alert("ID transaksi tidak ditemukan!");
             return;
         }
-
-        const idTransaction = transactionData.id_transaction;
 
         setIsSubmitting(true);
 
         try {
-            // Ambil token autentikasi
             const token = getToken();
             if (!token) {
                 alert("Anda perlu login untuk mengakses halaman ini.");
@@ -53,14 +80,8 @@ export default function Catatan({ onClose }) {
             const responseData = await response.json();
             if (response.ok) {
                 alert("Keluhan berhasil dikirim.");
-                // Set textarea dengan keluhan dari response
                 setComplaint(responseData.data.patient_complaint);
-                // Disable button setelah berhasil
                 setIsDisabled(true);
-
-                // Simpan ke localStorage
-                localStorage.setItem("savedComplaint", responseData.data.patient_complaint);
-                localStorage.setItem("isDisabled", "true");
             } else {
                 alert(`Gagal mengirim keluhan: ${responseData.message || "Terjadi kesalahan."}`);
             }
@@ -91,7 +112,7 @@ export default function Catatan({ onClose }) {
                 />
             </div>
             <div className="p-6">
-            <textarea
+                <textarea
                     className="w-full h-32 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     placeholder="Masukkan catatan"
                     value={complaint}
@@ -100,11 +121,13 @@ export default function Catatan({ onClose }) {
                 ></textarea>
                 <div className="flex justify-end mt-2">
                     <button
-                        onClick={handleSubmit}
-                        className={`px-4 py-2 rounded-md ${isDisabled ? "bg-disable" : "bg-primary"} text-white`}
-                        disabled={isDisabled || isSubmitting}
+                        onClick={isDisabled ? null : handleSubmit}
+                        className={`px-4 py-2 rounded-md ${
+                            isDisabled ? "bg-none cursor-not-allowed" : "bg-primary text-white"
+                        }`}
+                        disabled={isSubmitting}
                     >
-                        {isSubmitting ? "Mengirim..." : "Tambah"}
+                        {isDisabled ? "" : isSubmitting ? "Mengirim..." : "Tambah"}
                     </button>
                 </div>
             </div>

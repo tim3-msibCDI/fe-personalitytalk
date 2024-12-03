@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Modal from "@/components/modals/modal";
 import Catatan from "@/components/popup/catatan";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getToken } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 
@@ -12,12 +12,17 @@ export default function Pembayaran({ status }) {
         rekening: "",
         bukti: null,
     });
+    const [hasComplaint, setHasComplaint] = useState(false); // Status keluhan
     const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter();
 
     const openCatatanModal = () => setCatatanModalOpen(true);
     const closeCatatanModal = () => setCatatanModalOpen(false);
+
+    // Ambil ID Transaksi
+    const transactionData = JSON.parse(localStorage.getItem("transactionData"));
+    const idTransaction = transactionData?.id_transaction || null;
 
     const handleInputChange = (field, value) => {
         setFormValues((prev) => ({ ...prev, [field]: value }));
@@ -80,6 +85,43 @@ export default function Pembayaran({ status }) {
     const handlePesanLagi = () => {
         router.push("/konsultasi"); // Navigasi ke halaman /konsultasi
     };
+
+    useEffect(() => {
+        if (!idTransaction) return;
+
+        const fetchComplaintStatus = async () => {
+            try {
+                const token = await getToken();
+                if (!token) {
+                    console.error("Token tidak ditemukan. Silakan login ulang.");
+                    return;
+                }
+
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/consultation/detail-complaint/${idTransaction}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                            "ngrok-skip-browser-warning": "69420",
+                        },
+                    }
+                );
+
+                const result = await response.json();
+                if (response.ok && result.data) {
+                    setHasComplaint(true); // Keluhan ditemukan
+                } else {
+                    setHasComplaint(false); // Keluhan tidak ditemukan
+                }
+            } catch (error) {
+                console.error("Error fetching complaint status:", error);
+            }
+        };
+
+        fetchComplaintStatus();
+    }, [idTransaction]);
 
     return (
         <div className="flex flex-row gap-8">
@@ -192,7 +234,7 @@ export default function Pembayaran({ status }) {
                                 width={24}
                                 height={24}
                             />
-                            <span>Tambah Keluhan</span>
+                            <span>{hasComplaint ? "Keluhan Saya" : "Tambah Keluhan"}</span>
                         </button>
                         {/* Button Chat Psikolog */}
                         <button className="flex items-center justify-center space-x-2 p-3 bg-primary text-whitebg text-m font-semibold rounded-lg">

@@ -112,6 +112,8 @@ export default function Konsultasi() {
         consultation_time,
         transaction: {
             payment_method_name,
+            owner_bank,
+            no_rekening,
             booking_date,
             payment_date,
             status,
@@ -226,10 +228,10 @@ export default function Konsultasi() {
                                         <p>: {payment_method_name}</p>
 
                                         <p>Atas Nama</p>
-                                        <p>: PT. Personality Talk</p>
+                                        <p>: {owner_bank}</p>
 
                                         <p>No. Rekening</p>
-                                        <p>: 1222332545</p>
+                                        <p>: {no_rekening}</p>
 
                                         <p>Waktu Pemesanan</p>
                                         <p>: {booking_date}</p>
