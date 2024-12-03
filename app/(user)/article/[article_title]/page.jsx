@@ -63,6 +63,11 @@ export default function DetailArtikel({ params }) {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
+    // Handle klik article
+    const handleArticleClick = (articleId) => {
+        localStorage.setItem("selectedArticleId", articleId);
+    };
+
     return (
         <div className="py-4 px-6 md:px-8 lg:px-12 ml-4 lg:ml-8">
             <div className="flex gap-8 min-h-screen mb-10">
@@ -118,6 +123,7 @@ export default function DetailArtikel({ params }) {
                             <Link
                                 key={item.id}
                                 href={`/article/${item.article_title.replace(/\s+/g, '-').toLowerCase()}`}
+                                onClick={() => handleArticleClick(item.id)}
                             >
                                 <div className="flex gap-4">
                                     <div className="w-16 h-16 aspect-square overflow-hidden flex-shrink-0">
