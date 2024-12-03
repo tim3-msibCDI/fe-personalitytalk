@@ -167,6 +167,18 @@ export default function Pembayaran({ status }) {
                             </div>
                         </div>
                     </>
+                ) : status === "pending_confirmation" ? (
+                    <>
+                        <div className="bg-primary px-4 py-3 rounded-t-lg text-m text-whitebg flex justify-center">
+                            <p className="font-semibold">Pembayaran</p>
+                        </div>
+                        <div className="bg-primarylight2 rounded-b-lg text-s text-textcolor">
+                            <div className="px-6 py-32 text-center flex flex-col justify-center items-center">
+                                <p className="text-s font-semibold">Data Kamu Telah Diterima</p>
+                                <p className="text-s">Kami sedang memproses dan mengecek data Kamu dan akan memberikan konfirmasi segera.</p>
+                            </div>
+                        </div>
+                    </>
                 ) : status === "completed" ? (
                     <div className="flex flex-col space-y-4">
                         {/* Button tambah catatan */}

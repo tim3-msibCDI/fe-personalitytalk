@@ -18,7 +18,7 @@ export default function Konsultasi() {
     const [loading, setLoading] = useState(true);
 
     // State untuk modal
-    const [isModalOpen, setIsModalOpen] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
@@ -174,7 +174,7 @@ export default function Konsultasi() {
                             <Psikolog
                                 data={{
                                     name: psikolog_name,
-                                    photo: `https://fdf0-36-79-78-130.ngrok-free.app/${photo_profile}`,
+                                    photo: `https://4ab6-180-254-243-79.ngrok-free.app/${photo_profile}`,
                                     category,
                                     rating,
                                     experience: years_of_experience,
