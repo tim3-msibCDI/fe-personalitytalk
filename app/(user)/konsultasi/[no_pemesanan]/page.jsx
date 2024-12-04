@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { getToken } from "@/lib/auth";
 import Pembayaran from "@/components/konsultasi/form-wizard/pembayaran";
+import Loading from "@/components/loading/loading";
 
 export default function Konsultasi() {
     const router = useRouter();
@@ -95,7 +96,7 @@ export default function Konsultasi() {
     }, [pathname, router]);
 
     // Jika data masih loading
-    if (loading) return <p>Memuat detail transaksi...</p>;
+    if (loading) return <Loading/>;
 
     // Jika data transaksi tidak ditemukan
     if (!transactionData) return <p>Data transaksi tidak ditemukan</p>;

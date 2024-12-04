@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import BannerKonsultasi from "@/components/banner";
+import Loading from "@/components/loading/loading";
 
 export default function DetailArtikel({ params }) {
     const [article, setArticle] = useState(null);
@@ -60,7 +61,7 @@ export default function DetailArtikel({ params }) {
         fetchArticle();
     }, []);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loading/>;
     if (error) return <p>{error}</p>;
 
     // Handle klik article

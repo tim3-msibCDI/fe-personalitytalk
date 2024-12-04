@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getToken } from "@/lib/auth";
+import Loading from "@/components/loading/loading";
 
 export default function FormPilihJadwal({ onBack, onNext }) {
     const router = useRouter();
@@ -120,9 +121,7 @@ export default function FormPilihJadwal({ onBack, onNext }) {
 
             {/* Loading */}
             {isLoading ? (
-                <div className="mt-4 text-center">
-                    <p className="text-m text-gray-500">Memuat data, harap tunggu...</p>
-                </div>
+                <Loading/>
             ) : (
                 <div className="flex gap-8 mt-6">
                     {/* Konten Kanan */}

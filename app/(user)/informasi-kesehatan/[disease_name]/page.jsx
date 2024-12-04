@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import DOMPurify from "dompurify"; // Install: npm install dompurify
+import Loading from "@/components/loading/loading";
 
 export default function DetailPenyakit() {
     const [diseaseDetail, setDiseaseDetail] = useState(null);
@@ -54,7 +55,7 @@ export default function DetailPenyakit() {
     }, []);
 
     if (loading) {
-        return <div>Memuat...</div>;
+        return <Loading/>;
     }
 
     if (error) {

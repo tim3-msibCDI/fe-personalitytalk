@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Modal from "@/components/modals/modal";
 import SyaratKetentuan from "@/components/popup/snk";
 import VoucherGagal from "@/components/popup/voucher-gagal";
+import Loading from "@/components/loading/loading";
 
 export default function FormBayar({ onBack }) {
   const router = useRouter();
@@ -194,7 +195,7 @@ export default function FormBayar({ onBack }) {
     fetchData();
   }, []);
 
-  if (loading) return <p>Memuat data...</p>;
+  if (loading) return <Loading/>;
   if (error && !isVoucherGagalOpen) return <p>Error: {error}</p>;
 
   //Fungsi kalkulasi durasi konsultasi

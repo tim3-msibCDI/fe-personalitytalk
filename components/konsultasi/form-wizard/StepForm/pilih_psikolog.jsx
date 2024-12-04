@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { getToken } from "@/lib/auth";
 import TidakTersedia from "../../tidak-tersedia";
+import Loading from "@/components/loading/loading";
 
 export default function FormPilihPsikolog({ onSelectPsikolog }) {
     const router = useRouter();
@@ -85,7 +86,7 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
         }
     }, [router, selectedTopic]);
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <Loading/>;
 
     // Fungsi untuk memisahkan hari dan tanggal
     const splitDate = (dateString) => {
