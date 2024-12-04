@@ -50,6 +50,10 @@ export default function Login() {
     }
   }
 
+  async function redirectToGoogleLogin() {
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth/google`;
+  }
+
   return (
     <>
       {/* Loading */}
@@ -135,7 +139,9 @@ export default function Login() {
                 >
                   Login
                 </button>
-                <button className="flex items-center px-4 py-2 bg-whitebg text-textcolor rounded-lg w-full justify-center text-s mt-3.5">
+                <button 
+                  onClick={redirectToGoogleLogin}
+                  className="flex items-center px-4 py-2 bg-whitebg text-textcolor rounded-lg w-full justify-center text-s mt-3.5">
                   <Image
                     src="/image/icons/google.svg"
                     alt="Google Logo"
