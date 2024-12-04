@@ -255,7 +255,17 @@ export default function Article() {
                         </Link>
                     ))
                 ) : (
-                    <p>Tidak ada artikel untuk kategori ini</p>
+                    <div className="flex flex-col w-full justify-center items-center p-16">
+                        <Image
+                            src="/icons/sad.png"
+                            alt="Icons Sad"
+                            width={111}
+                            height={111}
+                            className="mx-auto"
+                        />
+                        <h2 className="text-h2 font-semibold">Maaf, Belum ada artikel</h2>
+                        <p className="text-m">Maaf, untuk saat ini belum ada artikel pada kategori tersebut</p>
+                    </div>
                 )}
             </div>
 
