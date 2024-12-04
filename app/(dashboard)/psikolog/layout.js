@@ -12,12 +12,15 @@ export default function PsikologLayout({ children }) {
 	if (Login.includes(path)) {
 	  return children;
 	}
+
+    // Cek apakah halaman saat ini adalah "/psikolog/chat"
+    const isChatPage = path === "/psikolog/chat";
     
     return (
         <div>
-            <TopbarPsikolog />
-            <HeaderPsikolog />
-            <div className="p-6">{children}</div>
+            {!isChatPage && <TopbarPsikolog />}
+            {!isChatPage && <HeaderPsikolog />}
+            <div>{children}</div>
         </div>
     );
 }

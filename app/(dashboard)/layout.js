@@ -12,9 +12,12 @@ export default function LayoutDashboard({ children }) {
 	  return children;
 	}
 
+	// Cek apakah halaman saat ini adalah "/psikolog/chat"
+	const isChatPage = path === "/psikolog/chat";
+
 	return (
 		<section className="flex flex-1">
-			<Sidebar />
+			{!isChatPage && <Sidebar />}
 			<div className="flex flex-col w-full h-full">
 				<main>{children}</main>
 			</div>
