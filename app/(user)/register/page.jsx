@@ -1,8 +1,9 @@
 "use client";
 
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { registerUser } from "@/api/user";
 import Modal from "@/components/modals/modal";
 import Loading from "@/components/loading/loading";
@@ -21,6 +22,7 @@ export default function Register() {
   const [startPractice, setStartPractice] = useState("");
   const [sippNumber, setSippNumber] = useState("");
   const [topics, setTopics] = useState([]);
+  const [availableTopics, setAvailableTopics] = useState([]);
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [description, setDescription] = useState("");
 
@@ -32,19 +34,34 @@ export default function Register() {
   const [isDateSelected, setIsDateSelected] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const availableTopics = [
-    "Depresi",
-    "Kecemasan",
-    "Pengembangan Diri",
-    "Hubungan Interpersonal",
-    "Manajemen Stres",
-  ];
+  useEffect(() => {
+    const fetchTopics = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/psikolog/topics`,
+          {
+            headers: {
+              "ngrok-skip-browser-warning": "69420",
+              "Content-Type": "application/json",
+            }
+          }
+        );
+        if (response.status === 200 && response.data.success) {
+          setAvailableTopics(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching topics:", error);
+      }
+    };
 
-  const handleTopicsChange = (topic) => {
+    fetchTopics();
+  }, []);
+
+  const handleTopicsChange = (topicName) => {
     setTopics((prev) =>
-      prev.includes(topic)
-        ? prev.filter((t) => t !== topic)
-        : [...prev, topic]
+      prev.includes(topicName)
+        ? prev.filter((t) => t !== topicName)
+        : [...prev, topicName]
     );
   };
 
@@ -193,6 +210,11 @@ export default function Register() {
   async function redirectToGoogleLogin() {
     window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth/google`;
   }
+
+  const splitIntoColumns = (topics) => {
+    const half = Math.ceil(topics.length / 2);
+    return [topics.slice(0, half), topics.slice(half)];
+  };
 
   return (
     <>
@@ -493,21 +515,31 @@ export default function Register() {
                           className={`absolute z-10 bg-white shadow-md rounded-lg mt-2 ${isDropdownOpen ? "block" : "hidden"
                             }`}
                         >
-                          {availableTopics.map((topic) => (
-                            <div key={topic} className="flex items-center px-4 py-2 hover:bg-gray-100">
-                              <input
-                                type="checkbox"
-                                id={topic}
-                                value={topic}
-                                checked={topics.includes(topic)}
-                                onChange={() => handleTopicsChange(topic)}
-                                className="mr-2"
-                              />
-                              <label htmlFor={topic} className="text-sm text-gray-800">
-                                {topic}
-                              </label>
+                          {Array.isArray(availableTopics) && availableTopics.length > 0 ? (
+                            <div className="grid grid-cols-2 gap-4 px-4 py-2">
+                              {splitIntoColumns(availableTopics).map((column, colIdx) => (
+                                <div key={colIdx} className="flex flex-col">
+                                  {column.map((topic) => (
+                                    <div key={topic.id} className="flex items-center px-4 py-2 hover:bg-gray-100">
+                                      <input
+                                        type="checkbox"
+                                        id={topic.id}
+                                        value={topic.topic_name}
+                                        checked={topics.includes(topic.topic_name)}
+                                        onChange={() => handleTopicsChange(topic.topic_name)}
+                                        className="mr-2"
+                                      />
+                                      <label htmlFor={topic.id} className="text-sm text-gray-800">
+                                        {topic.topic_name}
+                                      </label>
+                                    </div>
+                                  ))}
+                                </div>
+                              ))}
                             </div>
-                          ))}
+                          ) : (
+                            <p className="text-gray-500 px-4 py-2">Tidak ada topik tersedia.</p>
+                          )}
                         </div>
                       </div>
                       {error.topics && (
@@ -581,21 +613,31 @@ export default function Register() {
                           className={`absolute z-10 bg-white shadow-md rounded-lg mt-2 ${isDropdownOpen ? "block" : "hidden"
                             }`}
                         >
-                          {availableTopics.map((topic) => (
-                            <div key={topic} className="flex items-center px-4 py-2 hover:bg-gray-100">
-                              <input
-                                type="checkbox"
-                                id={topic}
-                                value={topic}
-                                checked={topics.includes(topic)}
-                                onChange={() => handleTopicsChange(topic)}
-                                className="mr-2"
-                              />
-                              <label htmlFor={topic} className="text-sm text-gray-800">
-                                {topic}
-                              </label>
+                          {Array.isArray(availableTopics) && availableTopics.length > 0 ? (
+                            <div className="grid grid-cols-2 gap-4 px-4 py-2">
+                              {splitIntoColumns(availableTopics).map((column, colIdx) => (
+                                <div key={colIdx} className="flex flex-col">
+                                  {column.map((topic) => (
+                                    <div key={topic.id} className="flex items-center px-4 py-2 hover:bg-gray-100">
+                                      <input
+                                        type="checkbox"
+                                        id={topic.id}
+                                        value={topic.topic_name}
+                                        checked={topics.includes(topic.topic_name)}
+                                        onChange={() => handleTopicsChange(topic.topic_name)}
+                                        className="mr-2"
+                                      />
+                                      <label htmlFor={topic.id} className="text-sm text-gray-800">
+                                        {topic.topic_name}
+                                      </label>
+                                    </div>
+                                  ))}
+                                </div>
+                              ))}
                             </div>
-                          ))}
+                          ) : (
+                            <p className="text-gray-500 px-4 py-2">Tidak ada topik tersedia.</p>
+                          )}
                         </div>
                       </div>
                       {error.topics && (
