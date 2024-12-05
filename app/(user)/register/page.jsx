@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import React, { useState } from "react";
 import { registerUser } from "@/api/user";
 import Modal from "@/components/modals/modal";
 import Loading from "@/components/loading/loading";
@@ -18,6 +18,11 @@ export default function Register() {
   const [gender, setGender] = useState("");
   const [university, setUniversity] = useState("");
   const [major, setMajor] = useState("");
+  const [startPractice, setStartPractice] = useState("");
+  const [sippNumber, setSippNumber] = useState("");
+  const [topics, setTopics] = useState([]);
+  const [profilePhoto, setProfilePhoto] = useState(null);
+  const [description, setDescription] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({});
@@ -25,6 +30,39 @@ export default function Register() {
 
   const [isAgreed, setIsAgreed] = useState(false);
   const [isDateSelected, setIsDateSelected] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const availableTopics = [
+    "Depresi",
+    "Kecemasan",
+    "Pengembangan Diri",
+    "Hubungan Interpersonal",
+    "Manajemen Stres",
+  ];
+
+  const handleTopicsChange = (topic) => {
+    setTopics((prev) =>
+      prev.includes(topic)
+        ? prev.filter((t) => t !== topic)
+        : [...prev, topic]
+    );
+  };
+
+  const toogleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
+  const renderSelectedTopics = () => {
+    if (topics.length === 0) {
+      return "Pilih topik";
+    }
+    if (topics.length === 1) {
+      return topics[0];
+    }
+    return `${topics.length} topik dipilih`;
+  };
+
+  const handleProfilePhotoChange = (e) => {
+    setProfilePhoto(e.target.files[0]);
+  };
 
   function handleDateChange(e) {
     setDateBirth(e.target.value);
@@ -76,6 +114,16 @@ export default function Register() {
     if (role === "M" && !major) {
       newErrors.jurusan = "Jurusan wajib diisi";
     }
+    if ((role === "P" || role === "K") && !startPractice)
+      newErrors.startPractice = "Tanggal Memulai Praktik wajib diisi";
+    if (role === "P" && !sippNumber)
+      newErrors.sippNumber = "Nomor SIPP wajib diisi";
+    if ((role === "P" || role === "K") && topics.length === 0)
+      newErrors.topics = "Pilih minimal satu topik";
+    if ((role === "P" || role === "K") && !profilePhoto)
+      newErrors.profilePhoto = "Foto Profil wajib diunggah";
+    if (role === "P" && !description)
+      newErrors.description = "Deskripsi wajib diisi";
 
     if (password !== confirmPassword) {
       newErrors.confirmPassword = "Password dan konfirmasi password tidak sama";
@@ -105,6 +153,19 @@ export default function Register() {
           universitas: university,
           jurusan: major,
         }),
+        ...(role === "P" && {
+          start_practice: startPractice,
+          sipp_number: sippNumber,
+          topics,
+          profile_photo: profilePhoto,
+          description,
+        }),
+        ...(role === "K" && {
+          start_practice: startPractice,
+          topics,
+          profile_photo: profilePhoto,
+          description,
+        })
       };
 
       const response = await registerUser(userData);
@@ -121,7 +182,7 @@ export default function Register() {
       } else {
         setError(
           error.response?.data?.message ||
-            "Terjadi kesalahan. Silakan coba lagi."
+          "Terjadi kesalahan. Silakan coba lagi."
         );
       }
     } finally {
@@ -197,9 +258,8 @@ export default function Register() {
                     placeholder="Masukan Nama Lengkap Anda"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
-                      error.name ? "border-red-500" : "border-text2"
-                    }`}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${error.name ? "border-red-500" : "border-text2"
+                      }`}
                   />
                   {error.name && (
                     <span className="text-red-500 text-sm">{error.name}</span>
@@ -215,9 +275,8 @@ export default function Register() {
                     placeholder="Masukan Email Anda"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
-                      error.email ? "border-red-500" : "border-text2"
-                    }`}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${error.email ? "border-red-500" : "border-text2"
+                      }`}
                   />
                   {error.email && (
                     <span className="text-red-500 text-sm">{error.email}</span>
@@ -233,9 +292,8 @@ export default function Register() {
                     placeholder="Masukan Password Anda"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
-                      error.password ? "border-red-500" : "border-text2"
-                    }`}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${error.password ? "border-red-500" : "border-text2"
+                      }`}
                   />
                   {error.password && (
                     <span className="text-red-500 text-sm">
@@ -253,9 +311,8 @@ export default function Register() {
                     placeholder="Ulangi Password Anda"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
-                      error.confirmPassword ? "border-red-500" : "border-text2"
-                    }`}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${error.confirmPassword ? "border-red-500" : "border-text2"
+                      }`}
                   />
                   {error.confirmPassword && (
                     <span className="text-red-500 text-sm">
@@ -273,9 +330,8 @@ export default function Register() {
                     placeholder="Masukan nomor telepon anda"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
-                      error.phone_number ? "border-red-500" : "border-text2"
-                    }`}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${error.phone_number ? "border-red-500" : "border-text2"
+                      }`}
                   />
                   {error.phone_number && (
                     <span className="text-red-500 text-sm">
@@ -294,11 +350,9 @@ export default function Register() {
                     onChange={handleDateChange}
                     onFocus={() => setIsDateSelected(false)}
                     onBlur={() => setIsDateSelected(!!dateBirth)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
-                      isDateSelected ? "text-textcolor" : "text-textsec"
-                    } placeholder:text-textsec ${
-                      error.date_birth ? "border-red-500" : "border-text2"
-                    }`}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${isDateSelected ? "text-textcolor" : "text-textsec"
+                      } placeholder:text-textsec ${error.date_birth ? "border-red-500" : "border-text2"
+                      }`}
                   />
                   {error.date_birth && (
                     <span className="text-red-500 text-sm">
@@ -314,9 +368,8 @@ export default function Register() {
                   <select
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
-                      gender === "" ? "text-textsec" : "text-textcolor"
-                    } ${error.gender ? "border-red-500" : "border-text2"}`}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${gender === "" ? "text-textsec" : "text-textcolor"
+                      } ${error.gender ? "border-red-500" : "border-text2"}`}
                   >
                     <option value="">Pilih Jenis Kelamin</option>
                     <option value="M">Laki-laki</option>
@@ -334,19 +387,21 @@ export default function Register() {
                   <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
-                      role === "" ? "text-textsec" : "text-textcolor"
-                    } ${error.role ? "border-red-500" : "border-text2"}`}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${role === "" ? "text-textsec" : "text-textcolor"
+                      } ${error.role ? "border-red-500" : "border-text2"}`}
                   >
                     <option value="">Pilih Role</option>
                     <option value="M">Mahasiswa</option>
                     <option value="U">Umum</option>
+                    <option value="P">Psikolog</option>
+                    <option value="K">Konselor</option>
                   </select>
                   {error.role && (
                     <span className="text-red-500 text-sm">{error.role}</span>
                   )}
                 </div>
 
+                {/* Input Mahasiswa */}
                 {role === "M" && (
                   <>
                     <div className="pt-5">
@@ -358,9 +413,8 @@ export default function Register() {
                         placeholder="Masukan universitas anda"
                         value={university}
                         onChange={(e) => setUniversity(e.target.value)}
-                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
-                          error.universitas ? "border-red-500" : "border-text2"
-                        }`}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${error.universitas ? "border-red-500" : "border-text2"
+                          }`}
                       />
                       {error.universitas && (
                         <span className="text-red-500 text-sm">
@@ -378,13 +432,204 @@ export default function Register() {
                         placeholder="Masukan jurusan anda"
                         value={major}
                         onChange={(e) => setMajor(e.target.value)}
-                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
-                          error.jurusan ? "border-red-500" : "border-text2"
-                        }`}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${error.jurusan ? "border-red-500" : "border-text2"
+                          }`}
                       />
                       {error.jurusan && (
                         <span className="text-red-500 text-sm">
                           {error.jurusan}
+                        </span>
+                      )}
+                    </div>
+                  </>
+                )}
+
+                {/* Input Psikolog */}
+                {role === "P" && (
+                  <>
+                    <div className="pt-5">
+                      <label className="text-m font-normal text-textcolor">Tanggal Memulai Praktik</label>
+                      <input
+                        type="date"
+                        value={startPractice}
+                        onFocus={() => setIsDateSelected(false)}
+                        onBlur={() => setIsDateSelected(!!dateBirth)}
+                        onChange={(e) => setStartPractice(e.target.value)}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${isDateSelected ? "text-textcolor" : "text-textsec"
+                          } placeholder:text-textsec ${error.start_practice ? "border-red-500" : "border-text2"
+                          }`}
+                      />
+                      {error.start_practice && (
+                        <span className="text-red-500 text-sm">
+                          {error.start_practice}
+                        </span>
+                      )}
+                    </div>
+                    <div className="pt-5">
+                      <label className="text-m font-normal text-textcolor">Nomor SIPP</label>
+                      <input
+                        type="text"
+                        placeholder="Masukan nomor SIPP anda"
+                        value={sippNumber}
+                        onChange={(e) => setSippNumber(e.target.value)}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${sippNumber === "" ? "text-textsec" : "text-textcolor"
+                          } ${error.sipp_number ? "border-red-500" : "border-text2"}`}
+                      />
+                      {error.sipp_number && (
+                        <span className="text-red-500 text-sm">
+                          {error.sipp_number}
+                        </span>
+                      )}
+                    </div>
+                    <div className="pt-5">
+                      <label className="text-m font-normal text-textcolor">Topik</label>
+                      <div
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light bg-whitebg border-solid border ${topics === "" ? "text-textsec" : "text-textcolor"
+                          } ${error.topics ? "border-red-500" : "border-text2"}`}
+                        onClick={toogleDropdown}
+                      >
+                        {renderSelectedTopics()}
+                        <div
+                          className={`absolute z-10 bg-white shadow-md rounded-lg mt-2 ${isDropdownOpen ? "block" : "hidden"
+                            }`}
+                        >
+                          {availableTopics.map((topic) => (
+                            <div key={topic} className="flex items-center px-4 py-2 hover:bg-gray-100">
+                              <input
+                                type="checkbox"
+                                id={topic}
+                                value={topic}
+                                checked={topics.includes(topic)}
+                                onChange={() => handleTopicsChange(topic)}
+                                className="mr-2"
+                              />
+                              <label htmlFor={topic} className="text-sm text-gray-800">
+                                {topic}
+                              </label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      {error.topics && (
+                        <span className="text-red-500 text-sm">
+                          {error.topics}
+                        </span>
+                      )}
+                    </div>
+                    <div className="pt-5">
+                      <label className="text-m font-normal text-textcolor">Foto Profil</label>
+                      <input
+                        type="file"
+                        onChange={handleProfilePhotoChange}
+                        className={`py-2 px-4 w-full bg-whitebg rounded-lg text-s mt-1 font-light border-solid border ${profilePhoto === "" ? "text-textsec" : "text-textcolor"
+                          } ${error.profile_photo ? "border-red-500" : "border-text2"}`}
+                      />
+                      {error.profile_photo && (
+                        <span className="text-red-500 text-sm">
+                          {error.profile_photo}
+                        </span>
+                      )}
+                    </div>
+                    <div className="pt-5">
+                      <label className="text-m font-normal text-textcolor">Deskripsi</label>
+                      <textarea
+                        value={description}
+                        placeholder="Masukan deskripsi anda"
+                        onChange={(e) => setDescription(e.target.value)}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${description === "" ? "text-textsec" : "text-textcolor"
+                          } ${error.description ? "border-red-500" : "border-text2"}`}
+                      />
+                      {error.description && (
+                        <span className="text-red-500 text-sm">
+                          {error.description}
+                        </span>
+                      )}
+                    </div>
+                  </>
+                )}
+
+                {/* Konselor inputs */}
+                {role === "K" && (
+                  <>
+                    <div className="pt-5">
+                      <label className="text-m font-normal text-textcolor">Tanggal Memulai Praktik</label>
+                      <input
+                        type="date"
+                        value={startPractice}
+                        onFocus={() => setIsDateSelected(false)}
+                        onBlur={() => setIsDateSelected(!!dateBirth)}
+                        onChange={(e) => setStartPractice(e.target.value)}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${isDateSelected ? "text-textcolor" : "text-textsec"
+                          } placeholder:text-textsec ${error.start_practice ? "border-red-500" : "border-text2"
+                          }`}
+                      />
+                      {error.start_practice && (
+                        <span className="text-red-500 text-sm">
+                          {error.start_practice}
+                        </span>
+                      )}
+                    </div>
+                    <div className="pt-5">
+                      <label className="text-m font-normal text-textcolor">Topik</label>
+                      <div
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light bg-whitebg border-solid border ${topics === "" ? "text-textsec" : "text-textcolor"
+                          } ${error.topics ? "border-red-500" : "border-text2"}`}
+                        onClick={toogleDropdown}
+                      >
+                        {renderSelectedTopics()}
+                        <div
+                          className={`absolute z-10 bg-white shadow-md rounded-lg mt-2 ${isDropdownOpen ? "block" : "hidden"
+                            }`}
+                        >
+                          {availableTopics.map((topic) => (
+                            <div key={topic} className="flex items-center px-4 py-2 hover:bg-gray-100">
+                              <input
+                                type="checkbox"
+                                id={topic}
+                                value={topic}
+                                checked={topics.includes(topic)}
+                                onChange={() => handleTopicsChange(topic)}
+                                className="mr-2"
+                              />
+                              <label htmlFor={topic} className="text-sm text-gray-800">
+                                {topic}
+                              </label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      {error.topics && (
+                        <span className="text-red-500 text-sm">
+                          {error.topics}
+                        </span>
+                      )}
+                    </div>
+                    <div className="pt-5">
+                      <label className="text-m font-normal text-textcolor">Foto Profil</label>
+                      <input
+                        type="file"
+                        onChange={handleProfilePhotoChange}
+                        className={`py-2 px-4 w-full bg-whitebg rounded-lg text-s mt-1 font-light border-solid border ${profilePhoto === "" ? "text-textsec" : "text-textcolor"
+                          } ${error.profile_photo ? "border-red-500" : "border-text2"}`}
+                      />
+                      {error.profile_photo && (
+                        <span className="text-red-500 text-sm">
+                          {error.profile_photo}
+                        </span>
+                      )}
+                    </div>
+                    <div className="pt-5">
+                      <label className="text-m font-normal text-textcolor">Deskripsi</label>
+                      <textarea
+                        value={description}
+                        placeholder="Masukan deskripsi anda"
+                        onChange={(e) => setDescription(e.target.value)}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${description === "" ? "text-textsec" : "text-textcolor"
+                          } ${error.description ? "border-red-500" : "border-text2"}`}
+                      />
+                      {error.description && (
+                        <span className="text-red-500 text-sm">
+                          {error.description}
                         </span>
                       )}
                     </div>
@@ -420,7 +665,7 @@ export default function Register() {
                 >
                   Daftar
                 </button>
-                <button 
+                <button
                   onClick={redirectToGoogleLogin}
                   className="flex items-center px-4 py-2 bg-whitebg text-textcolor rounded-lg w-full justify-center text-s mt-3.5"
                 >
