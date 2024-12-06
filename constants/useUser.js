@@ -1,10 +1,12 @@
 import useSWR from "swr";
 import { getUserDetail, updateProfile, upgradeMahasiswa } from "@/api/user";
 
+// Fungsi untuk mengambil detail pengguna
 const fetchUserDetail = async () => {
   try {
     const userDetails = await getUserDetail();
-    return {
+
+    const baseData = {
       name: userDetails.name,
       email: userDetails.email,
       joined_at: userDetails.joined_at,
@@ -13,51 +15,82 @@ const fetchUserDetail = async () => {
       gender: userDetails.gender,
       dateBirth: userDetails.dateBirth,
       phoneNumber: userDetails.phoneNumber,
-      universitas: userDetails.universitas,
-      jurusan: userDetails.jurusan,
     };
+
+    // Kondisi jika user adalah mahasiswa
+    if (userDetails.role === "M") {
+      return {
+        ...baseData,
+        universitas: userDetails.universitas || "",
+        jurusan: userDetails.jurusan || "",
+      };
+    } 
+    // Kondisi jika user adalah Psikolog (P) atau Konselor (K)
+    else if (userDetails.role === "P" || userDetails.role === "K") {
+      // Kondisi Psikolog
+      if (userDetails.role === "P") {
+        return {
+          ...baseData,
+          sipp: userDetails.psikologDetails?.sipp || "", // Hanya ada untuk Psikolog
+          practiceStartDate: userDetails.psikologDetails?.practiceStartDate || "",
+          description: userDetails.psikologDetails?.description || "",
+          topics: userDetails.psikologDetails?.topics || [],
+        };
+      }
+      // Kondisi Konselor
+      else if (userDetails.role === "K") {
+        return {
+          ...baseData,
+          practiceStartDate: userDetails.konselorDetails?.practiceStartDate || "",
+          description: userDetails.konselorDetails?.description || "",
+          topics: userDetails.konselorDetails?.topics || [],
+        };
+      }
+    }
+    // Jika role lainnya
+    else {
+      return baseData;
+    }
   } catch (error) {
     throw new Error("Error fetching user profile");
   }
 };
 
 export const useUser = () => {
-  // Menggunakan SWR untuk mengambil data user
   const { data, error, mutate } = useSWR("/user/profile", fetchUserDetail);
 
-  // Fungsi untuk memperbarui profil pengguna
+  // Fungsi untuk update profile
   const updateUserProfile = async (formData) => {
     try {
       mutate(
         async (prevData) => {
-          await updateProfile(formData); // Update data di server
-          return { ...prevData, ...formData }; // Update data lokal di cache SWR
+          await updateProfile(formData);
+          return { ...prevData, ...formData };
         },
         { revalidate: false }
-      ); // Menghindari refetch
+      );
     } catch (error) {
       console.error("Error updating profile:", error);
     }
   };
 
-  // Fungsi untuk memperbarui ke mahasiswa
+  // Fungsi untuk upgrade ke mahasiswa
   const upgradeToMahasiswa = async (universitas, jurusan) => {
     try {
-      await upgradeMahasiswa(universitas, jurusan); // Pastikan ini berhasil
+      await upgradeMahasiswa(universitas, jurusan);
       mutate(
         (prevData) => ({
           ...prevData,
           universitas,
           jurusan,
-          role: "M", 
+          role: "M", // Perubahan role menjadi mahasiswa
         }),
-        { revalidate: true } // Revalidate ke server untuk data terbaru
+        { revalidate: true }
       );
     } catch (error) {
       console.error("Error upgrading to mahasiswa:", error);
     }
   };
-
 
   return {
     user: data,

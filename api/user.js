@@ -68,10 +68,11 @@ export const getUserDetail = async () => {
       },
     });
 
-    // Access the actual user data within the `data` property
+    // Akses data pengguna yang ada di dalam `data` property
     const data = response.data.data;
 
-    return {
+    // Memeriksa role dan menambahkan data spesifik
+    const userDetails = {
       name: data.name,
       email: data.email,
       role: data.role,
@@ -83,6 +84,25 @@ export const getUserDetail = async () => {
       universitas: data.mahasiswa_details?.universitas || "",
       jurusan: data.mahasiswa_details?.jurusan || "",
     };
+
+    // Menambahkan detail untuk Psikolog (P)
+    if (data.role === "P") { // Jika Psikolog
+      userDetails.psikologDetails = {
+        sipp: data.psikolog_details.sipp, // Menyertakan sipp untuk Psikolog
+        practiceStartDate: data.psikolog_details.practice_start_date,
+        description: data.psikolog_details.description,
+        topics: data.psikolog_details.topics || [], // Topik yang tersedia untuk psikolog
+      };
+    } else if (data.role === "K") { // Jika Konselor
+      // Menambahkan detail untuk Konselor (tanpa sipp)
+      userDetails.konselorDetails = {
+        practiceStartDate: data.psikolog_details.practice_start_date,
+        description: data.psikolog_details.description,
+        topics: data.psikolog_details.topics || [], // Topik yang tersedia untuk konselor
+      };
+    }
+
+    return userDetails;
   } catch (error) {
     console.error("Error fetching user data:", error.message);
     throw new Error("Failed to fetch user data");
@@ -176,7 +196,7 @@ export const upgradeMahasiswa = async (universitas, jurusan) => {
 // Fungsi untuk Logout User
 export const logoutUser = async () => {
   const token = getToken();
-  
+
   try {
     const response = await axios.post(
       `${API_URL}/user/logout`,
@@ -213,7 +233,7 @@ export const loginAdmin = async (email, password) => {
 // Fungsi untuk Logout User
 export const logoutAdmin = async () => {
   const token = getToken();
-  
+
   try {
     const response = await axios.post(
       `${API_URL}/admin/logout`,

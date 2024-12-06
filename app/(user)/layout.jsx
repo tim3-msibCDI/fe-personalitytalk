@@ -2,7 +2,6 @@
 
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
-import { UserProvider } from "@/constants/UserContext";
 import { usePathname } from "next/navigation";
 
 export default function UserLayout({ children }) {

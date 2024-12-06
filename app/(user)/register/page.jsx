@@ -68,7 +68,7 @@ export default function Register() {
       return [topicId]; // Jika sebelumnya bukan array, inisialisasi array baru
     });
   };
-  
+
 
   const toogleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
@@ -149,7 +149,7 @@ export default function Register() {
       newErrors.sippNumber = "Nomor SIPP wajib diisi";
     if ((role === "P" || role === "K") && (!Array.isArray(topics) || topics.length === 0)) {
       newErrors.topics = "Pilih minimal satu topik";
-    }    
+    }
     if ((role === "P" || role === "K") && !profilePhoto)
       newErrors.profilePhoto = "Foto Profil wajib diunggah";
     if (role === "P" && !description)
@@ -200,13 +200,10 @@ export default function Register() {
         requestData = formData;
         isFormData = true;
 
-        // Log data FormData
-        console.log("Data sebelum dikirim (FormData):");
         const formDataLog = {};
         formData.forEach((value, key) => {
           formDataLog[key] = value;
         });
-        console.log(formDataLog);
 
       } else {
         // Format data untuk JSON
@@ -223,15 +220,8 @@ export default function Register() {
             jurusan: major,
           }),
         };
-        // Log data JSON
-        console.log("Data sebelum dikirim (JSON):", requestData);
       }
-
-      console.log("Jenis data yang akan dikirim:", isFormData ? "FormData" : "JSON");
       const response = await registerUser(requestData, isFormData);
-
-      console.log("Request Data:", requestData);
-      console.log("Is FormData:", isFormData);
 
       if (response.status === 200 || response.status === 201) {
         window.location.href = "/login"; // Redirect ke halaman login setelah berhasil
@@ -687,9 +677,9 @@ export default function Register() {
                                       <input
                                         type="checkbox"
                                         id={topic.id}
-                                        value={topic.topic_name}
-                                        checked={topics.includes(topic.topic_name)}
-                                        onChange={() => handleTopicsChange(topic.topic_name)}
+                                        value={topic.id}
+                                        checked={topics.includes(topic.id)}
+                                        onChange={() => handleTopicsChange(topic.id)}
                                         className="mr-2"
                                       />
                                       <label htmlFor={topic.id} className="text-sm text-gray-800">
