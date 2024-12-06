@@ -21,14 +21,17 @@ export const loginUser = async (email, password) => {
 };
 
 // Fungsi Register User
-export const registerUser = async (userData) => {
-  const response = await axios.post(`${API_URL}/user/register`, userData, {
-    headers: {
-      "Content-Type": "application/json",
-    },
+export const registerUser = async (data, isFormData = false) => {
+  const headers = isFormData
+    ? { "Content-Type": "multipart/form-data" }
+    : { "Content-Type": "application/json" };
+
+  const response = await axios.post(`${API_URL}/user/register`, data, {
+    headers,
   });
   return response;
 };
+
 
 // Fungsi ambil info User (nama, photo profile, role)
 export const getUserInfo = async () => {

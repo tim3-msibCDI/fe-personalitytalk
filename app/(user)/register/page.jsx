@@ -24,7 +24,7 @@ export default function Register() {
   const [topics, setTopics] = useState([]);
   const [availableTopics, setAvailableTopics] = useState([]);
   const [profilePhoto, setProfilePhoto] = useState(null);
-  const [description, setDescription] = useState("");
+  const [description, setdescription] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({});
@@ -57,24 +57,35 @@ export default function Register() {
     fetchTopics();
   }, []);
 
-  const handleTopicsChange = (topicName) => {
-    setTopics((prev) =>
-      prev.includes(topicName)
-        ? prev.filter((t) => t !== topicName)
-        : [...prev, topicName]
-    );
+  const handleTopicsChange = (topicId) => {
+    setTopics((prev) => {
+      // Pastikan `prev` adalah array sebelum melakukan operasi
+      if (Array.isArray(prev)) {
+        return prev.includes(topicId)
+          ? prev.filter((id) => id !== topicId)
+          : [...prev, topicId];
+      }
+      return [topicId]; // Jika sebelumnya bukan array, inisialisasi array baru
+    });
   };
+  
 
   const toogleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
+  const getTopicNames = (topicIds) => {
+    return availableTopics
+      .filter((topic) => topicIds.includes(topic.id))
+      .map((topic) => topic.topic_name);
+  };
+
   const renderSelectedTopics = () => {
-    if (topics.length === 0) {
-      return "Pilih topik";
-    }
-    if (topics.length === 1) {
-      return topics[0];
-    }
-    return `${topics.length} topik dipilih`;
+    if (topics.length === 0) return "Pilih topik";
+    const selectedNames = availableTopics
+      .filter((topic) => topics.includes(topic.id))
+      .map((topic) => topic.topic_name);
+    return selectedNames.length > 1
+      ? `${selectedNames.length} topik dipilih`
+      : selectedNames[0];
   };
 
   const handleProfilePhotoChange = (e) => {
@@ -93,6 +104,7 @@ export default function Register() {
   function handleCheckboxChange(event) {
     setIsAgreed(event.target.checked);
   }
+
   // Function untuk handle submit
   async function onSubmit(event) {
     event.preventDefault();
@@ -135,8 +147,9 @@ export default function Register() {
       newErrors.startPractice = "Tanggal Memulai Praktik wajib diisi";
     if (role === "P" && !sippNumber)
       newErrors.sippNumber = "Nomor SIPP wajib diisi";
-    if ((role === "P" || role === "K") && topics.length === 0)
+    if ((role === "P" || role === "K") && (!Array.isArray(topics) || topics.length === 0)) {
       newErrors.topics = "Pilih minimal satu topik";
+    }    
     if ((role === "P" || role === "K") && !profilePhoto)
       newErrors.profilePhoto = "Foto Profil wajib diunggah";
     if (role === "P" && !description)
@@ -158,34 +171,67 @@ export default function Register() {
     }
 
     try {
-      const userData = {
-        name,
-        email,
-        password,
-        phone_number: phoneNumber,
-        date_birth: dateBirth,
-        gender,
-        role,
-        ...(role === "M" && {
-          universitas: university,
-          jurusan: major,
-        }),
-        ...(role === "P" && {
-          start_practice: startPractice,
-          sipp_number: sippNumber,
-          topics,
-          profile_photo: profilePhoto,
-          description,
-        }),
-        ...(role === "K" && {
-          start_practice: startPractice,
-          topics,
-          profile_photo: profilePhoto,
-          description,
-        })
-      };
+      let requestData;
+      let isFormData = false;
 
-      const response = await registerUser(userData);
+      if (role === "P" || role === "K") {
+        // Format data untuk multipart/form-data
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("password", password);
+        formData.append("phone_number", phoneNumber);
+        formData.append("date_birth", dateBirth);
+        formData.append("gender", gender);
+        formData.append("role", role);
+        formData.append("practice_start_date", startPractice);
+        formData.append("description", description);
+        formData.append("photo_profile", profilePhoto); // File
+        // Pastikan topics berupa array dan tambahkan ke formData
+        if (Array.isArray(topics) && topics.length > 0) {
+          topics.forEach((topicId) => formData.append("topics[]", topicId.toString()));
+        } else {
+          throw new Error("Topics harus berupa array dengan minimal satu elemen.");
+        }
+        if (role === "P") {
+          formData.append("sipp", sippNumber);
+        }
+
+        requestData = formData;
+        isFormData = true;
+
+        // Log data FormData
+        console.log("Data sebelum dikirim (FormData):");
+        const formDataLog = {};
+        formData.forEach((value, key) => {
+          formDataLog[key] = value;
+        });
+        console.log(formDataLog);
+
+      } else {
+        // Format data untuk JSON
+        requestData = {
+          name,
+          email,
+          password,
+          phone_number: phoneNumber,
+          date_birth: dateBirth,
+          gender,
+          role,
+          ...(role === "M" && {
+            universitas: university,
+            jurusan: major,
+          }),
+        };
+        // Log data JSON
+        console.log("Data sebelum dikirim (JSON):", requestData);
+      }
+
+      console.log("Jenis data yang akan dikirim:", isFormData ? "FormData" : "JSON");
+      const response = await registerUser(requestData, isFormData);
+
+      console.log("Request Data:", requestData);
+      console.log("Is FormData:", isFormData);
 
       if (response.status === 200 || response.status === 201) {
         window.location.href = "/login"; // Redirect ke halaman login setelah berhasil
@@ -193,16 +239,17 @@ export default function Register() {
         const errorData = response.data;
         setError(errorData.data.message);
       }
-    } catch (error) {
-      if (error.response && error.response.status === 500) {
-        setError("Terjadi kesalahan pada server. Silakan coba lagi nanti.");
+    }
+    catch (error) {
+      if (error.response) {
+        console.log("API Error Response:", error.response.data);
+        setError(error.response?.data?.message || "Terjadi kesalahan. Silakan coba lagi.");
       } else {
-        setError(
-          error.response?.data?.message ||
-          "Terjadi kesalahan. Silakan coba lagi."
-        );
+        console.log("Error:", error.message);
+        setError("Terjadi kesalahan. Silakan coba lagi.");
       }
-    } finally {
+    }
+    finally {
       setIsLoading(false);
     }
   }
@@ -478,12 +525,12 @@ export default function Register() {
                         onBlur={() => setIsDateSelected(!!dateBirth)}
                         onChange={(e) => setStartPractice(e.target.value)}
                         className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${isDateSelected ? "text-textcolor" : "text-textsec"
-                          } placeholder:text-textsec ${error.start_practice ? "border-red-500" : "border-text2"
+                          } placeholder:text-textsec ${error.practice_start_date ? "border-red-500" : "border-text2"
                           }`}
                       />
-                      {error.start_practice && (
+                      {error.practice_start_date && (
                         <span className="text-red-500 text-sm">
-                          {error.start_practice}
+                          {error.practice_start_date}
                         </span>
                       )}
                     </div>
@@ -493,13 +540,31 @@ export default function Register() {
                         type="text"
                         placeholder="Masukan nomor SIPP anda"
                         value={sippNumber}
-                        onChange={(e) => setSippNumber(e.target.value)}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          setSippNumber(value);
+
+                          // Hitung jumlah '-' dalam input
+                          const dashCount = (value.match(/-/g) || []).length;
+
+                          if (dashCount !== 3) {
+                            setError((prev) => ({
+                              ...prev,
+                              sipp: "Format SIPP harus xxxxxxxx-xxxx-xx-xxxx",
+                            }));
+                          } else {
+                            setError((prev) => ({
+                              ...prev,
+                              sipp: "",
+                            }));
+                          }
+                        }}
                         className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${sippNumber === "" ? "text-textsec" : "text-textcolor"
-                          } ${error.sipp_number ? "border-red-500" : "border-text2"}`}
+                          } ${error.sipp ? "border-red-500" : "border-text2"}`}
                       />
-                      {error.sipp_number && (
+                      {error.sipp && (
                         <span className="text-red-500 text-sm">
-                          {error.sipp_number}
+                          {error.sipp}
                         </span>
                       )}
                     </div>
@@ -524,9 +589,9 @@ export default function Register() {
                                       <input
                                         type="checkbox"
                                         id={topic.id}
-                                        value={topic.topic_name}
-                                        checked={topics.includes(topic.topic_name)}
-                                        onChange={() => handleTopicsChange(topic.topic_name)}
+                                        value={topic.id}
+                                        checked={topics.includes(topic.id)}
+                                        onChange={() => handleTopicsChange(topic.id)}
                                         className="mr-2"
                                       />
                                       <label htmlFor={topic.id} className="text-sm text-gray-800">
@@ -554,11 +619,11 @@ export default function Register() {
                         type="file"
                         onChange={handleProfilePhotoChange}
                         className={`py-2 px-4 w-full bg-whitebg rounded-lg text-s mt-1 font-light border-solid border ${profilePhoto === "" ? "text-textsec" : "text-textcolor"
-                          } ${error.profile_photo ? "border-red-500" : "border-text2"}`}
+                          } ${error.photo_profile ? "border-red-500" : "border-text2"}`}
                       />
-                      {error.profile_photo && (
+                      {error.photo_profile && (
                         <span className="text-red-500 text-sm">
-                          {error.profile_photo}
+                          {error.photo_profile}
                         </span>
                       )}
                     </div>
@@ -567,7 +632,7 @@ export default function Register() {
                       <textarea
                         value={description}
                         placeholder="Masukan deskripsi anda"
-                        onChange={(e) => setDescription(e.target.value)}
+                        onChange={(e) => setdescription(e.target.value)}
                         className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${description === "" ? "text-textsec" : "text-textcolor"
                           } ${error.description ? "border-red-500" : "border-text2"}`}
                       />
@@ -592,12 +657,12 @@ export default function Register() {
                         onBlur={() => setIsDateSelected(!!dateBirth)}
                         onChange={(e) => setStartPractice(e.target.value)}
                         className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${isDateSelected ? "text-textcolor" : "text-textsec"
-                          } placeholder:text-textsec ${error.start_practice ? "border-red-500" : "border-text2"
+                          } placeholder:text-textsec ${error.practice_start_date ? "border-red-500" : "border-text2"
                           }`}
                       />
-                      {error.start_practice && (
+                      {error.practice_start_date && (
                         <span className="text-red-500 text-sm">
-                          {error.start_practice}
+                          {error.practice_start_date}
                         </span>
                       )}
                     </div>
@@ -652,11 +717,11 @@ export default function Register() {
                         type="file"
                         onChange={handleProfilePhotoChange}
                         className={`py-2 px-4 w-full bg-whitebg rounded-lg text-s mt-1 font-light border-solid border ${profilePhoto === "" ? "text-textsec" : "text-textcolor"
-                          } ${error.profile_photo ? "border-red-500" : "border-text2"}`}
+                          } ${error.photo_profile ? "border-red-500" : "border-text2"}`}
                       />
-                      {error.profile_photo && (
+                      {error.photo_profile && (
                         <span className="text-red-500 text-sm">
-                          {error.profile_photo}
+                          {error.photo_profile}
                         </span>
                       )}
                     </div>
@@ -665,7 +730,7 @@ export default function Register() {
                       <textarea
                         value={description}
                         placeholder="Masukan deskripsi anda"
-                        onChange={(e) => setDescription(e.target.value)}
+                        onChange={(e) => setdescription(e.target.value)}
                         className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${description === "" ? "text-textsec" : "text-textcolor"
                           } ${error.description ? "border-red-500" : "border-text2"}`}
                       />
