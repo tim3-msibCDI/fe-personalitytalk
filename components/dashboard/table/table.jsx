@@ -1,11 +1,11 @@
 "use client";
 
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import TableHead from "./table-head";
 import TableBody from "./table-body";
 import { getToken } from "@/lib/auth";
 import { SkeletonTable } from "./skeleton-table";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
 import Pagination from "./pagenation";
@@ -15,6 +15,7 @@ import SearchBar from "./search-bar";
 import Modal from "@/components/modals/modal";
 
 import { deleteUser } from "@/api/manage-user";
+import { deleteMahasiswa } from "@/api/manage-mahasiswa";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
@@ -36,6 +37,7 @@ const fetcher = async (url) => {
 
 export default function Table() {
   const pathname = usePathname();
+  const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("");
@@ -47,13 +49,22 @@ export default function Table() {
     setModalOpen(true);
   };
 
+
   const confirmDelete = async () => {
     if (selectedRow) {
-      const result = await deleteUser(selectedRow.id);
-      console.log(result.message);
-      // Tambahkan logika untuk refresh data jika diperlukan
+      try {
+        if (pathname === "/admin/pengguna/umum") {
+          const result = await deleteUser(selectedRow.id);
+        } else if (pathname === "/admin/pengguna/mahasiswa") {
+          const result = await deleteMahasiswa(selectedRow.id);
+        }
+        await mutate(`${API_URL}${endpoint}`);
+      } catch (error) {
+        console.error("Gagal menghapus data:", error.message);
+      } finally {
+        setModalOpen(false);
+      }
     }
-    setModalOpen(false);
   };
 
   const cancelDelete = () => {
@@ -141,24 +152,24 @@ export default function Table() {
           },
           {
             key: "photo_profile",
-            render: (photo) =>
-              photo ? (
+            render: (photo) => {
+              const linkphoto =
+                photo && photo.startsWith("http")
+                  ? photo
+                  : photo
+                  ? `${API_REAL}${photo}`
+                  : "/image/default-profile.jpg"; // URL foto default
+
+              return (
                 <Image
-                  src={`${API_REAL}/${photo}`}
+                  src={linkphoto}
                   alt="Foto Profil"
                   width={60}
                   height={60}
                   className="mx-auto"
                 />
-              ) : (
-                <Image
-                  src="/image/default-profile.jpg"
-                  alt="Foto Profil"
-                  width={60}
-                  height={60}
-                  className="mx-auto"
-                />
-              ),
+              );
+            },
           },
           { key: "name" },
           { key: "phone_number" },
@@ -171,8 +182,20 @@ export default function Table() {
             key: "actions",
             render: (_, row) => (
               <div className="space-x-2">
-                <ShowButton onClick={() => console.log("Show clicked", row)} />
-                <EditButton onClick={() => console.log("Edit clicked", row)} />
+                <ShowButton
+                  onClick={() =>
+                    router.push(
+                      `/admin/pengguna/umum/detail-pengguna?id=${row.id}`
+                    )
+                  }
+                />
+                <EditButton
+                  onClick={() =>
+                    router.push(
+                      `/admin/pengguna/umum/edit-pengguna?id=${row.id}`
+                    )
+                  }
+                />
                 <DeleteButton onClick={() => handleDeleteClick(row)} />
               </div>
             ),
@@ -186,24 +209,24 @@ export default function Table() {
           },
           {
             key: "photo_profile",
-            render: (photo) =>
-              photo ? (
+            render: (photo) => {
+              const linkphoto =
+                photo && photo.startsWith("http")
+                  ? photo
+                  : photo
+                  ? `${API_REAL}${photo}`
+                  : "/image/default-profile.jpg"; // URL foto default
+
+              return (
                 <Image
-                  src={`${API_REAL}/${photo}`}
+                  src={linkphoto}
                   alt="Foto Profil"
                   width={60}
                   height={60}
                   className="mx-auto"
                 />
-              ) : (
-                <Image
-                  src="/image/default-profile.jpg"
-                  alt="Foto Profil"
-                  width={60}
-                  height={60}
-                  className="mx-auto"
-                />
-              ),
+              );
+            },
           },
           { key: "name" },
           { key: "phone_number" },
@@ -219,11 +242,17 @@ export default function Table() {
             key: "actions",
             render: (_, row) => (
               <div className="space-x-2">
-                <ShowButton onClick={() => console.log("Show clicked", row)} />
-                <EditButton onClick={() => console.log("Edit clicked", row)} />
-                <DeleteButton
-                  onClick={() => console.log("Delete clicked", row)}
+                <ShowButton
+                  onClick={() =>
+                    router.push(`/admin/pengguna/mahasiswa/detail-mahasiswa?id=${row.id}`)
+                  }
                 />
+                <EditButton
+                  onClick={() =>
+                    router.push(`/admin/pengguna/mahasiswa/edit-mahasiswa?id=${row.id}`)
+                  }
+                />
+                <DeleteButton onClick={() => handleDeleteClick(row)} />
               </div>
             ),
           },

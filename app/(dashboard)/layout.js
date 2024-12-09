@@ -2,10 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import Sidebar from "@/components/sidebar/sidebar";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-// Create the QueryClient instance
-const queryClient = new QueryClient();
 
 export default function LayoutDashboard({ children }) {
   const path = usePathname();
@@ -17,13 +13,11 @@ export default function LayoutDashboard({ children }) {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <section className="flex flex-1">
-        <Sidebar />
-        <div className="flex flex-col w-full h-full">
-          <main>{children}</main>
-        </div>
-      </section>
-    </QueryClientProvider>
+    <section className="flex flex-1">
+      <Sidebar />
+      <div className="flex flex-col w-full h-full">
+        <main>{children}</main>
+      </div>
+    </section>
   );
 }

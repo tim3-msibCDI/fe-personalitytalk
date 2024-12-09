@@ -27,6 +27,26 @@ export default function HeaderAdmin() {
     setBreadcrumbs(breadcrumbItems);
   }, [pathname]);
 
+  // Kondisi untuk menampilkan tombol Tambah Data
+  const showAddButton =
+    pathname === "/admin/pengguna/umum" ||
+    pathname === "/admin/pengguna/mahasiswa" ||
+    pathname === "/admin/psikolog/psikolog";
+
+  // Tentukan URL tujuan berdasarkan pathname
+  const getAddDataUrl = () => {
+    if (pathname === "/admin/pengguna/umum") {
+      return "/admin/pengguna/umum/tambah-pengguna";
+    }
+    if (pathname === "/admin/pengguna/mahasiswa") {
+      return "/admin/pengguna/mahasiswa/tambah-mahasiswa";
+    }
+    if (pathname === "/admin/psikolog/psikolog") {
+      return "/admin/psikolog/psikolog/tambah-psikolog";
+    }
+    return `${pathname}/tambah`; // Default behavior
+  };
+
   return (
     <header className="px-6 mt-7">
       {/* Breadcrumbs */}
@@ -38,7 +58,9 @@ export default function HeaderAdmin() {
               <li key={index} className="flex items-center">
                 {isLast ? (
                   // Breadcrumb terakhir dengan font tebal dan warna berbeda
-                  <span className="font-semibold text-primary">{breadcrumb.title}</span>
+                  <span className="font-semibold text-primary">
+                    {breadcrumb.title}
+                  </span>
                 ) : (
                   // Breadcrumb biasa dengan link
                   <Link href={breadcrumb.url} className="hover:underline">
@@ -61,17 +83,19 @@ export default function HeaderAdmin() {
         </h1>
 
         {/* Tombol Tambah Data */}
-        <Link
-          href="/path-to-add-data" // Ganti dengan URL untuk menambahkan data
-          className="px-4 py-2 text-white bg-primary rounded-lg flex items-center space-x-2 hover:bg-primarydark"
-        >
-          <img
-            src="/icons/dashboard/add-data.svg" // Ganti dengan path ikon Anda
-            alt="Tambah"
-            className="w-4 h-4"
-          />
-          <span>Tambah Data</span>
-        </Link>
+        {showAddButton && (
+          <Link
+            href={getAddDataUrl()} // URL berdasarkan kondisi
+            className="px-4 py-2 text-white bg-primary rounded-lg flex items-center space-x-2 hover:bg-primarydark"
+          >
+            <img
+              src="/icons/dashboard/add-data.svg" // Ganti dengan path ikon Anda
+              alt="Tambah"
+              className="w-4 h-4"
+            />
+            <span>Tambah Data</span>
+          </Link>
+        )}
       </div>
     </header>
   );
