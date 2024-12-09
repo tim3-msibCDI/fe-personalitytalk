@@ -27,6 +27,7 @@ export async function addMahasiswa(mahasiswaData) {
   try {
     // Membuat FormData
     const formData = new FormData();
+    formData.append("name", mahasiswaData.name);
     formData.append("email", mahasiswaData.email);
     formData.append("phone_number", mahasiswaData.phone_number);
     formData.append("date_birth", mahasiswaData.date_birth);
@@ -59,7 +60,6 @@ export async function addMahasiswa(mahasiswaData) {
     return { success: false, message: error.message };
   }
 }
-
 
 export async function editMahasiswa(mahasiswaId, mahasiswaData) {
   try {
@@ -100,7 +100,6 @@ export async function editMahasiswa(mahasiswaId, mahasiswaData) {
   }
 }
 
-
 export async function getMahasiswaDetail(mahasiswaId) {
   try {
     const response = await fetch(`${API_URL}/admin/mahasiswa/${mahasiswaId}`, {
@@ -124,4 +123,3 @@ export async function getMahasiswaDetail(mahasiswaId) {
     return { success: false, message: error.message };
   }
 }
-

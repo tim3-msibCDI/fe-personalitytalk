@@ -1,22 +1,45 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import MhsForm from "@/components/dashboard/form/mhsform";
-import { getMhsById } from "@/api/manage-mahasiswa";
+import { getMahasiswaDetail } from "@/api/manage-mahasiswa";
 
 export default function DetailMahasiswa() {
-  const router = useRouter();
-  const { id } = router.query;
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   const [mhsData, setMhsData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (id) {
-      const fetchData = async () => {
-        const response = await getMhsById(id);
-        setMhsData(response.data);
-      };
-      fetchData();
-    }
+    const fetchData = async () => {
+      if (id) {
+        const { success, data, message } = await getMahasiswaDetail(id);
+        if (success) {
+          const dataMhs = data.data;
+          setMhsData(dataMhs);
+        } else {
+          console.error("Error fetching user detail:", message);
+        }
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, [id]);
 
-  return mhsData ? <MhsForm isViewMode={true} mhsData={mhsData} /> : null;
+  if (loading) {
+    return <p>Memuat data pengguna...</p>;
+  }
+
+  if (!mhsData) {
+    return <p>Data not found</p>;
+  }
+
+  return (
+    <MhsForm
+      mahasiswaData={mhsData} // Ensure you're passing correct prop name here
+      isViewMode={true}
+    />
+  );
 }

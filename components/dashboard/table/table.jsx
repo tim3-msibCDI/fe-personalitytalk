@@ -268,7 +268,11 @@ export default function Table() {
           { key: "practice_start_date" },
           {
             key: "topics",
-            render: (_, row) => (row.topics ? row.topics.join(", ") : "-"), // Gabungkan array dengan koma
+            render: (_, row) => (
+              <div style={{ width: "100px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                {row.topics ? row.topics.join(", ") : "-"}
+              </div>
+            ), // Gabungkan array dengan koma dan tampilkan dengan batas lebar 100px
           },
           {
             key: "actions",

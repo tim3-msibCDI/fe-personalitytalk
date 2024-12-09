@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; // Import useRouter
 import Image from "next/image";
-import { addMahasiswa, editMahasiswa } from "@/api/manage-user"; // Ganti dengan fungsi terkait mahasiswa
+import { addMahasiswa, editMahasiswa } from "@/api/manage-mahasiswa";
 import Modal from "@/components/modals/modal";
 
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
@@ -35,19 +35,21 @@ export default function MhsForm({
       setPhoneNumber(mahasiswaData.phone_number || "");
       setGender(mahasiswaData.gender || "");
       setDateBirth(mahasiswaData.date_birth || "");
-      setUniversitas(mahasiswaData.universitas || ""); // Ambil data universitas
-      setJurusan(mahasiswaData.jurusan || ""); // Ambil data jurusan
+
+      // Access universitas and jurusan from mahasiswa object
+      setUniversitas(mahasiswaData.mahasiswa.universitas || "");
+      setJurusan(mahasiswaData.mahasiswa.jurusan || "");
 
       const linkPhoto =
         mahasiswaData.photo_profile &&
         mahasiswaData.photo_profile.startsWith("http")
-          ? mahasiswaData.photo_profile // Jika sudah berupa URL lengkap
+          ? mahasiswaData.photo_profile
           : mahasiswaData.photo_profile
-          ? `${API_REAL}${mahasiswaData.photo_profile}` // Tambahkan `API_REAL` jika tidak diawali dengan "http"
-          : "/image/default-profile.jpg"; // Gunakan foto default jika `photo_profile` tidak ada
+          ? `${API_REAL}${mahasiswaData.photo_profile}`
+          : "/image/default-profile.jpg";
 
       setPhotoProfile(linkPhoto);
-      setPreviewImage(linkPhoto); // Atur pratinjau gambar
+      setPreviewImage(linkPhoto);
     }
   }, [mahasiswaData]);
 
@@ -85,6 +87,7 @@ export default function MhsForm({
       if (isAddMode) {
         const response = await addMahasiswa(formData);
         setMessage(response.message || "Mahasiswa berhasil ditambahkan");
+        console.log(response);
       } else if (isEditMode) {
         // Kirimkan hanya data yang berubah
         const updatedData = {};
@@ -168,7 +171,7 @@ export default function MhsForm({
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                disabled={!isAddMode && !isEditMode}
+                disabled={!isAddMode && !isEditMode && isViewMode}
                 placeholder={isAddMode ? "Masukkan nama lengkap" : ""}
                 className="border border-textcolor p-2 rounded-md w-full disabled:bg-white disabled:text-textcolor"
               />
@@ -181,7 +184,7 @@ export default function MhsForm({
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                disabled={!isAddMode && !isEditMode}
+                disabled={!isAddMode && !isEditMode && isViewMode}
                 placeholder={isAddMode ? "Masukkan email" : ""}
                 className="border border-textcolor p-2 rounded-md w-full disabled:bg-white disabled:text-textcolor"
               />
@@ -196,7 +199,7 @@ export default function MhsForm({
                   type="number"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  disabled={!isAddMode && !isEditMode}
+                  disabled={!isAddMode && !isEditMode && isViewMode}
                   placeholder={isAddMode ? "Masukkan nomor telepon" : ""}
                   className="w-full p-2 mr-2 outline-none"
                 />
@@ -209,7 +212,7 @@ export default function MhsForm({
                 name="gender"
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
-                disabled={!isAddMode && !isEditMode}
+                disabled={!isAddMode && !isEditMode && isViewMode}
                 className="border border-textcolor p-2 rounded-md w-full disabled:bg-white disabled:text-textcolor"
               >
                 <option value="">Jenis Kelamin</option>
@@ -225,7 +228,7 @@ export default function MhsForm({
                 type="date"
                 value={dateBirth}
                 onChange={(e) => setDateBirth(e.target.value)}
-                disabled={!isAddMode && !isEditMode}
+                disabled={!isAddMode && !isEditMode && isViewMode}
                 placeholder={isAddMode ? "Masukkan tanggal lahir" : ""}
                 className="border border-textcolor p-2 rounded-md w-full disabled:bg-white disabled:text-textcolor"
               />
@@ -238,7 +241,7 @@ export default function MhsForm({
                 type="text"
                 value={universitas}
                 onChange={(e) => setUniversitas(e.target.value)}
-                disabled={!isAddMode && !isEditMode}
+                disabled={!isAddMode && !isEditMode && isViewMode}
                 placeholder={isAddMode ? "Masukkan nama universitas" : ""}
                 className="border border-textcolor p-2 rounded-md w-full disabled:bg-white disabled:text-textcolor"
               />
@@ -251,7 +254,7 @@ export default function MhsForm({
                 type="text"
                 value={jurusan}
                 onChange={(e) => setJurusan(e.target.value)}
-                disabled={!isAddMode && !isEditMode}
+                disabled={!isAddMode && !isEditMode && isViewMode}
                 placeholder={isAddMode ? "Masukkan jurusan" : ""}
                 className="border border-textcolor p-2 rounded-md w-full disabled:bg-white disabled:text-textcolor"
               />
