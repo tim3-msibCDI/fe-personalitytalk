@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import SidebarProfile from "@/components/sidebarprofile";
+import SidebarProfilePsikolog from "@/components/sidebarprofilepsi";
 import { useUser } from "@/constants/useUser"; // Make sure this path is correct
 import Loading from "@/components/loading/loading";
 
-export default function ProfileUserLayout({ children }) {
+export default function ProfilePsikologLayout({ children }) {
   const { user, isLoading, isError } = useUser(); // Use the useUser hook
 
   // Handle loading and error states
@@ -18,15 +18,10 @@ export default function ProfileUserLayout({ children }) {
   }
 
   return (
-    <div className="mx-20 my-9 text-textcolor">
-      <div>
-        <h1 className="text-h2 font-semibold">
-          Selamat datang kembali {user.name}!
-        </h1>
-      </div>
-      <div className="w-full mt-6 lg:flex gap-4">
+    <div className="p-12 py-6 text-textcolor">
+      <div className="w-full lg:flex gap-4">
         {/* Sidebar Here */}
-        <SidebarProfile />
+        <SidebarProfilePsikolog />
 
         <div className="flex-1 rounded-lg bg-primarylight2 py-6 px-8 grid justify-items-center border border-solid border-textsec mt-4 lg:mt-0">
           {children}

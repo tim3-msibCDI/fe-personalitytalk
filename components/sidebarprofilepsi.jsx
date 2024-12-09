@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useUser } from "@/constants/useUser"; // Ganti dengan jalur yang benar ke useUser
 import Loading from "./loading/loading";
 
-export default function SidebarProfile() {
+export default function SidebarProfilePsikolog() {
   const pathname = usePathname();
   const { user } = useUser(); // Mengambil data pengguna dari useUser
 
@@ -22,7 +22,7 @@ export default function SidebarProfile() {
     <div className="lg:max-w-72 bg-primarylight2 rounded-lg p-9 border border-solid border-textsec flex flex-col justify-between">
       <div className="grid justify-items-center">
         <Image
-          src="/image/psikolog/1.png"
+          src= {`https://4ab6-180-254-243-79.ngrok-free.app/${user.photoProfile}`}
           width={120}
           height={120}
           className="rounded-full"
@@ -99,44 +99,16 @@ export default function SidebarProfile() {
                 <Image
                   src={
                     isActive("/profile/konsultasi")
-                      ? "/icons/chat-white.svg"
-                      : "/icons/chat-primary.svg"
+                      ? "/icons/star-white.svg"
+                      : "/icons/star.svg"
                   }
-                  height={15}
-                  width={15}
+                  height={20}
+                  width={20}
                   className="mr-0 lg:mr-2"
                 />
-                <span className="hidden lg:inline">Konsultasi Saya</span>
+                <span className="hidden lg:inline">Rating</span>
               </Link>
             </li>
-
-            {/* Course Link (Visible only for 'm' role) */}
-            {user.role === "M" && (
-              <li
-                className={`flex p-3 my-2 gap-2 rounded-lg cursor-pointer ${
-                  isActive("/profile/course")
-                    ? "bg-primary font-semibold text-whitebg"
-                    : ""
-                }`}
-              >
-                <Link
-                  href="/profile/course"
-                  className="flex items-center gap-2"
-                >
-                  <Image
-                    src={
-                      isActive("/profile/course")
-                        ? "/icons/course-white.svg"
-                        : "/icons/course-primary.svg"
-                    }
-                    height={15}
-                    width={15}
-                    className="mr-0 lg:mr-2"
-                  />
-                  <span className="hidden lg:inline">Course</span>
-                </Link>
-              </li>
-            )}
           </ul>
         </div>
       </div>

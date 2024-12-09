@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useUser } from "@/constants/useUser";
 import { getUserDetail } from "@/api/user";
+import Loading from "@/components/loading/loading";
 
 import Modal from "@/components/modals/modal";
 
@@ -28,7 +29,7 @@ export default function Profile() {
     mutate,
   } = useUser();
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading/>;
   if (isError) return <p>Error loading user data</p>;
 
   const formattedDate = user.dateBirth ? formatDate(user.dateBirth) : "";

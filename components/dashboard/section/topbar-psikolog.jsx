@@ -31,7 +31,7 @@ export default function TopbarPsikolog() {
               {user.name}
             </button>
             <div className="absolute right-0 w-48 bg-primary border border-t-4 border-t-primarylight text-white shadow-lg rounded-lg hidden group-hover:block">
-              <Link href="/profile" className="block px-4 py-2 hover:bg-hover">
+              <Link href="/psikolog/profile" className="block px-4 py-2 hover:bg-hover">
                 Profile
               </Link>
               <button

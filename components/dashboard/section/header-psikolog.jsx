@@ -23,9 +23,12 @@ export default function HeaderPsikolog() {
     setHeaderTitle(formatTitle(lastSegment || "Dashboard"));
   }, [pathname]);
 
+  // Cek apakah halaman profile
+  const isProfilePage = pathname === "/psikolog/profile";
+
   return (
     <header className="px-4 mt-7">
-      <h1 className="font-semibold text-h1">{headerTitle}</h1>
+      <h1 className="font-semibold text-h1">{!isProfilePage && headerTitle}</h1>
     </header>
   );
 }
