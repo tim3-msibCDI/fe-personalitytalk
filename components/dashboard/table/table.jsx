@@ -16,6 +16,7 @@ import Modal from "@/components/modals/modal";
 
 import { deleteUser } from "@/api/manage-user";
 import { deleteMahasiswa } from "@/api/manage-mahasiswa";
+import { deletePsikolog } from "@/api/manage-psikolog";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
@@ -49,7 +50,6 @@ export default function Table() {
     setModalOpen(true);
   };
 
-
   const confirmDelete = async () => {
     if (selectedRow) {
       try {
@@ -57,6 +57,10 @@ export default function Table() {
           const result = await deleteUser(selectedRow.id);
         } else if (pathname === "/admin/pengguna/mahasiswa") {
           const result = await deleteMahasiswa(selectedRow.id);
+        } else if (pathname === "/admin/psikolog/daftar-psikolog") {
+          const result = await deletePsikolog(selectedRow.id);
+        } else if (pathname === "/admin/psikolog/daftar-konselor") {
+          const result = await deletePsikolog(selectedRow.id);
         }
         await mutate(`${API_URL}${endpoint}`);
       } catch (error) {
@@ -84,8 +88,11 @@ export default function Table() {
   } else if (pathname === "/admin/psikolog/daftar-psikolog") {
     endpoint = `/admin/psikolog?page=${currentPage}`;
     searchPlaceholder = "Cari Data Psikolog";
+  } else if (pathname === "/admin/psikolog/daftar-konselor") {
+    endpoint = `/admin/konselor?page=${currentPage}`;
+    searchPlaceholder = "Cari Data Psikolog";
   } else if (pathname === "/admin/psikolog/kelola-psikolog") {
-    endpoint = `/admin/psikolog/psikolog-regis`;
+    endpoint = `/admin/psikolog-regis?page=${currentPage}`;
     searchPlaceholder = "Cari Data Psikolog";
   } else if (pathname === "/admin/artikel/informasi-kesehatan") {
     endpoint = `/admin/diseases?page=${currentPage}`;
@@ -137,6 +144,10 @@ export default function Table() {
           "Topik Keahlian",
           "Tindakan",
         ]
+      : pathname === "/admin/psikolog/daftar-konselor"
+      ? ["No", "Nama Lengkap", "Mulai Praktik", "Topik Keahlian", "Tindakan"]
+      : pathname === "/admin/psikolog/kelola-psikolog"
+      ? ["No", "Foto Profil", "Nama Lengkap", "No SIPP", "Status", "Tindakan"]
       : pathname === "/admin/artikel/informasi-kesehatan"
       ? ["No", "Nama Penyakit", "Tindakan"]
       : pathname === "/admin/konsultasi/topik-konsultasi"
@@ -244,12 +255,16 @@ export default function Table() {
               <div className="space-x-2">
                 <ShowButton
                   onClick={() =>
-                    router.push(`/admin/pengguna/mahasiswa/detail-mahasiswa?id=${row.id}`)
+                    router.push(
+                      `/admin/pengguna/mahasiswa/detail-mahasiswa?id=${row.id}`
+                    )
                   }
                 />
                 <EditButton
                   onClick={() =>
-                    router.push(`/admin/pengguna/mahasiswa/edit-mahasiswa?id=${row.id}`)
+                    router.push(
+                      `/admin/pengguna/mahasiswa/edit-mahasiswa?id=${row.id}`
+                    )
                   }
                 />
                 <DeleteButton onClick={() => handleDeleteClick(row)} />
@@ -269,20 +284,158 @@ export default function Table() {
           {
             key: "topics",
             render: (_, row) => (
-              <div style={{ width: "100px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              <div
+                style={{
+                  width: "100px",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
                 {row.topics ? row.topics.join(", ") : "-"}
               </div>
-            ), // Gabungkan array dengan koma dan tampilkan dengan batas lebar 100px
+            ),
           },
           {
             key: "actions",
             render: (_, row) => (
               <div className="space-x-2">
-                <ShowButton onClick={() => console.log("Show clicked", row)} />
-                <EditButton onClick={() => console.log("Edit clicked", row)} />
-                <DeleteButton
-                  onClick={() => console.log("Delete clicked", row)}
+                <ShowButton
+                  onClick={() =>
+                    router.push(
+                      `/admin/psikolog/daftar-psikolog/detail-psikolog?id=${row.id}`
+                    )
+                  }
                 />
+                <EditButton
+                  onClick={() =>
+                    router.push(
+                      `/admin/psikolog/daftar-psikolog/edit-psikolog?id=${row.id}`
+                    )
+                  }
+                />
+                <DeleteButton onClick={() => handleDeleteClick(row)} />
+              </div>
+            ),
+          },
+        ]
+      : pathname === "/admin/psikolog/daftar-konselor"
+      ? [
+          {
+            key: "index",
+            render: (_, __, index) => data.data.from - 1 + index + 1,
+          },
+          { key: "name" },
+          { key: "practice_start_date" },
+          {
+            key: "topics",
+            render: (_, row) => (
+              <div
+                style={{
+                  width: "150px",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {row.topics ? row.topics.join(", ") : "-"}
+              </div>
+            ),
+          },
+          {
+            key: "actions",
+            render: (_, row) => (
+              <div className="space-x-2">
+                <ShowButton
+                  onClick={() =>
+                    router.push(
+                      `/admin/psikolog/daftar-konselor/detail-konselor?id=${row.id}`
+                    )
+                  }
+                />
+                <EditButton
+                  onClick={() =>
+                    router.push(
+                      `/admin/psikolog/daftar-konselor/edit-konselor?id=${row.id}`
+                    )
+                  }
+                />
+                <DeleteButton onClick={() => handleDeleteClick(row)} />
+              </div>
+            ),
+          },
+        ]
+      : pathname === "/admin/psikolog/kelola-psikolog"
+      ? [
+          {
+            key: "index",
+            render: (_, __, index) => data.data.from - 1 + index + 1,
+          },
+          {
+            key: "photo_profile",
+            render: (photo) => {
+              const linkphoto =
+                photo && photo.startsWith("http")
+                  ? photo
+                  : photo
+                  ? `${API_REAL}${photo}`
+                  : "/image/default-profile.jpg"; // URL foto default
+
+              return (
+                <Image
+                  src={linkphoto}
+                  alt="Foto Profil"
+                  width={60}
+                  height={60}
+                  className="mx-auto"
+                />
+              );
+            },
+          },
+          {
+            key: "name",
+            render: (_, row) => row.user?.name || "-",
+          },
+          {
+            key: "sipp",
+            render: (_, row) => row.sipp || "-",
+          },
+          {
+            key: "status",
+            render: (_, row) => {
+              const statusMap = {
+                pending: { text: "Menunggu", bgColor: "bg-yellow-500" },
+                rejected: { text: "Ditolak", bgColor: "bg-red-500" },
+                approved: { text: "Diterima", bgColor: "bg-green-500" },
+              };
+
+              const { text, bgColor } = statusMap[row.status] || {
+                text: "-",
+                bgColor: "bg-gray-200",
+              };
+
+              return (
+                <span
+                  className={`inline-block px-3 py-2 text-white text-s font-medium rounded ${bgColor}`}
+                >
+                  {text}
+                </span>
+              );
+            },
+          },
+
+          {
+            key: "actions",
+            render: (_, row) => (
+              <div className="space-x-2">
+                <EditButton
+                  onClick={() =>
+                    router.push(
+                      `/admin/psikolog/daftar-konselor/edit-konselor?id=${row.id_psikolog}`
+                    )
+                  }
+                />
+                <DeleteButton onClick={() => handleDeleteClick(row)} />
               </div>
             ),
           },
