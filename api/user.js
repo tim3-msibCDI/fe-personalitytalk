@@ -4,7 +4,7 @@ import { getToken, removeToken } from "@/lib/auth";
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_URL ||
-  "https://4ab6-180-254-243-79.ngrok-free.app/api";
+  "https://fe76-180-246-46-205.ngrok-free.app/api";
 
 // Fungsi Login user
 export const loginUser = async (email, password) => {
@@ -92,6 +92,8 @@ export const getUserDetail = async () => {
         practiceStartDate: data.psikolog_details.practice_start_date,
         description: data.psikolog_details.description,
         topics: data.psikolog_details.topics || [], // Topik yang tersedia untuk psikolog
+        bankName: data.psikolog_details.bank_name,
+        rekening: data.psikolog_details.rekening,
       };
     } else if (data.role === "K") { // Jika Konselor
       // Menambahkan detail untuk Konselor (tanpa sipp)
@@ -99,6 +101,8 @@ export const getUserDetail = async () => {
         practiceStartDate: data.psikolog_details.practice_start_date,
         description: data.psikolog_details.description,
         topics: data.psikolog_details.topics || [], // Topik yang tersedia untuk konselor
+        bankName: data.psikolog_details.bank_name,
+        rekening: data.psikolog_details.rekening,
       };
     }
 

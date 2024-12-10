@@ -22,7 +22,7 @@ export default function SidebarProfilePsikolog() {
     <div className="lg:max-w-72 bg-primarylight2 rounded-lg p-9 border border-solid border-textsec flex flex-col justify-between">
       <div className="grid justify-items-center">
         <Image
-          src= {`https://4ab6-180-254-243-79.ngrok-free.app/${user.photoProfile}`}
+          src= {`https://fe76-180-246-46-205.ngrok-free.app/${user.photoProfile}`}
           width={120}
           height={120}
           className="rounded-full"
@@ -38,15 +38,15 @@ export default function SidebarProfilePsikolog() {
             {/* Biodata Link */}
             <li
               className={`flex p-3 my-2 gap-2 rounded-lg cursor-pointer ${
-                isActive("/profile")
+                isActive("/psikolog/profile")
                   ? "bg-primary font-semibold text-white"
                   : ""
               }`}
             >
-              <Link href="/profile" className="flex items-center">
+              <Link href="/psikolog/profile" className="flex items-center">
                 <Image
                   src={
-                    isActive("/profile")
+                    isActive("/psikolog/profile")
                       ? "/icons/user-white.svg"
                       : "/icons/user-primary.svg"
                   }

@@ -35,6 +35,8 @@ const fetchUserDetail = async () => {
           practiceStartDate: userDetails.psikologDetails?.practiceStartDate || "",
           description: userDetails.psikologDetails?.description || "",
           topics: userDetails.psikologDetails?.topics || [],
+          bankName: userDetails.psikologDetails?.bankName || "",
+          rekening: userDetails.psikologDetails?.rekening || "",
         };
       }
       // Kondisi Konselor
@@ -44,6 +46,8 @@ const fetchUserDetail = async () => {
           practiceStartDate: userDetails.konselorDetails?.practiceStartDate || "",
           description: userDetails.konselorDetails?.description || "",
           topics: userDetails.konselorDetails?.topics || [],
+          bankName: userDetails.psikologDetails?.bankName || "",
+          rekening: userDetails.psikologDetails?.rekening || "",
         };
       }
     }
