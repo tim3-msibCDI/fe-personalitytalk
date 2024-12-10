@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useUser } from "@/constants/useUser";
 import Loading from "@/components/loading/loading";
 import Modal from "@/components/modals/modal";
+import { getToken } from "@/lib/auth";
+import { useRouter } from "next/navigation";
 
 const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -13,12 +15,14 @@ const formatDate = (dateString) => {
 };
 
 export default function PsikologProfile() {
+    const router = useRouter();
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { user, isLoading, isError, updateUserProfile } = useUser();
     const [topicsList, setTopicsList] = useState([]);
     const [showTopicsDropdown, setShowTopicsDropdown] = useState(false);
+    const [bankList, setBanksList] = useState([]); // State untuk daftar bank
 
     useEffect(() => {
         if (isEditing) {
@@ -39,6 +43,33 @@ export default function PsikologProfile() {
                     }
                 })
                 .catch((error) => console.error("Error fetching topics:", error));
+
+            // Ambil token autentikasi
+            const token = getToken();
+            if (!token) {
+                alert("Anda perlu login untuk mengakses halaman ini.");
+                router.push("/login");
+                return;
+            }
+
+            // Fetch daftar bank
+            fetch(`${process.env.NEXT_PUBLIC_API_URL}/psikolog/banks`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "ngrok-skip-browser-warning": "69420",
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        setBanksList(data.data); // Simpan daftar bank dari API
+                    } else {
+                        console.error("Failed to fetch banks:", data.message);
+                    }
+                })
+                .catch((error) => console.error("Error fetching banks:", error));
         }
     }, [isEditing]);
 
@@ -49,11 +80,15 @@ export default function PsikologProfile() {
 
     const toggleEdit = () => {
         setIsEditing(!isEditing);
-        setFormData(user);
+        setFormData({
+            ...user,
+            gender: user.gender === "F" ? "F" : "M", // Atur nilai gender dengan benar
+        });
     };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        console.log("Change detected:", name, value);
         if (name === "topics") {
             const selectedOptions = Array.from(e.target.selectedOptions).map((option) => ({
                 id: parseInt(option.value),
@@ -77,18 +112,24 @@ export default function PsikologProfile() {
             gender: formData.gender,
             date_birth: formData.dateBirth,
             phone_number: formData.phoneNumber,
-            sipp: formData.sipp,
+            sipp: formData.sipp || "",
             practice_start_date: formData.practiceStartDate,
-            topics: formData.topics.map((topic) => topic.id),
-            bank_name: formData.bankName,
-            rekening: formData.rekening,
             description: formData.description,
+            bank_id: bankList.find((bank) => bank.name === formData.bankName)?.id || null, // Ambil ID bank berdasarkan nama
+            rekening: formData.rekening,
+            topics: formData.topics.map((topic) => topic.id), // Ambil hanya ID topik
         };
+
         try {
             await updateUserProfile(dataToSend);
             setFormData((prev) => ({ ...prev, ...dataToSend }));
             setIsEditing(false);
-            setIsModalOpen(true);
+
+            // Tampilkan alert keberhasilan
+            alert("Profil berhasil diperbarui!");
+
+            // Reload halaman untuk memuat data terbaru
+            window.location.reload();
         } catch (error) {
             console.error("Error updating profile:", error);
         }
@@ -96,11 +137,6 @@ export default function PsikologProfile() {
 
     return (
         <div className="w-full">
-            {isModalOpen && (
-                <Modal onClose={() => setIsModalOpen(false)}>
-                    <p>Profil berhasil diperbarui!</p>
-                </Modal>
-            )}
             <div className="w-full flex justify-between items-start">
                 <h3 className="text-h3 font-semibold pb-3">Biodata Diri</h3>
                 {!isEditing && (
@@ -180,7 +216,7 @@ export default function PsikologProfile() {
                         <input
                             type="text"
                             name="gender"
-                            value={user.gender === "F" ? "Perempuan" : "Laki-laki"}
+                            value={user.gender}
                             className="border border-gray-300 w-full rounded-lg p-3 bg-gray-100"
                             disabled
                         />
@@ -220,7 +256,7 @@ export default function PsikologProfile() {
                     <label>Tanggal Awal Praktek</label>
                     <input
                         type={isEditing ? "date" : "text"}
-                        name="startDate"
+                        name="practiceStartDate"
                         value={isEditing ? formData.practiceStartDate : user.practiceStartDate}
                         onChange={handleChange}
                         className={`border border-gray-300 w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"
@@ -257,8 +293,11 @@ export default function PsikologProfile() {
                         </div>
                     ) : (
                         <ul className="flex flex-row gap-2 border border-gray-300 w-full rounded-lg p-3 bg-gray-100">
-                            {user.topics.map((topic) => (
-                                <li key={topic.id}>{topic.topic_name},</li>
+                            {user.topics.map((topic, index) => (
+                                <li key={topic.id}>
+                                    {topic.topic_name}
+                                    {index < user.topics.length - 1 && ","}
+                                </li>
                             ))}
                         </ul>
                     )}
@@ -268,15 +307,29 @@ export default function PsikologProfile() {
                 {/* Bank */}
                 <div className="my-2">
                     <label>Bank</label>
-                    <input
-                        type="text"
-                        name="bank"
-                        value={isEditing ? formData.bankName : user.bankName}
-                        onChange={handleChange}
-                        className={`border border-gray-300 w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"
-                            }`}
-                        disabled={!isEditing}
-                    />
+                    {isEditing ? (
+                        <select
+                            name="bankName"
+                            value={formData.bankName}
+                            onChange={handleChange}
+                            className="border border-gray-300 w-full rounded-lg p-3 bg-white"
+                        >
+                            <option value="">Pilih Bank</option>
+                            {bankList.map((bank) => (
+                                <option key={bank.id} value={bank.name}>
+                                    {bank.name}
+                                </option>
+                            ))}
+                        </select>
+                    ) : (
+                        <input
+                            type="text"
+                            name="bankName"
+                            value={user.bankName}
+                            className="border border-gray-300 w-full rounded-lg p-3 bg-gray-100"
+                            disabled
+                        />
+                    )}
                 </div>
 
                 {/* Nomor Rekening */}
@@ -284,7 +337,7 @@ export default function PsikologProfile() {
                     <label>Nomor Rekening</label>
                     <input
                         type="text"
-                        name="accountNumber"
+                        name="rekening"
                         value={isEditing ? formData.rekening : user.rekening}
                         onChange={handleChange}
                         className={`border border-gray-300 w-full rounded-lg p-3 ${isEditing ? "bg-white" : "bg-gray-100"
