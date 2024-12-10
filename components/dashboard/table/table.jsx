@@ -16,7 +16,7 @@ import Modal from "@/components/modals/modal";
 
 import { deleteUser } from "@/api/manage-user";
 import { deleteMahasiswa } from "@/api/manage-mahasiswa";
-import { deletePsikolog } from "@/api/manage-psikolog";
+import { deletePsikolog, deletePricePsikolog } from "@/api/manage-psikolog";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
@@ -61,6 +61,8 @@ export default function Table() {
           const result = await deletePsikolog(selectedRow.id);
         } else if (pathname === "/admin/psikolog/daftar-konselor") {
           const result = await deletePsikolog(selectedRow.id);
+        } else if (pathname === "/admin/psikolog/harga-psikolog") {
+          const result = await deletePricePsikolog(selectedRow.id);
         }
         await mutate(`${API_URL}${endpoint}`);
       } catch (error) {
@@ -93,6 +95,9 @@ export default function Table() {
     searchPlaceholder = "Cari Data Psikolog";
   } else if (pathname === "/admin/psikolog/kelola-psikolog") {
     endpoint = `/admin/psikolog-regis?page=${currentPage}`;
+    searchPlaceholder = "Cari Data Psikolog";
+  } else if (pathname === "/admin/psikolog/harga-psikolog") {
+    endpoint = `/admin/psikolog-price?page=${currentPage}`;
     searchPlaceholder = "Cari Data Psikolog";
   } else if (pathname === "/admin/artikel/informasi-kesehatan") {
     endpoint = `/admin/diseases?page=${currentPage}`;
@@ -148,6 +153,8 @@ export default function Table() {
       ? ["No", "Nama Lengkap", "Mulai Praktik", "Topik Keahlian", "Tindakan"]
       : pathname === "/admin/psikolog/kelola-psikolog"
       ? ["No", "Foto Profil", "Nama Lengkap", "No SIPP", "Status", "Tindakan"]
+      : pathname === "/admin/psikolog/harga-psikolog"
+      ? ["No", "No SIPP", "Harga", "Tindakan"]
       : pathname === "/admin/artikel/informasi-kesehatan"
       ? ["No", "Nama Penyakit", "Tindakan"]
       : pathname === "/admin/konsultasi/topik-konsultasi"
@@ -435,6 +442,24 @@ export default function Table() {
                     )
                   }
                 />
+                <DeleteButton onClick={() => handleDeleteClick(row)} />
+              </div>
+            ),
+          },
+        ]
+      : pathname === "/admin/psikolog/harga-psikolog"
+      ? [
+          {
+            key: "index",
+            render: (_, __, index) => data.data.from - 1 + index + 1,
+          },
+          { key: "code" },
+          { key: "price" },
+          {
+            key: "actions",
+            render: (_, row) => (
+              <div className="space-x-2">
+                <EditButton onClick={() => console.log("Edit clicked", row)} />
                 <DeleteButton onClick={() => handleDeleteClick(row)} />
               </div>
             ),

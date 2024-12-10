@@ -158,3 +158,25 @@ export async function fetchBanks() {
     return []; // Kembalikan array kosong saat error
   }
 }
+
+export async function deletePricePsikolog(id) {
+  try {
+    const response = await fetch(`${API_URL}/admin/psikolog/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        "ngrok-skip-browser-warning": "69420",
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error("Gagal menghapus data psikolog");
+    }
+
+    return { success: true, message: "User deleted successfully" };
+  } catch (error) {
+    console.error(error.message);
+    return { success: false, message: error.message };
+  }
+}
