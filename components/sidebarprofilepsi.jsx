@@ -22,7 +22,7 @@ export default function SidebarProfilePsikolog() {
     <div className="lg:max-w-72 bg-primarylight2 rounded-lg p-9 border border-solid border-textsec flex flex-col justify-between">
       <div className="grid justify-items-center">
         <Image
-          src= {`https://fe76-180-246-46-205.ngrok-free.app/${user.photoProfile}`}
+          src= {`https://1522-125-166-225-192.ngrok-free.app/${user.photoProfile}`}
           width={120}
           height={120}
           className="rounded-full"
@@ -61,18 +61,18 @@ export default function SidebarProfilePsikolog() {
             {/* Change Password Link */}
             <li
               className={`flex p-3 my-2 gap-2 rounded-lg cursor-pointer ${
-                isActive("/profile/change-password")
+                isActive("/psikolog/profile/change-password")
                   ? "bg-primary font-semibold text-whitebg"
                   : ""
               }`}
             >
               <Link
-                href="/profile/change-password"
+                href="/psikolog/profile/change-password"
                 className="flex items-center"
               >
                 <Image
                   src={
-                    isActive("/profile/change-password")
+                    isActive("/psikolog/profile/change-password")
                       ? "/icons/key-white.svg"
                       : "/icons/key-primary.svg"
                   }
@@ -87,18 +87,18 @@ export default function SidebarProfilePsikolog() {
             {/* Konsultasi Link */}
             <li
               className={`flex p-3 my-2 gap-2 rounded-lg cursor-pointer ${
-                isActive("/profile/konsultasi")
+                isActive("/psikolog/profile/konsultasi")
                   ? "bg-primary font-semibold text-whitebg"
                   : ""
               }`}
             >
               <Link
-                href="/profile/konsultasi"
+                href="/psikolog/profile/konsultasi"
                 className="flex items-center"
               >
                 <Image
                   src={
-                    isActive("/profile/konsultasi")
+                    isActive("/psikolog/profile/konsultasi")
                       ? "/icons/star-white.svg"
                       : "/icons/star.svg"
                   }
