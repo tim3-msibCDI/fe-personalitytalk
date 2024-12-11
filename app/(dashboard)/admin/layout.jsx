@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import HeaderAdmin from "@/components/dashboard/section/header-admin";
-import Topbar from "@/components/dashboard/section/topbar";
+import TopbarAdmin from "@/components/dashboard/section/topbar-admin";
 
 export default function AdminLayout({ children }) {
   const path = usePathname();
@@ -15,7 +15,7 @@ export default function AdminLayout({ children }) {
   
   return (
     <div className="default-layout">
-      <Topbar />  
+      <TopbarAdmin />  
       <HeaderAdmin />
       <div className="p-6">{children}</div>
     </div>

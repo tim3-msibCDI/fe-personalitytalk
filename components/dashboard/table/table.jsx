@@ -114,9 +114,15 @@ export default function Table() {
   } else if (pathname === "/admin/keuangan/voucher") {
     endpoint = `/admin/vouchers?page=${currentPage}`;
     searchPlaceholder = "Cari Nama Client";
+  } else if (pathname === "/admin/artikel/artikel") {
+    endpoint = `/admin/articles?page=${currentPage}`;
+    searchPlaceholder = "Cari Artikel";
   } else if (pathname === "/admin/artikel/informasi-kesehatan") {
     endpoint = `/admin/diseases?page=${currentPage}`;
     searchPlaceholder = "Cari Informasi Kesehatan";
+  } else if (pathname === "/admin/lainnya/mitra") {
+    endpoint = `/admin/mitra?page=${currentPage}`;
+    searchPlaceholder = "Cari Mitra";
   } else {
     endpoint = null;
   }
@@ -191,8 +197,12 @@ export default function Table() {
           "Edit Status Aktif",
           "Tindakan",
         ]
+      : pathname === "/admin/artikel/artikel"
+      ? ["No", "Foto", "Nama Artikel", "Tindakan"]
       : pathname === "/admin/artikel/informasi-kesehatan"
       ? ["No", "Nama Penyakit", "Tindakan"]
+      : pathname === "/admin/lainnya/mitra"
+      ? ["No", "Foto", "Nama Mitra", "Tindakan"]
       : [];
 
   const columns =
@@ -613,6 +623,68 @@ export default function Table() {
             ),
           },
         ]
+      : pathname === "/admin/artikel/artikel"
+      ? [
+          {
+            key: "index",
+            render: (_, __, index) => data.data.from - 1 + index + 1,
+          },
+          {
+            key: "article_img",
+            render: (photo) => {
+              if (!photo) return null; // Jika photo null atau tidak ada, tidak ditampilkan
+
+              const linkphoto = photo.startsWith("http")
+                ? photo
+                : `${API_REAL}${photo}`; // Pastikan URL lengkap jika photo bukan URL penuh
+
+              return (
+                <Image
+                  src={linkphoto}
+                  alt="Foto Profil"
+                  width={250}
+                  height={250}
+                  className="mx-auto rounded-lg"
+                />
+              );
+            },
+          },
+          {
+            key: "article_title",
+            render: (title) => (
+              <div
+                style={{
+                  wordWrap: "break-word",
+                  maxWidth: "400px",
+                }}
+              >
+                {title}
+              </div>
+            ),
+          },
+          {
+            key: "actions",
+            render: (_, row) => (
+              <div className="space-x-2">
+                <ShowButton
+                  onClick={() =>
+                    router.push(
+                      `/admin/pengguna/mahasiswa/detail-mahasiswa?id=${row.id}`
+                    )
+                  }
+                />
+                <EditButton
+                  onClick={() =>
+                    router.push(
+                      `/admin/pengguna/mahasiswa/edit-mahasiswa?id=${row.id}`
+                    )
+                  }
+                />
+                <DeleteButton onClick={() => handleDeleteClick(row)} />
+              </div>
+            ),
+          },
+        ]
       : pathname === "/admin/artikel/informasi-kesehatan"
       ? [
           {
@@ -629,6 +701,68 @@ export default function Table() {
                 <DeleteButton
                   onClick={() => console.log("Delete clicked", row)}
                 />
+              </div>
+            ),
+          },
+        ]
+      : pathname === "/admin/lainnya/mitra"
+      ? [
+          {
+            key: "index",
+            render: (_, __, index) => data.data.from - 1 + index + 1,
+          },
+          {
+            key: "img",
+            render: (photo) => {
+              if (!photo) return null; // Jika photo null atau tidak ada, tidak ditampilkan
+
+              const linkphoto = photo.startsWith("http")
+                ? photo
+                : `${API_REAL}${photo}`; // Pastikan URL lengkap jika photo bukan URL penuh
+
+              return (
+                <Image
+                  src={linkphoto}
+                  alt="Foto Profil"
+                  width={250}
+                  height={250}
+                  className="mx-auto rounded-lg"
+                />
+              );
+            },
+          },
+          {
+            key: "name",
+            render: (title) => (
+              <div
+                style={{
+                  wordWrap: "break-word",
+                  maxWidth: "400px",
+                }}
+              >
+                {title}
+              </div>
+            ),
+          },
+          {
+            key: "actions",
+            render: (_, row) => (
+              <div className="space-x-2">
+                <ShowButton
+                  onClick={() =>
+                    router.push(
+                      `/admin/pengguna/mahasiswa/detail-mahasiswa?id=${row.id}`
+                    )
+                  }
+                />
+                <EditButton
+                  onClick={() =>
+                    router.push(
+                      `/admin/pengguna/mahasiswa/edit-mahasiswa?id=${row.id}`
+                    )
+                  }
+                />
+                <DeleteButton onClick={() => handleDeleteClick(row)} />
               </div>
             ),
           },

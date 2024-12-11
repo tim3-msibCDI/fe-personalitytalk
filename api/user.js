@@ -230,3 +230,25 @@ export const logoutAdmin = async () => {
     throw new Error("Failed to log out");
   }
 };
+
+// Admin
+// Fungsi untuk Mengambil info Admin
+export const getAdminInfo = async () => {
+  const token = getToken();
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  try {
+    const response = await axios.get(`${API_URL}/admin/info`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "ngrok-skip-browser-warning": "69420",
+      },
+    });
+    console.log(response)
+    return response;
+  } catch (error) {
+    throw new Error("Failed to fetch user data");
+  }
+};
