@@ -8,7 +8,8 @@ export default function BuatJadwal() {
   const [schedules, setSchedules] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedDay, setSelectedDay] = useState(null); // Track selected day
+  const [selectedDays, setSelectedDays] = useState([]); // Track selected day
+  const [currentDay, setCurrentDay] = useState(null);
   const [selectedSlots, setSelectedSlots] = useState([]); // Track selected slots
 
   // Fetch data dari API
@@ -83,20 +84,34 @@ export default function BuatJadwal() {
   ].slice(currentMonthIndex);
 
   // Fungsi untuk menangani perubahan checkbox
-  const handleCheckboxChange = (slotId) => {
-    setSelectedSlots((prevSelectedSlots) => {
-      if (prevSelectedSlots.includes(slotId)) {
-        return prevSelectedSlots.filter((id) => id !== slotId);
-      } else {
-        return [...prevSelectedSlots, slotId];
+  const handleCheckboxChange = (day, slotId) => {
+    setSelectedSlots((prev) => {
+      const updatedSlots = { ...prev };
+      if (!updatedSlots[day]) {
+        updatedSlots[day] = [];
       }
+
+      if (updatedSlots[day].includes(slotId)) {
+        updatedSlots[day] = updatedSlots[day].filter((id) => id !== slotId);
+      } else {
+        updatedSlots[day] = [...updatedSlots[day], slotId];
+      }
+
+      return updatedSlots;
     });
   };
 
   // Fungsi untuk menangani klik pada hari
   const handleDayClick = (day) => {
-    setSelectedDay(day);
-    setSelectedSlots([]); // Reset selected slots when a new day is clicked
+    setSelectedDays((prevSelectedDays) => {
+      const updatedDays = prevSelectedDays.includes(day)
+        ? prevSelectedDays.filter((selectedDay) => selectedDay !== day)
+        : [...prevSelectedDays, day];
+
+      // Set current day to the latest selected day
+      setCurrentDay(updatedDays[updatedDays.length - 1] || null);
+      return updatedDays;
+    });
   };
 
   return (
@@ -136,7 +151,7 @@ export default function BuatJadwal() {
                 <button
                   key={day}
                   onClick={() => handleDayClick(day)}
-                  className={`px-4 py-2 rounded-lg ${selectedDay === day ? "bg-primary text-white" : "bg-primarylight"
+                  className={`px-4 py-2 rounded-lg ${selectedDays.includes(day) ? "bg-primary text-white" : "bg-primarylight"
                     }`}
                 >
                   {day}
@@ -146,20 +161,20 @@ export default function BuatJadwal() {
           </div>
 
           {/* Pilih Waktu untuk Hari Terpilih */}
-          {selectedDay && (
-            <div>
+          {currentDay && (
+            <div className="mb-4">
               <label className="block text-sm font-medium mb-2">
-                Waktu Konsultasi
+                Waktu Konsultasi untuk {currentDay}
               </label>
               <div className="grid grid-cols-4 gap-x-4 gap-y-2">
-                {schedules[selectedDay]?.map((slot) => (
+                {schedules[currentDay]?.map((slot) => (
                   <div key={slot.id} className="mb-2 bg-white px-4 py-3 text-s rounded-lg">
                     <label className="flex items-center gap-2">
                       <input
                         type="checkbox"
                         value={slot.id}
-                        onChange={() => handleCheckboxChange(slot.id)}
-                        checked={selectedSlots.includes(slot.id)}
+                        onChange={() => handleCheckboxChange(currentDay, slot.id)}
+                        checked={selectedSlots[currentDay]?.includes(slot.id) || false}
                         className="form-checkbox rounded border-gray-300"
                       />
                       <span>{slot.time_slot}</span>
@@ -169,18 +184,37 @@ export default function BuatJadwal() {
               </div>
             </div>
           )}
-
-
-          {/* Tombol Simpan */}
-          {selectedSlots.length > 0 && (
-            <div className="mt-4 flex justify-end">
-              <button className="px-6 py-2 bg-primary text-white rounded-lg">
-                Simpan
-              </button>
-            </div>
-          )}
         </div>
       </div>
+
+      <div className="mt-6 bg-primarylight2 rounded-lg">
+        <div className="px-6 py-4">
+          <h3 className="text-lg font-bold mb-2">Jadwal Terpilih:</h3>
+          <div className="grid grid-cols-7 gap-4">
+            {Object.entries(selectedSlots).map(([day, slots]) => (
+              <div key={day} className="mb-4 bg-primarylight rounded-lg">
+                <div className="p-4">
+                  <p className="font-medium text-primary mb-2 text-center">{day}:</p>
+                  <ul className="list-none text-center">
+                    {slots.map((slotId) => {
+                      const slot = schedules[day].find((s) => s.id === slotId);
+                      return <li key={slotId}>{slot?.time_slot}</li>;
+                    })}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {Object.keys(selectedSlots).length > 0 && (
+        <div className="mt-4 flex justify-end">
+          <button className="px-6 py-2 bg-primary text-white rounded-lg">
+            Buat Jadwal
+          </button>
+        </div>
+      )}
     </div>
   );
 }
