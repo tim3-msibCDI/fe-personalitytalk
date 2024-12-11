@@ -14,6 +14,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -121,17 +122,59 @@ export default function Login() {
                     className="py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec"
                   />
                 </div>
-                <div className="pt-5">
-                  <label className="text-m font-normal text-textcolor">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    placeholder="Masukan Password Anda"
-                    id="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec"
-                  />
+                <div className="relative pt-5">
+                  <label className="text-m font-normal text-textcolor">Password</label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Masukan Password Anda"
+                      id="password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-4 flex items-center"
+                    >
+                      {showPassword ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M3.98 8.223A10.451 10.451 0 012 12c.77 2.017 2.512 4.102 5.02 5.777C9.51 19.4 11.686 20 12 20c.314 0 2.49-.6 4.98-2.223C19.488 16.102 21.23 14.017 22 12a10.451 10.451 0 00-1.98-3.777m-3.197-2.232C15.88 5.272 14.016 5 12 5c-.314 0-2.49.6-4.98 2.223m9.563.554L4.22 19.778"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-.268.943-1.07 2.463-2.458 3.944C15.978 18.016 13.062 19 12 19c-1.062 0-3.978-.984-7.084-3.056C3.528 14.463 2.726 12.943 2.458 12z"
+                          />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
                 </div>
                 <button
                   className="bg-primary text-whitebg text-s w-full py-2 px-4 mt-8 rounded-lg hover:bg-hover"
@@ -139,7 +182,7 @@ export default function Login() {
                 >
                   Login
                 </button>
-                <button 
+                <button
                   onClick={redirectToGoogleLogin}
                   className="flex items-center px-4 py-2 bg-whitebg text-textcolor rounded-lg w-full justify-center text-s mt-3.5">
                   <Image
