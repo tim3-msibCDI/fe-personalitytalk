@@ -63,7 +63,10 @@ export default function Table() {
           const result = await deletePsikolog(selectedRow.id);
         } else if (pathname === "/admin/psikolog/harga-psikolog") {
           const result = await deletePricePsikolog(selectedRow.id);
+        } else if (pathname === "/admin/keuangan/transaksi") {
+          const result = await deletePricePsikolog(selectedRow.id); //belum diperbaiki
         }
+
         await mutate(`${API_URL}${endpoint}`);
       } catch (error) {
         console.error("Gagal menghapus data:", error.message);
@@ -99,12 +102,21 @@ export default function Table() {
   } else if (pathname === "/admin/psikolog/harga-psikolog") {
     endpoint = `/admin/psikolog-price?page=${currentPage}`;
     searchPlaceholder = "Cari Data Psikolog";
+  } else if (pathname === "/admin/konsultasi/topik-konsultasi") {
+    endpoint = `/admin/topics`; //belum ada pagination
+    searchPlaceholder = "Cari Topik Konsultasi";
+  } else if (pathname === "/admin/keuangan/rekening") {
+    endpoint = `/admin/payment-methods?page=${currentPage}`;
+    searchPlaceholder = "Cari Topik Konsultasi";
+  } else if (pathname === "/admin/keuangan/transaksi") {
+    endpoint = `/admin/consultation/transactions?page=${currentPage}`;
+    searchPlaceholder = "Cari Nama Client";
+  } else if (pathname === "/admin/keuangan/voucher") {
+    endpoint = `/admin/vouchers?page=${currentPage}`;
+    searchPlaceholder = "Cari Nama Client";
   } else if (pathname === "/admin/artikel/informasi-kesehatan") {
     endpoint = `/admin/diseases?page=${currentPage}`;
     searchPlaceholder = "Cari Informasi Kesehatan";
-  } else if (pathname === "/admin/konsultasi/topik-konsultasi") {
-    endpoint = `/admin/diseases?page=${currentPage}`;
-    searchPlaceholder = "Cari Informasi Kesehatan"; //belum dibetulkan
   } else {
     endpoint = null;
   }
@@ -155,9 +167,31 @@ export default function Table() {
       ? ["No", "Foto Profil", "Nama Lengkap", "No SIPP", "Status", "Tindakan"]
       : pathname === "/admin/psikolog/harga-psikolog"
       ? ["No", "No SIPP", "Harga", "Tindakan"]
-      : pathname === "/admin/artikel/informasi-kesehatan"
-      ? ["No", "Nama Penyakit", "Tindakan"]
       : pathname === "/admin/konsultasi/topik-konsultasi"
+      ? ["No", "Nama Topik Konsulltasi", "Tindakan"]
+      : pathname === "/admin/keuangan/rekening"
+      ? ["No", "Nama Pemilik", "No Rekening", "Platform", "Tindakan"]
+      : pathname === "/admin/keuangan/transaksi"
+      ? [
+          "No Pembayaran",
+          "Waktu Bayar",
+          "Nama Client",
+          "Komisi",
+          "Metode",
+          "Status",
+          "Bukti Pembayaran",
+        ]
+      : pathname === "/admin/keuangan/voucher"
+      ? [
+          "Code",
+          "Type",
+          "Value",
+          "Min. Pembelian",
+          "Priode",
+          "Edit Status Aktif",
+          "Tindakan",
+        ]
+      : pathname === "/admin/artikel/informasi-kesehatan"
       ? ["No", "Nama Penyakit", "Tindakan"]
       : [];
 
@@ -417,8 +451,8 @@ export default function Table() {
               };
 
               const { text, bgColor } = statusMap[row.status] || {
-                text: "-",
-                bgColor: "bg-gray-200",
+                text: "",
+                bgColor: "",
               };
 
               return (
@@ -460,6 +494,120 @@ export default function Table() {
             render: (_, row) => (
               <div className="space-x-2">
                 <EditButton onClick={() => console.log("Edit clicked", row)} />
+                <DeleteButton onClick={() => handleDeleteClick(row)} />
+              </div>
+            ),
+          },
+        ]
+      : pathname === "/admin/konsultasi/topik-konsultasi"
+      ? [
+          {
+            key: "index",
+            render: (_, __, index) => data.data.from - 1 + index + 1,
+          },
+          { key: "topic_name" },
+          {
+            key: "actions",
+            render: (_, row) => (
+              <div className="space-x-2">
+                <ShowButton onClick={() => console.log("Show clicked", row)} />
+                <EditButton onClick={() => console.log("Edit clicked", row)} />
+                <DeleteButton
+                  onClick={() => console.log("Delete clicked", row)}
+                />
+              </div>
+            ),
+          },
+        ]
+      : pathname === "/admin/keuangan/rekening"
+      ? [
+          {
+            key: "index",
+            render: (_, __, index) => data.data.from - 1 + index + 1,
+          },
+          { key: "owner" },
+          { key: "no_rek" },
+          { key: "name" },
+          {
+            key: "actions",
+            render: (_, row) => (
+              <div className="space-x-2">
+                <EditButton onClick={() => console.log("Edit clicked", row)} />
+                <DeleteButton onClick={() => handleDeleteClick(row)} />
+              </div>
+            ),
+          },
+        ]
+      : pathname === "/admin/keuangan/transaksi"
+      ? [
+          {
+            key: "payment_number",
+          },
+          { key: "payment_date" },
+          { key: "client_name" },
+          { key: "consul_fee" },
+          { key: "payment_method" },
+          {
+            key: "status",
+            render: (_, row) => {
+              const statusMap = {
+                completed: { text: "Berhasil", bgColor: "bg-green-500" },
+                failed: { text: "Gagal", bgColor: "bg-red-500" },
+                pending_confirmation: {
+                  text: "Diterima",
+                  bgColor: "bg-yellow-500",
+                },
+              };
+
+              const { text, bgColor } = statusMap[row.status] || {
+                text: "",
+                bgColor: "",
+              };
+
+              return (
+                <span
+                  className={`inline-block px-3 py-2 text-white text-s font-medium rounded ${bgColor}`}
+                >
+                  {text}
+                </span>
+              );
+            },
+          },
+          {
+            key: "payment_proof",
+            render: (photo) => {
+              if (!photo) return null; // Jika photo null atau tidak ada, tidak ditampilkan
+
+              const linkphoto = photo.startsWith("http")
+                ? photo
+                : `${API_REAL}${photo}`; // Pastikan URL lengkap jika photo bukan URL penuh
+
+              return (
+                <Image
+                  src={linkphoto}
+                  alt="Foto Profil"
+                  width={60}
+                  height={60}
+                  className="mx-auto"
+                />
+              );
+            },
+          },
+        ]
+      : pathname === "/admin/keuangan/voucher"
+      ? [
+          {
+            key: "code",
+          },
+          { key: "voucher_type" },
+          { key: "discount_value" },
+          { key: "min_transaction_amount" },
+          { key: "valid_from" },
+          { key: "is_active" },
+          {
+            key: "actions",
+            render: (_, row) => (
+              <div className="space-x-2">
                 <DeleteButton onClick={() => handleDeleteClick(row)} />
               </div>
             ),
