@@ -11,12 +11,13 @@ export default function BuatJadwal() {
   const [selectedDays, setSelectedDays] = useState([]); // Track selected day
   const [currentDay, setCurrentDay] = useState(null);
   const [selectedSlots, setSelectedSlots] = useState([]); // Track selected slots
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
 
   // Fetch data dari API
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
-        // Ambil token autentikasi
         const token = getToken();
         if (!token) {
           alert("Anda perlu login untuk mengakses halaman ini.");
@@ -62,11 +63,9 @@ export default function BuatJadwal() {
     return <p className="text-red-500">Error: {error}</p>;
   }
 
-  // Generate array tahun
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 3 }, (_, i) => currentYear + i);
 
-  // Bulan sekarang hingga akhir tahun
   const currentMonthIndex = new Date().getMonth();
   const months = [
     "Januari",
@@ -81,7 +80,7 @@ export default function BuatJadwal() {
     "Oktober",
     "November",
     "Desember",
-  ].slice(currentMonthIndex);
+  ];
 
   // Fungsi untuk menangani perubahan checkbox
   const handleCheckboxChange = (day, slotId) => {
@@ -108,10 +107,54 @@ export default function BuatJadwal() {
         ? prevSelectedDays.filter((selectedDay) => selectedDay !== day)
         : [...prevSelectedDays, day];
 
-      // Set current day to the latest selected day
       setCurrentDay(updatedDays[updatedDays.length - 1] || null);
       return updatedDays;
     });
+  };
+
+  // Fungsi untuk mengirim data
+  const handleSubmit = async () => {
+    try {
+      const token = getToken();
+      if (!token) {
+        alert("Anda perlu login untuk mengakses halaman ini.");
+        router.push("/login");
+        return;
+      }
+
+      const formattedSchedules = Object.entries(selectedSlots).map(
+        ([day, slotIds]) => ({
+          day,
+          main_schedule_ids: slotIds,
+        })
+      );
+
+      const response = await fetch(`
+        ${process.env.NEXT_PUBLIC_API_URL}/psikolog/schedule/generate`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "ngrok-skip-browser-warning": "69420",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            schedules: formattedSchedules,
+            month: selectedMonth,
+            year: selectedYear,
+          }),
+        }
+      );
+
+      const result = await response.json();
+      if (result.success) {
+        alert("Jadwal berhasil dibuat!");
+      } else {
+        throw new Error(result.message || "Gagal membuat jadwal.");
+      }
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return (
@@ -122,7 +165,11 @@ export default function BuatJadwal() {
           <div className="flex justify-between items-center gap-4 mb-4">
             <div className="flex-1">
               <label className="block text-sm font-medium mb-1">Pilih Tahun</label>
-              <select className="w-full border rounded-lg px-3 py-2">
+              <select
+                className="w-full border rounded-lg px-3 py-2"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(Number(e.target.value))}
+              >
                 {years.map((year, index) => (
                   <option key={index} value={year}>
                     {year}
@@ -133,9 +180,13 @@ export default function BuatJadwal() {
 
             <div className="flex-1">
               <label className="block text-sm font-medium mb-1">Pilih Bulan</label>
-              <select className="w-full border rounded-lg px-3 py-2">
+              <select
+                className="w-full border rounded-lg px-3 py-2"
+                value={selectedMonth}
+                onChange={(e) => setSelectedMonth(Number(e.target.value))}
+              >
                 {months.map((month, index) => (
-                  <option key={index} value={month.toLowerCase()}>
+                  <option key={index} value={index + 1}>
                     {month}
                   </option>
                 ))}
@@ -194,11 +245,11 @@ export default function BuatJadwal() {
             {Object.entries(selectedSlots).map(([day, slots]) => (
               <div key={day} className="mb-4 bg-primarylight rounded-lg">
                 <div className="p-4">
-                  <p className="font-medium text-primary mb-2 text-center">{day}:</p>
+                  <p className="font-semibold mb-2 text-center">{day}:</p>
                   <ul className="list-none text-center">
                     {slots.map((slotId) => {
                       const slot = schedules[day].find((s) => s.id === slotId);
-                      return <li key={slotId}>{slot?.time_slot}</li>;
+                      return <li key={slotId} className="text-s text-center">{slot?.time_slot}</li>;
                     })}
                   </ul>
                 </div>
@@ -210,7 +261,7 @@ export default function BuatJadwal() {
 
       {Object.keys(selectedSlots).length > 0 && (
         <div className="mt-4 flex justify-end">
-          <button className="px-6 py-2 bg-primary text-white rounded-lg">
+          <button onClick={handleSubmit} className="px-6 py-2 bg-primary text-white rounded-lg mb-6">
             Buat Jadwal
           </button>
         </div>
