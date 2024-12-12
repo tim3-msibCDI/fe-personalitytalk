@@ -6,6 +6,7 @@ import Loading from "@/components/loading/loading";
 
 export default function BuatJadwal() {
   const [schedules, setSchedules] = useState({});
+  const [existingSchedules, setExistingSchedules] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedDays, setSelectedDays] = useState([]); // Track selected day
@@ -13,6 +14,9 @@ export default function BuatJadwal() {
   const [selectedSlots, setSelectedSlots] = useState([]); // Track selected slots
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+
+  // Check if schedules have been modified
+  const isSchedulesModified = JSON.stringify(existingSchedules) !== JSON.stringify(selectedSlots);
 
   // Fetch data dari API
   useEffect(() => {
@@ -25,23 +29,42 @@ export default function BuatJadwal() {
           return;
         }
 
-        const response = await fetch(`
-          ${process.env.NEXT_PUBLIC_API_URL}/psikolog/schedule/main-schedules`,
-          {
+        const [mainSchedulesResponse, existingSchedulesResponse] = await Promise.all([
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/psikolog/schedule/main-schedules`, {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
               "ngrok-skip-browser-warning": "69420",
               "Content-Type": "application/json",
             },
-          }
-        );
-        const result = await response.json();
+          }),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/psikolog/schedule/existing-schedules?month=${selectedMonth}&year=${selectedYear}`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "ngrok-skip-browser-warning": "69420",
+              "Content-Type": "application/json",
+            },
+          }),
+        ]);
 
-        if (result.success) {
-          setSchedules(result.data);
+        const mainSchedules = await mainSchedulesResponse.json();
+        const existingSchedules = await existingSchedulesResponse.json();
+
+        if (mainSchedules.success && existingSchedules.success) {
+          setSchedules(mainSchedules.data);
+
+          const formattedExistingSchedules = Array.isArray(existingSchedules.data.schedules)
+            ? {} // If schedules is an array, return an empty object
+            : Object.entries(existingSchedules.data.schedules).reduce((acc, [day, slots]) => {
+              acc[day] = slots.map((slot) => slot.id);
+              return acc;
+            }, {});
+
+          setExistingSchedules(formattedExistingSchedules);
+          setSelectedSlots(formattedExistingSchedules);
         } else {
-          throw new Error(result.message || "Gagal memuat data jadwal.");
+          throw new Error("Gagal memuat data jadwal.");
         }
       } catch (err) {
         setError(err.message);
@@ -49,9 +72,8 @@ export default function BuatJadwal() {
         setLoading(false);
       }
     };
-
     fetchSchedules();
-  }, []);
+  }, [selectedMonth, selectedYear]);
 
   // Jika sedang loading
   if (loading) {
@@ -238,31 +260,35 @@ export default function BuatJadwal() {
         </div>
       </div>
 
-      <div className="mt-6 bg-primarylight2 rounded-lg">
+      <div className="mt-6 bg-primarylight2 rounded-lg mb-6">
         <div className="px-6 py-4">
           <h3 className="text-lg font-bold mb-2">Jadwal Terpilih:</h3>
-          <div className="grid grid-cols-7 gap-4">
-            {Object.entries(selectedSlots).map(([day, slots]) => (
-              <div key={day} className="mb-4 bg-primarylight rounded-lg">
-                <div className="p-4">
-                  <p className="font-semibold mb-2 text-center">{day}:</p>
-                  <ul className="list-none text-center">
-                    {slots.map((slotId) => {
-                      const slot = schedules[day].find((s) => s.id === slotId);
-                      return <li key={slotId} className="text-s text-center">{slot?.time_slot}</li>;
-                    })}
-                  </ul>
+          {Object.keys(selectedSlots).length > 0 ? (
+            <div className="grid grid-cols-7 gap-4">
+              {Object.entries(selectedSlots).map(([day, slots]) => (
+                <div key={day} className="mb-4 bg-primarylight rounded-lg">
+                  <div className="p-4">
+                    <p className="font-semibold mb-2 text-center">{day}:</p>
+                    <ul className="list-none text-center">
+                      {slots.map((slotId) => {
+                        const slot = schedules[day]?.find((s) => s.id === slotId);
+                        return <li key={slotId} className="text-s text-center">{slot?.time_slot}</li>;
+                      })}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <p></p>
+          )}
         </div>
       </div>
 
-      {Object.keys(selectedSlots).length > 0 && (
+      {isSchedulesModified && (
         <div className="mt-4 flex justify-end">
           <button onClick={handleSubmit} className="px-6 py-2 bg-primary text-white rounded-lg mb-6">
-            Buat Jadwal
+            {existingSchedules ? "Update Jadwal" : "Buat Jadwal"}
           </button>
         </div>
       )}
