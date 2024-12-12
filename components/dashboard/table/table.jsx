@@ -103,7 +103,7 @@ export default function Table() {
     endpoint = `/admin/psikolog-price?page=${currentPage}`;
     searchPlaceholder = "Cari Data Psikolog";
   } else if (pathname === "/admin/konsultasi/topik-konsultasi") {
-    endpoint = `/admin/topics`; //belum ada pagination
+    endpoint = `/admin/topics?page=${currentPage}`; //belum ada pagination
     searchPlaceholder = "Cari Topik Konsultasi";
   } else if (pathname === "/admin/keuangan/rekening") {
     endpoint = `/admin/payment-methods?page=${currentPage}`;
@@ -482,11 +482,10 @@ export default function Table() {
                 <EditButton
                   onClick={() =>
                     router.push(
-                      `/admin/psikolog/daftar-konselor/edit-konselor?id=${row.id_psikolog}`
+                      `/admin/psikolog/kelola-psikolog/detail-informasi?id=${row.id_psikolog}`
                     )
                   }
                 />
-                <DeleteButton onClick={() => handleDeleteClick(row)} />
               </div>
             ),
           },

@@ -6,9 +6,9 @@ export default function TableBody({ rows, columns }) {
         <tr>
           <td
             colSpan={columns.length}
-            className="text-center py-4 text-gray-500"
+            className="text-center p-20 text-textcolor text-h3"
           >
-            Tidak ada data tersedia.
+            Data tidak tersedia.
           </td>
         </tr>
       </tbody>

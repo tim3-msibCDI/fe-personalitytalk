@@ -3,19 +3,37 @@
 import { ADMIN_MENU, PSIKOLOG_MENU } from "@/constants";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function SidebarMenu({ menuType }) {
   const menu = menuType === "admin" ? ADMIN_MENU : PSIKOLOG_MENU;
 
+  const pathname = usePathname(); // Dapatkan pathname saat ini
   const [activeMenu, setActiveMenu] = useState(null);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
 
+  // Sinkronkan menu aktif berdasarkan URL saat ini
+  useEffect(() => {
+    menu.forEach((item) => {
+      if (item.url && pathname.startsWith(item.url)) {
+        setActiveMenu(item.id);
+        if (item.subMenu) {
+          item.subMenu.forEach((subItem, subIndex) => {
+            if (subItem.url && pathname === subItem.url) {
+              setActiveDropdown(item.id);
+              setActiveSubMenu(subIndex);
+            }
+          });
+        }
+      }
+    });
+  }, [pathname, menu]);
+
   const handleMenuClick = (id, hasSubMenu) => {
     setActiveMenu(id);
-
-    setActiveDropdown(hasSubMenu ? (id === activeDropdown ? null : id) : null); 
+    setActiveDropdown(hasSubMenu ? (id === activeDropdown ? null : id) : null);
     setActiveSubMenu(null);
   };
 
@@ -26,7 +44,7 @@ export default function SidebarMenu({ menuType }) {
   return (
     <div>
       <div className="px-6">
-        <div className="py-10">
+        <div className="py-10 w-[180px]">
           <Image src="/image/logo.webp" alt="Logo" width={180} height={66} />
         </div>
       </div>
@@ -39,12 +57,16 @@ export default function SidebarMenu({ menuType }) {
                 <Link href={item.url} passHref>
                   <div
                     className={`cursor-pointer py-3 px-6 group flex gap-3 items-center
-                      ${!item.subMenu && activeMenu === item.id ? 'bg-primary text-white font-semibold' : ''}`}
+                      ${
+                        pathname.startsWith(item.url)
+                          ? "bg-primary text-white font-semibold"
+                          : ""
+                      }`}
                     onClick={() => handleMenuClick(item.id, item.subMenu)}
                   >
                     <Image
                       src={
-                        !item.subMenu && activeMenu === item.id
+                        pathname.startsWith(item.url)
                           ? item.iconhover
                           : item.icon
                       }
@@ -53,7 +75,9 @@ export default function SidebarMenu({ menuType }) {
                       height={20}
                       className="transition-all duration-300"
                     />
-                    <span className="transition-all duration-300">{item.title}</span>
+                    <span className="transition-all duration-300">
+                      {item.title}
+                    </span>
 
                     {item.subMenu && (
                       <Image
@@ -81,22 +105,38 @@ export default function SidebarMenu({ menuType }) {
                     className="transition-all duration-300"
                   />
                   <span>{item.title}</span>
+
+                  {item.subMenu && (
+                    <Image
+                      src="/icons/sidebar/arrow.svg"
+                      alt="Dropdown Icon"
+                      width={16}
+                      height={16}
+                      className={`ml-auto transition-transform duration-300 ${
+                        activeDropdown === item.id ? "rotate-180" : ""
+                      }`}
+                    />
+                  )}
                 </div>
               )}
 
               {item.subMenu && activeDropdown === item.id && (
                 <div className="mt-2">
-                  {item.subMenu.map((subItem, subIndex) => (
+                  {item.subMenu.map((subItem, subIndex) =>
                     subItem.url ? ( // Check if subItem.url exists
                       <Link key={subIndex} href={subItem.url} passHref>
                         <div
                           onClick={() => handleSubMenuClick(subIndex)}
                           className={`flex gap-3 pl-12 py-2 px-6 cursor-pointer transition-all duration-300 
-                            ${activeSubMenu === subIndex ? 'bg-primary text-white font-semibold' : ''}`}
+                            ${
+                              pathname === subItem.url
+                                ? "bg-primary text-white font-semibold"
+                                : ""
+                            }`}
                         >
                           <Image
                             src={
-                              activeSubMenu === subIndex
+                              pathname === subItem.url
                                 ? subItem.iconhover
                                 : subItem.icon
                             }
@@ -124,7 +164,7 @@ export default function SidebarMenu({ menuType }) {
                         <span>{subItem.title}</span>
                       </div>
                     )
-                  ))}
+                  )}
                 </div>
               )}
             </div>
@@ -134,4 +174,3 @@ export default function SidebarMenu({ menuType }) {
     </div>
   );
 }
-
