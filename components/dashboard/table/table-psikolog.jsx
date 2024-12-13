@@ -7,6 +7,8 @@ import { SkeletonTable } from "./skeleton-table";
 import TableHead from "./table-head";
 import TableBody from "./table-body";
 import { getToken } from "@/lib/auth";
+import Modal from "@/components/modals/modal";
+import KeluhanPsikolog from "@/components/popup/keluhan-psikolog";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -50,6 +52,8 @@ export default function TablePsikolog() {
     const router = useRouter();
     const [currentPage, setCurrentPage] = useState(1);
     const [isAscending, setIsAscending] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentComplaint, setCurrentComplaint] = useState(null);
 
     const apiEndpoint = pathname === "/psikolog/transaksi"
         ? `${API_URL}/psikolog/transactions?page=${currentPage}`
@@ -75,6 +79,17 @@ export default function TablePsikolog() {
             ...item,
             number: isAscending ? index + 1 : transactions.length - index,
         }));
+
+    const openModal = (complaint) => {
+        console.log("Complaint data:", complaint); // Debugging log
+        setCurrentComplaint(complaint);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setCurrentComplaint(null);
+    };
 
     const tableHead = isTransactionPage
         ? [
@@ -162,7 +177,10 @@ export default function TablePsikolog() {
                             <img src="/icons/konsultasi.png" alt="Chat Icon" className="w-4 h-4" />
                             Chat Client
                         </button>
-                        <button className="flex items-center justify-center gap-2 px-2 py-1 w-full border border-primary text-primary text-s rounded-md">
+                        <button
+                            className="flex items-center justify-center gap-2 px-2 py-1 w-full border border-primary text-primary text-s rounded-md"
+                            onClick={() => openModal(row.keluhan)}
+                        >
                             <img src="/icons/catatan.png" alt="Complaint Icon" className="w-4 h-4" />
                             Lihat Keluhan
                         </button>
@@ -228,8 +246,8 @@ export default function TablePsikolog() {
                         <button
                             key={pageNumber}
                             className={`px-4 py-2 mx-2 ${pageNumber === currentPage
-                                    ? "bg-primary text-white"
-                                    : "border border-primary text-primary"
+                                ? "bg-primary text-white"
+                                : "border border-primary text-primary"
                                 }`}
                             onClick={() => setCurrentPage(pageNumber)}
                         >
@@ -250,6 +268,9 @@ export default function TablePsikolog() {
                     )}
                 </div>
             )}
+            <Modal isOpen={isModalOpen} onClose={closeModal}>
+                <KeluhanPsikolog onClose={closeModal} keluhan={currentComplaint} />
+            </Modal>
         </div>
     );
 }
