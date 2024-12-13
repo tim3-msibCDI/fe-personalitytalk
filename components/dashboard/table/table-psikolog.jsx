@@ -32,17 +32,31 @@ const fetcher = async (url) => {
     return response.json();
 };
 
-export default function TablePsikolog() {
-    const pathname = usePathname(); // Mendapatkan path saat ini
-    const router = useRouter(); // Untuk navigasi
-    const [currentPage, setCurrentPage] = useState(1);
+const getStatusClass = (status) => {
+    switch (status) {
+        case "scheduled":
+            return "bg-primary text-white text-s font-semibold";
+        case "ongoing":
+            return "bg-wait text-white text-s font-semibold";
+        case "completed":
+            return "bg-success text-white text-s font-semibold";
+        default:
+            return "";
+    }
+};
 
-    // Bangun URL API secara eksplisit
-    const apiEndpoint = `${API_URL}/psikolog/transactions?page=${currentPage}`;
+export default function TablePsikolog() {
+    const pathname = usePathname();
+    const router = useRouter();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [isAscending, setIsAscending] = useState(true);
+
+    const apiEndpoint = pathname === "/psikolog/transaksi"
+        ? `${API_URL}/psikolog/transactions?page=${currentPage}`
+        : `${API_URL}/psikolog/consultations?page=${currentPage}`;
 
     const { data, error } = useSWR(apiEndpoint, fetcher);
 
-    // Redirect ke login jika token tidak valid
     if (error && error.message === "Unauthorized") {
         router.push("/login");
         return null;
@@ -51,18 +65,40 @@ export default function TablePsikolog() {
     if (error) return <div>Error: {error.message}</div>;
     if (!data) return <SkeletonTable />;
 
-    const transactions = data.data.data; // Ambil data transaksi atau chat dari JSON
+    let transactions = data.data.data;
 
-    // Konfigurasi Header dan Kolom Berdasarkan Path
     const isTransactionPage = pathname === "/psikolog/transaksi";
 
+    transactions = transactions
+        .filter(item => item.status !== "pending" && item.status !== "failed")
+        .map((item, index) => ({
+            ...item,
+            number: isAscending ? index + 1 : transactions.length - index,
+        }));
+
     const tableHead = isTransactionPage
-        ? ["ID Konsultasi", "Nama Klien", "Komisi", "Waktu Bayar", "Bukti Bayar", "Status"]
-        : ["ID Konsultasi", "Nama Klien", "Topik", "Tanggal dan Waktu", "Status", "Tindakan"];
+        ? [
+            <div key="nomor" className="flex items-center justify-center gap-1">
+                Nomor
+                <button onClick={() => setIsAscending((prev) => !prev)} className="text-sm">
+                    {isAscending ? "▲" : "▼"}
+                </button>
+            </div>,
+            "Nama Klien", "Komisi", "Waktu Bayar", "Bukti Bayar", "Status"
+        ]
+        : [
+            <div key="nomor" className="flex items-center justify-center gap-1">
+                Nomor
+                <button onClick={() => setIsAscending((prev) => !prev)} className="text-sm">
+                    {isAscending ? "▲" : "▼"}
+                </button>
+            </div>,
+            "Nama Klien", "Topik", "Tanggal dan Waktu", "Status", "Tindakan"
+        ];
 
     const columns = isTransactionPage
         ? [
-            { key: "id" },
+            { key: "number" },
             { key: "client_name" },
             {
                 key: "psikolog_comission",
@@ -87,23 +123,64 @@ export default function TablePsikolog() {
             { key: "commission_transfer_status" },
         ]
         : [
-            { key: "id" },
+            { key: "number" },
             { key: "client_name" },
             { key: "topic" },
-            { key: "date_time" },
-            { key: "status" },
+            {
+                key: "date",
+                render: (value, row) =>
+                    <div className="flex flex-col">
+                        <span>{value}</span>
+                        <span>{`${row.start_hour}-${row.end_hour}`}</span>
+                    </div>
+            },
+            {
+                key: "status",
+                render: (status) => {
+                    let text = "";
+                    switch (status) {
+                        case "scheduled":
+                            text = "Dijadwalkan";
+                            break;
+                        case "ongoing":
+                            text = "Sedang Berlangsung";
+                            break;
+                        case "completed":
+                            text = "Selesai";
+                            break;
+                        default:
+                            text = "";
+                    }
+                    return <span className={`px-3 py-2 rounded-md ${getStatusClass(status)}`}>{text}</span>;
+                },
+            },
             {
                 key: "actions",
-                render: () => (
-                    <div className="flex gap-2">
-                        <button className="px-2 py-1 bg-blue-500 text-white rounded">Chat</button>
-                        <button className="px-2 py-1 bg-red-500 text-white rounded">Hapus</button>
+                render: (value, row) => (
+                    <div className="flex flex-col gap-2 py-1 px-10 items-center">
+                        <button className="flex items-center justify-center gap-2 px-2 py-1 w-full bg-primary text-white text-s rounded-md">
+                            <img src="/icons/konsultasi.png" alt="Chat Icon" className="w-4 h-4" />
+                            Chat Client
+                        </button>
+                        <button className="flex items-center justify-center gap-2 px-2 py-1 w-full border border-primary text-primary text-s rounded-md">
+                            <img src="/icons/catatan.png" alt="Complaint Icon" className="w-4 h-4" />
+                            Lihat Keluhan
+                        </button>
                     </div>
                 ),
             },
         ];
 
-    // Navigasi Pagination
+    const maxVisiblePages = 5;
+    const totalPages = data.data.last_page;
+    const pageGroup = Math.floor((currentPage - 1) / maxVisiblePages);
+
+    const getVisiblePages = () => {
+        const startPage = pageGroup * maxVisiblePages + 1;
+        const endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
+        return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+    };
+
     const handlePagination = (direction) => {
         if (direction === "next" && data.data.next_page_url) {
             setCurrentPage((prev) => prev + 1);
@@ -113,33 +190,66 @@ export default function TablePsikolog() {
         }
     };
 
+    const nextPageGroup = () => {
+        const nextGroupPage = (pageGroup + 1) * maxVisiblePages + 1;
+        if (nextGroupPage <= totalPages) {
+            setCurrentPage(nextGroupPage);
+        }
+    };
+
+    const prevPageGroup = () => {
+        const prevGroupPage = pageGroup * maxVisiblePages;
+        if (prevGroupPage > 0) {
+            setCurrentPage(prevGroupPage);
+        }
+    };
+
     return (
         <div className="overflow-x-auto">
             <table className="w-full min-w-max bg-primarylight2 border border-text2 text-center text-s">
                 <TableHead heads={tableHead} />
                 <TableBody rows={transactions} columns={columns} />
             </table>
-            <div className="flex justify-between mt-4">
-                <button
-                    onClick={() => handlePagination("previous")}
-                    disabled={!data.data.prev_page_url}
-                    className={`px-4 py-2 rounded ${!data.data.prev_page_url ? "bg-gray-300" : "bg-blue-500 hover:bg-blue-600"
-                        } text-white`}
-                >
-                    Previous
-                </button>
-                <span>
-                    Page {data.data.current_page} of {data.data.last_page}
-                </span>
-                <button
-                    onClick={() => handlePagination("next")}
-                    disabled={!data.data.next_page_url}
-                    className={`px-4 py-2 rounded ${!data.data.next_page_url ? "bg-gray-300" : "bg-blue-500 hover:bg-blue-600"
-                        } text-white`}
-                >
-                    Next
-                </button>
-            </div>
+            {totalPages > 1 && (
+                <div className="flex justify-center mt-6 mb-10">
+                    {pageGroup > 0 && (
+                        <button
+                            className="px-3 mx-2 border border-primary"
+                            onClick={prevPageGroup}
+                        >
+                            <img
+                                src="/icons/arrow_left.png"
+                                alt="Previous Page"
+                                className="w-5"
+                            />
+                        </button>
+                    )}
+                    {getVisiblePages().map((pageNumber) => (
+                        <button
+                            key={pageNumber}
+                            className={`px-4 py-2 mx-2 ${pageNumber === currentPage
+                                    ? "bg-primary text-white"
+                                    : "border border-primary text-primary"
+                                }`}
+                            onClick={() => setCurrentPage(pageNumber)}
+                        >
+                            {pageNumber}
+                        </button>
+                    ))}
+                    {(pageGroup + 1) * maxVisiblePages < totalPages && (
+                        <button
+                            className="px-3 mx-2 border border-primary"
+                            onClick={nextPageGroup}
+                        >
+                            <img
+                                src="/icons/arrow_right.png"
+                                alt="Next Page"
+                                className="w-5"
+                            />
+                        </button>
+                    )}
+                </div>
+            )}
         </div>
     );
 }

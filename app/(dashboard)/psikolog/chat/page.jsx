@@ -1,13 +1,11 @@
-import ChatNavigation from "@/components/konsultasi/chat/chat_nav";
-import ChatContent from "@/components/konsultasi/chat/chat_content";
-import ChatInput from "@/components/konsultasi/chat/chat_input";
+import TablePsikolog from "@/components/dashboard/table/table-psikolog";
 
-export default function ChatPsikolog () {
+export default function ListChatPage() {
     return (
-        <div>
-            <ChatNavigation/>
-            <ChatContent/>
-            <ChatInput/>
+        <div className="p-4">
+            <div className="bg-primarylight2 p-6 rounded-lg">
+                <TablePsikolog />
+            </div>
         </div>
     );
 }

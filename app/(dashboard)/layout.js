@@ -13,7 +13,7 @@ export default function LayoutDashboard({ children }) {
   }
 
   // Cek apakah halaman saat ini adalah "/psikolog/chat"
-  const isChatPage = path === "/psikolog/chat";
+  const isChatPage = path === "/psikolog/chat/id";
 
   return (
     <section className="flex flex-1">
