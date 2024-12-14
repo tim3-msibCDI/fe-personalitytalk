@@ -26,6 +26,8 @@ module.exports = {
         textchoco: "#C44E0A",
         textdarkchoco: "#9B3D11",
         disabletextbox: "#EFEFEF",
+        iconcheck: "rgba(72, 197, 77, 0.30)",
+        iconinfo: "rgba(233, 171, 11, 0.20)",
       },
       fontSize: {
         h1: "2rem",

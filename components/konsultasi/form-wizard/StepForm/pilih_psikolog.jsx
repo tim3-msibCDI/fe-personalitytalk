@@ -211,7 +211,7 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                                 <div key={index} className="flex gap-3 mb-4 border-b border-textcolor pb-4">
                                     <div className="w-24 h-24 rounded overflow-hidden">
                                         <Image
-                                            src={`https://1522-125-166-225-192.ngrok-free.app/${item.photo_profile}`}
+                                            src={`https://7bfe-36-80-167-83.ngrok-free.app/${item.photo_profile}`}
                                             alt={`Foto ${item.name}`}
                                             width={100}
                                             height={100}

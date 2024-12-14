@@ -9,6 +9,9 @@ import TableBody from "./table-body";
 import { getToken } from "@/lib/auth";
 import Modal from "@/components/modals/modal";
 import KeluhanPsikolog from "@/components/popup/keluhan-psikolog";
+import InformasiTransaksi from "@/components/popup/info-transaksi";
+import Image from "next/image";
+import TerimaPembayaran from "@/components/popup/terima-bayar";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -53,7 +56,10 @@ export default function TablePsikolog() {
     const [currentPage, setCurrentPage] = useState(1);
     const [isAscending, setIsAscending] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isInformationModalOpen, setIsInformationModalOpen] = useState(false);
+    const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
     const [currentComplaint, setCurrentComplaint] = useState(null);
+    const [selectedTransactionId, setSelectedTransactionId] = useState(null);
 
     const apiEndpoint = pathname === "/psikolog/transaksi"
         ? `${API_URL}/psikolog/transactions?page=${currentPage}`
@@ -91,6 +97,33 @@ export default function TablePsikolog() {
         setCurrentComplaint(null);
     };
 
+    const openInformationModal = () => {
+        setIsInformationModalOpen(true); // Buka modal informasi
+    };
+
+    const closeInformationModal = () => {
+        setIsInformationModalOpen(false); // Tutup modal informasi
+    };
+
+    const openCheckModal = (transactionId) => {
+        setSelectedTransactionId(transactionId);
+        setIsCheckModalOpen(true); // Buka modal informasi
+    };
+
+    const closeCheckModal = () => {
+        setIsCheckModalOpen(false); // Tutup modal informasi
+        setSelectedTransactionId(null);
+    };
+
+    // Fungsi untuk reload halaman
+    const reloadPage = () => {
+        if (typeof window !== "undefined") {
+            window.location.reload(); // Reload seluruh halaman
+        } else {
+            router.replace(router.asPath || "/"); // Fallback ke root jika path tidak valid
+        }
+    };
+
     const tableHead = isTransactionPage
         ? [
             <div key="nomor" className="flex items-center justify-center gap-1">
@@ -99,7 +132,7 @@ export default function TablePsikolog() {
                     {isAscending ? "▲" : "▼"}
                 </button>
             </div>,
-            "Nama Klien", "Komisi", "Waktu Bayar", "Bukti Bayar", "Status"
+            "Nama Klien", "Waktu Bayar", "Komisi", "Bukti Bayar", "Status", "Konfirmasi"
         ]
         : [
             <div key="nomor" className="flex items-center justify-center gap-1">
@@ -115,18 +148,18 @@ export default function TablePsikolog() {
         ? [
             { key: "number" },
             { key: "client_name" },
+            { key: "payment_date" },
             {
                 key: "psikolog_comission",
                 render: (value) => `Rp ${value.toLocaleString("id-ID")}`,
             },
-            { key: "payment_date" },
             {
                 key: "commission_transfer_proof",
                 render: (proof) =>
                     proof ? (
                         <div className="flex justify-center">
                             <img
-                                src={`https://1522-125-166-225-192.ngrok-free.app/${proof}`}
+                                src={`https://7bfe-36-80-167-83.ngrok-free.app/${proof}`}
                                 alt="Bukti Transfer"
                                 className="w-auto h-10"
                             />
@@ -136,6 +169,39 @@ export default function TablePsikolog() {
                     ),
             },
             { key: "commission_transfer_status" },
+            {
+                key: "confirm",
+                render: (value, row) => (
+                    <div className="flex justify-center gap-2">
+                        {row.commission_transfer_status !== "Diterima" && (
+                            <>
+                                <button
+                                    className="bg-iconcheck p-2 rounded-lg"
+                                    onClick={() => openCheckModal(row.id)}
+                                >
+                                    <Image
+                                        src="/icons/psikolog/checklist.svg"
+                                        alt="Icon Checklist"
+                                        width={24}
+                                        height={24}
+                                    />
+                                </button>
+                                <button
+                                    className="bg-iconinfo p-2 rounded-lg"
+                                    onClick={openInformationModal}
+                                >
+                                    <Image
+                                        src="/icons/psikolog/information.svg"
+                                        alt="Icon Informasi"
+                                        width={24}
+                                        height={24}
+                                    />
+                                </button>
+                            </>
+                        )}
+                    </div>
+                ),
+            },
         ]
         : [
             { key: "number" },
@@ -268,8 +334,23 @@ export default function TablePsikolog() {
                     )}
                 </div>
             )}
+            {/* Modal Complain */}
             <Modal isOpen={isModalOpen} onClose={closeModal}>
                 <KeluhanPsikolog onClose={closeModal} keluhan={currentComplaint} />
+            </Modal>
+
+            {/* Modal Informasi */}
+            <Modal isOpen={isInformationModalOpen} onClose={closeInformationModal}>
+                <InformasiTransaksi onClose={closeInformationModal} />
+            </Modal>
+
+            {/* Modal Terima */}
+            <Modal isOpen={isCheckModalOpen} onClose={closeCheckModal}>
+                <TerimaPembayaran
+                    onClose={closeCheckModal}
+                    transactionId={selectedTransactionId}
+                    onReload={reloadPage}
+                />
             </Modal>
         </div>
     );
