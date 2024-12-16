@@ -1,5 +1,3 @@
-// pages/detail-psikolog.js
-
 "use client";
 
 import { useEffect, useState } from "react";

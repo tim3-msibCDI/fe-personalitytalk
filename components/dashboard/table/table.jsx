@@ -13,10 +13,15 @@ import { ShowButton, EditButton, DeleteButton } from "./button/button";
 import Filter from "./filter";
 import SearchBar from "./search-bar";
 import Modal from "@/components/modals/modal";
+import AddPriceModal from "@/components/popup/addpricepsikolog";
 
 import { deleteUser } from "@/api/manage-user";
 import { deleteMahasiswa } from "@/api/manage-mahasiswa";
-import { deletePsikolog, deletePricePsikolog } from "@/api/manage-psikolog";
+import {
+  deletePsikolog,
+  deletePricePsikolog,
+  deleteTopic,
+} from "@/api/manage-psikolog";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
@@ -44,10 +49,42 @@ export default function Table() {
   const [filter, setFilter] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
+  const [editData, setEditData] = useState({});
+  const [priceData, setPriceData] = useState(null);
 
+  // Fungsi untuk membuka modal edit dengan data yang ingin diedit
+  const handleEdit = (data) => {
+    setEditData(data); // Set data untuk modal edit
+    setIsPriceModalOpen(true); // Buka modal edit
+  };
+
+  const handleDataUpdated = async () => {
+    try {
+      // Memanggil mutate untuk memperbarui data setelah update berhasil
+      await mutate(`${API_URL}${endpoint}`);
+      setIsPriceModalOpen(false); // Tutup modal edit
+    } catch (error) {
+      console.error("Error during update:", error);
+    }
+  };
+
+  // Close AddPriceModal
+  const closeModal = () => {
+    setIsPriceModalOpen(false); // Close the modal
+    setEditData(null); // Clear the edit data
+  };
+
+  // Open delete modal
   const handleDeleteClick = (row) => {
-    setSelectedRow(row);
-    setModalOpen(true);
+    setSelectedRow(row); // Store the row to delete
+    setModalOpen(true); // Open the delete confirmation modal
+  };
+
+  // Cancel delete operation
+  const cancelDelete = () => {
+    setModalOpen(false); // Close the delete modal
+    setSelectedRow(null); // Clear the selected row
   };
 
   const confirmDelete = async () => {
@@ -65,6 +102,8 @@ export default function Table() {
           const result = await deletePricePsikolog(selectedRow.id);
         } else if (pathname === "/admin/keuangan/transaksi") {
           const result = await deletePricePsikolog(selectedRow.id); //belum diperbaiki
+        } else if (pathname === "/admin/konsultasi/topik-konsultasi") {
+          const result = await deleteTopic(selectedRow.id);
         }
 
         await mutate(`${API_URL}${endpoint}`);
@@ -74,11 +113,6 @@ export default function Table() {
         setModalOpen(false);
       }
     }
-  };
-
-  const cancelDelete = () => {
-    setSelectedRow(null);
-    setModalOpen(false);
   };
 
   // Tentukan endpoint berdasarkan path
@@ -502,7 +536,7 @@ export default function Table() {
             key: "actions",
             render: (_, row) => (
               <div className="space-x-2">
-                <EditButton onClick={() => console.log("Edit clicked", row)} />
+                <EditButton onClick={() => handleEdit(row)} />
                 <DeleteButton onClick={() => handleDeleteClick(row)} />
               </div>
             ),
@@ -519,11 +553,8 @@ export default function Table() {
             key: "actions",
             render: (_, row) => (
               <div className="space-x-2">
-                <ShowButton onClick={() => console.log("Show clicked", row)} />
                 <EditButton onClick={() => console.log("Edit clicked", row)} />
-                <DeleteButton
-                  onClick={() => console.log("Delete clicked", row)}
-                />
+                <DeleteButton onClick={() => handleDeleteClick(row)} />
               </div>
             ),
           },
@@ -747,13 +778,6 @@ export default function Table() {
             key: "actions",
             render: (_, row) => (
               <div className="space-x-2">
-                <ShowButton
-                  onClick={() =>
-                    router.push(
-                      `/admin/pengguna/mahasiswa/detail-mahasiswa?id=${row.id}`
-                    )
-                  }
-                />
                 <EditButton
                   onClick={() =>
                     router.push(
@@ -805,6 +829,18 @@ export default function Table() {
         onPageChange={(page) => setCurrentPage(page)}
       />
 
+      {/* AddPriceModal (Edit Mode) */}
+      {isPriceModalOpen && (
+        <AddPriceModal
+          isOpen={{ isPriceModalOpen }}
+          onClose={closeModal}
+          priceData={editData}
+          modalType="edit"
+          onDataUpdated={handleDataUpdated} // Pass callback function
+        />
+      )}
+
+      {/* Delete Confirmation Modal */}
       <Modal isOpen={isModalOpen} onClose={cancelDelete}>
         <div className="p-6">
           <div className="my-24">

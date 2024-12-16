@@ -1,11 +1,13 @@
-"use client";
-
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import Breadcrumbs from "./breadcrumbs";
+import { useState } from "react";
+import AddPriceModal from "@/components/popup/addpricepsikolog";
 
 export default function HeaderAdmin() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false); // State untuk modal
 
   // Fungsi untuk menentukan judul berdasarkan pathname
   const getTitle = () => {
@@ -24,7 +26,10 @@ export default function HeaderAdmin() {
   const showAddButton =
     pathname === "/admin/pengguna/umum" ||
     pathname === "/admin/pengguna/mahasiswa" ||
-    pathname === "/admin/psikolog/psikolog";
+    pathname === "/admin/psikolog/psikolog" ||
+    pathname === "/admin/psikolog/harga-psikolog" ||
+    pathname === "/admin/konsultasi/topik-konsultasi" ||
+    pathname === "/admin/lainnya/mitra";
 
   // Tentukan URL tujuan berdasarkan pathname
   const getAddDataUrl = () => {
@@ -37,11 +42,34 @@ export default function HeaderAdmin() {
     if (pathname === "/admin/psikolog/psikolog") {
       return "/admin/psikolog/psikolog/tambah-psikolog";
     }
+    if (pathname === "/admin/lainnya/mitra") {
+      return "/admin/psikolog/psikolog/tambah-psikolog";
+    }
+    if (pathname === "/admin/psikolog/harga-psikolog") {
+      return null; // Tidak diarahkan ke URL, tetapi membuka modal
+    }
+    if (pathname === "/admin/konsultasi/topik-konsultasi") {
+      return "/admin/psikolog/psikolog/tambah-psikolog";
+    }
     return `${pathname}/tambah`; // Default behavior
   };
 
   // Cek apakah berada di path admin/pengaturan/*
   const isSettingsPage = pathname.startsWith("/admin/pengaturan");
+
+  // Fungsi untuk membuka dan menutup modal
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false); // Defined closeModal function
+
+  // Modal close handler
+  const handleClose = () => {
+    closeModal(); // Close modal when triggered
+  };
+
+  const handleDataUpdated = () => {
+    router.refresh();
+    closeModal();
+  };
 
   return (
     <header className="px-6 mt-7">
@@ -55,19 +83,47 @@ export default function HeaderAdmin() {
 
           {/* Tombol Tambah Data */}
           {showAddButton && (
-            <Link
-              href={getAddDataUrl()} // URL berdasarkan kondisi
-              className="px-4 py-2 text-white bg-primary rounded-lg flex items-center space-x-2 hover:bg-primarydark"
-            >
-              <img
-                src="/icons/dashboard/add-data.svg" // Ganti dengan path ikon Anda
-                alt="Tambah"
-                className="w-4 h-4"
-              />
-              <span>Tambah Data</span>
-            </Link>
+            <>
+              {pathname === "/admin/psikolog/harga-psikolog" ? (
+                // Tombol untuk membuka modal
+                <button
+                  onClick={openModal}
+                  className="px-4 py-2 text-white bg-primary rounded-lg flex items-center space-x-2 hover:bg-primarydark"
+                >
+                  <img
+                    src="/icons/dashboard/add-data.svg" // Ganti dengan path ikon Anda
+                    alt="Tambah"
+                    className="w-4 h-4"
+                  />
+                  <span>Tambah Data</span>
+                </button>
+              ) : (
+                // Link untuk halaman lain
+                <Link
+                  href={getAddDataUrl()} // URL berdasarkan kondisi
+                  className="px-4 py-2 text-white bg-primary rounded-lg flex items-center space-x-2 hover:bg-primarydark"
+                >
+                  <img
+                    src="/icons/dashboard/add-data.svg" // Ganti dengan path ikon Anda
+                    alt="Tambah"
+                    className="w-4 h-4"
+                  />
+                  <span>Tambah Data</span>
+                </Link>
+              )}
+            </>
           )}
         </div>
+      )}
+
+      {/* Modal Tambah Harga */}
+      {pathname === "/admin/psikolog/harga-psikolog" && (
+        <AddPriceModal
+          isOpen={isModalOpen}
+          onClose={handleClose}
+          modalType="add"
+          onDataUpdated={handleDataUpdated}
+        />
       )}
     </header>
   );
