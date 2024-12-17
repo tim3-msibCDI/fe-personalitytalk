@@ -177,7 +177,7 @@ export default function Konsultasi() {
                             <Psikolog
                                 data={{
                                     name: psikolog_name,
-                                    photo: `https://7bfe-36-80-167-83.ngrok-free.app/${photo_profile}`,
+                                    photo: `https://756d-114-10-44-248.ngrok-free.app/${photo_profile}`,
                                     category,
                                     rating,
                                     experience: years_of_experience,

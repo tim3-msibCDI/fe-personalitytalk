@@ -79,7 +79,7 @@ export default function Article() {
                 // Ambil data artikel dari respons API
                 const articlesData = data.data.data.map((item) => ({
                     id: item.id,
-                    image: `https://7bfe-36-80-167-83.ngrok-free.app/${item.article_img}`,
+                    image: `https://756d-114-10-44-248.ngrok-free.app/${item.article_img}`,
                     title: item.article_title,
                     date: item.publication_date,
                     category: item.article_category.category_name || "Tanpa Kategori",

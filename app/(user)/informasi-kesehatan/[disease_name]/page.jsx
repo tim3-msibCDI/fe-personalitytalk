@@ -76,7 +76,7 @@ export default function DetailPenyakit() {
                 </p>
                 <div className="w-full h-[400px] mb-4">
                     <img
-                        src={`https://7bfe-36-80-167-83.ngrok-free.app/${diseaseDetail.disease_img}`}
+                        src={`https://756d-114-10-44-248.ngrok-free.app/${diseaseDetail.disease_img}`}
                         alt={diseaseDetail.disease_name}
                         className="w-full h-full object-cover"
                     />

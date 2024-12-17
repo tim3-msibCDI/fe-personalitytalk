@@ -126,7 +126,7 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                         <li>Lulusan <b>S1 Psikologi</b> atau <b>Bimbingan Konseling</b></li>
                         <li>Memiliki <b>Sertifikat Pelatihan</b></li>
                         <li>Pendekatan terapi berbasis <b>konseling psikologi</b></li>
-                        <li>Harga mulai dari <b>Rp.XXX.XXX</b></li>
+                        <li>Harga mulai dari <b>Rp.50.000</b></li>
                     </ul>
                 </div>
 
@@ -139,7 +139,7 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                         <li>Memiliki <b>Surat Ijin Praktik Psikologi</b></li>
                         <li>Mampu melakukan <b>Asesmen Psikologi</b></li>
                         <li>Pendekatan terapi dengan beragam <b>teknik psikoterapi</b></li>
-                        <li>Harga mulai dari <b>Rp.XXX.XXX</b></li>
+                        <li>Harga mulai dari <b>Rp.100.000</b></li>
                     </ul>
                 </div>
             </div>
@@ -211,7 +211,7 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                                 <div key={index} className="flex gap-3 mb-4 border-b border-textcolor pb-4">
                                     <div className="w-24 h-24 rounded overflow-hidden">
                                         <Image
-                                            src={`https://7bfe-36-80-167-83.ngrok-free.app/${item.photo_profile}`}
+                                            src={`https://756d-114-10-44-248.ngrok-free.app/${item.photo_profile}`}
                                             alt={`Foto ${item.name}`}
                                             width={100}
                                             height={100}

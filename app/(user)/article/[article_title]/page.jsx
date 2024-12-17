@@ -79,7 +79,7 @@ export default function DetailArtikel({ params }) {
                         <p className="text-s mb-5">{article.publication_date}</p>
                         <div className="w-full h-[300px] mb-5">
                             <img
-                                src={`https://7bfe-36-80-167-83.ngrok-free.app/${article.article_img}`}
+                                src={`https://756d-114-10-44-248.ngrok-free.app/${article.article_img}`}
                                 alt={article.article_title}
                                 className="w-full h-full object-cover"
                             />
@@ -129,7 +129,7 @@ export default function DetailArtikel({ params }) {
                                 <div className="flex gap-4">
                                     <div className="w-16 h-16 aspect-square overflow-hidden flex-shrink-0">
                                         <Image
-                                            src={`https://7bfe-36-80-167-83.ngrok-free.app/${item.article_img}`}
+                                            src={`https://756d-114-10-44-248.ngrok-free.app/${item.article_img}`}
                                             alt={item.article_title}
                                             width={100}
                                             height={100}
