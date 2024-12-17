@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { getPsikologRegist } from "@/api/manage-psikolog";
-import Loading from "@/components/loading/loading";
+import HeaderAdmin from "@/components/dashboard/section/header-admin";
+import { SkeletonTable } from "@/components/dashboard/table/skeleton-table";
 import PsiViewForm from "@/components/dashboard/form/psireg_form";
 
 export default function DetailRegistPsikologPage() {
@@ -18,8 +19,7 @@ export default function DetailRegistPsikologPage() {
         try {
           const { success, data, message } = await getPsikologRegist(id); // Panggil API detail psikolog
           if (success) {
-            const DataPsikolog = data.data;
-            setPsychologistData(DataPsikolog);
+            setPsychologistData(data.data);
           } else {
             console.error("Error fetching psychologist detail:", message);
           }
@@ -34,13 +34,48 @@ export default function DetailRegistPsikologPage() {
     fetchPsychologistData();
   }, [id]);
 
+  // Loading state
   if (loading) {
-    return <p>Memuat data...</p>; // Gunakan komponen loading
+    return (
+      <>
+        {/* HeaderAdmin Layout */}
+        <HeaderAdmin />
+
+        {/* Main Content Wrapper */}
+        <div className="p-6">
+          <SkeletonTable />
+        </div>
+      </>
+    );
   }
 
+  // Error state jika data tidak ditemukan
   if (!psychologistData) {
-    return <p>Data psikolog tidak ditemukan</p>;
+    return (
+      <>
+        <HeaderAdmin />
+        <div className="p-6">
+          <p>Data psikolog tidak ditemukan.</p>
+        </div>
+      </>
+    );
   }
 
-  return <PsiViewForm psychologistData={psychologistData} isViewMode={true} id={id} />;
+  // Main content
+  return (
+    <>
+      {/* HeaderAdmin Layout */}
+      <HeaderAdmin />
+
+      {/* Main Content Wrapper */}
+      <div className="p-6">
+        {/* PsiViewForm untuk menampilkan detail */}
+        <PsiViewForm
+          psychologistData={psychologistData}
+          isViewMode={true}
+          id={id}
+        />
+      </div>
+    </>
+  );
 }

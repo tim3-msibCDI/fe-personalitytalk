@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import MhsForm from "@/components/dashboard/form/mhsform";
 import { getMahasiswaDetail } from "@/api/manage-mahasiswa";
+import HeaderAdmin from "@/components/dashboard/section/header-admin";
+import { SkeletonTable } from "@/components/dashboard/table/skeleton-table"; // Import skeleton table
 
 export default function DetailMahasiswa() {
   const searchParams = useSearchParams();
@@ -19,7 +21,7 @@ export default function DetailMahasiswa() {
           const dataMhs = data.data;
           setMhsData(dataMhs);
         } else {
-          console.error("Error fetching user detail:", message);
+          console.error("Error fetching mahasiswa detail:", message);
         }
         setLoading(false);
       }
@@ -28,18 +30,39 @@ export default function DetailMahasiswa() {
     fetchData();
   }, [id]);
 
+  // Loading state with Skeleton Table
   if (loading) {
-    return <p>Memuat data pengguna...</p>;
+    return (
+      <>
+        {/* HeaderAdmin Layout */}
+        <HeaderAdmin />
+
+        {/* Main Content Wrapper */}
+        <div className="p-6">
+          <SkeletonTable /> {/* Display skeleton while loading */}
+        </div>
+      </>
+    );
   }
 
+  // Error state if no data found
   if (!mhsData) {
-    return <p>Data not found</p>;
+    return <p>Data mahasiswa tidak ditemukan.</p>;
   }
 
   return (
-    <MhsForm
-      mahasiswaData={mhsData} // Ensure you're passing correct prop name here
-      isViewMode={true}
-    />
+    <>
+      {/* HeaderAdmin Layout */}
+      <HeaderAdmin />
+
+      {/* Main Content Wrapper with Padding */}
+      <div className="p-6">
+        {/* MhsForm for displaying student details */}
+        <MhsForm
+          mahasiswaData={mhsData} // Pass the mahasiswa data here
+          isViewMode={true} // Set to view mode
+        />
+      </div>
+    </>
   );
 }

@@ -1,35 +1,34 @@
-// pages/detail-psikolog.js
-
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { getPsikologDetail } from "@/api/manage-psikolog";
-import Loading from "@/components/loading/loading";
+import HeaderAdmin from "@/components/dashboard/section/header-admin";
 import PsiForm from "@/components/dashboard/form/psiform";
+import { SkeletonTable } from "@/components/dashboard/table/skeleton-table";
 
 export default function DetailPsikologPage() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
+
   const [psychologistData, setPsychologistData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Fetch psychologist data
   useEffect(() => {
     const fetchPsychologistData = async () => {
       if (id) {
         try {
-          const { success, data, message } = await getPsikologDetail(id); // Panggil API detail psikolog
+          const { success, data, message } = await getPsikologDetail(id);
           if (success) {
-            const DataPsikolog = data.data;
-            setPsychologistData(DataPsikolog);
-            console.log(DataPsikolog); // Sesuaikan dengan struktur data dari API
+            setPsychologistData(data.data);
           } else {
             console.error("Error fetching psychologist detail:", message);
           }
         } catch (error) {
-          console.error("Error fetching psychologist detail:", error);
+          console.error("Error fetching psychologist data:", error);
         } finally {
-          setLoading(false);
+          setLoading(false); // Finish loading
         }
       }
     };
@@ -37,13 +36,47 @@ export default function DetailPsikologPage() {
     fetchPsychologistData();
   }, [id]);
 
+  // Loading state
   if (loading) {
-    return <p>Memuat data...</p>; // Gunakan komponen loading
+    return (
+      <>
+        {/* HeaderAdmin Layout */}
+        <HeaderAdmin />
+
+        {/* Main Content Wrapper */}
+        <div className="p-6">
+          {/* Skeleton table while loading */}
+          <SkeletonTable />
+        </div>
+      </>
+    );
   }
 
+  // Error if no psychologist data is found
   if (!psychologistData) {
-    return <p>Data psikolog tidak ditemukan</p>;
+    return (
+      <>
+        <HeaderAdmin />
+        <div className="p-6">
+          <p>Data psikolog tidak ditemukan.</p>
+        </div>
+      </>
+    );
   }
 
-  return <PsiForm psychologistData={psychologistData} isViewMode={true} />;
+  return (
+    <>
+      {/* HeaderAdmin Layout */}
+      <HeaderAdmin />
+
+      {/* Main Content Wrapper */}
+      <div className="p-6">
+        {/* PsiForm for viewing psychologist data */}
+        <PsiForm
+          isViewMode={true} // View mode enabled
+          psychologistData={psychologistData} // Send the fetched psychologist data to the form
+        />
+      </div>
+    </>
+  );
 }

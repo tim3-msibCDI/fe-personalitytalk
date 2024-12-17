@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { getPsikologDetail } from "@/api/manage-psikolog";
+import HeaderAdmin from "@/components/dashboard/section/header-admin";
 import PsiForm from "@/components/dashboard/form/psiform";
+import { SkeletonTable } from "@/components/dashboard/table/skeleton-table";
 
 export default function EditPsychologistPage() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const id = searchParams.get("id");
 
   const [psychologistData, setPsychologistData] = useState(null);
@@ -20,14 +21,14 @@ export default function EditPsychologistPage() {
         try {
           const { success, data, message } = await getPsikologDetail(id);
           if (success) {
-            setPsychologistData(data.data); // Atur data psikolog
+            setPsychologistData(data.data);
           } else {
             console.error("Error fetching psychologist detail:", message);
           }
         } catch (error) {
           console.error("Error fetching psychologist data:", error);
         } finally {
-          setLoading(false); // Selesaikan loading
+          setLoading(false); // Finish loading
         }
       }
     };
@@ -35,21 +36,47 @@ export default function EditPsychologistPage() {
     fetchPsychologistData();
   }, [id]);
 
-  // Redirect jika data tidak ditemukan atau sedang memuat
+  // Loading state
   if (loading) {
-    return <p>Memuat data psikolog...</p>;
+    return (
+      <>
+        {/* HeaderAdmin Layout */}
+        <HeaderAdmin />
+
+        {/* Main Content Wrapper */}
+        <div className="p-6">
+          {/* Skeleton table while loading */}
+          <SkeletonTable />
+        </div>
+      </>
+    );
   }
 
+  // Error if no psychologist data is found
   if (!psychologistData) {
-    return <p>Data psikolog tidak ditemukan.</p>;
+    return (
+      <>
+        <HeaderAdmin />
+        <div className="p-6">
+          <p>Data psikolog tidak ditemukan.</p>
+        </div>
+      </>
+    );
   }
 
   return (
-    <div className="relative">
-      <PsiForm
-        isEditMode={true} // Mode edit diaktifkan
-        psychologistData={psychologistData} // Kirim data psikolog yang diambil
-      />
-    </div>
+    <>
+      {/* HeaderAdmin Layout */}
+      <HeaderAdmin />
+
+      {/* Main Content Wrapper */}
+      <div className="p-6">
+        {/* PsiForm for editing psychologist data */}
+        <PsiForm
+          isEditMode={true} // Enable edit mode
+          psychologistData={psychologistData} // Send the fetched psychologist data to the form
+        />
+      </div>
+    </>
   );
 }

@@ -1,56 +1,83 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { getKonselorDetail } from "@/api/manage-psikolog";
+import HeaderAdmin from "@/components/dashboard/section/header-admin";
 import PsiForm from "@/components/dashboard/form/psiform";
+import { SkeletonTable } from "@/components/dashboard/table/skeleton-table";
 
-export default function EditPsychologistPage() {
+export default function EditKonselorPage() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const id = searchParams.get("id");
 
   const [psychologistData, setPsychologistData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch psychologist data
+  // Fetch konselor data
   useEffect(() => {
-    const fetchPsychologistData = async () => {
+    const fetchKonselorData = async () => {
       if (id) {
         try {
           const { success, data, message } = await getKonselorDetail(id);
           if (success) {
-            setPsychologistData(data.data); // Atur data psikolog
+            setPsychologistData(data.data); // Set konselor data
           } else {
-            console.error("Error fetching psychologist detail:", message);
+            console.error("Error fetching konselor detail:", message);
           }
         } catch (error) {
-          console.error("Error fetching psychologist data:", error);
+          console.error("Error fetching konselor data:", error);
         } finally {
-          setLoading(false); // Selesaikan loading
+          setLoading(false); // Finish loading
         }
       }
     };
 
-    fetchPsychologistData();
+    fetchKonselorData();
   }, [id]);
 
-  // Redirect jika data tidak ditemukan atau sedang memuat
+  // Loading state
   if (loading) {
-    return <p>Memuat data konselor...</p>;
+    return (
+      <>
+        {/* HeaderAdmin Layout */}
+        <HeaderAdmin />
+
+        {/* Main Content Wrapper */}
+        <div className="p-6">
+          {/* Skeleton table while loading */}
+          <SkeletonTable />
+        </div>
+      </>
+    );
   }
 
+  // Error if no konselor data is found
   if (!psychologistData) {
-    return <p>Data Konselor tidak ditemukan.</p>;
+    return (
+      <>
+        <HeaderAdmin />
+        <div className="p-6">
+          <p>Data konselor tidak ditemukan.</p>
+        </div>
+      </>
+    );
   }
 
   return (
-    <div className="relative">
-      <PsiForm
-        isEditMode={true} // Mode edit diaktifkan
-        psychologistData={psychologistData} // Kirim data psikolog yang diambil
-        konselorMode={true}
-      />
-    </div>
+    <>
+      {/* HeaderAdmin Layout */}
+      <HeaderAdmin />
+
+      {/* Main Content Wrapper */}
+      <div className="p-6">
+        {/* PsiForm for editing konselor data */}
+        <PsiForm
+          isEditMode={true} // Enable edit mode
+          psychologistData={psychologistData} // Send the fetched konselor data to the form
+          konselorMode={true} // Enable konselor-specific mode
+        />
+      </div>
+    </>
   );
 }

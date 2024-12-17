@@ -17,11 +17,8 @@ import AddPriceModal from "@/components/popup/addpricepsikolog";
 
 import { deleteUser } from "@/api/manage-user";
 import { deleteMahasiswa } from "@/api/manage-mahasiswa";
-import {
-  deletePsikolog,
-  deletePricePsikolog,
-  deleteTopic,
-} from "@/api/manage-psikolog";
+import { deletePsikolog, deletePricePsikolog } from "@/api/manage-psikolog";
+import { deleteTopic } from "@/api/manage-konsultasi";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
@@ -104,6 +101,8 @@ export default function Table() {
           const result = await deletePricePsikolog(selectedRow.id); //belum diperbaiki
         } else if (pathname === "/admin/konsultasi/topik-konsultasi") {
           const result = await deleteTopic(selectedRow.id);
+        } else if (pathname === "/admin/konsultasi/jadwal-konsultasi") {
+          const result = await deleteTopic(selectedRow.id);
         }
 
         await mutate(`${API_URL}${endpoint}`);
@@ -137,8 +136,14 @@ export default function Table() {
     endpoint = `/admin/psikolog-price?page=${currentPage}`;
     searchPlaceholder = "Cari Data Psikolog";
   } else if (pathname === "/admin/konsultasi/topik-konsultasi") {
-    endpoint = `/admin/topics?page=${currentPage}`; //belum ada pagination
+    endpoint = `/admin/topics?page=${currentPage}`;
     searchPlaceholder = "Cari Topik Konsultasi";
+  } else if (pathname === "/admin/konsultasi/jadwal-konsultasi") {
+    endpoint = `/admin/consul-schedules/psikolog?page=${currentPage}`;
+    searchPlaceholder = "Cari Nama Psikolog / Konselor";
+  } else if (pathname === "/admin/konsultasi/riwayat-konsultasi") {
+    endpoint = `/admin/consultation/history?page=${currentPage}`;
+    searchPlaceholder = "Cari Nama Psikolog / Konselor";
   } else if (pathname === "/admin/keuangan/rekening") {
     endpoint = `/admin/payment-methods?page=${currentPage}`;
     searchPlaceholder = "Cari Topik Konsultasi";
@@ -161,7 +166,6 @@ export default function Table() {
     endpoint = null;
   }
 
-  // Ambil data dari backend
   const { data, error } = useSWR(
     endpoint ? `${API_URL}${endpoint}` : null,
     fetcher
@@ -209,6 +213,17 @@ export default function Table() {
       ? ["No", "No SIPP", "Harga", "Tindakan"]
       : pathname === "/admin/konsultasi/topik-konsultasi"
       ? ["No", "Nama Topik Konsulltasi", "Tindakan"]
+      : pathname === "/admin/konsultasi/jadwal-konsultasi"
+      ? ["Id", "Nama", "Detail"]
+      : pathname === "/admin/konsultasi/riwayat-konsultasi"
+      ? [
+          "Id Konsultasi",
+          "Waktu",
+          "Nama Psikolog",
+          "Nama Client",
+          "Status",
+          "Detail",
+        ]
       : pathname === "/admin/keuangan/rekening"
       ? ["No", "Nama Pemilik", "No Rekening", "Platform", "Tindakan"]
       : pathname === "/admin/keuangan/transaksi"
@@ -559,6 +574,59 @@ export default function Table() {
             ),
           },
         ]
+      : pathname === "/admin/konsultasi/jadwal-konsultasi"
+      ? [
+          { key: "sipp" },
+          {
+            key: "name",
+            render: (_, row) => row.user?.name || "-",
+          },
+          {
+            key: "actions",
+            render: (_, row) => (
+              <div className="space-x-2">
+                <EditButton onClick={() => console.log("Edit clicked", row)} />
+              </div>
+            ),
+          },
+        ]
+      : pathname === "/admin/konsultasi/riwayat-konsultasi"
+      ? [
+          { key: "consul_id" },
+          { key: "date" },
+          { key: "psikolog_name" },
+          { key: "client" },
+          {
+            key: "status",
+            render: (_, row) => {
+              const statusMap = {
+                scheduled: { text: "Dijadwalkan", bgColor: "bg-yellow-500" },
+                completed: { text: "Selesai", bgColor: "bg-green-500" },
+              };
+
+              const { text, bgColor } = statusMap[row.status] || {
+                text: "",
+                bgColor: "",
+              };
+
+              return (
+                <span
+                  className={`inline-block px-3 py-2 text-white text-s font-medium rounded ${bgColor}`}
+                >
+                  {text}
+                </span>
+              );
+            },
+          },
+          {
+            key: "actions",
+            render: (_, row) => (
+              <div className="space-x-2">
+                <EditButton onClick={() => console.log("Edit clicked", row)} />
+              </div>
+            ),
+          },
+        ]
       : pathname === "/admin/keuangan/rekening"
       ? [
           {
@@ -643,7 +711,35 @@ export default function Table() {
           { key: "discount_value" },
           { key: "min_transaction_amount" },
           { key: "valid_from" },
-          { key: "is_active" },
+          {
+            key: "is_active",
+            render: (_, row) => {
+              const statusMap = {
+                0: {
+                  text: "Tidak Aktif",
+                  bgColor: "bg-red-500",
+                },
+                1: {
+                  text: "Aktif",
+                  bgColor: "bg-green-500",
+                },
+              };
+
+              const { text, bgColor, onClick } = statusMap[row.is_active] || {
+                text: "",
+                bgColor: "",
+                onClick: null,
+              };
+
+              return (
+                <button
+                  className={`inline-block px-7 py-2 text-white text-s font-medium rounded ${bgColor}`}
+                >
+                  {text}
+                </button>
+              );
+            },
+          },
           {
             key: "actions",
             render: (_, row) => (

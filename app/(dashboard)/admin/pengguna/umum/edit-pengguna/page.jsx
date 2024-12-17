@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { getUserDetail } from "@/api/manage-user";
+import HeaderAdmin from "@/components/dashboard/section/header-admin";
 import UserForm from "@/components/dashboard/form/userform";
+import { SkeletonTable } from "@/components/dashboard/table/skeleton-table";
 
 export default function EditPenggunaPage() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const id = searchParams.get("id");
 
   const [userData, setUserData] = useState(null);
@@ -20,14 +21,14 @@ export default function EditPenggunaPage() {
         try {
           const { success, data, message } = await getUserDetail(id);
           if (success) {
-            setUserData(data.data); // Atur data pengguna
+            setUserData(data.data); // Set the user data
           } else {
             console.error("Error fetching user detail:", message);
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
         } finally {
-          setLoading(false); // Selesaikan loading
+          setLoading(false); // Finish loading
         }
       }
     };
@@ -35,21 +36,40 @@ export default function EditPenggunaPage() {
     fetchUserData();
   }, [id]);
 
-  // Redirect jika data tidak ditemukan atau sedang memuat
+  // Loading state
   if (loading) {
-    return <p>Memuat data pengguna...</p>;
+    return (
+      <>
+        {/* HeaderAdmin Layout */}
+        <HeaderAdmin />
+
+        {/* Main Content Wrapper */}
+        <div className="p-6">
+          {/* Skeleton table while loading */}
+          <SkeletonTable />
+        </div>
+      </>
+    );
   }
 
+  // Error if no user data is found
   if (!userData) {
     return <p>Data pengguna tidak ditemukan.</p>;
   }
 
   return (
-    <div className="relative">
-      <UserForm
-        isEditMode={true} // Mode edit diaktifkan
-        userData={userData} // Kirim data pengguna yang diambil
-      />
-    </div>
+    <>
+      {/* HeaderAdmin Layout */}
+      <HeaderAdmin />
+
+      {/* Main Content Wrapper */}
+      <div className="p-6">
+        {/* UserForm for editing user data */}
+        <UserForm
+          isEditMode={true} // Enable edit mode
+          userData={userData} // Send the fetched user data to the form
+        />
+      </div>
+    </>
   );
 }

@@ -4,9 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Select from "react-select";
-import { editPsikolog, getTopics } from "@/api/manage-psikolog";
+import { editPsikolog, getTopics, fetchBanks } from "@/api/manage-psikolog";
 import Modal from "@/components/modals/modal";
-import { fetchBanks } from "@/api/manage-psikolog";
 
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
 
@@ -53,18 +52,24 @@ export default function PsiForm({
 
     const updatedData = {};
     const checkAndUpdate = (key, stateValue, originalValue) => {
+      // Jika stateValue null atau undefined, jangan tambahkan ke updatedData
+      if (stateValue === null || stateValue === undefined) {
+        return;
+      }
+    
       if (key === "rekening") {
-        // Hanya tambahkan rekening jika ada perubahan dan nilainya tidak kosong/null
+        // Hanya tambahkan jika rekening berubah dan tidak kosong/null
         if (stateValue && stateValue !== originalValue) {
           updatedData[key] = stateValue;
         }
       } else if (key === "bank_id") {
-        // Pastikan hanya tambahkan jika ada perubahan dan nilainya valid
-        if (stateValue && Number(stateValue) !== Number(originalValue)) {
-          updatedData[key] = Number(stateValue);
+        // Hanya tambahkan jika bank_id berubah dan valid
+        const stateValueNumber = Number(stateValue);
+        if (!isNaN(stateValueNumber) && stateValueNumber !== Number(originalValue)) {
+          updatedData[key] = stateValueNumber;
         }
       } else if (stateValue !== originalValue) {
-        // Tambahkan field lainnya jika berubah
+        // Field lainnya
         updatedData[key] = stateValue;
       }
     };
@@ -105,6 +110,8 @@ export default function PsiForm({
     }
 
     setLoading(true);
+    console.log("Updated Data: ", updatedData);
+
     try {
       const response = await editPsikolog(psychologistData.id, updatedData);
       setMessage(response.message || "Data psikolog berhasil diubah");
@@ -134,7 +141,7 @@ export default function PsiForm({
           const banks = await fetchBanks();
 
           setAvailableTopics(
-            topics.map((topic) => ({
+            topics.data.map((topic) => ({
               value: topic.id,
               label: topic.topic_name,
             }))
@@ -142,12 +149,15 @@ export default function PsiForm({
 
           setAvailableBanks(
             banks.map((bank) => ({
-              value: bank.id.toString(), // Pastikan ID bank diubah menjadi string
+              value: bank.id.toString(),
               label: bank.name,
             }))
           );
         } catch (error) {
-          console.error("Error fetching topics and banks:", error);
+          console.error(
+            "Error fetching topics and banks:",
+            error.response || error
+          );
         }
       };
 
@@ -155,6 +165,8 @@ export default function PsiForm({
     }
 
     if (psychologistData) {
+      console.log("Psychologist data:", psychologistData);
+
       setName(psychologistData.name || "");
       setEmail(psychologistData.email || "");
       setPhoneNumber(psychologistData.phone_number || "");
@@ -397,7 +409,7 @@ export default function PsiForm({
         <div className="p-6 text-center">
           <div className="py-16">
             <Image
-              src="/icons/dashboard/success.svg"
+              src="/icons/dashboard/sucess.svg"
               width={150}
               height={150}
               alt="success"

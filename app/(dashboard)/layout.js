@@ -13,10 +13,14 @@ export default function LayoutDashboard({ children }) {
   }
 
   return (
-    <section className="flex flex-1">
+    <section className="flex h-screen">
+      {" "}
+      {/* Pastikan tinggi penuh */}
       <Sidebar />
-      <div className="flex flex-col w-full h-full">
-        <main>{children}</main>
+      <div className="flex flex-col flex-1 overflow-auto">
+        {" "}
+        {/* flex-1 untuk sisa ruang */}
+        <main className="overflow-y-auto">{children}</main>
       </div>
     </section>
   );

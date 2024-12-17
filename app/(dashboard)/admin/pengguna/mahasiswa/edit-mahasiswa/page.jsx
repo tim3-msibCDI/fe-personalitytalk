@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { getMahasiswaDetail } from "@/api/manage-mahasiswa"; // Adjust API call for mahasiswa
 import MhsForm from "@/components/dashboard/form/mhsform"; // Use the MhsForm component for mahasiswa
+import HeaderAdmin from "@/components/dashboard/section/header-admin";
+import { SkeletonTable } from "@/components/dashboard/table/skeleton-table"; // Import skeleton table
 
 export default function EditMahasiswaPage() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const id = searchParams.get("id");
 
   const [mhsData, setMhsData] = useState(null);
@@ -35,21 +36,39 @@ export default function EditMahasiswaPage() {
     fetchMahasiswaData();
   }, [id]);
 
-  // Redirect if data is not found or is still loading
+  // Loading state with Skeleton Table
   if (loading) {
-    return <p>Memuat data mahasiswa...</p>;
+    return (
+      <>
+        {/* HeaderAdmin Layout */}
+        <HeaderAdmin />
+
+        {/* Main Content Wrapper */}
+        <div className="p-6">
+          <SkeletonTable /> {/* Display skeleton while loading */}
+        </div>
+      </>
+    );
   }
 
+  // Error state if no data found
   if (!mhsData) {
     return <p>Data mahasiswa tidak ditemukan.</p>;
   }
 
   return (
-    <div className="relative">
-      <MhsForm
-        isEditMode={true} // Enable edit mode
-        mahasiswaData={mhsData} // Send mahasiswa data to the form
-      />
-    </div>
+    <>
+      {/* HeaderAdmin Layout */}
+      <HeaderAdmin />
+
+      {/* Main Content Wrapper with Padding */}
+      <div className="p-6">
+        {/* MhsForm for editing mahasiswa data */}
+        <MhsForm
+          isEditMode={true} // Enable edit mode
+          mahasiswaData={mhsData} // Send mahasiswa data to the form
+        />
+      </div>
+    </>
   );
 }
