@@ -22,7 +22,7 @@ export default function SidebarProfilePsikolog() {
     <div className="lg:max-w-72 bg-primarylight2 rounded-lg p-9 border border-solid border-textsec flex flex-col justify-between">
       <div className="grid justify-items-center">
         <Image
-          src= {`https://756d-114-10-44-248.ngrok-free.app/${user.photoProfile}`}
+          src= {`${process.env.NEXT_PUBLIC_IMG_URL}/${user.photoProfile}`}
           width={120}
           height={120}
           className="rounded-full"

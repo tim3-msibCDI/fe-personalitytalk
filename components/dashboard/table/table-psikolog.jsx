@@ -159,7 +159,7 @@ export default function TablePsikolog() {
                     proof ? (
                         <div className="flex justify-center">
                             <img
-                                src={`https://756d-114-10-44-248.ngrok-free.app/${proof}`}
+                                src={`${process.env.NEXT_PUBLIC_IMG_URL}/${proof}`}
                                 alt="Bukti Transfer"
                                 className="w-auto h-10"
                             />

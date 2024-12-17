@@ -1,15 +1,10 @@
 import axios from "axios";
-
 import { getToken, removeToken } from "@/lib/auth";
-
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "https://756d-114-10-44-248.ngrok-free.app/api";
 
 // Fungsi Login user
 export const loginUser = async (email, password) => {
   const response = await axios.post(
-    `${API_URL}/user/login`,
+    `${process.env.NEXT_PUBLIC_API_URL}/user/login`,
     { email, password },
     {
       headers: {
@@ -26,7 +21,7 @@ export const registerUser = async (data, isFormData = false) => {
     ? { "Content-Type": "multipart/form-data" }
     : { "Content-Type": "application/json" };
 
-  const response = await axios.post(`${API_URL}/user/register`, data, {
+  const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/register`, data, {
     headers,
   });
   return response;
@@ -41,7 +36,7 @@ export const getUserInfo = async () => {
   }
 
   try {
-    const response = await axios.get(`${API_URL}/user/info`, {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/info`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "ngrok-skip-browser-warning": "69420",
@@ -61,7 +56,7 @@ export const getUserDetail = async () => {
   }
 
   try {
-    const response = await axios.get(`${API_URL}/user/profile/detail`, {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/profile/detail`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "ngrok-skip-browser-warning": "69420",
@@ -122,7 +117,7 @@ export const updateProfile = async (formData) => {
 
   try {
     const response = await axios.put(
-      `${API_URL}/user/profile/update`,
+      `${process.env.NEXT_PUBLIC_API_URL}/user/profile/update`,
       formData,
       {
         headers: {
@@ -151,7 +146,7 @@ export const changePassword = async (
 
   try {
     const response = await axios.put(
-      `${API_URL}/user/profile/updatePassword`,
+      `${process.env.NEXT_PUBLIC_API_URL}/user/profile/updatePassword`,
       {
         current_password: oldPassword,
         new_password: newPassword,
@@ -181,7 +176,7 @@ export const upgradeMahasiswa = async (universitas, jurusan) => {
 
   try {
     const response = await axios.put(
-      `${API_URL}/user/profile/updateMahasiswa`,
+      `${process.env.NEXT_PUBLIC_API_URL}/user/profile/updateMahasiswa`,
       { universitas, jurusan },
       {
         headers: {
@@ -203,7 +198,7 @@ export const logoutUser = async () => {
 
   try {
     const response = await axios.post(
-      `${API_URL}/user/logout`,
+      `${process.env.NEXT_PUBLIC_API_URL}/user/logout`,
       {},
       {
         headers: {
@@ -223,7 +218,7 @@ export const logoutUser = async () => {
 
 export const loginAdmin = async (email, password) => {
   const response = await axios.post(
-    `${API_URL}/admin/login`,
+    `${process.env.NEXT_PUBLIC_API_URL}/admin/login`,
     { email, password },
     {
       headers: {
@@ -240,7 +235,7 @@ export const logoutAdmin = async () => {
 
   try {
     const response = await axios.post(
-      `${API_URL}/admin/logout`,
+      `${process.env.NEXT_PUBLIC_API_URL}/admin/logout`,
       {},
       {
         headers: {

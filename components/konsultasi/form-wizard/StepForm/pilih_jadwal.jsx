@@ -131,7 +131,7 @@ export default function FormPilihJadwal({ onBack, onNext }) {
                             <div className="flex flex-row gap-4">
                                 <div className="w-28 h-28 rounded overflow-hidden">
                                     <Image className="mb-2 object-cover w-full h-full"
-                                        src={`https://756d-114-10-44-248.ngrok-free.app/${selectedPsikolog?.photo_profile}`}
+                                        src={`${process.env.NEXT_PUBLIC_IMG_URL}/${selectedPsikolog?.photo_profile}`}
                                         alt={`Photo ${selectedPsikolog?.name}`}
                                         width={100}
                                         height={100}
