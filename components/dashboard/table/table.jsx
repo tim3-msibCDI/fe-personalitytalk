@@ -14,6 +14,7 @@ import Filter from "./filter";
 import SearchBar from "./search-bar";
 import Modal from "@/components/modals/modal";
 import AddPriceModal from "@/components/popup/addpricepsikolog";
+import AddTopicModal from "@/components/popup/addtopic";
 
 import { deleteUser } from "@/api/manage-user";
 import { deleteMahasiswa } from "@/api/manage-mahasiswa";
@@ -47,13 +48,23 @@ export default function Table() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
+  const [isTopicModalOpen, setIsTopicModalOpen] = useState(false);
   const [editData, setEditData] = useState({});
-  const [priceData, setPriceData] = useState(null);
 
   // Fungsi untuk membuka modal edit dengan data yang ingin diedit
   const handleEdit = (data) => {
     setEditData(data); // Set data untuk modal edit
     setIsPriceModalOpen(true); // Buka modal edit
+  };
+
+  const handleTopicDataUpdated = async () => {
+    try {
+      // Memanggil mutate untuk memperbarui data setelah update berhasil
+      await mutate(`${API_URL}${endpoint}`);
+      setIsTopicModalOpen(false); // Tutup modal edit
+    } catch (error) {
+      console.error("Error during update:", error);
+    }
   };
 
   const handleDataUpdated = async () => {
@@ -64,12 +75,6 @@ export default function Table() {
     } catch (error) {
       console.error("Error during update:", error);
     }
-  };
-
-  // Close AddPriceModal
-  const closeModal = () => {
-    setIsPriceModalOpen(false); // Close the modal
-    setEditData(null); // Clear the edit data
   };
 
   // Open delete modal
@@ -568,7 +573,12 @@ export default function Table() {
             key: "actions",
             render: (_, row) => (
               <div className="space-x-2">
-                <EditButton onClick={() => console.log("Edit clicked", row)} />
+                <EditButton
+                  onClick={() => {
+                    setEditData(row); // Set data for modal edit
+                    setIsTopicModalOpen(true); // Open the modal for editing
+                  }}
+                />
                 <DeleteButton onClick={() => handleDeleteClick(row)} />
               </div>
             ),
@@ -585,7 +595,13 @@ export default function Table() {
             key: "actions",
             render: (_, row) => (
               <div className="space-x-2">
-                <EditButton onClick={() => console.log("Edit clicked", row)} />
+                <EditButton
+                  onClick={() =>
+                    router.push(
+                      `/admin/konsultasi/jadwal-konsultasi/${row.id_psikolog}/${row.user?.name}`
+                    )
+                  }
+                />
               </div>
             ),
           },
@@ -925,11 +941,27 @@ export default function Table() {
         onPageChange={(page) => setCurrentPage(page)}
       />
 
+      {isTopicModalOpen && (
+        <AddTopicModal
+          isOpen={isTopicModalOpen} // Modal visibility controlled by state
+          onClose={() => {
+            setIsPriceModalOpen(false); // Close the modal
+            setEditData(null); // Clear the edit data
+          }}
+          topicData={editData} // Pass the data to be edited
+          modalType="edit" // Specify the modal type as "edit"
+          onDataUpdated={handleTopicDataUpdated} // Callback function to refresh data
+        />
+      )}
+
       {/* AddPriceModal (Edit Mode) */}
       {isPriceModalOpen && (
         <AddPriceModal
-          isOpen={{ isPriceModalOpen }}
-          onClose={closeModal}
+          isOpen={isPriceModalOpen} // Use the boolean value directly
+          onClose={() => {
+            setIsPriceModalOpen(false); // Close the modal
+            setEditData(null); // Clear the edit data
+          }}
           priceData={editData}
           modalType="edit"
           onDataUpdated={handleDataUpdated} // Pass callback function

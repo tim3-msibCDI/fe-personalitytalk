@@ -245,7 +245,7 @@ export default function PsiViewForm({
 
       {/* Feedback Modal */}
       {feedbackModal.isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-5">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-md text-center w-96 h-64">
             <Image
               src={

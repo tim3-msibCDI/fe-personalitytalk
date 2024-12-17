@@ -1,28 +1,28 @@
 import { useState, useEffect } from "react";
 import Modal from "../modals/modal";
-import { addPsikologPrice, updatePsikologPrice } from "@/api/manage-psikolog";
-import Image from "next/image";
+import { addTopic, updateTopic } from "@/api/manage-konsultasi"; // Import the necessary functions
 import { useRouter } from "next/navigation";
 
-export default function AddPriceModal({
+export default function AddTopicModal({
   isOpen,
   onClose,
-  priceData = null,
-  modalType = "add",
-  onDataUpdated, // Terima props callback
+  topicData = null,
+  modalType = "add", // default is "add", can be "edit" when editing a topic
+  onDataUpdated, // Callback to refresh data after operation
 }) {
-  const [formData, setFormData] = useState({ code: "", price: "" });
+  const [formData, setFormData] = useState({ topic_name: "" });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const router = useRouter();
 
+  // Effect to set form data when modalType is "edit"
   useEffect(() => {
-    if (priceData && modalType === "edit") {
-      setFormData(priceData);
+    if (topicData && modalType === "edit") {
+      setFormData(topicData); // Pre-fill form with existing topic data
     } else {
-      setFormData({ code: "", price: "" });
+      setFormData({ topic_name: "" }); // Reset form data for adding a new topic
     }
-  }, [priceData, modalType]);
+  }, [topicData, modalType]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,33 +37,25 @@ export default function AddPriceModal({
     try {
       let response;
 
-      if (modalType === "edit" && priceData?.id) {
-        response = await updatePsikologPrice(priceData.id, {
-          code: formData.code,
-          price: parseInt(formData.price, 10),
-        });
+      if (modalType === "edit" && topicData?.id) {
+        // If editing, call the updateTopic function
+        response = await updateTopic(topicData.id, { topic_name: formData.topic_name });
       } else {
-        response = await addPsikologPrice({
-          code: formData.code,
-          price: parseInt(formData.price, 10),
-        });
+        // If adding, call the addTopic function
+        response = await addTopic({ topic_name: formData.topic_name });
       }
 
       if (response.success) {
         setMessage({ type: "success", text: response.message });
-        onDataUpdated(); // Panggil fungsi untuk update data setelah operasi berhasil
-        router.refresh()
-        onClose(); // Tutup modal
+        onDataUpdated(); // Callback to refresh data
+        router.refresh(); // Optionally refresh the page or data
+        onClose(); // Close the modal after success
       } else {
         setMessage({ type: "error", text: response.message });
-        console.log("Error response:", response);
       }
     } catch (error) {
       console.error("Error during submission:", error);
-      setMessage({
-        type: "error",
-        text: "Terjadi kesalahan saat menyimpan data.",
-      });
+      setMessage({ type: "error", text: "Terjadi kesalahan saat menyimpan data." });
     } finally {
       setLoading(false);
     }
@@ -75,7 +67,7 @@ export default function AddPriceModal({
         {/* Header */}
         <div className="flex justify-between items-center bg-orange-500 p-4 rounded-t-md">
           <h2 className="text-white text-lg font-semibold">
-            {modalType === "edit" ? "Edit Data" : "Tambah Data"}
+            {modalType === "edit" ? "Edit Topik" : "Tambah Topik"}
           </h2>
           <button
             onClick={onClose}
@@ -88,28 +80,14 @@ export default function AddPriceModal({
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-4 bg-gray-50 rounded-b-md">
           <div className="mb-4">
-            <label>No SIPP</label>
+            <label className="block text-gray-700 mb-2">Nama Topik</label>
             <input
               type="text"
-              id="code"
-              name="code"
-              placeholder="Masukan No SIPP"
-              value={formData.code}
+              name="topic_name"  // Change name to 'topic_name'
+              placeholder="Masukkan Nama Topik"
+              value={formData.topic_name}  // Use topic_name for value
               onChange={handleChange}
-              className="border border-textcolor p-2 rounded-md w-full bg-white text-textcolor"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label>Harga</label>
-            <input
-              type="number"
-              id="price"
-              name="price"
-              placeholder="Masukan Harga"
-              value={formData.price}
-              onChange={handleChange}
-              className="border border-textcolor p-2 rounded-md w-full bg-white text-textcolor"
+              className="border p-2 rounded-md w-full bg-white text-gray-700"
               required
             />
           </div>
@@ -125,13 +103,8 @@ export default function AddPriceModal({
                 "Menyimpan..."
               ) : (
                 <>
-                  <Image
-                    src="/icons/dashboard/save.svg"
-                    alt="Save"
-                    width={20}
-                    height={20}
-                  />
-                  Simpan
+                  <span className="text-xl font-bold">+</span>
+                  {modalType === "edit" ? "Update" : "Tambah"}
                 </>
               )}
             </button>

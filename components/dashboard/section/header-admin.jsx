@@ -9,19 +9,23 @@ export default function HeaderAdmin({ addButton }) {
   // Mengakses window.location.pathname di client-side
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setPathname(window.location.pathname);
+      // Decode pathname agar karakter URL-encoded seperti %20 menjadi spasi
+      setPathname(decodeURIComponent(window.location.pathname));
     }
   }, []);
 
   const getTitle = (pathname) => {
-    if (!pathname) return "Judul";
+    if (!pathname) return "";
     const segments = pathname.split("/");
     const lastSegment = segments[segments.length - 1];
-    return capitalize(lastSegment.replace("-", " "));
+    return capitalizeWords(lastSegment.replace("-", " "));
   };
 
-  const capitalize = (text) => {
-    return text.charAt(0).toUpperCase() + text.slice(1);
+  const capitalizeWords = (text) => {
+    return text
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
   };
 
   const isSettingsPage = pathname.startsWith("/admin/pengaturan");

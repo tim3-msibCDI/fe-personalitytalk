@@ -9,7 +9,10 @@ export default function Breadcrumbs() {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   useEffect(() => {
-    const pathSegments = pathname.split("/").filter(Boolean);
+    const pathSegments = pathname
+      .split("/")
+      .filter(Boolean)
+      .map((segment) => decodeURIComponent(segment)); // Decode each segment
 
     // Fungsi untuk mengubah slug menjadi judul dengan spasi dan kapitalisasi
     const formatTitle = (text) => {
