@@ -1,48 +1,53 @@
-"use client";
-
+"use client"
+import { mutate } from "swr";
 import Table from "@/components/dashboard/table/table";
 import HeaderAdmin from "@/components/dashboard/section/header-admin";
 import { useState } from "react";
 import AddPriceModal from "@/components/popup/addpricepsikolog";
 import AddButton from "@/components/dashboard/button/add-button";
-import { useRouter } from "next/navigation";
 import { SkeletonTable } from "@/components/dashboard/table/skeleton-table";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function HargaPsikolog() {
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for controlling modal visibility
-  const [loading, setLoading] = useState(false); // State for controlling loading state of table
-  const router = useRouter(); // Initialize router
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // Function to open the modal
   const openModal = () => setIsModalOpen(true);
-
-  // Function to close the modal
   const closeModal = () => setIsModalOpen(false);
 
-  // Function to handle data update and page reload
-  const handleDataUpdated = () => {
-    setLoading(true); s
-    closeModal(); // Close the modal after data is added
+  // Fungsi ini akan dipanggil ketika data berhasil ditambahkan
+  const handleDataUpdated = async () => {
+    setLoading(true);
+    closeModal();
+
+    try {
+      // Memperbarui data tabel melalui mutate SWR
+      await mutate(`${API_URL}/admin/psikolog-price?page=1`);
+    } catch (error) {
+      console.error("Gagal memperbarui tabel:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
       <HeaderAdmin
-        addButton={<AddButton onClick={openModal} text="Tambah Harga" />} // Use AddButton to open modal
+        addButton={<AddButton onClick={openModal} text="Tambah Harga" />}
       />
       <div className="p-6">
         <div className="bg-primarylight2 p-6 rounded-lg">
-          {/* Show loading indicator if loading state is true */}
           {loading ? <SkeletonTable /> : <Table />}
         </div>
       </div>
 
-      {/* AddPriceModal */}
+      {/* Modal Tambah Harga */}
       <AddPriceModal
         isOpen={isModalOpen}
         onClose={closeModal}
         modalType="add"
-        onDataUpdated={handleDataUpdated} // Pass the handleDataUpdated function
+        onDataUpdated={handleDataUpdated}
       />
     </>
   );

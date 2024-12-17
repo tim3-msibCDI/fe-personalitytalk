@@ -134,7 +134,7 @@ export default function Table() {
     searchPlaceholder = "Cari Data Psikolog";
   } else if (pathname === "/admin/psikolog/harga-psikolog") {
     endpoint = `/admin/psikolog-price?page=${currentPage}`;
-    searchPlaceholder = "Cari Data Psikolog";
+    searchPlaceholder = "Cari Harga";
   } else if (pathname === "/admin/konsultasi/topik-konsultasi") {
     endpoint = `/admin/topics?page=${currentPage}`;
     searchPlaceholder = "Cari Topik Konsultasi";
