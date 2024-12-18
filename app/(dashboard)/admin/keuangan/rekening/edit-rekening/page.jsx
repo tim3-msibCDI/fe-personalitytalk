@@ -21,7 +21,8 @@ export default function EditPaymentPage() {
         try {
           const { success, data, message } = await getPaymentMethodDetails(id);
           if (success) {
-            setPaymentData(data); // Set the payment data
+            const dataRek = data.data;
+            setPaymentData(dataRek); // Set the payment data
           } else {
             console.error("Error fetching payment method detail:", message);
           }

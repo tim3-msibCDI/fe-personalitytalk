@@ -20,7 +20,7 @@ import { deleteUser } from "@/api/manage-user";
 import { deleteMahasiswa } from "@/api/manage-mahasiswa";
 import { deletePsikolog, deletePricePsikolog } from "@/api/manage-psikolog";
 import { deleteTopic } from "@/api/manage-konsultasi";
-import { deletePaymentMethod } from "@/api/manage-keuangan";
+import { deletePaymentMethod, deleteVoucher } from "@/api/manage-keuangan";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
@@ -111,6 +111,8 @@ export default function Table() {
           const result = await deleteTopic(selectedRow.id);
         } else if (pathname === "/admin/keuangan/rekening") {
           const result = await deletePaymentMethod(selectedRow.id);
+        } else if (pathname === "/admin/keuangan/voucher") {
+          const result = await deleteVoucher(selectedRow.id);
         }
 
         await mutate(`${API_URL}${endpoint}`);
@@ -160,7 +162,7 @@ export default function Table() {
     searchPlaceholder = "Cari Nama Client";
   } else if (pathname === "/admin/keuangan/voucher") {
     endpoint = `/admin/vouchers?page=${currentPage}`;
-    searchPlaceholder = "Cari Nama Client";
+    searchPlaceholder = "Cari Nama Voucher";
   } else if (pathname === "/admin/artikel/artikel") {
     endpoint = `/admin/articles?page=${currentPage}`;
     searchPlaceholder = "Cari Artikel";

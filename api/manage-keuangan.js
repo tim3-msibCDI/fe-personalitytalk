@@ -43,7 +43,10 @@ export async function editPaymentMethod(paymentId, paymentData) {
 
     // Hanya tambahkan field yang ada
     for (const key in paymentData) {
-      if (key === "logo" && (typeof paymentData[key] === "string" || !paymentData[key])) {
+      if (
+        key === "logo" &&
+        (typeof paymentData[key] === "string" || !paymentData[key])
+      ) {
         continue; // Jangan tambahkan jika logo adalah URL atau null
       }
 
@@ -52,13 +55,16 @@ export async function editPaymentMethod(paymentId, paymentData) {
       }
     }
 
-    const response = await fetch(`${API_URL}/admin/payment-methods/${paymentId}`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-      body: formData,
-    });
+    const response = await fetch(
+      `${API_URL}/admin/payment-methods/${paymentId}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: formData,
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -75,13 +81,16 @@ export async function editPaymentMethod(paymentId, paymentData) {
 // Fungsi untuk menghapus data rekening
 export async function deletePaymentMethod(paymentId) {
   try {
-    const response = await fetch(`${API_URL}/admin/payment-methods/${paymentId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${API_URL}/admin/payment-methods/${paymentId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json();
@@ -98,17 +107,22 @@ export async function deletePaymentMethod(paymentId) {
 // Fungsi untuk melihat detail data rekening
 export async function getPaymentMethodDetails(paymentId) {
   try {
-    const response = await fetch(`${API_URL}/admin/payment-methods/${paymentId}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${API_URL}/admin/payment-methods/${paymentId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || "Failed to fetch payment method details");
+      throw new Error(
+        errorData.message || "Failed to fetch payment method details"
+      );
     }
 
     const data = await response.json();
@@ -117,4 +131,39 @@ export async function getPaymentMethodDetails(paymentId) {
     console.error("Error in getPaymentMethodDetails:", error.message);
     return { success: false, message: error.message };
   }
+}
+
+// Fungsi untuk menambah voucher
+export async function addVoucher(data) {
+  const response = await fetch(`${API_URL}/admin/vouchers`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Gagal menambahkan voucher");
+  }
+
+  return await response.json();
+}
+
+// Fungsi untuk menghapus voucher
+export async function deleteVoucher(id) {
+  const response = await fetch(`${API_URL}/admin/vouchers/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Gagal menghapus voucher");
+  }
+
+  return await response.json();
 }
