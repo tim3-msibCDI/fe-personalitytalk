@@ -7,7 +7,7 @@ import Select from "react-select";
 import { editPsikolog, getTopics, fetchBanks } from "@/api/manage-psikolog";
 import Modal from "@/components/modals/modal";
 
-const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
+const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
 
 export default function PsiForm({
   isEditMode = false,
@@ -198,7 +198,7 @@ export default function PsiForm({
         psychologistData.photo_profile.startsWith("http")
           ? psychologistData.photo_profile
           : psychologistData.photo_profile
-          ? `${API_REAL}${psychologistData.photo_profile}`
+          ? `${API_REAL}/${psychologistData.photo_profile}`
           : "/image/default-profile.jpg";
 
       setPhotoProfile(linkPhoto);

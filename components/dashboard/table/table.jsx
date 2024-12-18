@@ -23,7 +23,7 @@ import { deleteTopic } from "@/api/manage-konsultasi";
 import { deletePaymentMethod, deleteVoucher } from "@/api/manage-keuangan";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
+const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
 
 const fetcher = async (url) => {
   const response = await fetch(url, {
@@ -278,7 +278,7 @@ export default function Table() {
                 photo && photo.startsWith("http")
                   ? photo
                   : photo
-                  ? `${API_REAL}${photo}`
+                  ? `${API_REAL}/${photo}`
                   : "/image/default-profile.jpg"; // URL foto default
 
               return (
@@ -335,7 +335,7 @@ export default function Table() {
                 photo && photo.startsWith("http")
                   ? photo
                   : photo
-                  ? `${API_REAL}${photo}`
+                  ? `${API_REAL}/${photo}`
                   : "/image/default-profile.jpg"; // URL foto default
 
               return (
@@ -488,7 +488,7 @@ export default function Table() {
                 photo && photo.startsWith("http")
                   ? photo
                   : photo
-                  ? `${API_REAL}${photo}`
+                  ? `${API_REAL}/${photo}`
                   : "/image/default-profile.jpg"; // URL foto default
 
               return (
@@ -715,7 +715,7 @@ export default function Table() {
 
               const linkphoto = photo.startsWith("http")
                 ? photo
-                : `${API_REAL}${photo}`; // Pastikan URL lengkap jika photo bukan URL penuh
+                : `${API_REAL}/${photo}`; // Pastikan URL lengkap jika photo bukan URL penuh
 
               return (
                 <Image
@@ -789,7 +789,7 @@ export default function Table() {
 
               const linkphoto = photo.startsWith("http")
                 ? photo
-                : `${API_REAL}${photo}`; // Pastikan URL lengkap jika photo bukan URL penuh
+                : `${API_REAL}/${photo}`; // Pastikan URL lengkap jika photo bukan URL penuh
 
               return (
                 <Image
@@ -871,7 +871,7 @@ export default function Table() {
 
               const linkphoto = photo.startsWith("http")
                 ? photo
-                : `${API_REAL}${photo}`; // Pastikan URL lengkap jika photo bukan URL penuh
+                : `${API_REAL}/${photo}`; // Pastikan URL lengkap jika photo bukan URL penuh
 
               return (
                 <Image

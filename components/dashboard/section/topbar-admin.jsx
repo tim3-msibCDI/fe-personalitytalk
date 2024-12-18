@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { logoutAdmin } from "@/api/user";
 import Image from "next/image";
 
-const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
+const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
 
 export default function TopbarAdmin() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -17,7 +17,7 @@ export default function TopbarAdmin() {
     const photo = localStorage.getItem("userPhoto");
 
     setUserName(name || "User"); // Default ke "User" jika nama tidak ditemukan
-    setUserPhoto(photo ? `${API_REAL}${photo}` : "/image/default-profile.jpg"); // Tambahkan URL API jika foto tersedia
+    setUserPhoto(photo ? `${API_REAL}/${photo}` : "/image/default-profile.jpg"); // Tambahkan URL API jika foto tersedia
   }, []);
 
   const handleLogout = async () => {

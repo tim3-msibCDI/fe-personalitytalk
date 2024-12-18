@@ -3,7 +3,7 @@ import Image from "next/image";
 import { approvedPsikolog, rejectedPsikolog } from "@/api/manage-psikolog";
 import { useRouter } from "next/navigation";
 
-const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
+const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
 
 export default function PsiViewForm({
   isViewMode = false,
@@ -38,7 +38,7 @@ export default function PsiViewForm({
     photoProfile && photoProfile.startsWith("http")
       ? photoProfile
       : photoProfile
-      ? `${API_REAL}${photoProfile}`
+      ? `${API_REAL}/${photoProfile}`
       : "/image/default-profile.jpg";
 
   const renderInputField = (label, value) => (

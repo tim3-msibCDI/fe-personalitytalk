@@ -6,7 +6,7 @@ import Image from "next/image";
 import { addUser, editUser } from "@/api/manage-user";
 import Modal from "@/components/modals/modal";
 
-const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
+const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
 
 export default function UserForm({
   isEditMode = false,
@@ -38,7 +38,7 @@ export default function UserForm({
         userData.photo_profile && userData.photo_profile.startsWith("http")
           ? userData.photo_profile // Jika sudah berupa URL lengkap
           : userData.photo_profile
-          ? `${API_REAL}${userData.photo_profile}` // Tambahkan `API_REAL` jika tidak diawali dengan "http"
+          ? `${API_REAL}/${userData.photo_profile}` // Tambahkan `API_REAL` jika tidak diawali dengan "http"
           : "/image/default-profile.jpg"; // Gunakan foto default jika `photo_profile` tidak ada
 
       setPhotoProfile(linkPhoto);

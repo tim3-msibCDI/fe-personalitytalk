@@ -6,7 +6,7 @@ import Image from "next/image";
 import { addMahasiswa, editMahasiswa } from "@/api/manage-mahasiswa";
 import Modal from "@/components/modals/modal";
 
-const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
+const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
 
 export default function MhsForm({
   isEditMode = false,
@@ -45,7 +45,7 @@ export default function MhsForm({
         mahasiswaData.photo_profile.startsWith("http")
           ? mahasiswaData.photo_profile
           : mahasiswaData.photo_profile
-          ? `${API_REAL}${mahasiswaData.photo_profile}`
+          ? `${API_REAL}/${mahasiswaData.photo_profile}`
           : "/image/default-profile.jpg";
 
       setPhotoProfile(linkPhoto);
