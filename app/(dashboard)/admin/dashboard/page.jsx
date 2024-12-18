@@ -1,10 +1,12 @@
-import Table from "@/components/dashboard/table/table";
+import CardDashboardList from "@/components/dashboard/card/carddashboard-list";
+import HeaderAdmin from "@/components/dashboard/section/header-admin";
 
 export default function AdminDashboard() {
   return (
     <>
-      <div className="bg-primarylight2 p-6 rounded-lg">
-        <Table />
+      <HeaderAdmin />
+      <div className="p-6">
+        <CardDashboardList />
       </div>
     </>
   );

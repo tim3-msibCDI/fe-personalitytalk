@@ -172,3 +172,34 @@ body {
     transform: scale(0.5);
   }
 }
+
+/* Zoom Animation */
+.zoom-fade-in {
+  animation: zoomFadeIn 0.3s ease forwards;
+}
+
+.zoom-fade-out {
+  animation: zoomFadeOut 0.3s ease forwards;
+}
+
+@keyframes zoomFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes zoomFadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}

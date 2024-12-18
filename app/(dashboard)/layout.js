@@ -16,15 +16,15 @@ export default function LayoutDashboard({ children }) {
   const isChatPage = path === "/psikolog/chat/id";
 
   return (
-    <section className="flex flex-1">
+    <section className="flex h-screen">
       {/* Sidebar dengan posisi fixed */}
       {!isChatPage && (
-        <div className="fixed top-0 left-0 h-full w-[15%] bg-white shadow-lg z-40">
+        <div className="fixed top-0 left-0 h-full w-[240px] bg-white shadow-lg z-40">
           <Sidebar />
         </div>
       )}
       {/* Main Content */}
-      <div className={`flex flex-col w-full ${!isChatPage ? "ml-[15%]" : ""}`}>
+      <div className={`flex flex-col w-full ${!isChatPage ? "ml-[240px]" : ""}`}>
         <main>{children}</main>
       </div>
     </section>

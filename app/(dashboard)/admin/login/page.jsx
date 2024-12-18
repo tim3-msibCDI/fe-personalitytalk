@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { loginAdmin } from "@/api/user";
+import { loginAdmin, getAdminInfo } from "@/api/user";
 import { setToken } from "@/lib/auth";
 import Modal from "@/components/modals/modal";
 import Loading from "@/components/loading/loading";
@@ -15,7 +15,7 @@ export default function Login() {
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const router = useRouter()
+  const router = useRouter();
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -24,20 +24,26 @@ export default function Login() {
 
     try {
       const data = await loginAdmin(email, password);
-      const token = data.data.token; //Ambil token dari response token
+      const token = data.data.token;
       setToken(token);
-      router.push('/admin/dashboard')
+      // Ambil informasi admin setelah login berhasil
+      const adminInfo = await getAdminInfo();
+      const name = adminInfo.data.data.name;
+      const photo_profile = adminInfo.data.data.photo_profile;
+
+      // Simpan nama dan foto profil ke localStorage
+      localStorage.setItem("userName", name);
+      localStorage.setItem("userPhoto", photo_profile);
+
+      // Redirect ke dashboard
+      router.push("/admin/dashboard");
     } catch (error) {
       if (error.response && error.response.status === 500) {
         setError("Server error, please try again later.");
       } else if (error.response && error.response.status === 404) {
-        setError(
-          "Percobaan Login Gagal."
-        );
+        setError("Percobaan Login Gagal.");
       } else {
-        setError(
-          "Percobaan Login Gagal."
-        );
+        setError("Percobaan Login Gagal.");
       }
       setIsModalOpen(true); // Open modal on error
     } finally {

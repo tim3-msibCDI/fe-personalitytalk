@@ -1,50 +1,36 @@
 export function SkeletonTable({ columnCount = 5, rowCount = 5 }) {
   return (
-    <div className="relative">
+    <div className="relative flex items-center justify-center h-[400px] rounded-md">
       {/* Spinner Loading */}
-      <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-8 border-r-4 border-primary"></div>
-        <p className="ml-4 text-primary text-lg">Memuat data...</p>
-      </div>
+      <div className="flex flex-col items-center">
+        {/* Circular Progress */}
+        <svg className="h-20 w-20 animate-spin" viewBox="0 0 100 100">
+          <circle
+            className="text-gray-300"
+            cx="50"
+            cy="50"
+            r="45"
+            strokeWidth="10"
+            fill="none"
+            stroke="currentColor"
+          />
+          <circle
+            className="text-orange-500"
+            cx="50"
+            cy="50"
+            r="45"
+            strokeWidth="10"
+            fill="none"
+            strokeDasharray="220" // Circumference of the circle
+            strokeDashoffset="70" // Offset for the orange segment
+            strokeLinecap="round"
+            stroke="currentColor"
+          />
+        </svg>
 
-      {/* Skeleton Table */}
-      <table className="w-full min-w-max bg-primarylight2 border border-text2 text-center text-s">
-        <thead>
-          <tr>
-            {Array.from({ length: columnCount }).map((_, index) => (
-              <th
-                key={index}
-                className="p-2 border border-gray-100 bg-gray-100 h-6 rounded-md animate-pulse"
-              >
-                <ul className="mt-2 space-y-2">
-                  <li className="w-full h-4 bg-gray-200 rounded-full"></li>
-                </ul>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {Array.from({ length: rowCount }).map((_, rowIndex) => (
-            <tr key={rowIndex} className="animate-pulse">
-              {Array.from({ length: columnCount }).map((_, colIndex) => (
-                <td
-                  key={colIndex}
-                  className="p-2 border border-gray-100 bg-gray-100 h-6 rounded-md"
-                >
-                  <div className="flex animate-pulse">
-                    <div className="ms-4 mt-2 w-full">
-                      {/* List of additional placeholders */}
-                      <ul className="mt-2 space-y-2">
-                        <li className="w-full h-4 bg-gray-200 rounded-full"></li>
-                      </ul>
-                    </div>
-                  </div>
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        {/* Loading Text */}
+        <p className="mt-4 text-primary text-lg font-normal">Memuat data...</p>
+      </div>
     </div>
   );
 }
