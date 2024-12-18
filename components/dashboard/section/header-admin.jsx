@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Breadcrumbs from "./breadcrumbs";
 
-export default function HeaderAdmin({ addButton }) {
+export default function HeaderAdmin({ addButton, kategoriButton }) {
   const [pathname, setPathname] = useState("");
 
   // Mengakses window.location.pathname di client-side
@@ -40,8 +40,11 @@ export default function HeaderAdmin({ addButton }) {
           {/* Header Title */}
           <h1 className="font-semibold text-h1">{getTitle(pathname)}</h1>
 
-          {/* Tombol Tambah Data (dari props jika tersedia) */}
-          {addButton && <div>{addButton}</div>}
+          {/* Tombol Tambah Data dan Kategori */}
+          <div className="flex items-center gap-2">
+            {kategoriButton && <div>{kategoriButton}</div>}
+            {addButton && <div>{addButton}</div>}
+          </div>
         </div>
       )}
     </header>
