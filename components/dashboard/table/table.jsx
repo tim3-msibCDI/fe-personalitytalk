@@ -20,6 +20,7 @@ import { deleteUser } from "@/api/manage-user";
 import { deleteMahasiswa } from "@/api/manage-mahasiswa";
 import { deletePsikolog, deletePricePsikolog } from "@/api/manage-psikolog";
 import { deleteTopic } from "@/api/manage-konsultasi";
+import { deletePaymentMethod } from "@/api/manage-keuangan";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
@@ -108,6 +109,8 @@ export default function Table() {
           const result = await deleteTopic(selectedRow.id);
         } else if (pathname === "/admin/konsultasi/jadwal-konsultasi") {
           const result = await deleteTopic(selectedRow.id);
+        } else if (pathname === "/admin/keuangan/rekening") {
+          const result = await deletePaymentMethod(selectedRow.id);
         }
 
         await mutate(`${API_URL}${endpoint}`);
@@ -656,7 +659,13 @@ export default function Table() {
             key: "actions",
             render: (_, row) => (
               <div className="space-x-2">
-                <EditButton onClick={() => console.log("Edit clicked", row)} />
+                <EditButton
+                  onClick={() =>
+                    router.push(
+                      `/admin/keuangan/rekening/edit-rekening?id=${row.id}`
+                    )
+                  }
+                />
                 <DeleteButton onClick={() => handleDeleteClick(row)} />
               </div>
             ),
