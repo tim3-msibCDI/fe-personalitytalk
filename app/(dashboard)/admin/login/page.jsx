@@ -13,6 +13,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const router = useRouter();
@@ -21,31 +22,40 @@ export default function Login() {
     event.preventDefault();
     setIsLoading(true);
     setError(null);
+    setMessage(null);
+    setIsModalOpen(false);
 
     try {
       const data = await loginAdmin(email, password);
-      const token = data.data.token;
-      setToken(token);
-      // Ambil informasi admin setelah login berhasil
-      const adminInfo = await getAdminInfo();
-      const name = adminInfo.data.data.name;
-      const photo_profile = adminInfo.data.data.photo_profile;
 
-      // Simpan nama dan foto profil ke localStorage
-      localStorage.setItem("userName", name);
-      localStorage.setItem("userPhoto", photo_profile);
+      if (data.success) {
+        const token = data.data.token;
+        const role = data.data.role;
+        setToken(token, role);
 
-      // Redirect ke dashboard
-      router.push("/admin/dashboard");
+        // Navigasi ke halaman sesuai role
+        if (role === "A") {
+          router.push("/admin/dashboard");
+        } else {
+          router.push("/");
+        }
+
+        // Simpan nama dan foto profil ke localStorage
+        localStorage.setItem("userName", data.data.name);
+        setMessage(data.message);
+      } else {
+        setError(data.message);
+        setIsModalOpen(true);
+      }
     } catch (error) {
-      if (error.response && error.response.status === 500) {
+      setIsModalOpen(true);
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else if (error.response && error.response.status === 500) {
         setError("Server error, please try again later.");
-      } else if (error.response && error.response.status === 404) {
-        setError("Percobaan Login Gagal.");
       } else {
         setError("Percobaan Login Gagal.");
       }
-      setIsModalOpen(true); // Open modal on error
     } finally {
       setIsLoading(false);
     }
@@ -55,14 +65,14 @@ export default function Login() {
     <>
       {/* Loading */}
       {isLoading && <Loading />}
-      {/* Modal for displaying error messages */}
+      {/* Modal for displaying messages */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="p-6">
           <div className="pb-6 flex justify-items-end">
             <button onClick={() => setIsModalOpen(false)} className="ml-auto">
               <Image
                 src="/icons/close.svg"
-                alt="Login Image"
+                alt="Close Icon"
                 width={25}
                 height={25}
                 className="bg-primary rounded-md"
@@ -79,7 +89,7 @@ export default function Login() {
             />
           </div>
           <p className="lg:text-h3 text-m font-medium text-center py-6 lg:pb-16 pb-10">
-            {error}
+            {message || error}
           </p>
         </div>
       </Modal>

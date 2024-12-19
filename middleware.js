@@ -8,12 +8,14 @@ export function middleware(req) {
     if (isStaticFile) {
         return NextResponse.next();
     }
-    const token = req.cookies.get("authToken")?.value; // Ambil token dari cookie
+
+    // Ambil token dan role dari cookies
+    const token = req.cookies.get("authToken")?.value;
+    const role = req.cookies.get("role")?.value;
     const url = req.nextUrl.clone();
-    const role = req.cookies.get("role")?.value; // Ambil role dari cookie
 
     if (!token) {
-        // Redirect jika tidak ada token
+        // Redirect jika token tidak ada
         if (url.pathname.startsWith("/psikolog")) {
             return NextResponse.redirect(new URL("/", req.url));
         }
@@ -21,20 +23,24 @@ export function middleware(req) {
     }
 
     if (role === "U" || role === "M") {
-        // Hanya izinkan akses ke halaman non-psikolog
         if (url.pathname.startsWith("/psikolog")) {
             return NextResponse.redirect(new URL("/", req.url));
         }
     } else if (role === "P" || role === "K") {
-        // Hanya izinkan akses ke halaman psikolog
         if (!url.pathname.startsWith("/psikolog")) {
             return NextResponse.redirect(new URL("/psikolog/dashboard", req.url));
         }
+    } else if (role === "A") {
+        if (!url.pathname.startsWith("/admin")) {
+            return NextResponse.redirect(new URL("/admin/dashboard", req.url));
+        }
+    } else {
+        return NextResponse.redirect(new URL("/", req.url));
     }
 
     return NextResponse.next(); // Lanjutkan jika tidak ada pembatasan
 }
 
 export const config = {
-    matcher: ["/((?!_next|api).*)"], // Middleware dijalankan untuk halaman tertentu saja
+    matcher: ["/((?!_next|api|admin/login).*)"], // Middleware dijalankan untuk halaman tertentu saja
 };

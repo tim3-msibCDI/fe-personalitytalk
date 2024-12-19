@@ -29,6 +29,7 @@ export default function Login() {
       const token = data.data.token; //Ambil token dari response token
       const role = data.data.role; //ambil role untuk otorisasi dari response role
       setToken(token, role); // Simpan token dan role
+      console.log(token, role);
       // Navigasi berdasarkan role
       if (["U", "M"].includes(role)) {
         router.push("/"); // Arahkan ke halaman utama untuk user biasa

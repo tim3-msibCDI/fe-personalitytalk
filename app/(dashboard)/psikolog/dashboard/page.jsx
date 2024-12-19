@@ -50,6 +50,7 @@ export default function PsikologDashboard() {
 
     useEffect(() => {
         if (dashboardData) {
+
             const animate = (key, target) => {
                 let start = 0;
                 const duration = 1000; // Durasi animasi dalam milidetik
