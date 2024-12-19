@@ -54,59 +54,77 @@ export default function ArticleForm({
     }
   };
 
-  // Handle submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = {
-      article_title: title,
-      category_id: parseInt(category, 10),
-      publication_date: new Date().toISOString().split("T")[0], // Tanggal publikasi otomatis
-      content,
-      publisher_name: reviewedBy,
-      article_img: article_img,
-    };
-
-    // For debugging purposes
-    console.log("Category Type:", typeof formData.category_id);
-    console.log("Form Data:", formData);
-
-    // Tambahkan admin_id hanya jika mode tambah
-    if (isAddMode) {
-      formData.admin_id = 1; // Admin ID otomatis
-    }
-
     setLoading(true);
+
     try {
       let response;
 
       if (isAddMode) {
-        // Mode Tambah Artikel
-        response = await addArticle(formData);
+        // Penambahan data menggunakan FormData
+        const formData = new FormData();
+        formData.append("article_title", title);
+        formData.append("category_id", parseInt(category, 10));
+        formData.append(
+          "publication_date",
+          new Date().toISOString().split("T")[0]
+        );
+        formData.append("content", content);
+        formData.append("publisher_name", reviewedBy);
+
+        if (article_img instanceof File) {
+          formData.append("article_img", article_img);
+        }
+
+        formData.append("admin_id", 1); // Admin ID otomatis
+
+        response = await addArticle(formData); // Kirim FormData
         setMessage(response.message || "Artikel berhasil ditambahkan");
       } else if (isEditMode && articleData?.id) {
-        // Mode Edit Artikel, kirim hanya data yang berubah
+        // Pengeditan data
         const updatedData = {};
-        for (const key in formData) {
+        Object.keys(articleData).forEach((key) => {
+          if (
+            key === "category" &&
+            parseInt(category, 10) === articleData.category
+          ) {
+            return; // Jangan kirim kategori jika tidak berubah
+          }
+
           if (formData[key] !== articleData[key]) {
             updatedData[key] = formData[key];
           }
+        });
+
+        // Jika ada file baru, gunakan FormData
+        if (article_img instanceof File) {
+          const formData = new FormData();
+          Object.entries(updatedData).forEach(([key, value]) =>
+            formData.append(key, value)
+          );
+          formData.append("article_img", article_img);
+          response = await editArticle(articleData.id, formData);
+        } else {
+          // Kirim data JSON jika tidak ada file baru
+          response = await editArticle(articleData.id, updatedData);
         }
 
-        response = await editArticle(articleData.id, updatedData);
         setMessage(response.message || "Artikel berhasil diubah");
       }
 
       setIsModalOpen(true);
-
-      // Redirect setelah sukses
       setTimeout(() => {
         setIsModalOpen(false);
-        router.push("/admin/artikel/artikel"); // Ganti dengan path tujuan
+        router.push("/admin/artikel/artikel");
       }, 3000);
     } catch (error) {
-      console.error("Error:", error.message);
-      setMessage(error.message || "Terjadi kesalahan saat memproses artikel");
+      console.error("Error:", error);
+      const errorMessage =
+        error.response?.data?.message ||
+        "Terjadi kesalahan saat memproses artikel";
+      setMessage(errorMessage);
       setIsModalOpen(true);
     } finally {
       setLoading(false);

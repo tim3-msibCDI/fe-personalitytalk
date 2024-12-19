@@ -210,18 +210,22 @@ export async function addArticle(articleData) {
 }
 
 // Fungsi untuk mengedit artikel
-export async function editArticle(articleId, articleData) {
+export async function editArticle(articleId, updatedData) {
   try {
     const formData = new FormData();
-    formData.append("article_title", articleData.article_title);
-    formData.append("category", articleData.category);
-    formData.append("publication_date", articleData.publication_date);
-    formData.append("content", articleData.content);
-    formData.append("publisher_name", articleData.publisher_name);
 
-    if (articleData.article_img && articleData.article_img instanceof File) {
-      formData.append("article_img", articleData.article_img);
-    }
+    // Hanya tambahkan field yang ada dalam updatedData
+    Object.entries(updatedData).forEach(([key, value]) => {
+      // Periksa apakah article_img ada dan merupakan file baru
+      if (key === "article_img") {
+        if (value instanceof File) {
+          // Hanya tambahkan jika ada file baru
+          formData.append(key, value);
+        }
+      } else {
+        formData.append(key, value);
+      }
+    });
 
     const response = await fetch(`${API_URL}/admin/articles/${articleId}`, {
       method: "POST", // Gunakan method POST untuk edit
@@ -237,7 +241,11 @@ export async function editArticle(articleId, articleData) {
       throw new Error(errorData || "Gagal mengedit artikel");
     }
 
-    return { success: true, message: "Artikel berhasil diedit" };
+    const responseData = await response.json();
+    return {
+      success: true,
+      message: responseData.message || "Artikel berhasil diedit",
+    };
   } catch (error) {
     console.error("Error in editArticle:", error.message);
     return { success: false, message: error.message };

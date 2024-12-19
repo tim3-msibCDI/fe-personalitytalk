@@ -51,19 +51,13 @@ export default function PreviewArtikelPage() {
     <>
       <HeaderAdmin />
       <div className="p-6">
-        <h1 className="text-2xl font-semibold mb-4">
+        <div className="text-m font-normal">{articleData.category}</div>
+        <h1 className="text-h1 font-semibold my-1">
           {articleData.article_title}
         </h1>
-        <div className="mb-4">
-          <span className="font-semibold">Kategori: </span>
-          {articleData.category}
-        </div>
-        <div className="mb-4">
-          <span className="font-semibold">Tanggal Publikasi: </span>
-          {articleData.publication_date}
-        </div>
-        <div className="mb-4">
-          <span className="font-semibold">Ditinjau Oleh: </span>
+        <div className="my-1 text-vs">{articleData.publication_date}</div>
+        <div className="my-1 text-vs">
+          <span className="font-semibold text-vs">Ditinjau Oleh: </span>
           {articleData.publisher_name}
         </div>
         {articleData.article_img && (
@@ -72,8 +66,8 @@ export default function PreviewArtikelPage() {
               src={articleData.article_img}
               alt="Article Image"
               width={600}
-              height={400}
-              className="rounded-lg"
+              height={300}
+              className="rounded-md"
             />
           </div>
         )}

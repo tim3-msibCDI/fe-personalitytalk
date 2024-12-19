@@ -15,6 +15,19 @@ export default function EditArticlePage() {
   const [articleData, setArticleData] = useState(null); // State untuk data artikel
   const [loading, setLoading] = useState(true); // State untuk loading
 
+  // Daftar kategori dan ID
+  const categoryMapping = {
+    Teknologi: 1,
+    Kesehatan: 2,
+    Pendidikan: 3,
+    Bisnis: 4,
+    Hiburan: 5,
+    Olahraga: 6,
+    Travel: 7,
+    "Gaya Hidup": 8,
+    Politik: 14,
+  };
+
   // Fetch data artikel
   useEffect(() => {
     const fetchArticleData = async () => {
@@ -25,8 +38,16 @@ export default function EditArticlePage() {
 
           if (success) {
             const dataArtikel = data.data;
-            console.log(dataArtikel);
-            setArticleData(dataArtikel);
+
+            // Ubah kategori menjadi angka berdasarkan mapping
+            const categoryID = categoryMapping[dataArtikel.category] || "";
+            const updatedData = {
+              ...dataArtikel,
+              category: categoryID, // Ganti kategori menjadi angka
+            };
+
+            console.log("Updated Article Data:", updatedData);
+            setArticleData(updatedData);
           } else {
             console.error("Error fetching article detail:", message);
           }
