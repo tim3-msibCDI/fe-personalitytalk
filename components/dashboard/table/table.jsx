@@ -22,6 +22,7 @@ import { deletePsikolog, deletePricePsikolog } from "@/api/manage-psikolog";
 import { deleteTopic } from "@/api/manage-konsultasi";
 import { deletePaymentMethod, deleteVoucher } from "@/api/manage-keuangan";
 import { deletePartner } from "@/api/manage-dashboard";
+import { deleteArticle } from "@/api/manage-artikel";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
@@ -116,6 +117,8 @@ export default function Table() {
           const result = await deleteVoucher(selectedRow.id);
         } else if (pathname === "/admin/lainnya/mitra") {
           const result = await deletePartner(selectedRow.id);
+        } else if (pathname === "/admin/artikel/artikel") {
+          const result = await deleteArticle(selectedRow.id);
         }
 
         await mutate(`${API_URL}${endpoint}`);
@@ -825,14 +828,14 @@ export default function Table() {
                 <ShowButton
                   onClick={() =>
                     router.push(
-                      `/admin/pengguna/mahasiswa/detail-mahasiswa?id=${row.id}`
+                      `/admin/artikel/artikel/preview-artikel?id=${row.id}`
                     )
                   }
                 />
                 <EditButton
                   onClick={() =>
                     router.push(
-                      `/admin/pengguna/mahasiswa/edit-mahasiswa?id=${row.id}`
+                      `/admin/artikel/artikel/edit-artikel?id=${row.id}`
                     )
                   }
                 />

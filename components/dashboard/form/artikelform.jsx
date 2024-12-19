@@ -3,7 +3,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Modal from "@/components/modals/modal";
-import { addArticle, editArticle } from "@/api/manage-dashboard";
+import Image from "next/image";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import CSS tema Quill
+import { editArticle, addArticle } from "@/api/manage-artikel";
 
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
 
@@ -17,8 +20,8 @@ export default function ArticleForm({
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [reviewedBy, setReviewedBy] = useState("");
-  const [longDescription, setLongDescription] = useState("");
-  const [img, setImg] = useState(null);
+  const [content, setContent] = useState("");
+  const [article_img, setArticleImg] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -26,70 +29,119 @@ export default function ArticleForm({
 
   useEffect(() => {
     if (articleData) {
-      setTitle(articleData.title || "");
+      setTitle(articleData.article_title || "");
       setCategory(articleData.category || "");
-      setReviewedBy(articleData.reviewedBy || "");
-      setLongDescription(articleData.longDescription || "");
+      setReviewedBy(articleData.publisher_name || "");
+      setContent(articleData.content || "");
 
-      const linkImage =
-        articleData.img && articleData.img.startsWith("http")
-          ? articleData.img
-          : articleData.img
-          ? `${API_REAL}${articleData.img}`
-          : "/image/default-placeholder.png";
+      const linkPhoto =
+        articleData.article_img && articleData.article_img.startsWith("http")
+          ? articleData.article_img
+          : articleData.article_img
+          ? `${API_REAL}${articleData.article_img}`
+          : "/image/upload_picture_long.png";
 
-      setImg(linkImage);
-      setPreviewImage(linkImage);
+      setPreviewImage(linkPhoto);
+      setArticleImg(linkPhoto); // Atur preview untuk artikel image
     }
   }, [articleData]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImg(file);
+      setArticleImg(file);
       setPreviewImage(URL.createObjectURL(file));
-    } else {
-      setImg(null);
-      setPreviewImage(null);
     }
   };
 
+  // Handle submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = {
-      title,
-      category,
-      reviewedBy,
-      longDescription,
-      img,
+      article_title: title,
+      category_id: parseInt(category, 10),
+      publication_date: new Date().toISOString().split("T")[0], // Tanggal publikasi otomatis
+      content,
+      publisher_name: reviewedBy,
+      article_img: article_img,
     };
+
+    // For debugging purposes
+    console.log("Category Type:", typeof formData.category_id);
+    console.log("Form Data:", formData);
+
+    // Tambahkan admin_id hanya jika mode tambah
+    if (isAddMode) {
+      formData.admin_id = 1; // Admin ID otomatis
+    }
 
     setLoading(true);
     try {
       let response;
+
       if (isAddMode) {
+        // Mode Tambah Artikel
         response = await addArticle(formData);
-        setMessage(response.message || "Artikel berhasil ditambahkan.");
-      } else if (isEditMode) {
-        response = await editArticle(articleData.id, formData);
-        setMessage(response.message || "Artikel berhasil diperbarui.");
-      } else {
-        setMessage("Tidak ada perubahan.");
-        return;
+        setMessage(response.message || "Artikel berhasil ditambahkan");
+      } else if (isEditMode && articleData?.id) {
+        // Mode Edit Artikel, kirim hanya data yang berubah
+        const updatedData = {};
+        for (const key in formData) {
+          if (formData[key] !== articleData[key]) {
+            updatedData[key] = formData[key];
+          }
+        }
+
+        response = await editArticle(articleData.id, updatedData);
+        setMessage(response.message || "Artikel berhasil diubah");
       }
 
       setIsModalOpen(true);
+
+      // Redirect setelah sukses
       setTimeout(() => {
         setIsModalOpen(false);
-        router.push("/admin/articles");
+        router.push("/admin/artikel/artikel"); // Ganti dengan path tujuan
       }, 3000);
     } catch (error) {
-      setMessage(error.message || "Terjadi kesalahan.");
+      console.error("Error:", error.message);
+      setMessage(error.message || "Terjadi kesalahan saat memproses artikel");
+      setIsModalOpen(true);
     } finally {
       setLoading(false);
     }
   };
+
+  const modules = {
+    toolbar: [
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [{ color: [] }, { background: [] }],
+      [{ align: [] }],
+    ],
+  };
+
+  const formats = [
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+    "video",
+    "color",
+    "background",
+    "align",
+  ];
 
   return (
     <>
@@ -97,29 +149,29 @@ export default function ArticleForm({
         <div className="grid grid-cols-2 gap-6">
           {/* Image Upload */}
           <div>
-            <div className="w-full h-56 bg-gray-200 flex items-center justify-center rounded-lg overflow-hidden">
-              <img
-                src={previewImage || "/image/upload_picture_long.png"}
+            <div className="relative w-full h-56 bg-gray-200 flex items-center justify-center rounded-lg overflow-hidden">
+              <Image
+                src={previewImage || "/image/upload_picture.png"}
                 alt="Preview"
-                className="object-cover h-full w-full"
+                layout="fill"
+                objectFit="cover"
+                priority
               />
             </div>
-            {!isViewMode && (
-              <div className="mt-2">
-                <label className="block text-sm font-medium text-gray-700">
-                  Pilih File
-                </label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="mt-1 block w-full text-sm file:py-1 file:px-3 file:border file:border-gray-300 file:rounded-md file:text-sm file:bg-white file:text-gray-700 hover:file:bg-gray-100"
-                />
-              </div>
-            )}
+            <div className="mt-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Pilih File
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="mt-1 block w-full"
+              />
+            </div>
           </div>
 
-          {/* Right Side Inputs */}
+          {/* Input Fields */}
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -139,15 +191,21 @@ export default function ArticleForm({
               </label>
               <select
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={(e) => setCategory(parseInt(e.target.value, 10))} // Konversi ke number
                 className="mt-1 block w-full border rounded-md p-2"
               >
                 <option value="" disabled>
                   Pilih Kategori Artikel
                 </option>
-                <option value="Berita">Berita</option>
-                <option value="Opini">Opini</option>
-                <option value="Tutorial">Tutorial</option>
+                <option value={1}>Teknologi</option>
+                <option value={2}>Kesehatan</option>
+                <option value={3}>Pendidikan</option>
+                <option value={4}>Bisnis</option>
+                <option value={5}>Hiburan</option>
+                <option value={6}>Olahraga</option>
+                <option value={7}>Travel</option>
+                <option value={8}>Gaya Hidup</option>
+                <option value={14}>Politik</option>
               </select>
             </div>
             <div>
@@ -165,17 +223,19 @@ export default function ArticleForm({
           </div>
         </div>
 
-        {/* Long Description */}
+        {/* Rich Text Editor for Long Description */}
         <div className="mt-4">
           <label className="block text-sm font-medium text-gray-700">
             Deskripsi Panjang
           </label>
-          <textarea
-            value={longDescription}
-            onChange={(e) => setLongDescription(e.target.value)}
-            placeholder="Tuliskan Isi Artikel"
-            rows="8"
-            className="mt-1 block w-full border rounded-md p-2"
+          <ReactQuill
+            theme="snow"
+            value={content}
+            onChange={setContent}
+            formats={formats}
+            modules={modules}
+            placeholder="Tulis konten artikel di sini..."
+            className="bg-white h-64 pb-10"
           />
         </div>
 
@@ -191,21 +251,9 @@ export default function ArticleForm({
         </div>
       </form>
 
-      {/* Success Modal */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="p-6 text-center">
-          <img
-            src="/icons/dashboard/sucess.svg"
-            width={100}
-            height={100}
-            alt="success"
-            className="mx-auto"
-          />
-          <h2 className="mt-4 text-lg font-semibold text-gray-700">
-            {isAddMode
-              ? "Artikel Berhasil Ditambahkan!"
-              : "Artikel Berhasil Diperbarui!"}
-          </h2>
+          <h2 className="text-h2 font-medium text-textcolor">{message}</h2>
         </div>
       </Modal>
     </>

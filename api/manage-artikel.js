@@ -177,8 +177,9 @@ export async function getAllArticles() {
 export async function addArticle(articleData) {
   try {
     const formData = new FormData();
+    formData.append("admin_id", articleData.admin_id);
     formData.append("article_title", articleData.article_title);
-    formData.append("category", articleData.category);
+    formData.append("category_id", articleData.category_id);
     formData.append("publication_date", articleData.publication_date);
     formData.append("content", articleData.content);
     formData.append("publisher_name", articleData.publisher_name);
@@ -283,7 +284,7 @@ export async function getArticleDetail(articleId) {
     }
 
     const data = await response.json();
-    return { success: true, data: data.article };
+    return { success: true, data: data };
   } catch (error) {
     console.error("Error in getArticleDetail:", error.message);
     return { success: false, message: error.message, data: null };
