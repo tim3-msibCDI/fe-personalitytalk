@@ -20,15 +20,7 @@ export default function PreviewArtikelPage() {
         const { success, data, message } = await getArticleDetail(id);
         if (success) {
           const dataArticle = data.data;
-
-          // Pastikan path article_img adalah URL absolut
-          const articleImgPath =
-            dataArticle.article_img?.startsWith("http") ||
-            dataArticle.article_img?.startsWith("/")
-              ? dataArticle.article_img
-              : `${API_REAL}/${dataArticle.article_img}`;
-
-          setArticleData({ ...dataArticle, article_img: articleImgPath });
+          setArticleData(dataArticle);
         } else {
           console.error("Error fetching article detail:", message);
         }
@@ -47,12 +39,19 @@ export default function PreviewArtikelPage() {
     return <div>No article data found</div>;
   }
 
+  const photoPreview =
+    articleData.article_img && articleData.article_img.startsWith("http")
+      ? articleData.article_img
+      : articleData.article_img
+      ? `${API_REAL}${articleData.article_img}`
+      : "/image/default-profile.jpg";
+
   return (
     <>
       <HeaderAdmin />
       <div className="p-6">
         <div className="text-m font-normal">{articleData.category}</div>
-        <h1 className="text-h1 font-semibold my-1">
+        <h1 className="text-h1 font-semibold mb-1">
           {articleData.article_title}
         </h1>
         <div className="my-1 text-vs">{articleData.publication_date}</div>
@@ -60,10 +59,10 @@ export default function PreviewArtikelPage() {
           <span className="font-semibold text-vs">Ditinjau Oleh: </span>
           {articleData.publisher_name}
         </div>
-        {articleData.article_img && (
+        {photoPreview && (
           <div className="mb-4">
             <Image
-              src={articleData.article_img}
+              src={photoPreview}
               alt="Article Image"
               width={600}
               height={300}

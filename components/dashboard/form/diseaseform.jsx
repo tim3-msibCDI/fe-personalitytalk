@@ -6,50 +6,45 @@ import Modal from "@/components/modals/modal";
 import Image from "next/image";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import CSS tema Quill
-import { editArticle, addArticle } from "@/api/manage-artikel";
+import { addDisease, editDisease } from "@/api/manage-artikel";
 
 const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
 
-export default function ArticleForm({
+export default function DiseaseForm({
   isEditMode = false,
   isAddMode = false,
-  isViewMode = false,
-  articleData,
+  diseaseData,
 }) {
   const router = useRouter();
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [reviewedBy, setReviewedBy] = useState("");
+  const [name, setName] = useState("");
   const [content, setContent] = useState("");
-  const [article_img, setArticleImg] = useState(null);
+  const [disease_img, setDiseaseImg] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (articleData) {
-      setTitle(articleData.article_title || "");
-      setCategory(articleData.category || "");
-      setReviewedBy(articleData.publisher_name || "");
-      setContent(articleData.content || "");
+    if (diseaseData) {
+      setName(diseaseData.disease_name || "");
+      setContent(diseaseData.content || "");
 
       const linkPhoto =
-        articleData.article_img && articleData.article_img.startsWith("http")
-          ? articleData.article_img
-          : articleData.article_img
-          ? `${API_REAL}${articleData.article_img}`
+        diseaseData.disease_img && diseaseData.disease_img.startsWith("http")
+          ? diseaseData.disease_img
+          : diseaseData.disease_img
+          ? `${API_REAL}${diseaseData.disease_img}`
           : "/image/upload_picture_long.png";
 
       setPreviewImage(linkPhoto);
-      setArticleImg(linkPhoto); // Atur preview untuk artikel image
+      setDiseaseImg(linkPhoto); // Atur preview untuk gambar penyakit
     }
-  }, [articleData]);
+  }, [diseaseData]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setArticleImg(file);
+      setDiseaseImg(file);
       setPreviewImage(URL.createObjectURL(file));
     }
   };
@@ -63,69 +58,56 @@ export default function ArticleForm({
       let response;
 
       if (isAddMode) {
-        // Penambahan data menggunakan FormData
         const formData = new FormData();
-        formData.append("article_title", title);
-        formData.append("category_id", parseInt(category, 10));
-        formData.append(
-          "publication_date",
-          new Date().toISOString().split("T")[0]
-        );
+        formData.append("disease_name", name);
         formData.append("content", content);
-        formData.append("publisher_name", reviewedBy);
-
-        if (article_img instanceof File) {
-          formData.append("article_img", article_img);
-        }
-
         formData.append("admin_id", 1); // Admin ID otomatis
 
-        response = await addArticle(formData); // Kirim FormData
-        setMessage(response.message || "Artikel berhasil ditambahkan");
+        if (disease_img instanceof File) {
+          formData.append("disease_img", disease_img);
+        }
+
+        response = await addDisease(formData); // Kirim FormData
+        setMessage(response.message || "Penyakit berhasil ditambahkan");
       }
-      if (isEditMode && articleData?.id) {
+
+      if (isEditMode && diseaseData?.id) {
         const updatedData = {
-          article_title: title,
-          category_id: parseInt(category, 10),
-          publication_date: new Date().toISOString().split("T")[0],
+          disease_name: name,
           content: content,
-          publisher_name: reviewedBy,
         };
 
-        // Hanya tambahkan key yang diubah
         Object.keys(updatedData).forEach((key) => {
-          if (updatedData[key] === articleData[key]) {
+          if (updatedData[key] === diseaseData[key]) {
             delete updatedData[key]; // Hapus key yang tidak berubah
           }
         });
 
-        if (article_img instanceof File) {
-          // Jika ada file baru, gunakan FormData
+        if (disease_img instanceof File) {
           const formData = new FormData();
           Object.entries(updatedData).forEach(([key, value]) =>
             formData.append(key, value)
           );
-          formData.append("article_img", article_img);
+          formData.append("disease_img", disease_img);
 
-          response = await editArticle(articleData.id, formData);
+          response = await editDisease(diseaseData.id, formData);
         } else {
-          // Kirim data JSON jika tidak ada file baru
-          response = await editArticle(articleData.id, updatedData);
+          response = await editDisease(diseaseData.id, updatedData);
         }
 
-        setMessage(response.message || "Artikel berhasil diubah");
+        setMessage(response.message || "Penyakit berhasil diubah");
       }
 
       setIsModalOpen(true);
       setTimeout(() => {
         setIsModalOpen(false);
-        router.push("/admin/artikel/artikel");
+        router.push("/admin/artikel/informasi-kesehatan");
       }, 3000);
     } catch (error) {
       console.error("Error:", error);
       const errorMessage =
         error.response?.data?.message ||
-        "Terjadi kesalahan saat memproses artikel";
+        "Terjadi kesalahan saat memproses data penyakit";
       setMessage(errorMessage);
       setIsModalOpen(true);
     } finally {
@@ -195,58 +177,23 @@ export default function ArticleForm({
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Judul Artikel
+                Nama Penyakit
               </label>
               <input
                 type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Masukkan Judul Artikel"
-                className="mt-1 block w-full border rounded-md p-2"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Kategori
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(parseInt(e.target.value, 10))} // Konversi ke number
-                className="mt-1 block w-full border rounded-md p-2"
-              >
-                <option value="" disabled>
-                  Pilih Kategori Artikel
-                </option>
-                <option value={1}>Teknologi</option>
-                <option value={2}>Kesehatan</option>
-                <option value={3}>Pendidikan</option>
-                <option value={4}>Bisnis</option>
-                <option value={5}>Hiburan</option>
-                <option value={6}>Olahraga</option>
-                <option value={7}>Travel</option>
-                <option value={8}>Gaya Hidup</option>
-                <option value={14}>Politik</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Ditinjau Oleh
-              </label>
-              <input
-                type="text"
-                value={reviewedBy}
-                onChange={(e) => setReviewedBy(e.target.value)}
-                placeholder="Masukkan nama peninjau"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Masukkan Nama Penyakit"
                 className="mt-1 block w-full border rounded-md p-2"
               />
             </div>
           </div>
         </div>
 
-        {/* Rich Text Editor for Long Description */}
+        {/* Rich Text Editor for Content */}
         <div className="mt-4">
           <label className="block text-sm font-medium text-gray-700">
-            Deskripsi Panjang
+            Deskripsi Penyakit
           </label>
           <ReactQuill
             theme="snow"
@@ -254,7 +201,7 @@ export default function ArticleForm({
             onChange={setContent}
             formats={formats}
             modules={modules}
-            placeholder="Tulis konten artikel di sini..."
+            placeholder="Tulis deskripsi penyakit di sini..."
             className="bg-white h-64 pb-10"
           />
         </div>
