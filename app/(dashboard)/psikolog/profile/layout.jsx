@@ -23,7 +23,7 @@ export default function ProfilePsikologLayout({ children }) {
         {/* Sidebar Here */}
         <SidebarProfilePsikolog />
 
-        <div className="flex-1 rounded-lg bg-primarylight2 py-6 px-8 grid justify-items-center border border-solid border-textsec mt-4 lg:mt-0">
+        <div className="flex-1 rounded-lg bg-primarylight2 py-6 px-8 grid border border-solid border-textsec mt-4 lg:mt-0">
           {children}
         </div>
       </div>

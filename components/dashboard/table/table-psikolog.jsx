@@ -12,6 +12,8 @@ import KeluhanPsikolog from "@/components/popup/keluhan-psikolog";
 import InformasiTransaksi from "@/components/popup/info-transaksi";
 import Image from "next/image";
 import TerimaPembayaran from "@/components/popup/terima-bayar";
+import Filter from "./filter";
+import SearchBar from "./search-bar";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -60,7 +62,10 @@ export default function TablePsikolog() {
     const [isCheckModalOpen, setIsCheckModalOpen] = useState(false);
     const [currentComplaint, setCurrentComplaint] = useState(null);
     const [selectedTransactionId, setSelectedTransactionId] = useState(null);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filter, setFilter] = useState("");
 
+    let searchPlaceholder = "Cari Data";
     const apiEndpoint = pathname === "/psikolog/transaksi"
         ? `${API_URL}/psikolog/transactions?page=${currentPage}`
         : `${API_URL}/psikolog/consultations?page=${currentPage}`;
@@ -288,8 +293,28 @@ export default function TablePsikolog() {
         }
     };
 
+    const filterOptions = [
+        { value: "data1", label: "Data 1" },
+        { value: "data2", label: "Data 2" },
+        { value: "data3", label: "Data 3" },
+    ];
+
     return (
         <div className="overflow-x-auto">
+            {/* Filter dan Search */}
+            <div className="flex items-center space-x-4 mb-4">
+                <Filter
+                    options={filterOptions} // Mengirim data dummy sebagai options
+                    selectedOption={filter}
+                    onChange={(value) => setFilter(value)} // Mengubah filter state
+                />
+                <SearchBar
+                    value={searchQuery}
+                    onChange={setSearchQuery}
+                    placeholder={searchPlaceholder}
+                />
+            </div>
+            {/* Tabel */}
             <table className="w-full min-w-max bg-primarylight2 border border-text2 text-center text-s">
                 <TableHead heads={tableHead} />
                 <TableBody rows={transactions} columns={columns} />

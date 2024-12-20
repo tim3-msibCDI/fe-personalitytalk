@@ -84,21 +84,21 @@ export default function SidebarProfilePsikolog() {
               </Link>
             </li>
 
-            {/* Konsultasi Link */}
+            {/* Rating Link */}
             <li
               className={`flex p-3 my-2 gap-2 rounded-lg cursor-pointer ${
-                isActive("/psikolog/profile/konsultasi")
+                isActive("/psikolog/profile/rating")
                   ? "bg-primary font-semibold text-whitebg"
                   : ""
               }`}
             >
               <Link
-                href="/psikolog/profile/konsultasi"
+                href="/psikolog/profile/rating"
                 className="flex items-center"
               >
                 <Image
                   src={
-                    isActive("/psikolog/profile/konsultasi")
+                    isActive("/psikolog/profile/rating")
                       ? "/icons/star-white.svg"
                       : "/icons/star.svg"
                   }
