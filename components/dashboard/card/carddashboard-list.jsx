@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { getDashboardData } from "@/api/manage-dashboard";
 
 export default function CardDashboardList() {
   const [data, setData] = useState(null);
@@ -8,17 +9,22 @@ export default function CardDashboardList() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setData({
-        totalUsers: 1500,
-        totalTeachers: 250,
-        totalConsultants: 80,
-        totalCourses: 500,
-      });
+    const fetchData = async () => {
+      const result = await getDashboardData();
+      if (result.success) {
+        setData({
+          totalUsers: result.data.totalUser,
+          totalTeachers: result.data.totalPsikolog,
+          totalConsultants: result.data.totalConsultation,
+          totalCourses: result.data.totalCourse,
+        });
+      } else {
+        setError(result.message);
+      }
       setIsLoading(false);
-    }, 2000);
+    };
 
-    return () => clearTimeout(timeout);
+    fetchData();
   }, []);
 
   if (error) return <div>Error: {error}</div>;
