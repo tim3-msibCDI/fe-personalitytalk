@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { getArticleDetail } from "@/api/manage-artikel";
 import Image from "next/image";
 
-const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
+const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
 
 export default function PreviewArtikelPage() {
   const searchParams = useSearchParams();
@@ -43,7 +43,7 @@ export default function PreviewArtikelPage() {
     articleData.article_img && articleData.article_img.startsWith("http")
       ? articleData.article_img
       : articleData.article_img
-      ? `${API_REAL}${articleData.article_img}`
+      ? `${API_REAL}/${articleData.article_img}`
       : "/image/default-profile.jpg";
 
   return (

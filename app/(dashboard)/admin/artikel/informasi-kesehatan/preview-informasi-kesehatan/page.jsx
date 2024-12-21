@@ -7,7 +7,7 @@ import { getDiseaseDetail } from "@/api/manage-artikel";
 import Image from "next/image";
 import { SkeletonTable } from "@/components/dashboard/table/skeleton-table";
 
-const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
+const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
 
 // Fungsi untuk memformat tanggal (menambahkan nama hari)
 const formatDate = (dateString) => {
@@ -69,7 +69,7 @@ export default function PreviewDiseasePage() {
     diseaseData.disease_img && diseaseData.disease_img.startsWith("http")
       ? diseaseData.disease_img
       : diseaseData.disease_img
-      ? `${API_REAL}${diseaseData.disease_img}`
+      ? `${API_REAL}/${diseaseData.disease_img}`
       : "/image/default-profile.jpg";
 
   return (

@@ -8,7 +8,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import CSS tema Quill
 import { addDisease, editDisease } from "@/api/manage-artikel";
 
-const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
+const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
 
 export default function DiseaseForm({
   isEditMode = false,
@@ -33,7 +33,7 @@ export default function DiseaseForm({
         diseaseData.disease_img && diseaseData.disease_img.startsWith("http")
           ? diseaseData.disease_img
           : diseaseData.disease_img
-          ? `${API_REAL}${diseaseData.disease_img}`
+          ? `${API_REAL}/${diseaseData.disease_img}`
           : "/image/upload_picture_long.png";
 
       setPreviewImage(linkPhoto);

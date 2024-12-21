@@ -8,7 +8,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import CSS tema Quill
 import { editArticle, addArticle } from "@/api/manage-artikel";
 
-const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
+const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
 
 export default function ArticleForm({
   isEditMode = false,
@@ -38,7 +38,7 @@ export default function ArticleForm({
         articleData.article_img && articleData.article_img.startsWith("http")
           ? articleData.article_img
           : articleData.article_img
-          ? `${API_REAL}${articleData.article_img}`
+          ? `${API_REAL}/${articleData.article_img}`
           : "/image/upload_picture_long.png";
 
       setPreviewImage(linkPhoto);

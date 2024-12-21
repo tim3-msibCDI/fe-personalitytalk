@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import Loading from "@/components/loading/loading";
 
 export default function Article() {
     // State untuk menyimpan kategori dan artikel
@@ -200,7 +201,7 @@ export default function Article() {
                         className="flex items-center gap-16 overflow-hidden whitespace-nowrap"
                     >
                         {loadingCategories ? (
-                            <p>Loading kategori...</p>
+                            <Loading/>
                         ) : error ? (
                             <p className="text-red-500">{error}</p>
                         ) : (
@@ -229,7 +230,7 @@ export default function Article() {
             </div>
             <div className="flex flex-wrap gap-y-5 gap-x-4 mt-2">
                 {loadingArticles ? (
-                    <p>Loading artikel...</p>
+                    <Loading/>
                 ) : currentItems.length > 0 ? (
                     currentItems.map((item) => (
                         <Link
