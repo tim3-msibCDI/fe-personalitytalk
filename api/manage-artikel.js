@@ -216,12 +216,9 @@ export async function editArticle(articleId, updatedData) {
 
     // Hanya tambahkan field yang ada dalam updatedData
     Object.entries(updatedData).forEach(([key, value]) => {
-      // Periksa apakah article_img ada dan merupakan file baru
-      if (key === "article_img") {
-        if (value instanceof File) {
-          // Hanya tambahkan jika ada file baru
-          formData.append(key, value);
-        }
+      if (key === "article_img" && value instanceof File) {
+        // Jika article_img adalah file, tambahkan ke FormData
+        formData.append(key, value);
       } else {
         formData.append(key, value);
       }
@@ -296,5 +293,125 @@ export async function getArticleDetail(articleId) {
   } catch (error) {
     console.error("Error in getArticleDetail:", error.message);
     return { success: false, message: error.message, data: null };
+  }
+}
+
+export async function addDisease(diseaseData) {
+  try {
+    const formData = new FormData();
+    formData.append("disease_name", diseaseData.disease_name);
+    formData.append("content", diseaseData.content);
+    formData.append("admin_id", diseaseData.admin_id);
+
+    // Append disease_img hanya jika ada
+    if (diseaseData.disease_img) {
+      formData.append("disease_img", diseaseData.disease_img);
+    }
+
+    const response = await fetch(`${API_URL}/admin/diseases`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        "ngrok-skip-browser-warning": "69420",
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to add disease");
+    }
+
+    return { success: true, message: "Disease added successfully" };
+  } catch (error) {
+    console.error("Error in addDisease:", error.message);
+    return { success: false, message: error.message };
+  }
+}
+
+// Fungsi untuk mengedit penyakit
+export async function editDisease(diseaseId, diseaseData) {
+  try {
+    const formData = new FormData();
+    for (const key in diseaseData) {
+      if (
+        key === "disease_img" &&
+        (typeof diseaseData[key] === "string" || !diseaseData[key])
+      ) {
+        // Jangan tambahkan jika disease_img adalah URL atau null
+        continue;
+      }
+
+      if (diseaseData[key] !== null && diseaseData[key] !== undefined) {
+        formData.append(key, diseaseData[key]);
+      }
+    }
+
+    const response = await fetch(`${API_URL}/admin/diseases/${diseaseId}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        "ngrok-skip-browser-warning": "69420",
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData || "Failed to edit disease");
+    }
+
+    return { success: true, message: "Disease edited successfully" };
+  } catch (error) {
+    console.error("Error in editDisease:", error.message);
+    return { success: false, message: error.message };
+  }
+}
+
+// Fungsi untuk menghapus penyakit
+export async function deleteDisease(diseaseId) {
+  try {
+    const response = await fetch(`${API_URL}/admin/diseases/${diseaseId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to delete disease");
+    }
+
+    return { success: true, message: "Disease deleted successfully" };
+  } catch (error) {
+    console.error("Error in deleteDisease:", error.message);
+    return { success: false, message: error.message };
+  }
+}
+
+// Fungsi untuk mendapatkan detail penyakit
+export async function getDiseaseDetail(diseaseId) {
+  try {
+    const response = await fetch(`${API_URL}/admin/diseases/${diseaseId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "69420",
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to fetch disease details");
+    }
+
+    const diseaseData = await response.json();
+    return { success: true, data: diseaseData };
+  } catch (error) {
+    console.error("Error in getDiseaseDetail:", error.message);
+    return { success: false, message: error.message };
   }
 }
