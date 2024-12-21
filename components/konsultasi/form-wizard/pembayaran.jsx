@@ -5,15 +5,16 @@ import { useState, useEffect } from "react";
 import { getToken } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 
-export default function Pembayaran({ status }) {
+export default function Pembayaran({ status,  chat_status, chat_sessions_id, consultation_id, sender_id, receiver_id }) {
     const [isCatatanModalOpen, setCatatanModalOpen] = useState(false);
     const [formValues, setFormValues] = useState({
         nama: "",
         rekening: "",
         bukti: null,
     });
-    const [hasComplaint, setHasComplaint] = useState(false); // Status keluhan
+    const [hasComplaint, setHasComplaint] = useState(false); 
     const [isLoading, setIsLoading] = useState(false);
+    const [timeLeft, setTimeLeft] = useState(0);
 
     const router = useRouter();
 
@@ -22,7 +23,8 @@ export default function Pembayaran({ status }) {
 
     // Ambil ID Transaksi
     const transactionData = JSON.parse(localStorage.getItem("transactionData"));
-    const idTransaction = transactionData?.id_transaction || null;
+    const idTransaction = transactionData?.id_transaction;
+// console.log("ID Transaksi:", idTransaction);
 
     const handleInputChange = (field, value) => {
         setFormValues((prev) => ({ ...prev, [field]: value }));
@@ -39,7 +41,7 @@ export default function Pembayaran({ status }) {
             alert("ID transaksi tidak ditemukan di localStorage!");
             return;
         }
-        const idTransaction = transactionData.id_transaction;
+        const idTransaction = transactionData?.id_transaction;
 
         setIsLoading(true);
 
@@ -86,6 +88,25 @@ export default function Pembayaran({ status }) {
         router.push("/konsultasi"); // Navigasi ke halaman /konsultasi
     };
 
+    const handleChatClick = ({ consulId, chatSessionId, psikologId, senderId, chatStatus }) => {
+        if (chat_status === "scheduled") {
+          alert(
+            "Sesi konsultasi belum dimulai. Silakan tunggu hingga waktu yang dijadwalkan."
+          );
+        } else if (chat_status === "ongoing" || chat_status === "completed") {
+        //   setChatId(chat_sessions_id);
+        //   setConsulId(consultation_id);
+        //   setSenderId(sender_id);
+        //   setReceiverId(receiver_id);
+        //   setChatStatus(chat_status);
+
+          localStorage.setItem("clientChatData", JSON.stringify({ consulId, chatSessionId, psikologId, senderId, chatStatus }));
+          router.push(`/konsultasi/chat`);
+        } else {
+          alert("Chat hanya tersedia untuk sesi yang dijadwalkan atau sedang berlangsung.");
+        }
+      };
+
     useEffect(() => {
         if (!idTransaction) return;
 
@@ -123,6 +144,38 @@ export default function Pembayaran({ status }) {
         fetchComplaintStatus();
     }, [idTransaction]);
 
+    useEffect(() => {
+        if (status === "pending") {
+            // Ambil waktu akhir dari localStorage atau hitung baru jika tidak ada
+            const transactionEndTime =
+                localStorage.getItem("transactionEndTime") ||
+                new Date().getTime() + 15 * 60 * 1000; // 15 menit dari sekarang
+
+            localStorage.setItem("transactionEndTime", transactionEndTime); // Simpan waktu akhir jika belum ada
+
+            const timer = setInterval(() => {
+                const now = new Date().getTime();
+                const remainingTime = Math.max(Math.floor((transactionEndTime - now) / 1000), 0);
+
+                setTimeLeft(remainingTime);
+
+                if (remainingTime <= 0) {
+                    clearInterval(timer);
+                    alert("Waktu pembayaran telah habis.");
+                    // Tambahkan logika tambahan, seperti navigasi atau update status
+                }
+            }, 1000);
+
+            return () => clearInterval(timer); // Bersihkan timer saat komponen di-unmount
+        }
+    }, [status]);
+
+    const formatTime = (time) => {
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+        return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    };
+
     return (
         <div className="flex flex-row gap-8">
             {/* Batas Waktu */}
@@ -135,7 +188,7 @@ export default function Pembayaran({ status }) {
                         <div className="bg-primarylight2 rounded-b-lg text-s text-textcolor">
                             <div className="px-4 py-2 flex flex-col items-center text-center text-s">
                                 <p>Selesaikan Pembayaran sebelum waktu habis</p>
-                                <p className="font-semibold mt-2">04.00</p>
+                                <p className="font-semibold mt-2">{formatTime(timeLeft)}</p>
                             </div>
                             <div className="px-4 py-3">
                                 <form className="space-y-2">
@@ -237,7 +290,18 @@ export default function Pembayaran({ status }) {
                             <span>{hasComplaint ? "Keluhan Saya" : "Tambah Keluhan"}</span>
                         </button>
                         {/* Button Chat Psikolog */}
-                        <button className="flex items-center justify-center space-x-2 p-3 bg-primary text-whitebg text-m font-semibold rounded-lg">
+                        <button
+                         className="flex items-center justify-center space-x-2 p-3 bg-primary text-whitebg text-m font-semibold rounded-lg"
+                         onClick={() =>
+                            handleChatClick({
+                              consulId: consultation_id,
+                              chatSessionId: chat_sessions_id,
+                              psikologId: receiver_id, 
+                              senderId: sender_id,
+                              chatStatus: status,
+                            })
+                          }   
+                         >
                             <Image
                                 src="/icons/konsultasi.png"
                                 alt="Chat Psikolog Icon"
@@ -260,7 +324,7 @@ export default function Pembayaran({ status }) {
             </div>
             {/* Modal untuk Tambah Catatan */}
             <Modal isOpen={isCatatanModalOpen} onClose={closeCatatanModal}>
-                <Catatan onClose={closeCatatanModal} />
+                <Catatan onClose={closeCatatanModal} consulId={consultation_id}/>
             </Modal>
         </div>
     );

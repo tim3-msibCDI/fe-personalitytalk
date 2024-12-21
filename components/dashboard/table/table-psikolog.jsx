@@ -244,7 +244,10 @@ export default function TablePsikolog() {
                 key: "actions",
                 render: (value, row) => (
                     <div className="flex flex-col gap-2 py-1 px-10 items-center">
-                        <button className="flex items-center justify-center gap-2 px-2 py-1 w-full bg-primary text-white text-s rounded-md">
+                        <button
+                            onClick={() => navigateToChat(row.consul_id, row.chat_session_id, row.client_id, row.psikolog_id, row.status)}
+                            className="flex items-center justify-center gap-2 px-2 py-1 w-full bg-primary text-white text-s rounded-md"
+                        >
                             <img src="/icons/konsultasi.png" alt="Chat Icon" className="w-4 h-4" />
                             Chat Client
                         </button>
@@ -293,18 +296,33 @@ export default function TablePsikolog() {
         }
     };
 
-    const filterOptions = [
-        { value: "data1", label: "Data 1" },
-        { value: "data2", label: "Data 2" },
-        { value: "data3", label: "Data 3" },
-    ];
+    // Tentukan opsi filter berdasarkan halaman
+    const filterOptions = pathname === "/psikolog/chat"
+        ? [
+            { value: "scheduled", label: "Dijadwalkan" },
+            { value: "ongoing", label: "Sedang Berlangsung" },
+            { value: "completed", label: "Selesai" },
+        ]
+        : pathname === "/psikolog/transaksi"
+            ? [
+                { value: "pending", label: "Menunggu Konfirmasi" },
+                { value: "completed", label: "Diterima" },
+            ]
+            : [];
+
+    const navigateToChat = (consulId, chatSessionId, clientId, senderId, chatStatus) => {
+        // const chatData = { consulId, chatSessionId, clientId, senderId, chatStatus };
+        // console.log("Navigating to chat with:", { consulId, chatSessionId, clientId, senderId, chatStatus });
+        localStorage.setItem("psikologChatData", JSON.stringify({ consulId, chatSessionId, clientId, senderId, chatStatus }));
+        router.push(`/psikolog/chat/${chatSessionId}`);
+    };
 
     return (
         <div className="overflow-x-auto">
             {/* Filter dan Search */}
             <div className="flex items-center space-x-4 mb-4">
                 <Filter
-                    options={filterOptions} // Mengirim data dummy sebagai options
+                    options={filterOptions} // Mengirim data filter yang sesuai halaman
                     selectedOption={filter}
                     onChange={(value) => setFilter(value)} // Mengubah filter state
                 />

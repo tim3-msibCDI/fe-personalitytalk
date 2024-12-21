@@ -10,6 +10,14 @@ export default function UserLayout({ children }) {
   // Cek apakah halaman saat ini adalah "/konsultasi/chat"
   const isChatPage = pathname === "/konsultasi/chat";
 
+  const isResetPasswordPage = pathname === "/lupa-password/request";
+  const isChangePasswordPage = pathname === "/lupa-password/change-password";
+
+  // Jika di halaman reset password, jangan tampilkan Navbar dan Footer
+  if (isResetPasswordPage || isChangePasswordPage) {
+    return <>{children}</>; // Hanya render children
+  }
+
   return (
     <>
       <Navbar />
