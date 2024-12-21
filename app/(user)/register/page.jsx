@@ -852,19 +852,23 @@ export default function Register() {
                 >
                   Daftar
                 </button>
-                <button
-                  onClick={redirectToGoogleLogin}
-                  className="flex items-center px-4 py-2 bg-whitebg text-textcolor rounded-lg w-full justify-center text-s mt-3.5"
-                >
-                  <Image
-                    src="/image/icons/google.svg"
-                    alt="Google Logo"
-                    width={0}
-                    height={30}
-                    className="w-6 h-6 mr-2"
-                  />
-                  Lanjutkan dengan Akun Google
-                </button>
+
+                {/* Tombol Google hanya muncul jika role bukan Psikolog atau Konselor */}
+                {role !== "P" && role !== "K" && (
+                  <button
+                    onClick={redirectToGoogleLogin}
+                    className="flex items-center px-4 py-2 bg-whitebg text-textcolor rounded-lg w-full justify-center text-s mt-3.5"
+                  >
+                    <Image
+                      src="/image/icons/google.svg"
+                      alt="Google Logo"
+                      width={0}
+                      height={30}
+                      className="w-6 h-6 mr-2"
+                    />
+                    Lanjutkan dengan Akun Google
+                  </button>
+                )}
               </form>
             </div>
           </div>
