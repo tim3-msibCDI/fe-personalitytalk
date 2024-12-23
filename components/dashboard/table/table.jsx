@@ -55,6 +55,8 @@ export default function Table() {
   const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
   const [isTopicModalOpen, setIsTopicModalOpen] = useState(false);
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
+  const [selectedConsultation, setSelectedConsultation] = useState(null);
+  const [selectedPsychologist, setSelectedPsychologist] = useState(null);
   const [editData, setEditData] = useState({});
   const [selectedIdTransaksi, setSelectedIdTransaksi] = useState(null);
   const [selectedPaymentProof, setSelectedPaymentProof] = useState(null); // Bukti bayar yang dipilih
@@ -184,6 +186,9 @@ export default function Table() {
   } else if (pathname === "/admin/keuangan/transaksi") {
     endpoint = `/admin/consultation/transactions?page=${currentPage}`;
     searchPlaceholder = "Cari Nama Client";
+  } else if (pathname === "/admin/keuangan/transaksi/psikolog") {
+    endpoint = `/admin/consultation/psikolog_commission?page=${currentPage}`;
+    searchPlaceholder = "Cari Nama Psikolog";
   } else if (pathname === "/admin/keuangan/voucher") {
     endpoint = `/admin/vouchers?page=${currentPage}`;
     searchPlaceholder = "Cari Nama Voucher";
@@ -267,6 +272,16 @@ export default function Table() {
           "Nama Client",
           "Komisi",
           "Metode",
+          "Status",
+          "Bukti Pembayaran",
+        ]
+      : pathname === "/admin/keuangan/transaksi/psikolog"
+      ? [
+          "Id Konsultasi",
+          "Waktu Bayar",
+          "Nama Psikolog",
+          "Metode",
+          "Komisi",
           "Status",
           "Bukti Pembayaran",
         ]
@@ -796,6 +811,75 @@ export default function Table() {
             },
           },
         ]
+      : pathname === "/admin/keuangan/transaksi/psikolog"
+      ? [
+          {
+            key: "id",
+          },
+          { key: "payment_date" },
+          { key: "psikolog_name" },
+          { key: "payment_method" },
+          { key: "psikolog_comission" },
+          {
+            key: "commission_transfer_status",
+            render: (_, row) => {
+              const statusMap = {
+                Diterima: {
+                  text: "Diterima",
+                  bgColor: "bg-green-500",
+                },
+                "Menunggu Konfirmasi": {
+                  text: (
+                    <>
+                      Menunggu <br /> Konfirmasi
+                    </>
+                  ),
+                  bgColor: "bg-gray-400",
+                },
+              };
+              const { text, bgColor } = statusMap[
+                row.commission_transfer_status
+              ] || {
+                text: "",
+                bgColor: "",
+              };
+              return (
+                <span
+                  className={`inline-block px-3 py-2 text-white text-s font-medium rounded ${bgColor}`}
+                >
+                  {text}
+                </span>
+              );
+            },
+          },
+          {
+            key: "commission_transfer_proof",
+            render: (_, row) => {
+              if (!row.commission_transfer_proof) return null;
+
+              return (
+                <button
+                  onClick={() => {
+                    setSelectedIdTransaksi(row.id);
+                    setSelectedPaymentProof(row.payment_proof);
+                    setSenderName(row.sender_name);
+                    setSenderBank(row.sender_bank);
+                    setStatusTransaksi(row.status);
+                    setFailureReason(row.failure_reason);
+                    setModalPaymentOpen(true);
+                  }}
+                  title="Lihat Bukti Pembayaran"
+                >
+                  <img
+                    src="/icons/open-picture.png" // Ganti dengan path ikon Anda
+                    alt="Bukti Pembayaran"
+                    className="w-6 h-6"
+                  />
+                </button>
+              );
+            },
+          },
+        ]
       : pathname === "/admin/keuangan/voucher"
       ? [
           {
@@ -1013,10 +1097,14 @@ export default function Table() {
       </div>
 
       {/* Table */}
-      <table className="w-full min-w-max bg-primarylight2 border border-text2 text-center text-s p-5">
-        <TableHead heads={tableHead} />
-        <TableBody rows={data.data.data} columns={columns} />
-      </table>
+      <div className="relative">
+        <div className="overflow-x-auto max-h-[calc(100vh-5rem)] overflow-y-auto">
+          <table className="w-full bg-primarylight2 border border-text2 text-center text-s p-5">
+            <TableHead heads={tableHead} />
+            <TableBody rows={data.data.data} columns={columns} />
+          </table>
+        </div>
+      </div>
 
       {/* Komponen Pagination */}
       <Pagination

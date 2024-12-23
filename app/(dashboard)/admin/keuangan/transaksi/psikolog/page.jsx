@@ -2,7 +2,7 @@ import Table from "@/components/dashboard/table/table";
 import HeaderAdmin from "@/components/dashboard/section/header-admin";
 import NavgiationPaymentButton from "@/components/dashboard/section/navigationpayment";
 
-export default function TransaksiPage() {
+export default function TransaksiPsikologPage() {
   return (
     <>
       <HeaderAdmin />
