@@ -15,6 +15,8 @@ import SearchBar from "./search-bar";
 import Modal from "@/components/modals/modal";
 import AddPriceModal from "@/components/popup/addpricepsikolog";
 import AddTopicModal from "@/components/popup/addtopic";
+import RatingAdmin from "@/components/popup/ratingadmin";
+import PaymentProofModal from "@/components/popup/open-payment-proof";
 
 import { deleteUser } from "@/api/manage-user";
 import { deleteMahasiswa } from "@/api/manage-mahasiswa";
@@ -52,7 +54,15 @@ export default function Table() {
   const [selectedRow, setSelectedRow] = useState(null);
   const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
   const [isTopicModalOpen, setIsTopicModalOpen] = useState(false);
+  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [editData, setEditData] = useState({});
+  const [selectedIdTransaksi, setSelectedIdTransaksi] = useState(null);
+  const [selectedPaymentProof, setSelectedPaymentProof] = useState(null); // Bukti bayar yang dipilih
+  const [senderName, setSenderName] = useState(""); // Nama pengirim
+  const [senderBank, setSenderBank] = useState(""); // Bank pengirim
+  const [statusTransaksi, setStatusTransaksi] = useState(""); // Status transaksi
+  const [failureReason, setFailureReason] = useState(""); // Alasan penolakan
+  const [isModalPaymentOpen, setModalPaymentOpen] = useState(false);
 
   // Fungsi untuk membuka modal edit dengan data yang ingin diedit
   const handleEdit = (data) => {
@@ -90,6 +100,12 @@ export default function Table() {
   const cancelDelete = () => {
     setModalOpen(false); // Close the delete modal
     setSelectedRow(null); // Clear the selected row
+  };
+
+  const handleRatingClose = () => {
+    setIsRatingModalOpen(false);
+    setSelectedConsultation(null);
+    setSelectedPsychologist(null);
   };
 
   const confirmDelete = async () => {
@@ -651,7 +667,17 @@ export default function Table() {
             key: "actions",
             render: (_, row) => (
               <div className="space-x-2">
-                <EditButton onClick={() => console.log("Edit clicked", row)} />
+                <button
+                  onClick={() => {
+                    console.log("Button clicked");
+                    setSelectedConsultation(row.consul_id);
+                    setSelectedPsychologist(row.psch_id);
+                    setIsRatingModalOpen(true);
+                  }}
+                  className="rounded-md py-2 px-4 text-primary border border-primary bg-transparent font-medium text-s hover:bg-primarylight"
+                >
+                  Lihat Rating
+                </button>
               </div>
             ),
           },
@@ -688,25 +714,51 @@ export default function Table() {
           },
           { key: "payment_date" },
           { key: "client_name" },
-          { key: "consul_fee" },
+          {
+            key: "consul_fee_commission",
+            render: (_, row) => {
+              return (
+                <div className="text-sm">
+                  <div>
+                    <strong>Harga Konsultasi:</strong>
+                    <div>Rp {parseInt(row.consul_fee).toLocaleString()}</div>
+                  </div>
+                  <div className="mt-2">
+                    <strong>Komisi Psikolog:</strong>
+                    <div>
+                      Rp {parseInt(row.psikolog_comission).toLocaleString()}
+                    </div>
+                  </div>
+                </div>
+              );
+            },
+          },
           { key: "payment_method" },
           {
             key: "status",
             render: (_, row) => {
               const statusMap = {
-                completed: { text: "Berhasil", bgColor: "bg-green-500" },
-                failed: { text: "Gagal", bgColor: "bg-red-500" },
+                completed: {
+                  text: "Berhasil",
+                  bgColor: "bg-green-500",
+                },
+                failed: {
+                  text: "Gagal",
+                  bgColor: "bg-red-500",
+                },
                 pending_confirmation: {
-                  text: "Diterima",
-                  bgColor: "bg-yellow-500",
+                  text: (
+                    <>
+                      Menunggu <br /> Konfirmasi
+                    </>
+                  ),
+                  bgColor: "bg-gray-400",
                 },
               };
-
               const { text, bgColor } = statusMap[row.status] || {
                 text: "",
                 bgColor: "",
               };
-
               return (
                 <span
                   className={`inline-block px-3 py-2 text-white text-s font-medium rounded ${bgColor}`}
@@ -718,21 +770,28 @@ export default function Table() {
           },
           {
             key: "payment_proof",
-            render: (photo) => {
-              if (!photo) return null; // Jika photo null atau tidak ada, tidak ditampilkan
-
-              const linkphoto = photo.startsWith("http")
-                ? photo
-                : `${API_REAL}/${photo}`; // Pastikan URL lengkap jika photo bukan URL penuh
+            render: (_, row) => {
+              if (!row.payment_proof) return null;
 
               return (
-                <Image
-                  src={linkphoto}
-                  alt="Foto Profil"
-                  width={60}
-                  height={60}
-                  className="mx-auto"
-                />
+                <button
+                  onClick={() => {
+                    setSelectedIdTransaksi(row.id);
+                    setSelectedPaymentProof(row.payment_proof);
+                    setSenderName(row.sender_name);
+                    setSenderBank(row.sender_bank);
+                    setStatusTransaksi(row.status);
+                    setFailureReason(row.failure_reason);
+                    setModalPaymentOpen(true);
+                  }}
+                  title="Lihat Bukti Pembayaran"
+                >
+                  <img
+                    src="/icons/open-picture.png" // Ganti dengan path ikon Anda
+                    alt="Bukti Pembayaran"
+                    className="w-6 h-6"
+                  />
+                </button>
               );
             },
           },
@@ -994,6 +1053,26 @@ export default function Table() {
           onDataUpdated={handleDataUpdated} // Pass callback function
         />
       )}
+
+      {isRatingModalOpen && (
+        <RatingAdmin
+          onClose={handleRatingClose}
+          consul_id={selectedConsultation}
+          psch_id={selectedPsychologist}
+        />
+      )}
+
+      {/* PaymentProofModal */}
+      <PaymentProofModal
+        isOpen={isModalPaymentOpen}
+        onClose={() => setModalPaymentOpen(false)}
+        idTransaksi={selectedIdTransaksi}
+        senderName={senderName}
+        senderBank={senderBank}
+        paymentProof={selectedPaymentProof}
+        status={statusTransaksi}
+        failureReason={failureReason}
+      />
 
       {/* Delete Confirmation Modal */}
       <Modal isOpen={isModalOpen} onClose={cancelDelete}>

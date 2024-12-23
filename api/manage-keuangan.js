@@ -20,6 +20,7 @@ export async function addPaymentMethod(paymentData) {
       method: "POST",
       headers: {
         Authorization: `Bearer ${getToken()}`,
+        "ngrok-skip-browser-warning": "69420",
       },
       body: formData,
     });
@@ -61,6 +62,7 @@ export async function editPaymentMethod(paymentId, paymentData) {
         method: "POST",
         headers: {
           Authorization: `Bearer ${getToken()}`,
+          "ngrok-skip-browser-warning": "69420",
         },
         body: formData,
       }
@@ -88,13 +90,21 @@ export async function deletePaymentMethod(paymentId) {
         headers: {
           Authorization: `Bearer ${getToken()}`,
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
         },
       }
     );
 
+    const contentType = response.headers.get("Content-Type");
+
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Failed to delete payment method");
+      if (contentType && contentType.includes("application/json")) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to delete payment method");
+      } else {
+        const errorText = await response.text();
+        throw new Error(`Unexpected response: ${errorText}`);
+      }
     }
 
     return { success: true, message: "Payment method deleted successfully" };
@@ -114,6 +124,7 @@ export async function getPaymentMethodDetails(paymentId) {
         headers: {
           Authorization: `Bearer ${getToken()}`,
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
         },
       }
     );
@@ -140,6 +151,7 @@ export async function addVoucher(data) {
     headers: {
       Authorization: `Bearer ${getToken()}`,
       "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": "69420",
     },
     body: JSON.stringify(data),
   });

@@ -33,15 +33,28 @@ export default function Login() {
         const role = data.data.role;
         setToken(token, role);
 
+        // Ambil informasi admin setelah login berhasil
+        try {
+          const adminData = await getAdminInfo();
+          if (adminData.success) {
+            // Simpan data admin ke local storage
+            localStorage.setItem("userName", adminData.data.data.name);
+            localStorage.setItem(
+              "userPhoto",
+              adminData.data.data.photo_profile
+            );
+          }
+        } catch (adminError) {
+          console.error("Gagal mengambil informasi admin:", adminError.message);
+        }
+
         // Navigasi ke halaman sesuai role
         if (role === "A") {
           router.push("/admin/dashboard");
         } else {
-          router.push("/");
+          router.push("/admin");
         }
 
-        // Simpan nama dan foto profil ke localStorage
-        localStorage.setItem("userName", data.data.name);
         setMessage(data.message);
       } else {
         setError(data.message);
@@ -49,7 +62,11 @@ export default function Login() {
       }
     } catch (error) {
       setIsModalOpen(true);
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         setError(error.response.data.message);
       } else if (error.response && error.response.status === 500) {
         setError("Server error, please try again later.");

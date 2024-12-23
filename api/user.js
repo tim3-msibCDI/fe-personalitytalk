@@ -21,12 +21,15 @@ export const registerUser = async (data, isFormData = false) => {
     ? { "Content-Type": "multipart/form-data" }
     : { "Content-Type": "application/json" };
 
-  const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/register`, data, {
-    headers,
-  });
+  const response = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/register`,
+    data,
+    {
+      headers,
+    }
+  );
   return response;
 };
-
 
 // Fungsi ambil info User (nama, photo profile, role)
 export const getUserInfo = async () => {
@@ -36,12 +39,15 @@ export const getUserInfo = async () => {
   }
 
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/info`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "ngrok-skip-browser-warning": "69420",
-      },
-    });
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/user/info`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "ngrok-skip-browser-warning": "69420",
+        },
+      }
+    );
     return response;
   } catch (error) {
     throw new Error("Failed to fetch user data");
@@ -56,12 +62,15 @@ export const getUserDetail = async () => {
   }
 
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/profile/detail`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "ngrok-skip-browser-warning": "69420",
-      },
-    });
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/user/profile/detail`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "ngrok-skip-browser-warning": "69420",
+        },
+      }
+    );
 
     // Akses data pengguna yang ada di dalam `data` property
     const data = response.data.data;
@@ -81,7 +90,8 @@ export const getUserDetail = async () => {
     };
 
     // Menambahkan detail untuk Psikolog (P)
-    if (data.role === "P") { // Jika Psikolog
+    if (data.role === "P") {
+      // Jika Psikolog
       userDetails.psikologDetails = {
         sipp: data.psikolog_details.sipp, // Menyertakan sipp untuk Psikolog
         practiceStartDate: data.psikolog_details.practice_start_date,
@@ -90,7 +100,8 @@ export const getUserDetail = async () => {
         bankName: data.psikolog_details.bank_name,
         rekening: data.psikolog_details.rekening,
       };
-    } else if (data.role === "K") { // Jika Konselor
+    } else if (data.role === "K") {
+      // Jika Konselor
       // Menambahkan detail untuk Konselor (tanpa sipp)
       userDetails.konselorDetails = {
         practiceStartDate: data.psikolog_details.practice_start_date,
@@ -255,22 +266,29 @@ export const logoutAdmin = async () => {
 
 // Admin
 // Fungsi untuk Mengambil info Admin
-export const getAdminInfo = async () => {
-  const token = getToken();
-  if (!token) {
-    throw new Error("No token found");
-  }
-
+export async function getAdminInfo() {
   try {
-    const response = await axios.get(`${API_URL}/admin/info`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "ngrok-skip-browser-warning": "69420",
-      },
-    });
-    console.log(response)
-    return response;
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/admin/info`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Gagal mengambil data admin.");
+    }
+
+    const adminData = await response.json();
+    return { success: true, data: adminData };
   } catch (error) {
-    throw new Error("Failed to fetch user data");
+    console.error("Error in getAdminInfo:", error.message);
+    return { success: false, message: error.message };
   }
-};
+}
