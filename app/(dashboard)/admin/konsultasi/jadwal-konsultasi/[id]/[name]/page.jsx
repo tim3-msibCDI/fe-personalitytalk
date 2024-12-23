@@ -1,97 +1,112 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSearchParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import HeaderAdmin from "@/components/dashboard/section/header-admin";
 import TableHead from "@/components/dashboard/table/table-head";
 import TableBody from "@/components/dashboard/table/table-body";
+import { getPsychologistSchedule, updateScheduleAvailability } from "@/api/manage-konsultasi";
 
 export default function DetailJadwalKonsultasiPage() {
   const [selectedDate, setSelectedDate] = useState("");
-  const [isDateSelected, setIsDateSelected] = useState(false); // State untuk menandai jika tombol sudah ditekan
-
-  // State for holding extracted id and nama from the path
+  const [scheduleData, setScheduleData] = useState([]);
   const [id, setId] = useState(null);
   const [nama, setNama] = useState(null);
 
-  const searchParams = useSearchParams(); // Mengambil query params dari URL
-  const pathname = usePathname(); // Mengambil path URL
+  const pathname = usePathname();
 
   useEffect(() => {
-    // Mengambil id dan nama dari URL (berbasis path atau query params)
-    const extractedId = pathname.split("/").pop(); // Ambil parameter terakhir dari path
-    const extractedNama = searchParams.get("nama"); // Ambil "nama" dari query params
+    const pathSegments = pathname.split("/");
+    const extractedId = pathSegments[4];
+    const extractedNama = pathSegments[5];
 
     setId(extractedId);
-    setNama(extractedNama);
-  }, [pathname, searchParams]);
+    setNama(decodeURIComponent(extractedNama));
+
+    if (extractedId) {
+      fetchSchedule(extractedId);
+    }
+  }, [pathname]);
+
+  const fetchSchedule = async (id, date = null) => {
+    try {
+      const res = await getPsychologistSchedule(id, date);
+      if (res.success) {
+        setScheduleData(res.data.data);
+      } else {
+        console.error("Failed to fetch schedule:", res.message);
+      }
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
+    }
+  };
 
   const handleDateChange = (e) => {
     setSelectedDate(e.target.value);
   };
 
   const handleButtonClick = () => {
-    if (selectedDate) {
-      setIsDateSelected(true); // Mengaktifkan tampilan tabel jika tanggal dipilih
+    if (id) {
+      fetchSchedule(id, selectedDate || null);
     }
   };
 
-  // Data untuk Table
-  const heads = ["Waktu", "Status", "Detail"];
-  const rows = [
-    { id: 1, waktu: "06:00 - 07:00", status: "Selesai", detail: "1" },
-    {
-      id: 2,
-      waktu: "07:00 - 08:00",
-      status: "Sedang Berlangsung",
-      detail: "1",
-    },
-    { id: 3, waktu: "13:00 - 14:00", status: "Dijadwalkan", detail: "0" },
-    { id: 4, waktu: "18:00 - 19:00", status: "Tersedia", detail: "0" },
-  ];
+  const handleUpdateAvailability = async (scheduleId, currentAvailability) => {
+    const newAvailability = currentAvailability === 0 ? 1 : 0; // Toggle availability
+    const result = await updateScheduleAvailability(scheduleId, newAvailability);
+    if (result.success) {
+      alert("Ketersediaan berhasil diperbarui!");
+      fetchSchedule(id, selectedDate || null); // Refresh data
+    } else {
+      console.error("Gagal memperbarui ketersediaan:", result.message);
+      alert("Terjadi kesalahan saat memperbarui ketersediaan.");
+    }
+  };
 
+  const heads = ["Waktu", "Status", "Ketersediaan"];
   const columns = [
     {
-      key: "waktu",
+      key: "time_slot",
       render: (value) => <span>{value}</span>,
     },
     {
-      key: "status",
+      key: "consul_status",
       render: (value) => {
-        let colorClass = "";
-        if (value === "Selesai") colorClass = "bg-green-500";
-        else if (value === "Sedang Berlangsung") colorClass = "bg-yellow-500";
-        else if (value === "Dijadwalkan") colorClass = "bg-primary";
-        else if (value === "Tersedia") colorClass = "bg-primarylight";
-
+        let colorClass =
+          value === "available" ? "bg-primarylight" : "bg-gray-400";
         return (
           <div
             className={`${colorClass} font-semibold text-whitebg py-4 px-6 rounded-md m-1`}
           >
-            {value}
+            {value === "available" ? "Tersedia" : value}
           </div>
         );
       },
     },
     {
-      key: "detail",
-      render: (value) => (
+      key: "is_available",
+      render: (value, row) => (
         <div className="flex justify-center items-center">
-          {value === "0" ? (
-            <img
-              src="/icons/dashboard/checkbox.svg"
-              alt="Checkbox"
-              width={25}
-              height={25}
-            />
-          ) : (
-            <img
-              src="/icons/dashboard/checkbox_disabled.svg"
-              alt="Checkbox Disabled"
-              width={25}
-              height={25}
-            />
-          )}
+          <button
+            onClick={() => handleUpdateAvailability(row.id, value)}
+            className="focus:outline-none"
+          >
+            {value === 0 ? (
+              <img
+                src="/icons/dashboard/checkbox_disabled.svg"
+                alt="Checkbox Disabled"
+                width={25}
+                height={25}
+              />
+            ) : (
+              <img
+                src="/icons/dashboard/checkbox.svg"
+                alt="Checkbox"
+                width={25}
+                height={25}
+              />
+            )}
+          </button>
         </div>
       ),
     },
@@ -99,10 +114,8 @@ export default function DetailJadwalKonsultasiPage() {
 
   return (
     <>
-      {/* Header Admin with Add Button */}
       <HeaderAdmin />
 
-      {/* Wrapper for the Table */}
       <div className="p-6">
         <div className="bg-primarylight2 p-6 rounded-lg">
           <div className="flex items-center gap-4 mb-6">
@@ -119,31 +132,27 @@ export default function DetailJadwalKonsultasiPage() {
                 value={selectedDate}
                 onChange={handleDateChange}
                 className="w-full p-3 pl-4 pr-10 border rounded-md bg-gray-100 text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500"
-                placeholder="Pilih Tanggal"
               />
             </div>
-
-            {/* Tombol Pilih */}
             <button
               type="button"
-              onClick={handleButtonClick} // Setiap klik tombol, akan memeriksa dan menampilkan tabel
+              onClick={handleButtonClick}
               className="bg-primary px-7 py-3 border rounded-md mt-7 text-whitebg"
             >
               Pilih
             </button>
           </div>
 
-          {/* Table Component - Muncul hanya jika tombol "Pilih" sudah ditekan dan tanggal sudah dipilih */}
-          {isDateSelected && selectedDate ? (
+          {scheduleData.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="min-w-full rounded-lg border-collapse overflow-hidden">
                 <TableHead heads={heads} />
-                <TableBody rows={rows} columns={columns} />
+                <TableBody rows={scheduleData} columns={columns} />
               </table>
             </div>
           ) : (
             <div className="text-center text-gray-500 mt-6">
-              Silakan pilih tanggal dan klik tombol "Pilih" untuk melihat jadwal konsultasi.
+              Tidak ada data jadwal tersedia.
             </div>
           )}
         </div>

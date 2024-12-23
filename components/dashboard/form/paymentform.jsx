@@ -6,7 +6,13 @@ import { addPaymentMethod, editPaymentMethod } from "@/api/manage-keuangan";
 import Image from "next/image";
 import Modal from "@/components/modals/modal";
 
-export default function PaymentForm({ isAddMode = false, isEditMode = false, paymentData }) {
+const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
+
+export default function PaymentForm({
+  isAddMode = false,
+  isEditMode = false,
+  paymentData,
+}) {
   const router = useRouter();
 
   // State form
@@ -35,7 +41,7 @@ export default function PaymentForm({ isAddMode = false, isEditMode = false, pay
         paymentData.logo && paymentData.logo.startsWith("http")
           ? paymentData.logo
           : paymentData.logo
-          ? `/uploads/${paymentData.logo}`
+          ? `${API_REAL}/${paymentData.logo}`
           : "/images/default-bank-logo.jpg";
 
       setLogo(linkPhoto);
@@ -101,7 +107,13 @@ export default function PaymentForm({ isAddMode = false, isEditMode = false, pay
 
   // Validasi form
   const isFormValid = () => {
-    return name.trim() && type.trim() && bankCode.trim() && noRek.trim() && owner.trim();
+    return (
+      name.trim() &&
+      type.trim() &&
+      bankCode.trim() &&
+      noRek.trim() &&
+      owner.trim()
+    );
   };
 
   return (
@@ -170,10 +182,12 @@ export default function PaymentForm({ isAddMode = false, isEditMode = false, pay
             <label>Gambar</label>
             <div className="mt-2">
               {previewImage && (
-                <img
+                <Image
                   src={previewImage}
                   alt="Preview"
-                  className="mb-2 w-48 h-48 rounded-md object-cover"
+                  width={150}
+                  height={150}
+                  className="rounded-md object-cover"
                 />
               )}
               <input
@@ -199,6 +213,13 @@ export default function PaymentForm({ isAddMode = false, isEditMode = false, pay
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="p-6 text-center">
+          <Image
+            src="/icons/sucess.svg"
+            width={150}
+            height={150}
+            alt="modal status"
+            className="mx-auto"
+          />
           <h2 className="text-h2 font-medium text-textcolor">{message}</h2>
         </div>
       </Modal>

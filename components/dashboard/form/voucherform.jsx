@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Modal from "@/components/modals/modal";
 import { addVoucher } from "@/api/manage-keuangan";
@@ -11,7 +11,6 @@ export default function VoucherForm() {
 
   // State form
   const [code, setCode] = useState("");
-  const [voucherType, setVoucherType] = useState("");
   const [discountValue, setDiscountValue] = useState(null);
   const [minTransactionAmount, setMinTransactionAmount] = useState(null);
   const [validFrom, setValidFrom] = useState("");
@@ -20,6 +19,7 @@ export default function VoucherForm() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState(""); // Tambahan state untuk gambar modal
 
   // Handle submit form
   const handleSubmit = async (e) => {
@@ -27,7 +27,7 @@ export default function VoucherForm() {
 
     const formData = {
       code,
-      voucher_type: voucherType,
+      voucher_type: "consultation", // Tetap "consultation"
       discount_value: discountValue,
       min_transaction_amount: minTransactionAmount,
       valid_from: validFrom,
@@ -39,6 +39,7 @@ export default function VoucherForm() {
     try {
       const response = await addVoucher(formData);
       setMessage(response.message || "Voucher berhasil ditambahkan");
+      setModalImage("/icons/dashboard/sucess.svg"); // Gambar sukses
       setIsModalOpen(true);
       setTimeout(() => {
         setIsModalOpen(false);
@@ -46,6 +47,7 @@ export default function VoucherForm() {
       }, 3000);
     } catch (error) {
       setMessage(error.message || "Terjadi kesalahan");
+      setModalImage("/icons/dashboard/fail.svg"); // Gambar gagal
       setIsModalOpen(true);
     } finally {
       setLoading(false);
@@ -56,7 +58,6 @@ export default function VoucherForm() {
   const isFormValid = () => {
     return (
       code.trim() &&
-      voucherType.trim() &&
       discountValue > 0 &&
       minTransactionAmount > 0 &&
       validFrom.trim() &&
@@ -87,10 +88,9 @@ export default function VoucherForm() {
             <label>Jenis Voucher</label>
             <input
               type="text"
-              value={voucherType}
-              onChange={(e) => setVoucherType(e.target.value)}
-              placeholder="Masukkan Jenis Voucher"
-              className="border border-textcolor p-2 rounded-md w-full"
+              value="consultation"
+              disabled
+              className="border border-textcolor p-2 rounded-md w-full bg-gray-100 cursor-not-allowed"
             />
           </div>
 
@@ -164,10 +164,10 @@ export default function VoucherForm() {
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="p-6 text-center">
           <Image
-            src="/icons/dashboard/sucess.svg"
+            src={modalImage}
             width={150}
             height={150}
-            alt="success"
+            alt="modal status"
             className="mx-auto"
           />
           <h2 className="text-h2 font-medium text-textcolor">{message}</h2>

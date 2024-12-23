@@ -22,7 +22,7 @@ export default function EditPaymentPage() {
           const { success, data, message } = await getPaymentMethodDetails(id);
           if (success) {
             const dataRek = data.data;
-            setPaymentData(dataRek); // Set the payment data
+            setPaymentData(dataRek);
           } else {
             console.error("Error fetching payment method detail:", message);
           }
