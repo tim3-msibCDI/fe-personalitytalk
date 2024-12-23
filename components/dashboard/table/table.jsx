@@ -65,6 +65,8 @@ export default function Table() {
   const [statusTransaksi, setStatusTransaksi] = useState(""); // Status transaksi
   const [failureReason, setFailureReason] = useState(""); // Alasan penolakan
   const [isModalPaymentOpen, setModalPaymentOpen] = useState(false);
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [modalImageUrl, setModalImageUrl] = useState("");
 
   // Fungsi untuk membuka modal edit dengan data yang ingin diedit
   const handleEdit = (data) => {
@@ -800,11 +802,13 @@ export default function Table() {
                     setModalPaymentOpen(true);
                   }}
                   title="Lihat Bukti Pembayaran"
+                  className="bg-primary rounded-md p-2"
                 >
-                  <img
+                  <Image
                     src="/icons/open-picture.png" // Ganti dengan path ikon Anda
                     alt="Bukti Pembayaran"
-                    className="w-6 h-6"
+                    width={25}
+                    height={25}
                   />
                 </button>
               );
@@ -860,20 +864,19 @@ export default function Table() {
               return (
                 <button
                   onClick={() => {
-                    setSelectedIdTransaksi(row.id);
-                    setSelectedPaymentProof(row.payment_proof);
-                    setSenderName(row.sender_name);
-                    setSenderBank(row.sender_bank);
-                    setStatusTransaksi(row.status);
-                    setFailureReason(row.failure_reason);
-                    setModalPaymentOpen(true);
+                    setModalImageUrl(
+                      `${process.env.NEXT_PUBLIC_IMG_URL}/${row.commission_transfer_proof}`
+                    );
+                    setImageModalOpen(true);
                   }}
                   title="Lihat Bukti Pembayaran"
+                  className="bg-primary rounded-md p-2"
                 >
-                  <img
+                  <Image
                     src="/icons/open-picture.png" // Ganti dengan path ikon Anda
                     alt="Bukti Pembayaran"
-                    className="w-6 h-6"
+                    width={25}
+                    height={25}
                   />
                 </button>
               );
@@ -1161,6 +1164,32 @@ export default function Table() {
         status={statusTransaksi}
         failureReason={failureReason}
       />
+
+      {imageModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          onClick={() => setImageModalOpen(false)}
+        >
+          <div
+            className="bg-white rounded-lg p-4"
+            onClick={(e) => e.stopPropagation()} // Prevent modal close when clicking inside
+          >
+            <Image
+              src={modalImageUrl}
+              alt="Bukti Pembayaran"
+              width={500}
+              height={500}
+              className="rounded-lg"
+            />
+            <button
+              onClick={() => setImageModalOpen(false)}
+              className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
+            >
+              Tutup
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Delete Confirmation Modal */}
       <Modal isOpen={isModalOpen} onClose={cancelDelete}>

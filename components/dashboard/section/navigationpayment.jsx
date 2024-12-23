@@ -1,14 +1,31 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import AddButton from "../button/add-button";
+import AddCommissionModal from "@/components/popup/addcomissionmodal";
 
 export default function NavigationPaymentButton() {
   const pathname = usePathname(); // Mendapatkan path saat ini
   const router = useRouter(); // Router untuk navigasi
+  const [isModalOpen, setIsModalOpen] = useState(false); // State untuk modal
 
   // Helper function untuk menentukan apakah tombol aktif
   const isActive = (path) => pathname === path;
+
+  const handleAddCommision = () => {
+    setIsModalOpen(true); // Membuka modal
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // Menutup modal
+  };
+
+  const handleDataUpdated = () => {
+    // Callback ketika data diperbarui di modal
+    console.log("Data updated!");
+    // Refresh data di halaman atau lakukan sesuatu sesuai kebutuhan
+  };
 
   return (
     <div className="flex justify-between items-center space-x-4 py-4">
@@ -41,9 +58,16 @@ export default function NavigationPaymentButton() {
       {/* Add Button */}
       {isActive("/admin/keuangan/transaksi/psikolog") && (
         <div>
-          <AddButton />
+          <AddButton onClick={handleAddCommision} text="Kirim Komisi" />
         </div>
       )}
+
+      {/* AddCommissionModal */}
+      <AddCommissionModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onDataUpdated={handleDataUpdated}
+      />
     </div>
   );
 }
