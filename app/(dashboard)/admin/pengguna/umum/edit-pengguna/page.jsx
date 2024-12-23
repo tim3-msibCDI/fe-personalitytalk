@@ -8,16 +8,24 @@ import UserForm from "@/components/dashboard/form/userform";
 import { SkeletonTable } from "@/components/dashboard/table/skeleton-table";
 
 export default function EditPenggunaPage() {
+  const [isClient, setIsClient] = useState(false);
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    // Check if the code is running on the client side
+    if (typeof window !== "undefined") {
+      setIsClient(true);
+    }
+  }, []);
+
   // Fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
-      if (id) {
+      if (id && isClient) {
         try {
           const { success, data, message } = await getUserDetail(id);
           if (success) {
@@ -34,7 +42,7 @@ export default function EditPenggunaPage() {
     };
 
     fetchUserData();
-  }, [id]);
+  }, [id, isClient]);
 
   // Loading state
   if (loading) {

@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Modal from "@/components/modals/modal";
 import Image from "next/image";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Import CSS tema Quill
 import { addDisease, editDisease } from "@/api/manage-artikel";
 
 const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
@@ -115,36 +113,6 @@ export default function DiseaseForm({
     }
   };
 
-  const modules = {
-    toolbar: [
-      [{ header: "1" }, { header: "2" }, { font: [] }],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [{ color: [] }, { background: [] }],
-      [{ align: [] }],
-    ],
-  };
-
-  const formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "video",
-    "color",
-    "background",
-    "align",
-  ];
-
   return (
     <>
       <form onSubmit={handleSubmit} className="p-6 bg-primarylight2 rounded-lg">
@@ -190,19 +158,16 @@ export default function DiseaseForm({
           </div>
         </div>
 
-        {/* Rich Text Editor for Content */}
+        {/* Textarea for Content */}
         <div className="mt-4">
           <label className="block text-sm font-medium text-gray-700">
             Deskripsi Penyakit
           </label>
-          <ReactQuill
-            theme="snow"
+          <textarea
             value={content}
-            onChange={setContent}
-            formats={formats}
-            modules={modules}
+            onChange={(e) => setContent(e.target.value)}
             placeholder="Tulis deskripsi penyakit di sini..."
-            className="bg-white h-64 pb-10"
+            className="bg-white w-full h-64 border rounded-md p-2"
           />
         </div>
 

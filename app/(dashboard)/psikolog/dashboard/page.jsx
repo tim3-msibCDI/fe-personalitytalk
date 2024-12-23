@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getToken } from '@/lib/auth';
 import Loading from '@/components/loading/loading';
+import Image from 'next/image';
 
 export default function PsikologDashboard() {
     const [dashboardData, setDashboardData] = useState(null);
@@ -90,7 +91,7 @@ export default function PsikologDashboard() {
                         className="flex items-center rounded-lg p-4 shadow-md bg-primarylight2"
                     >
                         <div className="w-12 h-12 mr-4">
-                            <img
+                            <Image
                                 src="/icons/psikolog/dashboard/client.svg"
                                 alt="Total Clients Icon"
                                 className="w-full h-full object-contain"
@@ -106,7 +107,7 @@ export default function PsikologDashboard() {
                         className="flex items-center rounded-lg p-4 shadow-md bg-primarylight2"
                     >
                         <div className="w-12 h-12 mr-4">
-                            <img
+                            <Image
                                 src="/icons/psikolog/dashboard/konsultasi.svg"
                                 alt="Total Consultations Icon"
                                 className="w-full h-full object-contain"
@@ -122,7 +123,7 @@ export default function PsikologDashboard() {
                         className="flex items-center rounded-lg p-4 shadow-md bg-primarylight2"
                     >
                         <div className="w-12 h-12 mr-4">
-                            <img
+                            <Image
                                 src="/icons/psikolog/dashboard/jadwal.svg"
                                 alt="Total Scheduled Consultations Icon"
                                 className="w-full h-full object-contain"
@@ -138,7 +139,7 @@ export default function PsikologDashboard() {
                         className="flex items-center rounded-lg p-4 shadow-md bg-primarylight2"
                     >
                         <div className="w-12 h-12 mr-4">
-                            <img
+                            <Image
                                 src="/icons/psikolog/dashboard/kepuasan.svg"
                                 alt="Average Rating Icon"
                                 className="w-full h-full object-contain"

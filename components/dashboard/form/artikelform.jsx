@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Modal from "@/components/modals/modal";
 import Image from "next/image";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Import CSS tema Quill
 import { editArticle, addArticle } from "@/api/manage-artikel";
 
 const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
@@ -56,7 +54,6 @@ export default function ArticleForm({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
 
     try {
@@ -80,27 +77,20 @@ export default function ArticleForm({
 
         formData.append("admin_id", 1); // Admin ID otomatis
 
-        response = await addArticle(formData); // Kirim FormData
+        response = await addArticle(formData);
         setMessage(response.message || "Artikel berhasil ditambahkan");
       }
+
       if (isEditMode && articleData?.id) {
         const updatedData = {
           article_title: title,
           category_id: parseInt(category, 10),
           publication_date: new Date().toISOString().split("T")[0],
-          content: content,
+          content,
           publisher_name: reviewedBy,
         };
 
-        // Hanya tambahkan key yang diubah
-        Object.keys(updatedData).forEach((key) => {
-          if (updatedData[key] === articleData[key]) {
-            delete updatedData[key]; // Hapus key yang tidak berubah
-          }
-        });
-
         if (article_img instanceof File) {
-          // Jika ada file baru, gunakan FormData
           const formData = new FormData();
           Object.entries(updatedData).forEach(([key, value]) =>
             formData.append(key, value)
@@ -109,7 +99,6 @@ export default function ArticleForm({
 
           response = await editArticle(articleData.id, formData);
         } else {
-          // Kirim data JSON jika tidak ada file baru
           response = await editArticle(articleData.id, updatedData);
         }
 
@@ -132,36 +121,6 @@ export default function ArticleForm({
       setLoading(false);
     }
   };
-
-  const modules = {
-    toolbar: [
-      [{ header: "1" }, { header: "2" }, { font: [] }],
-      [{ list: "ordered" }, { list: "bullet" }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [{ color: [] }, { background: [] }],
-      [{ align: [] }],
-    ],
-  };
-
-  const formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "video",
-    "color",
-    "background",
-    "align",
-  ];
 
   return (
     <>
@@ -243,19 +202,16 @@ export default function ArticleForm({
           </div>
         </div>
 
-        {/* Rich Text Editor for Long Description */}
+        {/* Textarea for Content */}
         <div className="mt-4">
           <label className="block text-sm font-medium text-gray-700">
             Deskripsi Panjang
           </label>
-          <ReactQuill
-            theme="snow"
+          <textarea
             value={content}
-            onChange={setContent}
-            formats={formats}
-            modules={modules}
-            placeholder="Tulis konten artikel di sini..."
-            className="bg-white h-64 pb-10"
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Masukkan deskripsi panjang artikel"
+            className="border p-2 rounded-md bg-white w-full h-64 resize-none"
           />
         </div>
 

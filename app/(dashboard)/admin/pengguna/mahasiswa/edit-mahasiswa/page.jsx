@@ -8,16 +8,24 @@ import HeaderAdmin from "@/components/dashboard/section/header-admin";
 import { SkeletonTable } from "@/components/dashboard/table/skeleton-table"; // Import skeleton table
 
 export default function EditMahasiswaPage() {
+  const [isClient, setIsClient] = useState(false);
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
   const [mhsData, setMhsData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    // Check if the code is running on the client side
+    if (typeof window !== "undefined") {
+      setIsClient(true);
+    }
+  }, []);
+
   // Fetch mahasiswa data
   useEffect(() => {
     const fetchMahasiswaData = async () => {
-      if (id) {
+      if (id && isClient) {
         try {
           const { success, data, message } = await getMahasiswaDetail(id);
           if (success) {
@@ -34,7 +42,7 @@ export default function EditMahasiswaPage() {
     };
 
     fetchMahasiswaData();
-  }, [id]);
+  }, [id, isClient]);
 
   // Loading state with Skeleton Table
   if (loading) {

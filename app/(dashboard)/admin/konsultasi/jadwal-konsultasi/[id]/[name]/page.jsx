@@ -6,6 +6,7 @@ import HeaderAdmin from "@/components/dashboard/section/header-admin";
 import TableHead from "@/components/dashboard/table/table-head";
 import TableBody from "@/components/dashboard/table/table-body";
 import { getPsychologistSchedule, updateScheduleAvailability } from "@/api/manage-konsultasi";
+import Image from "next/image";
 
 export default function DetailJadwalKonsultasiPage() {
   const [selectedDate, setSelectedDate] = useState("");
@@ -92,14 +93,14 @@ export default function DetailJadwalKonsultasiPage() {
             className="focus:outline-none"
           >
             {value === 0 ? (
-              <img
+              <Image
                 src="/icons/dashboard/checkbox_disabled.svg"
                 alt="Checkbox Disabled"
                 width={25}
                 height={25}
               />
             ) : (
-              <img
+              <Image
                 src="/icons/dashboard/checkbox.svg"
                 alt="Checkbox"
                 width={25}

@@ -145,17 +145,17 @@ export default function ConsultationHistoryCard({
           <div className="flex-col justify-center items-start gap-2 inline-flex">
             <div className="justify-start items-center gap-2 inline-flex">
               <div className="w-4 h-4 relative" />
-              <Image src="/icons/chat-primary.svg" width={15} height={15} />
+              <Image src="/icons/chat-primary.svg" width={15} height={15} alt="icons" />
               <div className="text-textcolor text-xs font-semibold">{date}</div>
             </div>
             <div className="justify-start items-center gap-2 inline-flex">
               <div className="w-4 h-[14.30px] relative" />
-              <Image src="/icons/coins-primary.svg" width={15} height={15} />
+              <Image src="/icons/coins-primary.svg" width={15} height={15} alt="icons" />
               <div className="text-textcolor text-xs font-semibold">{time}</div>
             </div>
           </div>
           <div>
-            <Image src="/icons/arrow-activity.svg" width={20} height={20} />
+            <Image src="/icons/arrow-activity.svg" width={20} height={20} alt="icons" />
           </div>
         </div>
       </div>

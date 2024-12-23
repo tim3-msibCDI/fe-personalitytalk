@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import DOMPurify from "dompurify"; // Install: npm install dompurify
 import Loading from "@/components/loading/loading";
+import Image from "next/image";
 
 export default function DetailPenyakit() {
     const [diseaseDetail, setDiseaseDetail] = useState(null);
@@ -75,7 +76,7 @@ export default function DetailPenyakit() {
                     Ditulis oleh <strong>{diseaseDetail.writer_name}</strong>
                 </p>
                 <div className="w-full h-[400px] mb-4">
-                    <img
+                    <Image
                         src={`${process.env.NEXT_PUBLIC_IMG_URL}/${diseaseDetail.disease_img}`}
                         alt={diseaseDetail.disease_name}
                         className="w-full h-full object-cover"

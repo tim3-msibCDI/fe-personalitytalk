@@ -163,10 +163,10 @@ export default function TablePsikolog() {
                 render: (proof) =>
                     proof ? (
                         <div className="flex justify-center">
-                            <img
+                            <Image
                                 src={`${process.env.NEXT_PUBLIC_IMG_URL}/${proof}`}
                                 alt="Bukti Transfer"
-                                className="w-auto h-10"
+                                width={0} height={40}
                             />
                         </div>
                     ) : (
@@ -248,14 +248,14 @@ export default function TablePsikolog() {
                             onClick={() => navigateToChat(row.consul_id, row.chat_session_id, row.client_id, row.psikolog_id, row.status)}
                             className="flex items-center justify-center gap-2 px-2 py-1 w-full bg-primary text-white text-s rounded-md"
                         >
-                            <img src="/icons/konsultasi.png" alt="Chat Icon" className="w-4 h-4" />
+                            <Image src="/icons/konsultasi.png" alt="Chat Icon" width={16} height={16}/>
                             Chat Client
                         </button>
                         <button
                             className="flex items-center justify-center gap-2 px-2 py-1 w-full border border-primary text-primary text-s rounded-md"
                             onClick={() => openModal(row.keluhan)}
                         >
-                            <img src="/icons/catatan.png" alt="Complaint Icon" className="w-4 h-4" />
+                            <Image src="/icons/catatan.png" alt="Complaint Icon" width={16} height={16} />
                             Lihat Keluhan
                         </button>
                     </div>
@@ -344,10 +344,10 @@ export default function TablePsikolog() {
                             className="px-3 mx-2 border border-primary"
                             onClick={prevPageGroup}
                         >
-                            <img
+                            <Image
                                 src="/icons/arrow_left.png"
                                 alt="Previous Page"
-                                className="w-5"
+                                width={20} height={20}
                             />
                         </button>
                     )}
@@ -368,10 +368,10 @@ export default function TablePsikolog() {
                             className="px-3 mx-2 border border-primary"
                             onClick={nextPageGroup}
                         >
-                            <img
+                            <Image
                                 src="/icons/arrow_right.png"
                                 alt="Next Page"
-                                className="w-5"
+                                width={20} height={20}
                             />
                         </button>
                     )}

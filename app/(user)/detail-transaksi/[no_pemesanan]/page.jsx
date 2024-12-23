@@ -151,7 +151,7 @@ export default function DetailTransaksi() {
         <div className="px-6 md:px-8 lg:px-12 py-9 ml-4 lg:ml-8 mr-4 lg:mr-8">
             <div className="py-6">
                 <div className="flex items-center gap-4 cursor-pointer" onClick={() => router.back()}>
-                    <Image src="/icons/arrow_back.png" alt="icon kembali" width={9} height={14} />
+                    <Image src="/icons/arrow_back.png" alt="icon kembali" width={9} height={14}  />
                     <p className="text-m font-bold">Konsultasi Saya</p>
                 </div>
                 <div className="flex gap-8 mt-6">

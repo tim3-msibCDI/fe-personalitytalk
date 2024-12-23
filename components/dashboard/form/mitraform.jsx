@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { addPartner, editPartner } from "@/api/manage-dashboard";
 import Modal from "@/components/modals/modal";
+import Image from "next/image";
 
 const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
 
@@ -122,7 +123,7 @@ export default function PartnerForm({
       >
         <div className="flex items-start space-x-6">
           <div className="flex-shrink-0">
-            <img
+            <Image
               src={previewImage || "/image/upload_picture.png"}
               alt="Profile"
               width={275}
@@ -180,7 +181,7 @@ export default function PartnerForm({
               className="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-md disabled:bg-disable disabled:cursor-not-allowed"
               disabled={!isFormValid() || loading}
             >
-              <img
+              <Image
                 src="/icons/dashboard/save.svg"
                 width={20}
                 height={20}
@@ -199,7 +200,7 @@ export default function PartnerForm({
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="p-6 text-center">
           <div className="py-16">
-            <img
+            <Image
               src="/icons/dashboard/sucess.svg"
               width={150}
               height={150}

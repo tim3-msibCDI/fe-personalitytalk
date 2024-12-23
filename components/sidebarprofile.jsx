@@ -134,6 +134,7 @@ export default function SidebarProfile() {
                   height={15}
                   width={15}
                   className="mr-0 lg:mr-2"
+                  alt="profile"
                 />
                 <span className="hidden lg:inline">Biodata Diri</span>
               </Link>
@@ -160,6 +161,7 @@ export default function SidebarProfile() {
                   height={15}
                   width={15}
                   className="mr-0 lg:mr-2"
+                  alt="icons"
                 />
                 <span className="hidden lg:inline">Ganti Password</span>
               </Link>
@@ -183,6 +185,7 @@ export default function SidebarProfile() {
                   height={20}
                   width={20}
                   className="mr-0 lg:mr-2"
+                  alt="icons"
                 />
                 <span className="hidden lg:inline">Konsultasi Saya</span>
               </Link>
@@ -210,6 +213,7 @@ export default function SidebarProfile() {
                     height={20}
                     width={20}
                     className="mr-0 lg:mr-2"
+                    alt="icons"
                   />
                   <span className="hidden lg:inline">Course</span>
                 </Link>

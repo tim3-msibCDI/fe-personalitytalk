@@ -1,12 +1,15 @@
 import React from "react";
+import Image from "next/image";
 
 const SearchBar = ({ value, onChange, placeholder }) => {
   return (
     <div className="flex items-center w-full p-2 border border-gray-300 rounded-lg bg-white shadow-sm">
-      <img
-        src="/icons/dashboard/search.svg" 
+      <Image
+        src="/icons/dashboard/search.svg"
         alt="Search Icon"
-        className="w-5 h-5 ml-2 text-gray-500"
+        className="ml-2 text-gray-500"
+        width={20}
+        height={20}
       />
       <input
         type="text"

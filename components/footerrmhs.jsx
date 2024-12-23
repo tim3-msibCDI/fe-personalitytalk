@@ -12,6 +12,7 @@ export default function Footerrmhs() {
               width={160}
               height={160}
               className=""
+              alt="Image"
             />
           </div>
           <div className="inline-block ml-60 mr-20">
