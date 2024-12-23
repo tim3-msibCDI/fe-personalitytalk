@@ -67,13 +67,15 @@ export default function ConsultationHistoryCard({
   };
 
   // Handle card click
-  const navigateToChat = ({ consulId, chatSessionId, psikologId, senderId, chatStatus }) => {
+  const navigateToChat = ({
+    consulId,
+    chatSessionId,
+    psikologId,
+    senderId,
+    chatStatus,
+  }) => {
     if (status === "scheduled") {
-      openModal(
-        <KonsulBelumMulai
-          onClose={closeModal}
-        />
-      );
+      openModal(<KonsulBelumMulai onClose={closeModal} />);
     } else if (status === "ongoing" || status === "completed") {
       // setChatId(chat_sessions_id);
       // setConsulId(consultation_id);
@@ -81,10 +83,21 @@ export default function ConsultationHistoryCard({
       // setReceiverId(receiver_id);
       // setChatStatus(status);
 
-      localStorage.setItem("clientChatData", JSON.stringify({ consulId, chatSessionId, psikologId, senderId, chatStatus }));
+      localStorage.setItem(
+        "clientChatData",
+        JSON.stringify({
+          consulId,
+          chatSessionId,
+          psikologId,
+          senderId,
+          chatStatus,
+        })
+      );
       router.push(`/konsultasi/chat`);
     } else {
-      alert("Chat hanya tersedia untuk sesi yang dijadwalkan atau sedang berlangsung.");
+      alert(
+        "Chat hanya tersedia untuk sesi yang dijadwalkan atau sedang berlangsung."
+      );
     }
   };
 
@@ -97,18 +110,24 @@ export default function ConsultationHistoryCard({
           navigateToChat({
             consulId: consultation_id,
             chatSessionId: chat_sessions_id,
-            psikologId: receiver_id, 
+            psikologId: receiver_id,
             senderId: sender_id,
             chatStatus: status,
           })
-        }      
+        }
       >
         <div className="justify-start items-center gap-3 flex">
           <div className="h-20 rounded-lg justify-start items-center gap-2.5 flex">
-            <img
-              className="grow shrink basis-0 h-20 rounded-lg"
-              src={`${process.env.NEXT_PUBLIC_IMG_URL}/${psikolog_profile}`}
+            <Image
+              className="grow shrink basis-0 rounded-lg"
+              src={
+                psikolog_profile
+                  ? `${process.env.NEXT_PUBLIC_IMG_URL}/${psikolog_profile}`
+                  : "/default-profile.jpg" // Gambar default jika `psikolog_profile` kosong
+              }
               alt={`${name}'s profile picture`}
+              height={100}
+              width={100}
             />
           </div>
           <div className="self-stretch flex-col justify-center items-start gap-2 inline-flex">
