@@ -12,8 +12,8 @@ export default function LayoutDashboard({ children }) {
     return children;
   }
 
-  // Cek apakah halaman saat ini adalah "/psikolog/chat"
-  const isChatPage = path === "/psikolog/chat/id";
+  // Cek apakah halaman saat ini adalah "/psikolog/chat/[id]"
+  const isChatPage = /^\/psikolog\/chat\/.+$/.test(path); // Regex untuk mencocokkan "/psikolog/chat/[id]"
 
   return (
     <section className="flex h-screen">

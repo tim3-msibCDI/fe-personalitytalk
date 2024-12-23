@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footerrmhs() {
   return (
@@ -22,8 +23,8 @@ export default function Footerrmhs() {
               seputar ilmu psikologi <br />dan terapannya.
             </p>
           </div>
-          <div className=" inline-block rounded-lg px-8 py-2 bg-whitebg text-primary text-h3 font-normal">
-            Register
+          <div className="inline-block rounded-lg px-8 py-2 bg-whitebg text-primary text-h3 font-normal">
+            <Link href="/register">Register</Link> 
           </div>
         </div>
       </div>

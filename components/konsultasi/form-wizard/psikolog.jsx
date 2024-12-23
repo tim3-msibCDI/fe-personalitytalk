@@ -75,14 +75,14 @@ export default function Psikolog({ data }) {
                     <div className="mt-3 flex items-center">
                         <div
                             className={`px-4 py-2 rounded-md text-white font-semibold text-sm ${status === "pending"
-                                    ? "bg-wait"
-                                    : status === "pending_confirmation"
-                                        ? "bg-text2"
-                                        : status === "completed"
-                                            ? "bg-success"
-                                            : status === "failed"
-                                                ? "bg-fail"
-                                                : "bg-gray-300"
+                                ? "bg-wait"
+                                : status === "pending_confirmation"
+                                    ? "bg-text2"
+                                    : status === "completed"
+                                        ? "bg-success"
+                                        : status === "failed"
+                                            ? "bg-fail"
+                                            : "bg-gray-300"
                                 }`}
                         >
                             {status === "pending" && "Menunggu Pembayaran"}

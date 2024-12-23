@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { addPartner, editPartner } from "@/api/manage-dashboard";
 import Modal from "@/components/modals/modal";
 
-const API_REAL = process.env.NEXT_PUBLIC_API_URL2;
+const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
 
 export default function PartnerForm({
   isEditMode = false,
@@ -31,7 +31,7 @@ export default function PartnerForm({
         partnerData.img && partnerData.img.startsWith("http")
           ? partnerData.img // If the image URL is complete
           : partnerData.img
-          ? `${API_REAL}${partnerData.img}` // Add `API_REAL` if the image path does not start with "http"
+          ? `${API_REAL}/${partnerData.img}` // Add `API_REAL` if the image path does not start with "http"
           : "/image/default-profile.jpg"; // Use a default image if `img` is missing
 
       setImg(linkImage);

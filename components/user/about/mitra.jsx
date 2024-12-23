@@ -3,83 +3,91 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
-const mitras = [
-  {
-    name: "SMK Yayasan Pharmasi Semarang",
-    image: "/image/mitra/1.png",
-  },
-  {
-    name: "SMK Telkom Purwokerto",
-    image: "/image/mitra/2.png",
-  },
-  {
-    name: "SMK Muhammadiyah 1 Semarang",
-    image: "/image/mitra/3.png",
-  },
-];
-
 export default function Mitra() {
-  const scrollAmount = 200;
+  const [mitras, setMitras] = useState([]);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const handleScroll = (direction) => {
-    const container = document.getElementById("scroll-container");
-    if (direction === "left") {
-      container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-    } else {
-      container.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    }
-  };
+  // Fetch mitra data
+  useEffect(() => {
+    const fetchMitras = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/landing-page/mitra`,
+          {
+            method: "GET",
+            headers: {
+              "ngrok-skip-browser-warning": "69420",
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch mitra data");
+        }
+        const result = await response.json();
+        if (result.success) {
+          setMitras(result.data);
+        }
+      } catch (error) {
+        console.error("Error fetching mitra data:", error);
+      }
+    };
+
+    fetchMitras();
+  }, []);
 
   useEffect(() => {
     const container = document.getElementById("scroll-container");
+
+    // Infinite scroll effect
+    const handleInfiniteScroll = () => {
+      if (container.scrollLeft + container.offsetWidth >= container.scrollWidth) {
+        container.scrollLeft = 0;
+      }
+    };
+
+    container.addEventListener("scroll", handleInfiniteScroll);
+
     const interval = setInterval(() => {
-      container.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    }, 3000);
+      if (!isHovered) {
+        container.scrollBy({ left: 1, behavior: "smooth" });
+      }
+    }, 10);
 
     return () => {
       clearInterval(interval);
+      container.removeEventListener("scroll", handleInfiniteScroll);
     };
-  }, []);
+  }, [isHovered]);
 
   return (
     <>
-    <div className="pt-14 bg-whitebg">
+      <div className="pt-14 bg-whitebg">
         <h1 className="text-h1 font-medium text-center">Mitra</h1>
-    </div>
+      </div>
       <div className="flex items-center justify-center pb-14 bg-whitebg">
-        <button
-          onClick={() => handleScroll("left")}
-          className="absolute left-0 z-10 bg-whitebg p-2 rounded-full shadow-lg"
-        >
-          {"<"}
-        </button>
         <div
           id="scroll-container"
-          className="flex overflow-x-auto space-x-4 p-4 scrollbar-hide"
+          className="flex overflow-x-hidden space-x-4 p-4 scrollbar-hide"
           style={{ scrollBehavior: "smooth" }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          {mitras.map((mitra, index) => (
-            <div
-              key={index}
-              className="bg-whitebg rounded-lg p-4 shadow-top flex flex-col items-center justify-center min-w-[350px]"
-            >
-              <Image
-                src={mitra.image}
-                alt={mitra.name}
-                width={100}
-                height={100}
-                className="rounded-full"
-              />
-              <p className="text-center mt-2">{mitra.name}</p>
-            </div>
-          ))}
+          {mitras.length > 0 &&
+            [...mitras, ...mitras].map((mitra, index) => (
+              <div
+                key={index}
+                className="bg-whitebg rounded-lg p-4 shadow-top flex flex-row items-center justify-center min-w-[350px]"
+              >
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_IMG_URL}/${mitra.img}`}
+                  alt={mitra.name}
+                  width={100}
+                  height={100}
+                  className="rounded-full"
+                />
+                <p className="text-center mt-2">{mitra.name}</p>
+              </div>
+            ))}
         </div>
-        <button
-          onClick={() => handleScroll("right")}
-          className="absolute right-0 z-10 bg-white p-2 rounded-full shadow-lg"
-        >
-          {">"}
-        </button>
       </div>
     </>
   );

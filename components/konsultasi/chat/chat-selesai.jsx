@@ -1,16 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Modal from "@/components/modals/modal";
 import Rating from "@/components/popup/rating";
 
-export default function ChatSelesai() {
+export default function ChatSelesai({consulId, psikologId, psikologInfo, consultationTime}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
+    const closeModal = () => setIsModalOpen(false); 
+    const router = useRouter();
 
-    return (
+    const handlePesanLagi = () => {
+        router.push("/konsultasi"); 
+    };
+
+    return ( 
         <>
             <hr className="border-1 border-gray-600 mt-5" />
             <div className="flex flex-col justify-center items-center mt-5">
@@ -31,11 +37,17 @@ export default function ChatSelesai() {
                         />
                         Rating Konsultasi
                     </button>
-                    <button className="bg-primary text-white rounded-lg px-4 py-2">Pesan lagi</button>
+                    <button onClick={handlePesanLagi} className="bg-primary text-white rounded-lg px-4 py-2">Pesan lagi</button>
                 </div>
                 {/* Modal component */}
                 <Modal isOpen={isModalOpen} onClose={closeModal}>
-                    <Rating onClose={closeModal} /> {/* Mengirim fungsi closeModal sebagai prop */}
+                    <Rating 
+                        onClose={closeModal} 
+                        consulId={consulId} 
+                        psikologId={psikologId} 
+                        psikologInfo={psikologInfo}
+                        consultationTime={consultationTime}
+                        /> {/* Mengirim fungsi closeModal sebagai prop */}
                 </Modal>
             </div>
         </>

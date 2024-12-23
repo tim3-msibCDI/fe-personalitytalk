@@ -180,6 +180,11 @@ export default function Login() {
                       )}
                     </button>
                   </div>
+                  <div className="flex justify-end mt-2">
+                    <Link href="/lupa-password/request" className="text-primary text-sm font-medium">
+                      Lupa Kata Sandi?
+                    </Link>
+                  </div>
                 </div>
                 <button
                   className="bg-primary text-whitebg text-s w-full py-2 px-4 mt-8 rounded-lg hover:bg-hover"

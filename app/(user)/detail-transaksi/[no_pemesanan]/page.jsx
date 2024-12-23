@@ -10,7 +10,8 @@ import { getToken } from "@/lib/auth";
 import Pembayaran from "@/components/konsultasi/form-wizard/pembayaran";
 import Loading from "@/components/loading/loading";
 
-export default function Konsultasi() {
+
+export default function DetailTransaksi() {
     const router = useRouter();
     const pathname = usePathname();
 
@@ -34,30 +35,8 @@ export default function Konsultasi() {
                     router.push("/login");
                     return;
                 }
-
-                // Ambil no_pemesanan dari path
-                const no_pemesanan = pathname.split("/").pop();
-
-                // Ambil transactionData dari localStorage
-                const transactionData = JSON.parse(localStorage.getItem("transactionData"));
-                if (!transactionData) {
-                    console.error("Data transaksi tidak ditemukan di localStorage.");
-                    alert("Terjadi kesalahan pada data transaksi. Silakan ulangi proses.");
-                    router.push("/konsultasi");
-                    return;
-                }
-
-                // Ambil id_transaction dari data transaksi
-                const { id_transaction, no_pemesanan: stored_no_pemesanan } = transactionData;
-
-                // Cocokkan no_pemesanan dengan data URL
-                if (no_pemesanan !== stored_no_pemesanan) {
-                    console.error("No. Pemesanan di URL tidak cocok dengan data di localStorage.");
-                    alert("Data pemesanan tidak valid. Silakan ulangi proses.");
-                    router.push("/konsultasi");
-                    return;
-                }
-
+                const id_transaction = localStorage.getItem("id_transaction");
+          
                 // Fetch data transaksi dari API
                 const url = `${process.env.NEXT_PUBLIC_API_URL}/history/consultation/transaction/${id_transaction}`;
                 const response = await fetch(url, {
@@ -267,18 +246,17 @@ export default function Konsultasi() {
                             </div>
                             <div className="w-2/5">
                                 <Pembayaran 
-                                    status={status}
-                                    chat_status={chat_status}
-                                    chat_sessions_id={chat_session_id}
-                                    consultation_id={id_consultation} 
-                                    sender_id={client_id}
-                                    receiver_id={psi_id} 
+                                 status={status}
+                                 chat_status={chat_status}
+                                 chat_sessions_id={chat_session_id}
+                                 consultation_id={id_consultation} 
+                                 sender_id={client_id}
+                                 receiver_id={psi_id} 
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
-
                 {/* Modal Informasi Transfer */}
                 <Modal isOpen={isModalOpen} onClose={closeModal}>
                     <InfoTransfer onClose={closeModal} />

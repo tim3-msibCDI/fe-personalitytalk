@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { coursesData } from "@/constants";
+import Loading from "@/components/loading/loading";
 
 export default function PaymentDetail() {
   const [course, setCourse] = useState(null);
@@ -21,7 +22,7 @@ export default function PaymentDetail() {
   }, []);
 
   if (!course) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   return (

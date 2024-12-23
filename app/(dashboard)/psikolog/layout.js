@@ -9,21 +9,19 @@ export default function PsikologLayout({ children }) {
     const path = usePathname();
 
     const Login = ["/login"];
+    const isChatPage = /^\/psikolog\/chat\/.+$/.test(path); // Deteksi path untuk "/psikolog/chat/[id]"
 
+    // Jika halaman adalah "/login", langsung render children tanpa layout
     if (Login.includes(path)) {
         return children;
     }
 
-    // Cek apakah halaman saat ini adalah "/psikolog/chat"
-    const isChatPage = path === "/psikolog/chat/id";
-
     return (
-        <>
-            <UserProvider>
-                <TopbarPsikolog />
-                {!isChatPage && <HeaderPsikolog />}
-                <div>{children}</div>
-            </UserProvider>
-        </>
+        <UserProvider>
+            {/* Tampilkan Topbar dan Header kecuali pada halaman "/psikolog/chat/[id]" */}
+            <TopbarPsikolog />
+            {!isChatPage && <HeaderPsikolog />}
+            <div>{children}</div>
+        </UserProvider>
     );
 }

@@ -45,6 +45,11 @@ const Footer = () => {
                   Course
                 </a>
               </li>
+              <li>
+                <a href="#" className="hover:underline">
+                  Tes Mental
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -63,17 +68,12 @@ const Footer = () => {
               </li>
               <li>
                 <a href="#" className="hover:underline">
-                  Gabung sebagai Konselor
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:underline">
                   Artikel
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:underline">
-                  Forum
+                  Informasi Penyakit
                 </a>
               </li>
             </ul>
