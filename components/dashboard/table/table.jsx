@@ -208,7 +208,9 @@ export default function Table() {
   }
 
   const { data, error } = useSWR(
-    endpoint ? `${API_URL}${endpoint}` : null,
+    searchQuery
+      ? `${API_URL}${endpoint.replace("?", "/search?")}&search=${searchQuery}`
+      : `${API_URL}${endpoint}`,
     fetcher
   );
 
@@ -1094,7 +1096,13 @@ export default function Table() {
         />
         <SearchBar
           value={searchQuery}
-          onChange={setSearchQuery}
+          onChange={(value) => {
+            if (searchQuery !== value) {
+              // Reset hanya jika query benar-benar berubah
+              setCurrentPage(1);
+            }
+            setSearchQuery(value);
+          }}
           placeholder={searchPlaceholder}
         />
       </div>
