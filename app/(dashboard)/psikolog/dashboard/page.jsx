@@ -94,6 +94,8 @@ export default function PsikologDashboard() {
                             <Image
                                 src="/icons/psikolog/dashboard/client.svg"
                                 alt="Total Clients Icon"
+                                width={100}
+                                height={100}
                                 className="w-full h-full object-contain"
                             />
                         </div>
@@ -110,6 +112,8 @@ export default function PsikologDashboard() {
                             <Image
                                 src="/icons/psikolog/dashboard/konsultasi.svg"
                                 alt="Total Consultations Icon"
+                                width={100}
+                                height={100}
                                 className="w-full h-full object-contain"
                             />
                         </div>
@@ -126,6 +130,8 @@ export default function PsikologDashboard() {
                             <Image
                                 src="/icons/psikolog/dashboard/jadwal.svg"
                                 alt="Total Scheduled Consultations Icon"
+                                width={100}
+                                height={100}
                                 className="w-full h-full object-contain"
                             />
                         </div>
@@ -142,6 +148,8 @@ export default function PsikologDashboard() {
                             <Image
                                 src="/icons/psikolog/dashboard/kepuasan.svg"
                                 alt="Average Rating Icon"
+                                width={100}
+                                height={100}
                                 className="w-full h-full object-contain"
                             />
                         </div>

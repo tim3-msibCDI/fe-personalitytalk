@@ -14,6 +14,7 @@ import Image from "next/image";
 import TerimaPembayaran from "@/components/popup/terima-bayar";
 import Filter from "./filter";
 import SearchBar from "./search-bar";
+import KonsulBelumMulai from "@/components/popup/konsul-belum-mulai";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -64,6 +65,7 @@ export default function TablePsikolog() {
     const [selectedTransactionId, setSelectedTransactionId] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [filter, setFilter] = useState("");
+    const [isBelumMulaiModalOpen, setBelumMulaiModalOpen] = useState(false); // State untuk modal belum dimulai
 
     let searchPlaceholder = "Cari Data";
     const apiEndpoint = pathname === "/psikolog/transaksi"
@@ -119,6 +121,8 @@ export default function TablePsikolog() {
         setIsCheckModalOpen(false); // Tutup modal informasi
         setSelectedTransactionId(null);
     };
+    const openBelumMulaiModal = () => setBelumMulaiModalOpen(true);
+    const closeBelumMulaiModal = () => setBelumMulaiModalOpen(false);
 
     // Fungsi untuk reload halaman
     const reloadPage = () => {
@@ -310,11 +314,19 @@ export default function TablePsikolog() {
             ]
             : [];
 
+            
+
     const navigateToChat = (consulId, chatSessionId, clientId, senderId, chatStatus) => {
         // const chatData = { consulId, chatSessionId, clientId, senderId, chatStatus };
         // console.log("Navigating to chat with:", { consulId, chatSessionId, clientId, senderId, chatStatus });
-        localStorage.setItem("psikologChatData", JSON.stringify({ consulId, chatSessionId, clientId, senderId, chatStatus }));
-        router.push(`/psikolog/chat/${chatSessionId}`);
+        if (chatStatus === "scheduled") {
+            openBelumMulaiModal();
+        } else if (chatStatus === "ongoing" || chatStatus === "completed") {
+            localStorage.setItem("psikologChatData", JSON.stringify({ consulId, chatSessionId, clientId, senderId, chatStatus }));
+            router.push(`/psikolog/chat/${chatSessionId}`);
+        } else {
+            alert("Chat hanya tersedia untuk sesi yang dijadwalkan atau sedang berlangsung.");
+        }
     };
 
     return (
@@ -394,6 +406,11 @@ export default function TablePsikolog() {
                     transactionId={selectedTransactionId}
                     onReload={reloadPage}
                 />
+            </Modal>
+
+            {/* Modal KonsulBelumMulai */}
+            <Modal isOpen={isBelumMulaiModalOpen} onClose={closeBelumMulaiModal}>
+                <KonsulBelumMulai onClose={closeBelumMulaiModal} />
             </Modal>
         </div>
     );
