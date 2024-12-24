@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import CardCourse from "./CardCourse";
+import CardCourse from "./cardcourse";
 import Image from "next/image";
 
 const ListCourse = ({ courses }) => {
