@@ -79,6 +79,8 @@ export default function DetailArtikel({ params }) {
                         <p className="text-s mb-5">{article.publication_date}</p>
                         <div className="w-full h-[300px] mb-5">
                             <Image
+                                width={100}
+                                height={100}
                                 src={`${process.env.NEXT_PUBLIC_IMG_URL}/${article.article_img}`}
                                 alt={article.article_title}
                                 className="w-full h-full object-cover"
@@ -97,6 +99,8 @@ export default function DetailArtikel({ params }) {
                                     key={icon.name}
                                     src={hoveredIcon === icon.name ? icon.hoverSrc : icon.defaultSrc}
                                     alt={icon.name}
+                                    width={100}
+                                    height={100}
                                     onMouseEnter={() => setHoveredIcon(icon.name)}
                                     onMouseLeave={() => setHoveredIcon(null)}
                                     className="cursor-pointer"
@@ -114,7 +118,11 @@ export default function DetailArtikel({ params }) {
                 {/* Konten Artikel Lainnya dengan Centering */}
                 <div className="w-1/3 flex flex-col justify-center">
                     <div className="flex justify-center items-center">
-                        <Image src="/image/ilustrasi/detail_artikel.svg" alt="Ilustrasi" width={100} height={40} />
+                        <Image 
+                            src="/image/ilustrasi/detail_artikel.svg" 
+                            alt="Ilustrasi" 
+                            width={200} 
+                            height={100} />
                     </div>
                     <div className="mt-5 flex justify-center">
                         <h2 className="text-h2 font-semibold">Artikel Lainnya</h2>
