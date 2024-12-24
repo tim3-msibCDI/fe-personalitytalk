@@ -1,12 +1,17 @@
 import Image from "next/image";
 import Modal from "@/components/modals/modal";
 import Catatan from "@/components/popup/catatan";
+import KonsulBelumMulai from "@/components/popup/konsul-belum-mulai";
+import Berhasil from "@/components/popup/berhasil";
 import { useState, useEffect } from "react";
 import { getToken } from "@/lib/auth";
 import { useRouter } from "next/navigation";
+import { mutate } from "swr";
 
 export default function Pembayaran({ status,  chat_status, chat_sessions_id, consultation_id, sender_id, receiver_id }) {
+    const [isBelumMulaiModalOpen, setBelumMulaiModalOpen] = useState(false); // State untuk modal belum dimulai
     const [isCatatanModalOpen, setCatatanModalOpen] = useState(false);
+    const [isBerhasilModalOpen, setBerhasilModalOpen] = useState(false)
     const [formValues, setFormValues] = useState({
         nama: "",
         rekening: "",
@@ -20,6 +25,10 @@ export default function Pembayaran({ status,  chat_status, chat_sessions_id, con
 
     const openCatatanModal = () => setCatatanModalOpen(true);
     const closeCatatanModal = () => setCatatanModalOpen(false);
+    const openBelumMulaiModal = () => setBelumMulaiModalOpen(true);
+    const closeBelumMulaiModal = () => setBelumMulaiModalOpen(false);
+    const openBerhasilModal = () => setBerhasilModalOpen(true);
+    const closeBerhasilModal = () => setBerhasilModalOpen(false);
 
     // Ambil ID Transaksi
     const transactionData = JSON.parse(localStorage.getItem("transactionData"));
@@ -69,9 +78,7 @@ export default function Pembayaran({ status,  chat_status, chat_sessions_id, con
             });
 
             if (response.ok) {
-                alert("Pembayaran berhasil dikirim!");
-                // Muat ulang halaman
-                window.location.reload();
+                openBerhasilModal();
             } else {
                 const errorData = await response.json();
                 alert(`Gagal mengirim pembayaran: ${errorData.message || "Terjadi kesalahan."}`);
@@ -90,22 +97,14 @@ export default function Pembayaran({ status,  chat_status, chat_sessions_id, con
 
     const handleChatClick = ({ consulId, chatSessionId, psikologId, senderId, chatStatus }) => {
         if (chat_status === "scheduled") {
-          alert(
-            "Sesi konsultasi belum dimulai. Silakan tunggu hingga waktu yang dijadwalkan."
-          );
+            openBelumMulaiModal(); // Ganti alert dengan membuka modal
         } else if (chat_status === "ongoing" || chat_status === "completed") {
-        //   setChatId(chat_sessions_id);
-        //   setConsulId(consultation_id);
-        //   setSenderId(sender_id);
-        //   setReceiverId(receiver_id);
-        //   setChatStatus(chat_status);
-
-          localStorage.setItem("clientChatData", JSON.stringify({ consulId, chatSessionId, psikologId, senderId, chatStatus }));
-          router.push(`/konsultasi/chat`);
+            localStorage.setItem("clientChatData", JSON.stringify({ consulId, chatSessionId, psikologId, senderId, chatStatus }));
+            router.push(`/konsultasi/chat`);
         } else {
-          alert("Chat hanya tersedia untuk sesi yang dijadwalkan atau sedang berlangsung.");
+            alert("Chat hanya tersedia untuk sesi yang dijadwalkan atau sedang berlangsung.");
         }
-      };
+    };
 
     useEffect(() => {
         if (!idTransaction) return;
@@ -330,6 +329,19 @@ export default function Pembayaran({ status,  chat_status, chat_sessions_id, con
             <Modal isOpen={isCatatanModalOpen} onClose={closeCatatanModal}>
                 <Catatan onClose={closeCatatanModal} consulId={consultation_id}/>
             </Modal>
+
+            {/* Modal untuk Belum Dimulai */}
+            <Modal isOpen={isBelumMulaiModalOpen} onClose={closeBelumMulaiModal}>
+                <KonsulBelumMulai onClose={closeBelumMulaiModal} />
+            </Modal>
+            
+            <Modal isOpen={isBerhasilModalOpen} onClose={closeBerhasilModal}>
+                <Berhasil 
+                    onClose={closeBerhasilModal}
+                    message={"Pembayaran berhasil dikirim"}
+                />
+            </Modal>
+
         </div>
     );
 }

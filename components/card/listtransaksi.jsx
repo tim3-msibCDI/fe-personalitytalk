@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import TransactionHistoryCard from "./cardprofiletransaksi";
 import { getTransactionHistory } from "@/api/history_activity";
 import Loading from "../loading/loading";
+import Image from "next/image";
 
 export default function Listransaksi() {
   const [transaksiData, setTransaksiData] = useState([]);
@@ -14,7 +15,7 @@ export default function Listransaksi() {
     const fetchData = async () => {
       try {
         const response = await getTransactionHistory();
-        setTransaksiData(response.data.data || []); 
+        setTransaksiData(response.data.data || []);
       } catch (err) {
         // console.error(err.message || "Gagal memuat data transaksi");
         setError(err.message || "Gagal memuat data transaksi");
@@ -26,7 +27,7 @@ export default function Listransaksi() {
     fetchData();
   }, []);
 
-  if (loading) return <Loading/>;
+  if (loading) return <Loading />;
   if (error) return <p>Error: {error}</p>;
 
 
@@ -37,16 +38,24 @@ export default function Listransaksi() {
           <TransactionHistoryCard
             key={index}
             id_transaction={transaksi.transaction_id}
-            name={transaksi.psikolog_name} 
-            status={transaksi.status} 
-            date={transaksi.date} 
+            name={transaksi.psikolog_name}
+            status={transaksi.status}
+            date={transaksi.date}
             price={transaksi.total_amount}
             psikolog_profile={transaksi.psikolog_profile}
             no_pemesanan={transaksi.no_pemesanan}
           />
         ))
       ) : (
-        <p>Data tidak tersedia</p>
+        <div className="p-6 flex flex-col items-center justify-center text-center">
+          <Image
+            src="/icons/konsultasi/tidak_tersedia.svg"
+            alt="Vector Tidak Tersedia"
+            width={96}
+            height={96}
+          />
+          <h3 className="text-h3 font-semibold mt-4">Anda belum mempunyai transaksi konsultasi</h3>
+        </div>
       )}
     </div>
   );

@@ -1,15 +1,21 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getToken } from "@/lib/auth";
+import Modal from "../modals/modal";
+import Berhasil from "./berhasil";
 
-export default function Catatan({ onClose }) {
+export default function Catatan({ onClose , consulId}) {
     const [complaint, setComplaint] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
+    const [isBerhasilModalOpen, setBerhasilModalOpen] = useState(false)
 
     // Ambil id_transaction dari localStorage
-    const transactionData = JSON.parse(localStorage.getItem("transactionData"));
-    const idTransaction = transactionData?.id_transaction || null;
+    const idTransaction = consulId || JSON.parse(localStorage.getItem("transactionData"))?.id_transaction;
+    // console.log("idTransaction:", idTransaction);
+
+    const openBerhasilModal = () => setBerhasilModalOpen(true);
+    const closeBerhasilModal = () => setBerhasilModalOpen(false);
 
     useEffect(() => {
         if (!idTransaction) return;
@@ -79,7 +85,8 @@ export default function Catatan({ onClose }) {
 
             const responseData = await response.json();
             if (response.ok) {
-                alert("Keluhan berhasil dikirim.");
+                // alert("Keluhan berhasil dikirim.");
+                openBerhasilModal();
                 setComplaint(responseData.data.patient_complaint);
                 setIsDisabled(true);
             } else {
@@ -131,6 +138,13 @@ export default function Catatan({ onClose }) {
                     </button>
                 </div>
             </div>
+
+            <Modal isOpen={isBerhasilModalOpen} onClose={closeBerhasilModal}>
+                <Berhasil 
+                    onClose={closeBerhasilModal}
+                    message={"Catatan berhasil dikirim"}
+                />
+            </Modal>
         </div>
     );
 }
