@@ -1,8 +1,8 @@
 // pages/Course.js
 
 import Image from "next/image";
-import CourseList from "@/components/card/CourseList";
-import ListCourse from "@/components/card/ListCourse";
+import CourseList from "@/components/card/courselist";
+import ListCourse from "@/components/card/listcourse";
 import { coursesData } from "@/constants";
 
 export default function Course() {
@@ -40,7 +40,9 @@ export default function Course() {
               width={160}
               height={150}
             />
-            <p className="text-h3 text-whitebg font-medium py-4">Modul Belajar</p>
+            <p className="text-h3 text-whitebg font-medium py-4">
+              Modul Belajar
+            </p>
           </div>
           <div className="box flex flex-col items-center w-[289px]">
             <Image
@@ -60,7 +62,9 @@ export default function Course() {
               width={130}
               height={110}
             />
-            <p className="text-h3 text-whitebg font-medium py-4">Kuis dan Penilaian</p>
+            <p className="text-h3 text-whitebg font-medium py-4">
+              Kuis dan Penilaian
+            </p>
           </div>
           <div className="box flex flex-col items-center w-[289px]">
             <Image
@@ -77,7 +81,9 @@ export default function Course() {
       {/* Recommended Courses */}
       <div className="px-20 py-9 text-textcolor text-center">
         <h1 className="text-h1 font-semibold">Recommendation Courses</h1>
-        <p className="text-m">Rekomendasi Kursus untuk Kemajuan Perkembanganmu</p>
+        <p className="text-m">
+          Rekomendasi Kursus untuk Kemajuan Perkembanganmu
+        </p>
       </div>
       <div className="py-9">
         <CourseList courses={coursesData} />

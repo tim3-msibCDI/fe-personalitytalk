@@ -27,7 +27,7 @@ export default function SidebarProfile() {
 
   // Function to handle file upload
   const handleFileChange = async (event) => {
-    const token = getToken();  
+    const token = getToken();
     const file = event.target.files[0];
     if (!file) return;
 
@@ -44,7 +44,6 @@ export default function SidebarProfile() {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
             "ngrok-skip-browser-warning": "69420",
-
           },
         }
       );
@@ -69,15 +68,16 @@ export default function SidebarProfile() {
           {/* Gambar Profil */}
           <Image
             src={
-              user.photoProfile.startsWith("storage/")
+              user.photoProfile && user.photoProfile.startsWith("storage/")
                 ? `${process.env.NEXT_PUBLIC_IMG_URL}/${user.photoProfile}` // Jika diawali dengan "storage/"
-                : user.photoProfile // Jika bukan
+                : user.photoProfile || "/image/default-profile.jpg" // Jika bukan, atau jika null gunakan default
             }
             width={120}
             height={120}
             className="rounded-full"
             alt="Foto Profil"
           />
+
           {/* Ikon Pensil */}
           <div
             className="absolute bottom-0 right-0 bg-white p-2 rounded-full shadow cursor-pointer"
@@ -99,10 +99,15 @@ export default function SidebarProfile() {
             accept="image/*" // Hanya file gambar
           />
           {/* Modal Success Update Profile */}
-          <Modal isOpen={isSuccessModalOpen} onClose={() => setIsSuccessModalOpen(false)}>
-            <SuccessUpdateProfile onClose={() => setIsSuccessModalOpen(false)} />
+          <Modal
+            isOpen={isSuccessModalOpen}
+            onClose={() => setIsSuccessModalOpen(false)}
+          >
+            <SuccessUpdateProfile
+              onClose={() => setIsSuccessModalOpen(false)}
+            />
           </Modal>
-        </div>  
+        </div>
         <div className="mt-2 text-center">
           <h3 className="text-h3 font-semibold">{user.name}</h3>
           <p className="text-center text-vs font-normal">{user.email}</p>
@@ -129,6 +134,7 @@ export default function SidebarProfile() {
                   height={15}
                   width={15}
                   className="mr-0 lg:mr-2"
+                  alt="profile"
                 />
                 <span className="hidden lg:inline">Biodata Diri</span>
               </Link>
@@ -155,6 +161,7 @@ export default function SidebarProfile() {
                   height={15}
                   width={15}
                   className="mr-0 lg:mr-2"
+                  alt="icons"
                 />
                 <span className="hidden lg:inline">Ganti Password</span>
               </Link>
@@ -168,10 +175,7 @@ export default function SidebarProfile() {
                   : ""
               }`}
             >
-              <Link
-                href="/profile/konsultasi"
-                className="flex items-center"
-              >
+              <Link href="/profile/konsultasi" className="flex items-center">
                 <Image
                   src={
                     isActive("/profile/konsultasi")
@@ -181,6 +185,7 @@ export default function SidebarProfile() {
                   height={20}
                   width={20}
                   className="mr-0 lg:mr-2"
+                  alt="icons"
                 />
                 <span className="hidden lg:inline">Konsultasi Saya</span>
               </Link>
@@ -208,6 +213,7 @@ export default function SidebarProfile() {
                     height={20}
                     width={20}
                     className="mr-0 lg:mr-2"
+                    alt="icons"
                   />
                   <span className="hidden lg:inline">Course</span>
                 </Link>

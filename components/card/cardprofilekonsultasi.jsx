@@ -67,13 +67,15 @@ export default function ConsultationHistoryCard({
   };
 
   // Handle card click
-  const navigateToChat = ({ consulId, chatSessionId, psikologId, senderId, chatStatus }) => {
+  const navigateToChat = ({
+    consulId,
+    chatSessionId,
+    psikologId,
+    senderId,
+    chatStatus,
+  }) => {
     if (status === "scheduled") {
-      openModal(
-        <KonsulBelumMulai
-          onClose={closeModal}
-        />
-      );
+      openModal(<KonsulBelumMulai onClose={closeModal} />);
     } else if (status === "ongoing" || status === "completed") {
       // setChatId(chat_sessions_id);
       // setConsulId(consultation_id);
@@ -81,10 +83,21 @@ export default function ConsultationHistoryCard({
       // setReceiverId(receiver_id);
       // setChatStatus(status);
 
-      localStorage.setItem("clientChatData", JSON.stringify({ consulId, chatSessionId, psikologId, senderId, chatStatus }));
+      localStorage.setItem(
+        "clientChatData",
+        JSON.stringify({
+          consulId,
+          chatSessionId,
+          psikologId,
+          senderId,
+          chatStatus,
+        })
+      );
       router.push(`/konsultasi/chat`);
     } else {
-      alert("Chat hanya tersedia untuk sesi yang dijadwalkan atau sedang berlangsung.");
+      alert(
+        "Chat hanya tersedia untuk sesi yang dijadwalkan atau sedang berlangsung."
+      );
     }
   };
 
@@ -97,18 +110,24 @@ export default function ConsultationHistoryCard({
           navigateToChat({
             consulId: consultation_id,
             chatSessionId: chat_sessions_id,
-            psikologId: receiver_id, 
+            psikologId: receiver_id,
             senderId: sender_id,
             chatStatus: status,
           })
-        }      
+        }
       >
         <div className="justify-start items-center gap-3 flex">
           <div className="h-20 rounded-lg justify-start items-center gap-2.5 flex">
-            <img
-              className="grow shrink basis-0 h-20 rounded-lg"
-              src={`${process.env.NEXT_PUBLIC_IMG_URL}/${psikolog_profile}`}
+            <Image
+              className="grow shrink basis-0 rounded-lg"
+              src={
+                psikolog_profile
+                  ? `${process.env.NEXT_PUBLIC_IMG_URL}/${psikolog_profile}`
+                  : "/default-profile.jpg" // Gambar default jika `psikolog_profile` kosong
+              }
               alt={`${name}'s profile picture`}
+              height={100}
+              width={100}
             />
           </div>
           <div className="self-stretch flex-col justify-center items-start gap-2 inline-flex">
@@ -126,17 +145,17 @@ export default function ConsultationHistoryCard({
           <div className="flex-col justify-center items-start gap-2 inline-flex">
             <div className="justify-start items-center gap-2 inline-flex">
               <div className="w-4 h-4 relative" />
-              <Image src="/icons/chat-primary.svg" width={15} height={15} />
+              <Image src="/icons/chat-primary.svg" width={15} height={15} alt="icons" />
               <div className="text-textcolor text-xs font-semibold">{date}</div>
             </div>
             <div className="justify-start items-center gap-2 inline-flex">
               <div className="w-4 h-[14.30px] relative" />
-              <Image src="/icons/coins-primary.svg" width={15} height={15} />
+              <Image src="/icons/coins-primary.svg" width={15} height={15} alt="icons" />
               <div className="text-textcolor text-xs font-semibold">{time}</div>
             </div>
           </div>
           <div>
-            <Image src="/icons/arrow-activity.svg" width={20} height={20} />
+            <Image src="/icons/arrow-activity.svg" width={20} height={20} alt="icons" />
           </div>
         </div>
       </div>

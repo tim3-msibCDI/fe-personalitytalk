@@ -304,6 +304,7 @@ export default function Profile() {
                   width={15}
                   height={15}
                   className="mr-2"
+                  alt="arrow"
                 />
                 <span>Klik disini</span>
               </button>

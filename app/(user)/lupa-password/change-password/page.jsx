@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const ChangePassword = () => {
   const [password, setPassword] = useState("");
@@ -10,12 +11,12 @@ const ChangePassword = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     // Get the query string from the URL
     const queryParams = new URLSearchParams(window.location.search);
-    const tokenFromUrl = queryParams.get('token'); // Get the 'token' from the URL
+    const tokenFromUrl = queryParams.get("token"); // Get the 'token' from the URL
     setToken(tokenFromUrl);
   }, []);
 
@@ -36,7 +37,8 @@ const ChangePassword = () => {
     setSuccess("");
     setLoading(true);
 
-    const resetToken = "LrJjt95pgHl7qBAUkWuYmDrZNBUY1miap9f5BdjL0yB2KN5pzjehCMrgzkPo"; // Sesuaikan dengan token dari server
+    const resetToken =
+      "LrJjt95pgHl7qBAUkWuYmDrZNBUY1miap9f5BdjL0yB2KN5pzjehCMrgzkPo"; // Sesuaikan dengan token dari server
 
     try {
       const response = await axios.post(
@@ -49,7 +51,9 @@ const ChangePassword = () => {
       );
 
       if (response.data) {
-        setSuccess("Password berhasil diperbarui. Silakan kembali ke halaman login.");
+        setSuccess(
+          "Password berhasil diperbarui. Silakan kembali ke halaman login."
+        );
         setTimeout(() => router.push("/login"), 3000); // Redirect ke halaman login setelah 3 detik
       }
     } catch (err) {
@@ -66,16 +70,19 @@ const ChangePassword = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
       {/* Logo */}
-      <img
+      <Image
         src="/image/logo.webp" // Ganti dengan path logo Anda
         alt="Logo Personality Talk"
         className="mb-6 h-16"
+        height={64}
+        width={0}
       />
-    
+
       {/* Judul */}
       <h1 className="text-2xl font-bold text-gray-800 mb-4">Ubah Kata Sandi</h1>
       <p className="text-gray-600 text-center mb-6">
-        Silahkan lakukan pengubahan kata sandi Anda. Pastikan kata sandi Anda tidak mudah ditebak.
+        Silahkan lakukan pengubahan kata sandi Anda. Pastikan kata sandi Anda
+        tidak mudah ditebak.
       </p>
 
       {/* Form */}
@@ -89,7 +96,7 @@ const ChangePassword = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="py-2 px-4 w-full rounded-lg text-s mt-1 font-light border border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-400"
-              />
+            />
             <span
               className="absolute right-3 top-3 cursor-pointer"
               onClick={() => toggleVisibility("password")}
@@ -143,7 +150,7 @@ const ChangePassword = () => {
               value={passwordConfirmation}
               onChange={(e) => setPasswordConfirmation(e.target.value)}
               className="py-2 px-4 w-full rounded-lg text-s mt-1 font-light border border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-400"
-              />
+            />
             <span
               className="absolute right-3 top-3 cursor-pointer"
               onClick={() => toggleVisibility("passwordConfirmation")}

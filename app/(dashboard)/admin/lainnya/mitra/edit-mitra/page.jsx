@@ -8,6 +8,7 @@ import PartnerForm from "@/components/dashboard/form/mitraform";
 import { SkeletonTable } from "@/components/dashboard/table/skeleton-table";
 
 export default function EditMitraPage() {
+  const [isClient, setIsClient] = useState(false);
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const router = useRouter();
@@ -15,12 +16,19 @@ export default function EditMitraPage() {
   const [mitraData, setMitraData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    // Check if the code is running on the client side
+    if (typeof window !== "undefined") {
+      setIsClient(true);
+    }
+  }, []);
+
   // Fetch mitra data
   useEffect(() => {
     const fetchMitraData = async () => {
-      if (id) {
+      if (id && isClient) {
         try {
-          const { success, data, message } = await getPartnerDetail(id); // Use the mitra API
+          const { success, data, message } = await getPartnerDetail(id);
           if (success) {
             const dataMitra = data.data;
             setMitraData(dataMitra); // Set the mitra data
@@ -36,7 +44,7 @@ export default function EditMitraPage() {
     };
 
     fetchMitraData();
-  }, [id]);
+  }, [id, isClient]);
 
   // Handle partner data update after editing
   const handlePartnerUpdate = async (updatedData) => {

@@ -66,6 +66,7 @@ export default function SidebarAdmin() {
           width={120}
           height={120}
           className="rounded-full"
+          alt="user"
         />
         <div className="mt-2 text-center">
           <h3 className="text-h3 font-semibold">{userName}</h3>
@@ -89,6 +90,7 @@ export default function SidebarAdmin() {
                   height={15}
                   width={15}
                   className="mr-0 lg:mr-2"
+                  alt="icons"
                 />
                 <span className="hidden lg:inline">Biodata Diri</span>
               </Link>
@@ -115,6 +117,7 @@ export default function SidebarAdmin() {
                   height={15}
                   width={15}
                   className="mr-0 lg:mr-2"
+                  alt="icons"
                 />
                 <span className="hidden lg:inline">Ganti Password</span>
               </Link>
@@ -138,6 +141,7 @@ export default function SidebarAdmin() {
                   height={20}
                   width={20}
                   className="mr-0 lg:mr-2"
+                  alt="icons"
                 />
                 <span className="hidden lg:inline">Log Out</span>
               </button>

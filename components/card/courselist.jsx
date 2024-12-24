@@ -1,5 +1,5 @@
 import React from "react";
-import CourseBox from "./CourseBox";
+import CourseBox from "./coursebox";
 
 const CourseList = ({ courses }) => {
   return (

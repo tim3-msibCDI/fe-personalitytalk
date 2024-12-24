@@ -2,7 +2,7 @@
 const nextConfig = {
   images: {
     domains: [
-      "756d-114-10-44-248.ngrok-free.app",
+      "f632-182-2-39-155.ngrok-free.app",
       "magang3.personalitytalk.id",
       "lh3.googleusercontent.com",
     ],

@@ -7,6 +7,7 @@ import TableBody from "../dashboard/table/table-body";
 import Pagination from "../dashboard/table/pagenation";
 import { DeleteButton } from "../dashboard/table/button/button";
 import Modal from "../modals/modal";
+import Image from "next/image";
 
 // Fetcher function
 const fetcher = async (url, options = {}) => {
@@ -185,10 +186,10 @@ export default function AddCategoryModal({ isOpen, onClose }) {
               disabled={loading}
               className="px-6 py-2 text-white bg-primary rounded-lg flex items-center space-x-2 hover:bg-primarydark"
             >
-              <img
+              <Image
                 src="/icons/dashboard/add-data.svg"
                 alt="Tambah"
-                className="w-4 h-4"
+                width={16} height={16}
               />
               <span>{loading ? "Menambah..." : "Tambahkan"}</span>
             </button>

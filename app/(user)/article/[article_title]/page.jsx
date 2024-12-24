@@ -78,7 +78,7 @@ export default function DetailArtikel({ params }) {
                         <h1 className="text-h1 font-semibold">{article.article_title}</h1>
                         <p className="text-s mb-5">{article.publication_date}</p>
                         <div className="w-full h-[300px] mb-5">
-                            <img
+                            <Image
                                 src={`${process.env.NEXT_PUBLIC_IMG_URL}/${article.article_img}`}
                                 alt={article.article_title}
                                 className="w-full h-full object-cover"
@@ -93,7 +93,7 @@ export default function DetailArtikel({ params }) {
                         <h2 className="text-h2 font-semibold">Bagikan artikel ini:</h2>
                         <div className="flex flex-row gap-4 mt-3">
                             {socialMediaIcons.map((icon) => (
-                                <img
+                                <Image
                                     key={icon.name}
                                     src={hoveredIcon === icon.name ? icon.hoverSrc : icon.defaultSrc}
                                     alt={icon.name}
@@ -114,7 +114,7 @@ export default function DetailArtikel({ params }) {
                 {/* Konten Artikel Lainnya dengan Centering */}
                 <div className="w-1/3 flex flex-col justify-center">
                     <div className="flex justify-center items-center">
-                        <img src="/image/ilustrasi/detail_artikel.svg" alt="Ilustrasi" />
+                        <Image src="/image/ilustrasi/detail_artikel.svg" alt="Ilustrasi" width={100} height={40} />
                     </div>
                     <div className="mt-5 flex justify-center">
                         <h2 className="text-h2 font-semibold">Artikel Lainnya</h2>

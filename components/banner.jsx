@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function BannerKonsultasi() {
     const router = useRouter();
@@ -25,7 +26,7 @@ export default function BannerKonsultasi() {
                     </button>
                 </div>
                 <div>
-                    <img
+                    <Image
                         src="/image/ilustrasi/konsultasi-img.svg"
                         alt="Ilustrasi Konsultasi"
                         width={315}

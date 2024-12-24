@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getDashboardData } from "@/api/manage-dashboard";
+import Image from "next/image";
 
 export default function CardDashboardList() {
   const [data, setData] = useState(null);
@@ -85,7 +86,7 @@ function Card({ icon, title, count, isLoading }) {
   return (
     <div className="bg-orange-100 p-5 rounded-lg flex items-center shadow-md">
       <div className="rounded-lg flex items-center justify-center">
-        <img src={icon} alt={`${title} Icon`} className="w-10 h-10" />
+        <Image src={icon} alt={`${title} Icon`} width={40} height={40} />
       </div>
       <div className="ml-4">
         <p className="text-h2 font-bold text-black">
