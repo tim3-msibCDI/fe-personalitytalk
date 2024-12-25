@@ -167,7 +167,9 @@ export default function PartnerForm({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 disabled={!isAddMode && !isEditMode}
-                placeholder={isAddMode ? "Masukkan deskripsi mitra yang diperlukan" : ""}
+                placeholder={
+                  isAddMode ? "Masukkan deskripsi mitra yang diperlukan" : ""
+                }
                 rows="9" // Set height with number of rows
                 className="border border-textcolor p-2 rounded-md w-full disabled:bg-white disabled:text-textcolor"
               />
@@ -182,7 +184,7 @@ export default function PartnerForm({
               disabled={!isFormValid() || loading}
             >
               <Image
-                src="/icons/dashboard/save.svg"
+                src="/image/icons/dashboard/save.svg"
                 width={20}
                 height={20}
                 alt="sv"
@@ -201,7 +203,7 @@ export default function PartnerForm({
         <div className="p-6 text-center">
           <div className="py-16">
             <Image
-              src="/icons/dashboard/sucess.svg"
+              src="/image/icons/dashboard/sucess.svg"
               width={150}
               height={150}
               alt="success"

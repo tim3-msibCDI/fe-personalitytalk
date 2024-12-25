@@ -81,7 +81,9 @@ export default function Informasi() {
     // Simpan ID ke localStorage
     localStorage.setItem("diseaseId", id);
     // Navigasi ke halaman detail
-    router.push(`/informasi-kesehatan/${encodeURIComponent(name.replace(/\s+/g, "-"))}`);
+    router.push(
+      `/informasi-kesehatan/${encodeURIComponent(name.replace(/\s+/g, "-"))}`
+    );
   };
 
   return (
@@ -127,7 +129,7 @@ export default function Informasi() {
                 onClick={prevPageGroup}
               >
                 <img
-                  src="/icons/arrow_left.png"
+                  src="/image/icons/arrow_left.png"
                   alt="Previous Page"
                   className="w-5"
                 />
@@ -152,7 +154,7 @@ export default function Informasi() {
                 onClick={nextPageGroup}
               >
                 <img
-                  src="/icons/arrow_right.png"
+                  src="/image/icons/arrow_right.png"
                   alt="Next Page"
                   className="w-5"
                 />

@@ -33,25 +33,25 @@ export default function CardDashboardList() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <Card
-        icon="/icons/dashboard/total-pengguna.svg"
+        icon="/image/icons/dashboard/total-pengguna.svg"
         title="Total Pengguna"
         count={data?.totalUsers || 0}
         isLoading={isLoading}
       />
       <Card
-        icon="/icons/dashboard/total-psikolog.svg"
+        icon="/image/icons/dashboard/total-psikolog.svg"
         title="Total Psikolog"
         count={data?.totalTeachers || 0}
         isLoading={isLoading}
       />
       <Card
-        icon="/icons/dashboard/total-konsultasi.svg"
+        icon="/image/icons/dashboard/total-konsultasi.svg"
         title="Total Konsultasi"
         count={data?.totalConsultants || 0}
         isLoading={isLoading}
       />
       <Card
-        icon="/icons/dashboard/total-course.svg"
+        icon="/image/icons/dashboard/total-course.svg"
         title="Total Course"
         count={data?.totalCourses || 0}
         isLoading={isLoading}

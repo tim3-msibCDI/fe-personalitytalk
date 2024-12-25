@@ -9,14 +9,14 @@ export default function Herotes() {
       <div className="mx-20 flex">
         <div className="w-1/2 flex justify-center mt-20 w-82 h-72 relative">
           <Image
-            src="/icons/b-tes.svg"
+            src="/image/icons/b-tes.svg"
             alt="Background Tes"
             width={300}
             height={300}
-            className="absolute inset-0 w-full h-full object-contain z-0" 
+            className="absolute inset-0 w-full h-full object-contain z-0"
           />
           <Image
-            src="/icons/tes-vector.svg"
+            src="/image/icons/tes-vector.svg"
             alt="Vector Tes"
             width={240}
             height={240}
@@ -24,9 +24,7 @@ export default function Herotes() {
           />
         </div>
         <div className="w-1/2 flex flex-col justify-center items-center text-center p-8 rounded-lg text-whitebg">
-          <h1 className="text-h1 font-semibold mb-4">
-            Tes Mental
-          </h1>
+          <h1 className="text-h1 font-semibold mb-4">Tes Mental</h1>
           <p>
             Tes ini dirancang untuk membantu kamu mengenali aspek-aspek penting
             dari kesehatan mentalmu, sehingga kamu bisa lebih memahami dirimu

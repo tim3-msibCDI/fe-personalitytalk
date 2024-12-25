@@ -12,9 +12,9 @@ export default function ChatNavigationPsikolog({
   notes,
   setNotes,
   chat_status,
-  consul_id
+  consul_id,
 }) {
-  const router = useRouter(); 
+  const router = useRouter();
 
   // Hooks harus tetap dipanggil di sini meskipun data belum ada
   const [remainingTime, setRemainingTime] = useState(null);
@@ -40,11 +40,9 @@ export default function ChatNavigationPsikolog({
         const diffInSeconds = Math.floor((endDateTime - now) / 1000);
         const minutes = Math.floor(diffInSeconds / 60);
         const seconds = diffInSeconds % 60;
-        setRemainingTime(
-          `${minutes}:${seconds.toString().padStart(2, "0")}`
-        );
+        setRemainingTime(`${minutes}:${seconds.toString().padStart(2, "0")}`);
       } else if (now > endDateTime) {
-        setRemainingTime("00:00"); 
+        setRemainingTime("00:00");
       } else {
         setRemainingTime(null); // Belum dimulai
       }
@@ -61,10 +59,10 @@ export default function ChatNavigationPsikolog({
     return null;
   }
   const handleNotesUpdate = (updatedNotes) => {
-        setNotes(updatedNotes);
-    };  
+    setNotes(updatedNotes);
+  };
 
-    const { name = "", photo_profile = "", is_online = false } = clientInfo || {};
+  const { name = "", photo_profile = "", is_online = false } = clientInfo || {};
   const { start_time, end_time, date } = consultationTime;
 
   return (
@@ -74,7 +72,7 @@ export default function ChatNavigationPsikolog({
           {/* Tombol back */}
           <div onClick={() => router.back()} className="cursor-pointer">
             <Image
-              src="/icons/arrow_back.png"
+              src="/image/icons/arrow_back.png"
               alt="Kembali"
               width={9}
               height={14}
@@ -91,22 +89,22 @@ export default function ChatNavigationPsikolog({
               />
             </div>
             <div>
-                <p className="text-m font-semibold">{name}</p>
-                <div className="flex items-center text-xs">
-                    {is_online ? (
-                        <>
-                            {/* Titik Hijau */}
-                            <span className="h-2 w-2 bg-green-500 rounded-full mr-2"></span>
-                            <span>Online</span>
-                        </>
-                    ) : (
-                        <>
-                            {/* Titik Abu-Abu */}
-                            <span className="h-2 w-2 bg-gray-400 rounded-full mr-2"></span>
-                            <span>Offline</span>
-                        </>
-                    )}
-                </div>
+              <p className="text-m font-semibold">{name}</p>
+              <div className="flex items-center text-xs">
+                {is_online ? (
+                  <>
+                    {/* Titik Hijau */}
+                    <span className="h-2 w-2 bg-green-500 rounded-full mr-2"></span>
+                    <span>Online</span>
+                  </>
+                ) : (
+                  <>
+                    {/* Titik Abu-Abu */}
+                    <span className="h-2 w-2 bg-gray-400 rounded-full mr-2"></span>
+                    <span>Offline</span>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -123,7 +121,7 @@ export default function ChatNavigationPsikolog({
                          `}
           >
             <Image
-              src="/icons/white-catatan.png"
+              src="/image/icons/white-catatan.png"
               alt="Icon Catatan"
               width={24}
               height={24}
@@ -137,9 +135,15 @@ export default function ChatNavigationPsikolog({
                                 ? "bg-gray-400 text-white"
                                 : "bg-primary text-white"
                             }
-                            ${chat_status === "completed" ? "grayscale(100%) opacity-50" : ""}`}
+                            ${
+                              chat_status === "completed"
+                                ? "grayscale(100%) opacity-50"
+                                : ""
+                            }`}
           >
-            <p className={`${chat_status === "completed" ? "opacity-100" : ""}`}>
+            <p
+              className={`${chat_status === "completed" ? "opacity-100" : ""}`}
+            >
               {chat_status === "completed"
                 ? "Selesai"
                 : remainingTime ?? "Belum dimulai"}
@@ -149,11 +153,11 @@ export default function ChatNavigationPsikolog({
       </div>
       {/* Modal */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <SubmitPsikologNotes 
-            onClose={closeModal} 
-            notes={notes} 
-            consul_id={consul_id}
-            onNotesUpdate={handleNotesUpdate}
+        <SubmitPsikologNotes
+          onClose={closeModal}
+          notes={notes}
+          consul_id={consul_id}
+          onNotesUpdate={handleNotesUpdate}
         />
       </Modal>
     </div>

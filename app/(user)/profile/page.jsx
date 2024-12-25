@@ -29,7 +29,7 @@ export default function Profile() {
     mutate,
   } = useUser();
 
-  if (isLoading) return <Loading/>;
+  if (isLoading) return <Loading />;
   if (isError) return <p>Error loading user data</p>;
 
   const formattedDate = user.dateBirth ? formatDate(user.dateBirth) : "";
@@ -134,7 +134,7 @@ export default function Profile() {
             onClick={toggleEdit}
           >
             <Image
-              src="/icons/pencil-white.svg"
+              src="/image/icons/pencil-white.svg"
               width={20}
               height={20}
               alt="Edit Icon"
@@ -203,7 +203,13 @@ export default function Profile() {
                 <input
                   type="text"
                   name="gender"
-                  value={user.gender === "F" ? "Perempuan" : "Laki-laki"}
+                  value={
+                    user.gender === "F"
+                      ? "Perempuan"
+                      : user.gender === "M"
+                      ? "Laki-laki"
+                      : user.gender
+                  }
                   className={`border border-textcolor w-full rounded-lg p-3 bg-gray-100`}
                   disabled
                 />
@@ -300,7 +306,7 @@ export default function Profile() {
                 onClick={handleUpgradeMahasiswa}
               >
                 <Image
-                  src="/icons/arrow.png"
+                  src="/image/icons/arrow.png"
                   width={15}
                   height={15}
                   className="mr-2"

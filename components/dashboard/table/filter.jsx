@@ -4,7 +4,7 @@ const Filter = ({ options, selectedOption, onChange }) => {
   return (
     <div className="relative w-72 p-2 border border-textcolor rounded-lg bg-white shadow-sm">
       <img
-        src="/icons/dashboard/filter.svg" // Ganti dengan path ikon filter Anda
+        src="/image/icons/dashboard/filter.svg" // Ganti dengan path ikon filter Anda
         alt="Filter Icon"
         className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5"
       />

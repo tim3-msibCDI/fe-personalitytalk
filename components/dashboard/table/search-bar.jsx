@@ -15,7 +15,7 @@ const SearchBar = ({ value, onChange, placeholder }) => {
   return (
     <div className="flex items-center w-full p-2 border border-gray-300 rounded-lg bg-white shadow-sm">
       <img
-        src="/icons/dashboard/search.svg"
+        src="/image/icons/dashboard/search.svg"
         alt="Search Icon"
         className="w-5 h-5 ml-2 text-gray-500"
       />

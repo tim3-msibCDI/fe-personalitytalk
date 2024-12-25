@@ -83,7 +83,7 @@ export default function SidebarMenu({ menuType, children }) {
 
                       {item.subMenu && (
                         <Image
-                          src="/icons/sidebar/arrow.svg"
+                          src="/image/icons/sidebar/arrow.svg"
                           alt="Dropdown Icon"
                           width={16}
                           height={16}
@@ -110,7 +110,7 @@ export default function SidebarMenu({ menuType, children }) {
 
                     {item.subMenu && (
                       <Image
-                        src="/icons/sidebar/arrow.svg"
+                        src="/image/icons/sidebar/arrow.svg"
                         alt="Dropdown Icon"
                         width={16}
                         height={16}

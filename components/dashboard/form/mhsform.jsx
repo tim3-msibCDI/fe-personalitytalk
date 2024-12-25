@@ -269,7 +269,7 @@ export default function MhsForm({
               disabled={!isFormValid() || loading}
             >
               <Image
-                src="/icons/dashboard/save.svg"
+                src="/image/icons/dashboard/save.svg"
                 width={20}
                 height={20}
                 alt="sv"
@@ -288,7 +288,7 @@ export default function MhsForm({
         <div className="p-6 text-center">
           <div className="py-16">
             <Image
-              src="/icons/dashboard/sucess.svg"
+              src="/image/icons/dashboard/sucess.svg"
               width={150}
               height={150}
               alt="success"

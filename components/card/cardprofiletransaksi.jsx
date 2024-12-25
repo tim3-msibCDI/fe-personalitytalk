@@ -89,18 +89,33 @@ export default function TransactionHistoryCard({
       <div className="h-11 justify-end items-center gap-4 flex">
         <div className="flex-col justify-center items-start gap-2 inline-flex">
           <div className="justify-start items-center gap-2 inline-flex">
-            <Image src="/icons/chat-primary.svg" width={15} height={15} alt="icons"/>
+            <Image
+              src="/image/icons/chat-primary.svg"
+              width={15}
+              height={15}
+              alt="icons"
+            />
             <div className="text-textcolor text-xs font-semibold">{date}</div>
           </div>
           <div className="justify-start items-center gap-2 inline-flex">
-            <Image src="/icons/coins-primary.svg" width={15} height={15} alt="icons" />
+            <Image
+              src="/image/icons/coins-primary.svg"
+              width={15}
+              height={15}
+              alt="icons"
+            />
             <div className="text-textcolor text-xs font-semibold">
               {formatRupiah(price)}
             </div>
           </div>
         </div>
         <div>
-          <Image src="/icons/arrow-activity.svg" width={20} height={20} alt="icons" />
+          <Image
+            src="/image/icons/arrow-activity.svg"
+            width={20}
+            height={20}
+            alt="icons"
+          />
         </div>
       </div>
     </div>

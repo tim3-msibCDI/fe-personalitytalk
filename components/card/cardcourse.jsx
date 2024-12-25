@@ -34,7 +34,7 @@ const CardCourse = ({ id, name, description, rating, price, imageUrl }) => {
         <div className="flex justify-between items-center mt-4">
           <div className="flex items-center">
             <Image
-              src="/icons/star-black.svg"
+              src="/image/icons/star-black.svg"
               alt="Star"
               width={15}
               height={15}

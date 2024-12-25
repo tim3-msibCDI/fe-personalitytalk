@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import CourseSummary from "@/components/course/coursesummary";
 import CourseDetails from "@/components/course/coursedetails";
@@ -23,7 +23,7 @@ export default function DetailCoursePage({ params }) {
         className="flex items-center gap-4"
       >
         <Image
-          src="/icons/arrow_back.png"
+          src="/image/icons/arrow_back.png"
           alt="icon kembali"
           width={9}
           height={14}
@@ -39,8 +39,7 @@ export default function DetailCoursePage({ params }) {
         rating={course.rating}
         price={course.price}
         showPrice={false} // Pass false to hide price
-      >
-      </CourseSummary>
+      ></CourseSummary>
 
       {/* Divider */}
       <div className="py-9">

@@ -84,8 +84,8 @@ export default function SidebarAdmin() {
                 <Image
                   src={
                     isActive("/admin/pengaturan")
-                      ? "/icons/user-white.svg"
-                      : "/icons/user-primary.svg"
+                      ? "/image/icons/user-white.svg"
+                      : "/image/icons/user-primary.svg"
                   }
                   height={15}
                   width={15}
@@ -111,8 +111,8 @@ export default function SidebarAdmin() {
                 <Image
                   src={
                     isActive("/admin/pengaturan/change-password")
-                      ? "/icons/key-white.svg"
-                      : "/icons/key-primary.svg"
+                      ? "/image/icons/key-white.svg"
+                      : "/image/icons/key-primary.svg"
                   }
                   height={15}
                   width={15}
@@ -135,8 +135,8 @@ export default function SidebarAdmin() {
                 <Image
                   src={
                     isActive("/admin/logout")
-                      ? "/icons/logout-white.svg"
-                      : "/icons/logout-primary.svg"
+                      ? "/image/icons/logout-white.svg"
+                      : "/image/icons/logout-primary.svg"
                   }
                   height={20}
                   width={20}

@@ -88,7 +88,7 @@ export default function Login() {
           <div className="pb-6 flex justify-items-end">
             <button onClick={() => setIsModalOpen(false)} className="ml-auto">
               <Image
-                src="/icons/close.svg"
+                src="/image/icons/close.svg"
                 alt="Close Icon"
                 width={25}
                 height={25}
@@ -98,7 +98,7 @@ export default function Login() {
           </div>
           <div>
             <Image
-              src="/icons/sad.png"
+              src="/image/icons/sad.png"
               alt="Icons Sad"
               width={111}
               height={111}

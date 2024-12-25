@@ -52,7 +52,7 @@ export default function AddPriceModal({
       if (response.success) {
         setMessage({ type: "success", text: response.message });
         onDataUpdated(); // Panggil fungsi untuk update data setelah operasi berhasil
-        router.refresh()
+        router.refresh();
         onClose(); // Tutup modal
       } else {
         setMessage({ type: "error", text: response.message });
@@ -126,7 +126,7 @@ export default function AddPriceModal({
               ) : (
                 <>
                   <Image
-                    src="/icons/dashboard/save.svg"
+                    src="/image/icons/dashboard/save.svg"
                     alt="Save"
                     width={20}
                     height={20}

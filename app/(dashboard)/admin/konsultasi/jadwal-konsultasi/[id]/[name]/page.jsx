@@ -5,7 +5,10 @@ import { usePathname } from "next/navigation";
 import HeaderAdmin from "@/components/dashboard/section/header-admin";
 import TableHead from "@/components/dashboard/table/table-head";
 import TableBody from "@/components/dashboard/table/table-body";
-import { getPsychologistSchedule, updateScheduleAvailability } from "@/api/manage-konsultasi";
+import {
+  getPsychologistSchedule,
+  updateScheduleAvailability,
+} from "@/api/manage-konsultasi";
 import Image from "next/image";
 
 export default function DetailJadwalKonsultasiPage() {
@@ -54,7 +57,10 @@ export default function DetailJadwalKonsultasiPage() {
 
   const handleUpdateAvailability = async (scheduleId, currentAvailability) => {
     const newAvailability = currentAvailability === 0 ? 1 : 0; // Toggle availability
-    const result = await updateScheduleAvailability(scheduleId, newAvailability);
+    const result = await updateScheduleAvailability(
+      scheduleId,
+      newAvailability
+    );
     if (result.success) {
       alert("Ketersediaan berhasil diperbarui!");
       fetchSchedule(id, selectedDate || null); // Refresh data
@@ -94,14 +100,14 @@ export default function DetailJadwalKonsultasiPage() {
           >
             {value === 0 ? (
               <Image
-                src="/icons/dashboard/checkbox_disabled.svg"
+                src="/image/icons/dashboard/checkbox_disabled.svg"
                 alt="Checkbox Disabled"
                 width={25}
                 height={25}
               />
             ) : (
               <Image
-                src="/icons/dashboard/checkbox.svg"
+                src="/image/icons/dashboard/checkbox.svg"
                 alt="Checkbox"
                 width={25}
                 height={25}

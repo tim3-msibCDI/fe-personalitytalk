@@ -579,17 +579,25 @@ export default function Table() {
 
           {
             key: "actions",
-            render: (_, row) => (
-              <div className="space-x-2">
-                <EditButton
-                  onClick={() =>
-                    router.push(
-                      `/admin/psikolog/kelola-psikolog/detail-informasi?id=${row.id_psikolog}`
-                    )
-                  }
-                />
-              </div>
-            ),
+            render: (_, row) => {
+              // Periksa jika status adalah 'pending'
+              if (row.status === "pending") {
+                return (
+                  <div className="space-x-2">
+                    <EditButton
+                      onClick={() =>
+                        router.push(
+                          `/admin/psikolog/kelola-psikolog/detail-informasi?id=${row.id_psikolog}`
+                        )
+                      }
+                    />
+                  </div>
+                );
+              }
+
+              // Jika status bukan 'pending', jangan tampilkan tombol
+              return null;
+            },
           },
         ]
       : pathname === "/admin/psikolog/harga-psikolog"
@@ -807,7 +815,7 @@ export default function Table() {
                   className="bg-primary rounded-md p-2"
                 >
                   <Image
-                    src="/icons/open-picture.png" // Ganti dengan path ikon Anda
+                    src="/image/icons/open-picture.png" // Ganti dengan path ikon Anda
                     alt="Bukti Pembayaran"
                     width={25}
                     height={25}
@@ -875,7 +883,7 @@ export default function Table() {
                   className="bg-primary rounded-md p-2"
                 >
                   <Image
-                    src="/icons/open-picture.png" // Ganti dengan path ikon Anda
+                    src="/image/icons/open-picture.png" // Ganti dengan path ikon Anda
                     alt="Bukti Pembayaran"
                     width={25}
                     height={25}
