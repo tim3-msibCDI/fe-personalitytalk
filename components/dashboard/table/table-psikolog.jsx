@@ -14,6 +14,7 @@ import Image from "next/image";
 import TerimaPembayaran from "@/components/popup/terima-bayar";
 import Filter from "./filter";
 import SearchBar from "./search-bar";
+import KonsulBelumMulai from "@/components/popup/konsul-belum-mulai";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 

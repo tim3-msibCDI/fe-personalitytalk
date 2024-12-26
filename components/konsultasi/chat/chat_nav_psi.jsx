@@ -82,7 +82,11 @@ export default function ChatNavigationPsikolog({
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-full overflow-hidden">
               <Image
-                src={`${process.env.NEXT_PUBLIC_IMG_URL}/${photo_profile}`}
+                src={
+                  photo_profile
+                    ? `${process.env.NEXT_PUBLIC_IMG_URL}/${photo_profile}`
+                    : "/image/default-profile.jpg"
+                }
                 alt={`Photo ${name}`}
                 width={100}
                 height={100}

@@ -1,7 +1,5 @@
-"use client"
+"use client";
 import { useState } from "react";
-import ListKonsultasi from "@/components/card/listkonsultasi";
-import ListTransaksi from "@/components/card/listtransaksi";
 
 export default function CourseUserPage() {
   const [activeTab, setActiveTab] = useState("konsultasi"); // State untuk tab aktif
@@ -30,11 +28,16 @@ export default function CourseUserPage() {
             Riwayat Transaksi
           </li>
         </ul>
-        <div className={`bg-primarylight p-2 max-h-[26rem] overflow-y-auto ${
-              activeTab === "konsultasi" ? "rounded-tr-lg rounded-br-lg" : "rounded-lg"
-            }`}>
-          {activeTab === "konsultasi" && <ListKonsultasi />}
-          {activeTab === "transaksi" && <ListTransaksi />}
+        <div
+          className={`bg-primarylight p-2 max-h-[26rem] overflow-y-auto ${
+            activeTab === "konsultasi" ? "rounded-tr-lg rounded-br-lg" : "rounded-lg"
+          }`}
+        >
+          <div className="py-24">
+            <p className="text-h3 text-center font-bold">
+              Fitur belum tersedia
+            </p>
+          </div>
         </div>
       </div>
     </div>
