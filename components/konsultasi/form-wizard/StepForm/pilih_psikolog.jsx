@@ -71,10 +71,11 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
             })
           );
 
-          //set tanggal pertama secara otomatis
-          if (formattedDates.length > 0 && !selectedDate) {
-            setSelectedDate(formattedDates[0].dayMonth);
-          }
+                    //set tanggal pertama secara otomatis
+                    if (formattedDates.length > 0 && !selectedDate) {
+                        setSelectedDate(formattedDates[0].dayMonth);
+                        localStorage.setItem("selectedDate", formattedDates[0].dayMonth); // Simpan tanggal pertama di localStorage
+                    }
 
           setWeekDates(formattedDates);
         } else {
@@ -176,38 +177,29 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
         </div>
       </div>
 
-      <div className="w-3/5">
-        <div className="border bg-primarylight2 rounded-lg p-4 mb-6 shadow">
-          <div
-            className="flex gap-4 overflow-x-scroll overflow-hidden w-full mb-5"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
-            {Array.isArray(weekDates) &&
-              weekDates.map((date, index) => {
-                const { day, date: dateOnly } = splitDate(date.dayMonth);
-                return (
-                  <div
-                    key={index}
-                    onClick={() => setSelectedDate(date.dayMonth)}
-                    className={`flex flex-col items-center justify-center rounded py-2 px-4 w-24 cursor-pointer ${
-                      selectedDate === date.dayMonth
-                        ? "bg-primary text-white"
-                        : "bg-primarylight text-black"
-                    }`}
-                  >
-                    <p className="text-s px-2 whitespace-nowrap text-center">
-                      {dateOnly}
-                    </p>
-                    <p className="text-m font-semibold text-center">{day}</p>
-                  </div>
-                );
-              })}
-          </div>
-          <h1 className="text-h font-semibold">Pilih Jenis Profesional</h1>
-          <p className="mb-6 text-s">
-            Kamu dapat memilih Psikolog / Konselor sesuai dengan yang kamu
-            inginkan
-          </p>
+            <div className="w-3/5">
+                <div className="border bg-primarylight2 rounded-lg p-4 mb-6 shadow">
+                    <div className="flex gap-4 overflow-x-scroll overflow-hidden w-full mb-5"
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                        {Array.isArray(weekDates) && weekDates.map((date, index) => {
+                            const { day, date: dateOnly } = splitDate(date.dayMonth);
+                            return (
+                                <div
+                                    key={index}
+                                    onClick={() => { 
+                                        setSelectedDate(date.dayMonth);
+                                        localStorage.setItem("selectedDate", date.dayMonth); // Simpan tanggal di localStorage
+                                    }}
+                                    className={`flex flex-col items-center justify-center rounded py-2 px-4 w-24 cursor-pointer ${selectedDate === date.dayMonth ? 'bg-primary text-white' : 'bg-primarylight text-black'}`}
+                                >
+                                    <p className="text-s px-2 whitespace-nowrap text-center">{dateOnly}</p>
+                                    <p className="text-m font-semibold text-center">{day}</p>
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <h1 className="text-h font-semibold">Pilih Jenis Profesional</h1>
+                    <p className="mb-6 text-s">Kamu dapat memilih Psikolog / Konselor sesuai dengan yang kamu inginkan</p>
 
           {/* Tombol Psikolog dan Konselor */}
           <div className="flex justify-between gap-4 text-h3 font-semibold mb-4">

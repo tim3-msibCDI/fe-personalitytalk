@@ -19,7 +19,7 @@ export default function Konsultasi() {
   const [loading, setLoading] = useState(true);
 
   // State untuk modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 

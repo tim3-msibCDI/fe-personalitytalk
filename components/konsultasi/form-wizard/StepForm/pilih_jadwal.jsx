@@ -60,16 +60,22 @@ export default function FormPilihJadwal({ onBack, onNext }) {
       // Set reviews data
       setReviews(result.data.psikolog.list_top_ratings);
 
-      // Automatically select the first available date
-      if (result.data.weekly_schedule.length > 0) {
-        setSelectedDate(result.data.weekly_schedule[0]);
-      }
-    } catch (error) {
-      console.error("Error fetching psikolog data:", error);
-    } finally {
-      setIsLoading(false); // Data fetching is complete
-    }
-  };
+            // Cek apakah ada tanggal yang tersimpan di localStorage
+            const storedDate = localStorage.getItem("selectedDate");
+            const foundDate = result.data.weekly_schedule.find(schedule => schedule.date === storedDate);
+
+            // Pilih tanggal yang sesuai dengan localStorage atau tanggal pertama jika tidak ditemukan
+            if (foundDate) {
+                setSelectedDate(foundDate);
+            } else if (result.data.weekly_schedule.length > 0) {
+                setSelectedDate(result.data.weekly_schedule[0]);
+            }
+        } catch (error) {
+            console.error("Error fetching psikolog data:", error);
+        } finally {
+            setIsLoading(false); // Data fetching is complete
+        }
+    };
 
   // Format harga
   const formatPrice = (price) => {
@@ -100,11 +106,17 @@ export default function FormPilihJadwal({ onBack, onNext }) {
     );
   };
 
-  const handleNextReview = () => {
-    setCurrentReviewIndex((prevIndex) =>
-      prevIndex === reviews.length - 1 ? 0 : prevIndex + 1
-    );
-  };
+    const handleNextReview = () => {
+        setCurrentReviewIndex((prevIndex) =>
+            prevIndex === reviews.length - 1 ? 0 : prevIndex + 1
+        );
+    };
+
+    // Fungsi untuk memilih tanggal
+    const handleSelectDate = (schedule) => {
+        setSelectedDate(schedule);
+        localStorage.setItem("selectedDate", schedule.date); // Simpan tanggal ke localStorage
+    };
 
   return (
     <div className="py-6">
@@ -119,86 +131,73 @@ export default function FormPilihJadwal({ onBack, onNext }) {
         <p className="text-m font-bold">Kembali</p>
       </div>
 
-      {/* Loading */}
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <div className="flex gap-8 mt-6">
-          {/* Konten Kanan */}
-          <div className="w-2/5 bg-primarylight2 rounded-md">
-            <div className="p-4">
-              <h3 className="text-h3 font-semibold text-textcolor mb-4">
-                Detail Profil Psikolog
-              </h3>
-              <div className="flex flex-row gap-4">
-                <div className="w-28 h-28 rounded overflow-hidden">
-                  <Image
-                    className="mb-2 object-cover w-full h-full"
-                    src={`${process.env.NEXT_PUBLIC_IMG_URL}/${selectedPsikolog?.photo_profile}`}
-                    alt={`Photo ${selectedPsikolog?.name}`}
-                    width={100}
-                    height={100}
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <p className="text-m font-semibold">
-                    {selectedPsikolog?.name}
-                  </p>
-                  {/* Rating, Pengalaman, dan Role */}
-                  <div className="flex items-center gap-3 mt-1">
-                    {selectedPsikolog?.rating &&
-                      selectedPsikolog?.rating > 0 && (
-                        <>
-                          <div className="flex items-center">
-                            <Image
-                              src="/image/icons/bintang.png"
-                              alt="Icon Star"
-                              width={18}
-                              height={18}
-                            />
-                            <span className="ml-1">
-                              {selectedPsikolog?.rating}
-                            </span>
-                          </div>
-                          <span className="text-gray-400">|</span>
-                        </>
-                      )}
-                    <div className="flex items-center">
-                      <Image
-                        src="/image/icons/i-konsultasi.png"
-                        alt="Icon Konsultasi"
-                        width={18}
-                        height={18}
-                      />
-                      <p className="ml-1">
-                        {selectedPsikolog?.years_of_experience} tahun
-                      </p>
-                    </div>
-                    <span className="text-gray-400">|</span>
-                    <div className="flex items-center">
-                      <Image
-                        src="/image/icons/role.png"
-                        alt="Icon Role"
-                        width={18}
-                        height={18}
-                      />
-                      <p className="ml-1">{selectedPsikolog?.category_name}</p>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex gap-2 mt-3">
-                      <p className="text-s font-semibold">No SIPP</p>
-                      <p className="text-s">{selectedPsikolog?.sipp}</p>
-                    </div>
-                  </div>
-                  <p className="mt-1 text-m font-bold">
-                    {selectedPsikolog
-                      ? formatPrice(selectedPsikolog?.price)
-                      : "Rp 0,00"}
-                    /sesi
-                  </p>
-                </div>
-              </div>
+            {/* Loading */}
+            {isLoading ? (
+                <Loading />
+            ) : (
+                <div className="flex gap-8 mt-6">
+                    {/* Konten Kanan */}
+                    <div className="w-2/5 bg-primarylight2 rounded-md">
+                        <div className="p-4">
+                            <h3 className="text-h3 font-semibold text-textcolor mb-4">Detail Profil Psikolog</h3>
+                            <div className="flex flex-row gap-4">
+                                <div className="w-28 h-28 rounded overflow-hidden">
+                                    <Image className="mb-2 object-cover w-full h-full"
+                                        src={`${process.env.NEXT_PUBLIC_IMG_URL}/${selectedPsikolog?.photo_profile}`}
+                                        alt={`Photo ${selectedPsikolog?.name}`}
+                                        width={100}
+                                        height={100}
+                                    />
+                                </div>
+                                <div className="flex flex-col">
+                                    <p className="text-m font-semibold">{selectedPsikolog?.name}</p>
+                                    {/* Rating, Pengalaman, dan Role */}
+                                    <div className="flex items-center gap-3 mt-1">
+                                        {selectedPsikolog?.rating && selectedPsikolog?.rating > 0 && (
+                                            <>
+                                                <div className="flex items-center">
+                                                    <Image
+                                                        src="/image/icons/bintang.png"
+                                                        alt="Icon Star"
+                                                        width={18}
+                                                        height={18}
+                                                    />
+                                                    <span className="ml-1">{selectedPsikolog?.rating}</span>
+                                                </div>
+                                                <span className="text-gray-400">|</span>
+                                            </>
+                                        )}
+                                        <div className="flex items-center">
+                                            <Image
+                                                src="/image/icons/i-konsultasi.png"
+                                                alt="Icon Konsultasi"
+                                                width={18}
+                                                height={18}
+                                            />
+                                            <p className="ml-1">{selectedPsikolog?.years_of_experience} tahun</p>
+                                        </div>
+                                        <span className="text-gray-400">|</span>
+                                        <div className="flex items-center">
+                                            <Image
+                                                src="/image/icons/role.png"
+                                                alt="Icon Role"
+                                                width={18}
+                                                height={18}
+                                            />
+                                            <p className="ml-1">{selectedPsikolog?.category_name}</p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="flex gap-2 mt-3">
+                                            <p className="text-s font-semibold">No SIPP</p>
+                                            <p className="text-s">{selectedPsikolog?.sipp}</p>
+                                        </div>
+                                    </div>
+                                    <p className="mt-1 text-m font-bold">
+                                        {selectedPsikolog ? formatPrice(selectedPsikolog?.price) : "Rp 0,00"}/sesi
+                                    </p>
+                                </div>
+                            </div>
 
               <hr className="my-4 border-1 border-gray-400" />
 
@@ -314,31 +313,24 @@ export default function FormPilihJadwal({ onBack, onNext }) {
                     const [day, ...dateParts] = schedule.date.split(" ");
                     const date = dateParts.join(" ");
 
-                    return (
-                      <div
-                        key={index}
-                        className={`flex flex-col items-center cursor-pointer py-2 px-4 w-24 rounded-md ${
-                          selectedDate === schedule
-                            ? "bg-primary text-white"
-                            : "bg-primarylight text-black"
-                        }`}
-                        onClick={() => setSelectedDate(schedule)}
-                      >
-                        <p className="text-s px-2 whitespace-nowrap text-center">
-                          {date}
-                        </p>
-                        <p className="text-m font-semibold text-center">
-                          {day}
-                        </p>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <p className="text-m text-gray-500">
-                    Tidak ada jadwal tersedia.
-                  </p>
-                )}
-              </div>
+                                        return (
+                                            <div
+                                                key={index}
+                                                className={`flex flex-col items-center cursor-pointer py-2 px-4 w-24 rounded-md ${selectedDate === schedule
+                                                    ? "bg-primary text-white"
+                                                    : "bg-primarylight text-black"
+                                                    }`}
+                                                onClick={() => handleSelectDate(schedule)}
+                                            >
+                                                <p className="text-s px-2 whitespace-nowrap text-center">{date}</p>
+                                                <p className="text-m font-semibold text-center">{day}</p>
+                                            </div>
+                                        );
+                                    })
+                                ) : (
+                                    <p className="text-m text-gray-500">Tidak ada jadwal tersedia.</p>
+                                )}
+                            </div>
 
               {/* Tampilkan waktu untuk tanggal yang dipilih */}
               {selectedDate && (

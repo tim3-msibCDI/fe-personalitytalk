@@ -50,7 +50,7 @@ export default function Psikologlist() {
   if (error) {
     return (
       <div className="bg-whitebg py-12">
-        <h2 className="text-h1 font-medium text-center p-2">Psikolog PersonalityTalk</h2>
+        <h2 className="text-h1 font-semibold text-center p-2">Psikolog PersonalityTalk</h2>
         <p className="text-center text-m text-red-500">Error: {error}</p>
       </div>
     );
@@ -58,7 +58,7 @@ export default function Psikologlist() {
 
   return (
     <div className="bg-whitebg py-12">
-      <h2 className="text-h1 font-medium text-center p-2">Psikolog PersonalityTalk</h2>
+      <h2 className="text-h1 font-semibold text-center p-2">Psikolog PersonalityTalk</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-20">
         {data.map((person, index) => (
           <Cardpsikologi

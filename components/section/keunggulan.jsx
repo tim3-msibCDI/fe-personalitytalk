@@ -14,14 +14,14 @@ export default function Keunggulan() {
                 </p>
                 <div className="grid grid-cols-4 gap-5">
                     {layanan.map((item, index) => (
-                        <a key={item.id} href={`#${item.slug}`} className="flex flex-col items-center space-y-2 p-5 bg-primary border border-gray-300 rounded-lg hover:shadow-lg transition duration-300 text-center scroll-smooth">
+                        <a key={item.id} href={`#${item.slug}`} className="flex flex-col items-center space-y-2 p-5 w-[150px] max-w-[180px] mx-auto bg-primary border border-gray-300 rounded-lg hover:shadow-lg transition duration-300 text-center scroll-smooth">
                             <Image className="mb-3"
                                 src={item.icon_white}
                                 alt={item.iconalt}
                                 width={50}
                                 height={50}
                             />
-                            <span className="flex justify-center items-center h-full text-whitebg">{item.name}</span>
+                            <span className="flex justify-center items-center h-full text-whitebg font-medium">{item.name}</span>
                         </a>
                     ))}
                 </div>

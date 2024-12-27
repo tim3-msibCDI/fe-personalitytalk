@@ -43,6 +43,18 @@ export default function Navbar() {
         </Link>
       </div>
       <ul className="hidden md:flex space-x-4 lg:space-x-6 font-light text-textcolor text-m md:text-base lg:text-m">
+      <li>
+          <Link
+            href="/"
+            className={`${
+              isActive("/")
+                ? "font-semibold underline underline-offset-8"
+                : ""
+            }`}
+          >
+            Beranda
+          </Link>
+        </li>
         <li>
           <Link
             href="/konsultasi"

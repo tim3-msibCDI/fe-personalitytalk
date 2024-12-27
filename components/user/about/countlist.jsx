@@ -5,7 +5,7 @@ export default function Countlist() {
     <>
       <div className="bg-primary p-6">
         <div className="my-16">
-          <h2 className="text-h1 font-medium mb-4 text-center text-whitebg">
+          <h2 className="text-h1 font-bold mb-4 text-center text-whitebg">
             PersonalityTalk dalam Angka
           </h2>
           <div className="flex justify-center space-x-4 mt-9">

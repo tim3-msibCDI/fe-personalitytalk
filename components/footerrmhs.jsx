@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Footerrmhs() {
   return (
     <>
-      <div className="bg-primary w-full text-whitebg relative rounded-t-2xl shadow-bottom z-50 py-6 px-20">
+      <div className="bg-primary w-full text-whitebg relative rounded-t-2xl shadow-bottom py-6 px-20">
         <div className="flex items-center justify-between">
           <div className="absolute bottom-0 left-24">
             <Image
@@ -16,7 +16,7 @@ export default function Footerrmhs() {
             />
           </div>
           <div className="inline-block ml-60 mr-20">
-            <h2 className="text-h2 font-medium">
+            <h2 className="text-h2 font-semibold">
               Apakah Anda Mahasiswa Psikologi?
             </h2>
             <p className="text-m font-[300]">

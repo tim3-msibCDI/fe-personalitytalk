@@ -51,15 +51,20 @@ export default function TransactionHistoryCard({
     }
   };
 
-  const handleCardClick = () => {
-    localStorage.setItem("id_transaction", id_transaction);
-    router.push(`/detail-transaksi/${no_pemesanan}`);
+  const navigateToDetailTransaksi = ({ idTransaction, noPemesanan }) => {
+    localStorage.setItem("id_transaction", idTransaction);
+    router.push(`/detail-transaksi/${noPemesanan}`);
   };
 
   return (
     <div
-      onClick={handleCardClick}
-      className="w-full h-[124px] p-4 bg-primarylight rounded-lg border border-primary justify-between items-center inline-flex mb-2 cursor-pointer"
+    className="w-full h-[124px] p-4 bg-primarylight rounded-lg border border-primary justify-between items-center inline-flex mb-2 cursor-pointer"
+    onClick={() =>
+      navigateToDetailTransaksi({
+        idTransaction: id_transaction,
+        noPemesanan: no_pemesanan,
+      })
+    }
     >
       <div className="justify-start items-center gap-3 flex">
         <div className="h-20 rounded-lg justify-start items-center gap-2.5 flex">

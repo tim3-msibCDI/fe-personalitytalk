@@ -82,7 +82,7 @@ export default function Artikel() {
               .toLowerCase()}`}
             passHref
           >
-            <div className="bg-primarylight2 rounded-lg shadow-md p-4 cursor-pointer">
+            <div className="bg-primarylight2 rounded-lg shadow-md p-4 cursor-pointer flex flex-col h-full">
               <div className="w-full h-56 overflow-hidden rounded-t-lg relative">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.article_img}`}
@@ -92,11 +92,14 @@ export default function Artikel() {
                   className="rounded-t-lg"
                 />
               </div>
-              <div className="py-4">
-                <h5 className="text-m font-bold text-textcolor">
+              <div className="py-4 flex flex-col flex-grow">
+                <h5
+                  className="text-m font-bold text-textcolor truncate"
+                  title={item.article_title}
+                >
                   {item.article_title || "Judul Artikel"}
                 </h5>
-                <p className="text-s text-textcolor">
+                <p className="text-s text-textcolor mt-2">
                   {item.publication_date || "Tanggal tidak tersedia"}
                 </p>
               </div>

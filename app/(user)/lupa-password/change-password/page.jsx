@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Loading from "@/components/loading/loading";
 
 const ChangePassword = () => {
   const [password, setPassword] = useState("");
@@ -37,9 +38,6 @@ const ChangePassword = () => {
     setSuccess("");
     setLoading(true);
 
-    const resetToken =
-      "LrJjt95pgHl7qBAUkWuYmDrZNBUY1miap9f5BdjL0yB2KN5pzjehCMrgzkPo"; // Sesuaikan dengan token dari server
-
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/password/reset/change`,
@@ -69,6 +67,7 @@ const ChangePassword = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+      {loading && <Loading />} {/* Tampilkan loading jika proses sedang berlangsung */}
       {/* Logo */}
       <Image
         src="/image/logo.webp" // Ganti dengan path logo Anda
@@ -196,14 +195,10 @@ const ChangePassword = () => {
         </div>
         <button
           type="submit"
-          className="bg-primary text-whitebg text-s py-2 px-4 mt-8 rounded-lg hover:bg-hover transition-all duration-200 flex items-center justify-center mx-auto w-1/2"
+          className="bg-primary text-white text-s py-2 px-4 mt-8 rounded-lg hover:bg-hover transition-all duration-200 flex items-center justify-center mx-auto w-1/2"
           disabled={loading}
         >
-          {loading ? (
-            <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-white border-solid"></div>
-          ) : (
-            "Ubah Kata Sandi"
-          )}
+          Ubah Kata Sandi
         </button>
       </form>
 
