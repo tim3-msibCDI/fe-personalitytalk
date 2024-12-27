@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
+import Loading from "@/components/loading/loading";
 
 const PasswordResetRequest = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ const PasswordResetRequest = () => {
     e.preventDefault();
     setError("");
     setSuccess("");
+    setLoading(true); // Mulai loading
 
     try {
       const response = await axios.post(
@@ -23,7 +25,9 @@ const PasswordResetRequest = () => {
       );
 
       if (response.data.success) {
-        setSuccess("Link reset kata sandi telah dikirim ke email Anda. Silahkan cek email anda.");
+        setSuccess(
+          "Link reset kata sandi telah dikirim ke email Anda. Silahkan cek email anda."
+        );
       }
     } catch (err) {
       if (
@@ -42,6 +46,9 @@ const PasswordResetRequest = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
+      {/* Tampilkan komponen Loading jika loading true */}
+      {loading && <Loading />}
+      
       {/* Logo */}
       <div className="mb-8">
         <img
@@ -70,17 +77,12 @@ const PasswordResetRequest = () => {
             required
           />
           <button
-            className="bg-primary text-whitebg text-s py-2 px-4 mt-8 rounded-lg hover:bg-hover transition-all duration-200 flex items-center justify-center mx-auto w-1/2"
+            className="bg-primary text-white text-s py-2 px-4 mt-8 rounded-lg hover:bg-hover transition-all duration-200 flex items-center justify-center mx-auto w-1/2"
             type="submit"
-            disabled={loading}
+            disabled={loading} 
           >
-            {loading ? (
-              <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-white border-solid"></div>
-            ) : (
-              "Ubah Kata Sandi"
-            )}
+            Ubah Kata Sandi
           </button>
-
         </form>
         {/* Error atau Success Message */}
         {error && <p className="text-red-500 text-center mt-4">{error}</p>}
