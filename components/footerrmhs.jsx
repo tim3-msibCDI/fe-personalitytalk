@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Footerrmhs() {
   return (
     <>
-      <div className="bg-primary w-full text-whitebg relative rounded-t-2xl shadow-bottom z-50 py-6 px-20">
+      <div className="bg-primary w-full text-whitebg relative rounded-t-2xl shadow-bottom py-6 px-20">
         <div className="flex items-center justify-between">
           <div className="absolute bottom-0 left-24">
             <Image
