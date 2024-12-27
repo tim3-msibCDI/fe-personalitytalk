@@ -209,10 +209,7 @@ select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-image: url("/image/icons/select-arrow-down.svg"); /* Gambar panah */
-  background-position: right 1rem center;
   background-repeat: no-repeat;
-  background-size: 1rem; /* Ukuran gambar yang lebih besar */
   padding-right: 3rem; /* Memberikan ruang untuk panah */
 }
 

@@ -35,6 +35,8 @@ export default function Register() {
   const [isAgreed, setIsAgreed] = useState(false);
   const [isDateSelected, setIsDateSelected] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownRoleOpen, setIsDropdownRoleOpen] = useState(false);
+  const [isDropdownJkOpen, setIsDropdownJkOpen] = useState(false);
 
   useEffect(() => {
     const fetchTopics = async () => {
@@ -488,40 +490,74 @@ export default function Register() {
                   <label className="text-m font-normal text-textcolor">
                     Jenis Kelamin
                   </label>
-                  <select
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
-                      gender === "" ? "text-textsec" : "text-textcolor"
-                    } ${error.gender ? "border-red-500" : "border-text2"}`}
-                  >
-                    <option value="">Pilih Jenis Kelamin</option>
-                    <option value="M">Laki-laki</option>
-                    <option value="F">Perempuan</option>
-                  </select>
-                  {error.gender && (
+                  <div className="relative">
+                    <select
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value)}
+                      onFocus={() => setIsDropdownJkOpen(true)}
+                      onBlur={() => setIsDropdownJkOpen(false)}
+                      className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border pr-12 ${
+                        gender === "" ? "text-textsec" : "text-textcolor"
+                      } ${error?.gender ? "border-red-500" : "border-text2"}`}
+                    >
+                      <option value="">Pilih Jenis Kelamin</option>
+                      <option value="M">Laki-laki</option>
+                      <option value="F">Perempuan</option>
+                    </select>
+                    <div
+                      className={`absolute top-1/2 right-4 transform -translate-y-1/2 transition-transform duration-200 ${
+                        isDropdownJkOpen ? "rotate-180" : "rotate-0"
+                      }`}
+                    >
+                      <Image
+                        src="/image/icons/select-arrow-down.svg"
+                        alt="Dropdown Icon"
+                        className="pointer-events-none mt-1"
+                        width={20}
+                        height={20}
+                      />
+                    </div>
+                  </div>
+                  {error?.gender && (
                     <span className="text-red-500 text-sm">{error.gender}</span>
                   )}
                 </div>
 
-                <div className="pt-5">
+                <div className="pt-5 relative">
                   <label className="text-m font-normal text-textcolor">
                     Role
                   </label>
-                  <select
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
-                      role === "" ? "text-textsec" : "text-textcolor"
-                    } ${error.role ? "border-red-500" : "border-text2"}`}
-                  >
-                    <option value="">Pilih Role</option>
-                    <option value="M">Mahasiswa</option>
-                    <option value="U">Umum</option>
-                    <option value="P">Psikolog</option>
-                    <option value="K">Konselor</option>
-                  </select>
-                  {error.role && (
+                  <div className="relative">
+                    <select
+                      value={role}
+                      onChange={(e) => setRole(e.target.value)}
+                      onFocus={() => setIsDropdownRoleOpen(true)} // Dropdown dibuka
+                      onBlur={() => setIsDropdownRoleOpen(false)} // Dropdown ditutup
+                      className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border pr-12 ${
+                        role === "" ? "text-textsec" : "text-textcolor"
+                      } ${error?.role ? "border-red-500" : "border-text2"}`}
+                    >
+                      <option value="">Pilih Role</option>
+                      <option value="M">Mahasiswa</option>
+                      <option value="U">Umum</option>
+                      <option value="P">Psikolog</option>
+                      <option value="K">Konselor</option>
+                    </select>
+                    <div
+                      className={`absolute top-1/2 right-4 transform -translate-y-1/2 transition-transform duration-200 ${
+                        isDropdownRoleOpen ? "rotate-180" : "rotate-0"
+                      }`}
+                    >
+                      <img
+                        src="/image/icons/select-arrow-down.svg"
+                        alt="Dropdown Icon"
+                        className="pointer-events-none"
+                        width={20}
+                        height={20}
+                      />
+                    </div>
+                  </div>
+                  {error?.role && (
                     <span className="text-red-500 text-sm">{error.role}</span>
                   )}
                 </div>
