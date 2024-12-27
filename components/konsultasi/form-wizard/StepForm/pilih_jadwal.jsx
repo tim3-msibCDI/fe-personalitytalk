@@ -60,11 +60,16 @@ export default function FormPilihJadwal({ onBack, onNext }) {
             // Set reviews data
             setReviews(result.data.psikolog.list_top_ratings);
 
-            // Automatically select the first available date
-            if (result.data.weekly_schedule.length > 0) {
+            // Cek apakah ada tanggal yang tersimpan di localStorage
+            const storedDate = localStorage.getItem("selectedDate");
+            const foundDate = result.data.weekly_schedule.find(schedule => schedule.date === storedDate);
+
+            // Pilih tanggal yang sesuai dengan localStorage atau tanggal pertama jika tidak ditemukan
+            if (foundDate) {
+                setSelectedDate(foundDate);
+            } else if (result.data.weekly_schedule.length > 0) {
                 setSelectedDate(result.data.weekly_schedule[0]);
             }
-
         } catch (error) {
             console.error("Error fetching psikolog data:", error);
         } finally {
@@ -105,6 +110,11 @@ export default function FormPilihJadwal({ onBack, onNext }) {
         );
     };
 
+    // Fungsi untuk memilih tanggal
+    const handleSelectDate = (schedule) => {
+        setSelectedDate(schedule);
+        localStorage.setItem("selectedDate", schedule.date); // Simpan tanggal ke localStorage
+    };
 
     return (
         <div className="py-6">
@@ -121,7 +131,7 @@ export default function FormPilihJadwal({ onBack, onNext }) {
 
             {/* Loading */}
             {isLoading ? (
-                <Loading/>
+                <Loading />
             ) : (
                 <div className="flex gap-8 mt-6">
                     {/* Konten Kanan */}
@@ -304,7 +314,7 @@ export default function FormPilihJadwal({ onBack, onNext }) {
                                                     ? "bg-primary text-white"
                                                     : "bg-primarylight text-black"
                                                     }`}
-                                                onClick={() => setSelectedDate(schedule)}
+                                                onClick={() => handleSelectDate(schedule)}
                                             >
                                                 <p className="text-s px-2 whitespace-nowrap text-center">{date}</p>
                                                 <p className="text-m font-semibold text-center">{day}</p>

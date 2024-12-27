@@ -43,7 +43,7 @@ export default function Listransaksi() {
             date={transaksi.date}
             price={transaksi.total_amount}
             psikolog_profile={transaksi.psikolog_profile}
-            no_pemesanan={transaksi.no_pemesanan}
+            no_pemesanan={transaksi.payment_number}
           />
         ))
       ) : (

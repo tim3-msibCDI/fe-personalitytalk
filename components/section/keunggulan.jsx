@@ -21,7 +21,7 @@ export default function Keunggulan() {
                                 width={50}
                                 height={50}
                             />
-                            <span className="flex justify-center items-center h-full text-whitebg">{item.name}</span>
+                            <span className="flex justify-center items-center h-full text-whitebg font-medium">{item.name}</span>
                         </a>
                     ))}
                 </div>

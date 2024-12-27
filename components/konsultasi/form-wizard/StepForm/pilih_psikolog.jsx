@@ -67,6 +67,7 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                     //set tanggal pertama secara otomatis
                     if (formattedDates.length > 0 && !selectedDate) {
                         setSelectedDate(formattedDates[0].dayMonth);
+                        localStorage.setItem("selectedDate", formattedDates[0].dayMonth); // Simpan tanggal pertama di localStorage
                     }
 
                     setWeekDates(formattedDates);
@@ -153,7 +154,10 @@ export default function FormPilihPsikolog({ onSelectPsikolog }) {
                             return (
                                 <div
                                     key={index}
-                                    onClick={() => setSelectedDate(date.dayMonth)}
+                                    onClick={() => { 
+                                        setSelectedDate(date.dayMonth);
+                                        localStorage.setItem("selectedDate", date.dayMonth); // Simpan tanggal di localStorage
+                                    }}
                                     className={`flex flex-col items-center justify-center rounded py-2 px-4 w-24 cursor-pointer ${selectedDate === date.dayMonth ? 'bg-primary text-white' : 'bg-primarylight text-black'}`}
                                 >
                                     <p className="text-s px-2 whitespace-nowrap text-center">{dateOnly}</p>

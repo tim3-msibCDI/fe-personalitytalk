@@ -146,6 +146,7 @@ export default function Pembayaran({ status,  chat_status, chat_sessions_id, con
     useEffect(() => {
         if (status === "pending") {
             const transactionEndTimeKey = `transactionEndTime_${idTransaction}`;
+            const transactionRefreshedKey = `transactionRefreshed_${idTransaction}`;
     
             // Ambil waktu akhir dari localStorage berdasarkan ID Transaksi
             let transactionEndTime = localStorage.getItem(transactionEndTimeKey);
@@ -159,15 +160,26 @@ export default function Pembayaran({ status,  chat_status, chat_sessions_id, con
             const timer = setInterval(() => {
                 const now = new Date().getTime();
                 const remainingTime = Math.max(Math.floor((transactionEndTime - now) / 1000), 0);
-    
+                
                 setTimeLeft(remainingTime);
-    
+                
                 if (remainingTime <= 0) {
                     clearInterval(timer);
-                    alert("Waktu pembayaran telah habis.");
-                    // Tambahkan logika tambahan, seperti navigasi atau update status
+                    
+                    // Cek apakah sudah di-refresh sebelumnya
+                    const alreadyRefreshed = localStorage.getItem(transactionRefreshedKey);
+                    if (!alreadyRefreshed) {
+                        alert("Waktu pembayaran telah habis.");
+                        
+                        // Tandai bahwa refresh telah dilakukan
+                        localStorage.setItem(transactionRefreshedKey, "true");
+                        
+                        // Lakukan refresh hanya sekali
+                        window.location.reload();
+                    }
                 }
             }, 1000);
+    
     
             return () => clearInterval(timer); // Bersihkan timer saat komponen di-unmount
         }
@@ -301,7 +313,7 @@ export default function Pembayaran({ status,  chat_status, chat_sessions_id, con
                               chatSessionId: chat_sessions_id,
                               psikologId: receiver_id, 
                               senderId: sender_id,
-                              chatStatus: status,
+                              chatStatus: chat_status,
                             })
                           }   
                          >

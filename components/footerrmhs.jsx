@@ -16,7 +16,7 @@ export default function Footerrmhs() {
             />
           </div>
           <div className="inline-block ml-60 mr-20">
-            <h2 className="text-h2 font-medium">
+            <h2 className="text-h2 font-semibold">
               Apakah Anda Mahasiswa Psikologi?
             </h2>
             <p className="text-m font-[300]">

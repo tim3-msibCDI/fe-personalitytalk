@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -26,29 +27,29 @@ const Footer = () => {
             <h5 className="font-semibold mb-3">Tentang</h5>
             <ul>
               <li>
-                <a href="#" className="hover:underline">
+                <Link href="/about" className="hover:underline">
                   Tentang PersonalityTalk
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:underline">
+                <Link href="/" className="hover:underline">
                   Kontak Kami
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:underline">
-                  Konseling
-                </a>
+                <Link href="/konsultasi" className="hover:underline">
+                  Konsultasi
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:underline">
+                <Link href="/course" className="hover:underline">
                   Course
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:underline">
+                <Link href="/tes-mental" className="hover:underline">
                   Tes Mental
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -57,24 +58,24 @@ const Footer = () => {
             <h5 className="font-semibold mb-3">Lainnya</h5>
             <ul>
               <li>
-                <a href="#" className="hover:underline">
+                <Link href="/syarat-dan-ketentuan" className="hover:underline">
                   Syarat & Ketentuan
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:underline">
+                <Link href="/" className="hover:underline">
                   Kebijakan Privasi
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:underline">
+                <Link href="/article" className="hover:underline">
                   Artikel
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:underline">
-                  Informasi Penyakit
-                </a>
+                <Link href="/informasi-kesehatan" className="hover:underline">
+                  Informasi Kesehatan
+                </Link>
               </li>
             </ul>
           </div>
