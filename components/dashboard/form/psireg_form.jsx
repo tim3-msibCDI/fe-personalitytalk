@@ -146,7 +146,7 @@ export default function PsiViewForm({
                 className="flex-1 bg-red-500 text-white font-medium py-2 px-6 flex items-center justify-center space-x-2 rounded-md hover:bg-red-600"
               >
                 <Image
-                  src="/icons/dashboard/rejected.svg"
+                  src="/image/icons/dashboard/rejected.svg"
                   alt="Reject Icon"
                   width={20}
                   height={20}
@@ -159,7 +159,7 @@ export default function PsiViewForm({
                 className="flex-1 bg-green-500 text-white font-medium py-2 px-6 flex items-center justify-center space-x-2 rounded-md hover:bg-green-600"
               >
                 <Image
-                  src="/icons/dashboard/approved.svg"
+                  src="/image/icons/dashboard/approved.svg"
                   alt="Approve Icon"
                   width={20}
                   height={20}
@@ -230,7 +230,7 @@ export default function PsiViewForm({
                 disabled={loading}
               >
                 <Image
-                  src="/icons/dashboard/rejected.svg"
+                  src="/image/icons/dashboard/rejected.svg"
                   alt="Reject Icon"
                   width={20}
                   height={20}
@@ -250,8 +250,8 @@ export default function PsiViewForm({
             <Image
               src={
                 feedbackModal.success
-                  ? "/icons/dashboard/sucess.svg"
-                  : "/icons/dashboard/fail.svg"
+                  ? "/image/icons/dashboard/sucess.svg"
+                  : "/image/icons/dashboard/fail.svg"
               }
               alt="Feedback Icon"
               width={150}

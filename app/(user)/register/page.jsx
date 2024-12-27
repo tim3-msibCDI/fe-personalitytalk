@@ -45,7 +45,7 @@ export default function Register() {
             headers: {
               "ngrok-skip-browser-warning": "69420",
               "Content-Type": "application/json",
-            }
+            },
           }
         );
         if (response.status === 200 && response.data.success) {
@@ -70,7 +70,6 @@ export default function Register() {
       return [topicId]; // Jika sebelumnya bukan array, inisialisasi array baru
     });
   };
-
 
   const toogleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
@@ -149,7 +148,10 @@ export default function Register() {
       newErrors.startPractice = "Tanggal Memulai Praktik wajib diisi";
     if (role === "P" && !sippNumber)
       newErrors.sippNumber = "Nomor SIPP wajib diisi";
-    if ((role === "P" || role === "K") && (!Array.isArray(topics) || topics.length === 0)) {
+    if (
+      (role === "P" || role === "K") &&
+      (!Array.isArray(topics) || topics.length === 0)
+    ) {
       newErrors.topics = "Pilih minimal satu topik";
     }
     if ((role === "P" || role === "K") && !profilePhoto)
@@ -162,8 +164,8 @@ export default function Register() {
     }
 
     if (password.length > 0 && password.length <= 8) {
-      newErrors.password = "Password baru harus memiliki minimal 8 karakter."
-      newErrors.confirmPassword = ""
+      newErrors.password = "Password baru harus memiliki minimal 8 karakter.";
+      newErrors.confirmPassword = "";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -191,9 +193,13 @@ export default function Register() {
         formData.append("photo_profile", profilePhoto); // File
         // Pastikan topics berupa array dan tambahkan ke formData
         if (Array.isArray(topics) && topics.length > 0) {
-          topics.forEach((topicId) => formData.append("topics[]", topicId.toString()));
+          topics.forEach((topicId) =>
+            formData.append("topics[]", topicId.toString())
+          );
         } else {
-          throw new Error("Topics harus berupa array dengan minimal satu elemen.");
+          throw new Error(
+            "Topics harus berupa array dengan minimal satu elemen."
+          );
         }
         if (role === "P") {
           formData.append("sipp", sippNumber);
@@ -206,7 +212,6 @@ export default function Register() {
         formData.forEach((value, key) => {
           formDataLog[key] = value;
         });
-
       } else {
         // Format data untuk JSON
         requestData = {
@@ -231,17 +236,18 @@ export default function Register() {
         const errorData = response.data;
         setError(errorData.data.message);
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (error.response) {
         console.log("API Error Response:", error.response.data);
-        setError(error.response?.data?.message || "Terjadi kesalahan. Silakan coba lagi.");
+        setError(
+          error.response?.data?.message ||
+            "Terjadi kesalahan. Silakan coba lagi."
+        );
       } else {
         console.log("Error:", error.message);
         setError("Terjadi kesalahan. Silakan coba lagi.");
       }
-    }
-    finally {
+    } finally {
       setIsLoading(false);
     }
   }
@@ -265,7 +271,7 @@ export default function Register() {
           <div className="pb-6 flex justify-items-end">
             <button onClick={() => setIsModalOpen(false)} className="ml-auto">
               <Image
-                src="/icons/close.svg"
+                src="/image/icons/close.svg"
                 alt="Login Image"
                 width={25}
                 height={25}
@@ -275,7 +281,7 @@ export default function Register() {
           </div>
           <div>
             <Image
-              src="/icons/sad.png"
+              src="/image/icons/sad.png"
               alt="Icons Sad"
               width={111}
               height={111}
@@ -319,8 +325,9 @@ export default function Register() {
                     placeholder="Masukan Nama Lengkap Anda"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${error.name ? "border-red-500" : "border-text2"
-                      }`}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
+                      error.name ? "border-red-500" : "border-text2"
+                    }`}
                   />
                   {error.name && (
                     <span className="text-red-500 text-sm">{error.name}</span>
@@ -336,8 +343,9 @@ export default function Register() {
                     placeholder="Masukan Email Anda"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${error.email ? "border-red-500" : "border-text2"
-                      }`}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
+                      error.email ? "border-red-500" : "border-text2"
+                    }`}
                   />
                   {error.email && (
                     <span className="text-red-500 text-sm">{error.email}</span>
@@ -354,8 +362,9 @@ export default function Register() {
                       placeholder="Masukan Password Anda"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${error.password ? "border-red-500" : "border-text2"
-                        }`}
+                      className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
+                        error.password ? "border-red-500" : "border-text2"
+                      }`}
                     />
                     <button
                       type="button"
@@ -417,34 +426,39 @@ export default function Register() {
                       placeholder="Ulangi Password Anda"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${error.confirmPassword ? "border-red-500" : "border-text2"
-                        }`}
+                      className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
+                        error.confirmPassword
+                          ? "border-red-500"
+                          : "border-text2"
+                      }`}
                     />
                     <button
                       type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                       className="absolute inset-y-0 right-4 flex items-center"
                     >
                       {showConfirmPassword ? (
                         <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-.268.943-1.07 2.463-2.458 3.944C15.978 18.016 13.062 19 12 19c-1.062 0-3.978-.984-7.084-3.056C3.528 14.463 2.726 12.943 2.458 12z"
-                        />
-                      </svg>
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-.268.943-1.07 2.463-2.458 3.944C15.978 18.016 13.062 19 12 19c-1.062 0-3.978-.984-7.084-3.056C3.528 14.463 2.726 12.943 2.458 12z"
+                          />
+                        </svg>
                       ) : (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -479,8 +493,9 @@ export default function Register() {
                     placeholder="Masukan nomor telepon anda"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${error.phone_number ? "border-red-500" : "border-text2"
-                      }`}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
+                      error.phone_number ? "border-red-500" : "border-text2"
+                    }`}
                   />
                   {error.phone_number && (
                     <span className="text-red-500 text-sm">
@@ -499,9 +514,11 @@ export default function Register() {
                     onChange={handleDateChange}
                     onFocus={() => setIsDateSelected(false)}
                     onBlur={() => setIsDateSelected(!!dateBirth)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${isDateSelected ? "text-textcolor" : "text-textsec"
-                      } placeholder:text-textsec ${error.date_birth ? "border-red-500" : "border-text2"
-                      }`}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
+                      isDateSelected ? "text-textcolor" : "text-textsec"
+                    } placeholder:text-textsec ${
+                      error.date_birth ? "border-red-500" : "border-text2"
+                    }`}
                   />
                   {error.date_birth && (
                     <span className="text-red-500 text-sm">
@@ -517,8 +534,9 @@ export default function Register() {
                   <select
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${gender === "" ? "text-textsec" : "text-textcolor"
-                      } ${error.gender ? "border-red-500" : "border-text2"}`}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
+                      gender === "" ? "text-textsec" : "text-textcolor"
+                    } ${error.gender ? "border-red-500" : "border-text2"}`}
                   >
                     <option value="">Pilih Jenis Kelamin</option>
                     <option value="M">Laki-laki</option>
@@ -536,8 +554,9 @@ export default function Register() {
                   <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${role === "" ? "text-textsec" : "text-textcolor"
-                      } ${error.role ? "border-red-500" : "border-text2"}`}
+                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
+                      role === "" ? "text-textsec" : "text-textcolor"
+                    } ${error.role ? "border-red-500" : "border-text2"}`}
                   >
                     <option value="">Pilih Role</option>
                     <option value="M">Mahasiswa</option>
@@ -562,8 +581,9 @@ export default function Register() {
                         placeholder="Masukan universitas anda"
                         value={university}
                         onChange={(e) => setUniversity(e.target.value)}
-                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${error.universitas ? "border-red-500" : "border-text2"
-                          }`}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
+                          error.universitas ? "border-red-500" : "border-text2"
+                        }`}
                       />
                       {error.universitas && (
                         <span className="text-red-500 text-sm">
@@ -581,8 +601,9 @@ export default function Register() {
                         placeholder="Masukan jurusan anda"
                         value={major}
                         onChange={(e) => setMajor(e.target.value)}
-                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${error.jurusan ? "border-red-500" : "border-text2"
-                          }`}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border focus:text-textcolor placeholder:text-textsec ${
+                          error.jurusan ? "border-red-500" : "border-text2"
+                        }`}
                       />
                       {error.jurusan && (
                         <span className="text-red-500 text-sm">
@@ -597,16 +618,22 @@ export default function Register() {
                 {role === "P" && (
                   <>
                     <div className="pt-5">
-                      <label className="text-m font-normal text-textcolor">Tanggal Memulai Praktik</label>
+                      <label className="text-m font-normal text-textcolor">
+                        Tanggal Memulai Praktik
+                      </label>
                       <input
                         type="date"
                         value={startPractice}
                         onFocus={() => setIsDateSelected(false)}
                         onBlur={() => setIsDateSelected(!!dateBirth)}
                         onChange={(e) => setStartPractice(e.target.value)}
-                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${isDateSelected ? "text-textcolor" : "text-textsec"
-                          } placeholder:text-textsec ${error.practice_start_date ? "border-red-500" : "border-text2"
-                          }`}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
+                          isDateSelected ? "text-textcolor" : "text-textsec"
+                        } placeholder:text-textsec ${
+                          error.practice_start_date
+                            ? "border-red-500"
+                            : "border-text2"
+                        }`}
                       />
                       {error.practice_start_date && (
                         <span className="text-red-500 text-sm">
@@ -615,7 +642,9 @@ export default function Register() {
                       )}
                     </div>
                     <div className="pt-5">
-                      <label className="text-m font-normal text-textcolor">Nomor SIPP</label>
+                      <label className="text-m font-normal text-textcolor">
+                        Nomor SIPP
+                      </label>
                       <input
                         type="text"
                         placeholder="Masukan nomor SIPP anda"
@@ -639,8 +668,9 @@ export default function Register() {
                             }));
                           }
                         }}
-                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${sippNumber === "" ? "text-textsec" : "text-textcolor"
-                          } ${error.sipp ? "border-red-500" : "border-text2"}`}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
+                          sippNumber === "" ? "text-textsec" : "text-textcolor"
+                        } ${error.sipp ? "border-red-500" : "border-text2"}`}
                       />
                       {error.sipp && (
                         <span className="text-red-500 text-sm">
@@ -649,41 +679,58 @@ export default function Register() {
                       )}
                     </div>
                     <div className="pt-5">
-                      <label className="text-m font-normal text-textcolor">Topik</label>
+                      <label className="text-m font-normal text-textcolor">
+                        Topik
+                      </label>
                       <div
-                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light bg-whitebg border-solid border ${topics === "" ? "text-textsec" : "text-textcolor"
-                          } ${error.topics ? "border-red-500" : "border-text2"}`}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light bg-whitebg border-solid border ${
+                          topics === "" ? "text-textsec" : "text-textcolor"
+                        } ${error.topics ? "border-red-500" : "border-text2"}`}
                         onClick={toogleDropdown}
                       >
                         {renderSelectedTopics()}
                         <div
-                          className={`absolute z-10 bg-white shadow-md rounded-lg mt-2 ${isDropdownOpen ? "block" : "hidden"
-                            }`}
+                          className={`absolute z-10 bg-white shadow-md rounded-lg mt-2 ${
+                            isDropdownOpen ? "block" : "hidden"
+                          }`}
                         >
-                          {Array.isArray(availableTopics) && availableTopics.length > 0 ? (
+                          {Array.isArray(availableTopics) &&
+                          availableTopics.length > 0 ? (
                             <div className="grid grid-cols-2 gap-4 px-4 py-2">
-                              {splitIntoColumns(availableTopics).map((column, colIdx) => (
-                                <div key={colIdx} className="flex flex-col">
-                                  {column.map((topic) => (
-                                    <div key={topic.id} className="flex items-center px-4 py-2 hover:bg-gray-100">
-                                      <input
-                                        type="checkbox"
-                                        id={topic.id}
-                                        value={topic.id}
-                                        checked={topics.includes(topic.id)}
-                                        onChange={() => handleTopicsChange(topic.id)}
-                                        className="mr-2"
-                                      />
-                                      <label htmlFor={topic.id} className="text-sm text-gray-800">
-                                        {topic.topic_name}
-                                      </label>
-                                    </div>
-                                  ))}
-                                </div>
-                              ))}
+                              {splitIntoColumns(availableTopics).map(
+                                (column, colIdx) => (
+                                  <div key={colIdx} className="flex flex-col">
+                                    {column.map((topic) => (
+                                      <div
+                                        key={topic.id}
+                                        className="flex items-center px-4 py-2 hover:bg-gray-100"
+                                      >
+                                        <input
+                                          type="checkbox"
+                                          id={topic.id}
+                                          value={topic.id}
+                                          checked={topics.includes(topic.id)}
+                                          onChange={() =>
+                                            handleTopicsChange(topic.id)
+                                          }
+                                          className="mr-2"
+                                        />
+                                        <label
+                                          htmlFor={topic.id}
+                                          className="text-sm text-gray-800"
+                                        >
+                                          {topic.topic_name}
+                                        </label>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )
+                              )}
                             </div>
                           ) : (
-                            <p className="text-gray-500 px-4 py-2">Tidak ada topik tersedia.</p>
+                            <p className="text-gray-500 px-4 py-2">
+                              Tidak ada topik tersedia.
+                            </p>
                           )}
                         </div>
                       </div>
@@ -694,12 +741,21 @@ export default function Register() {
                       )}
                     </div>
                     <div className="pt-5">
-                      <label className="text-m font-normal text-textcolor">Foto Profil</label>
+                      <label className="text-m font-normal text-textcolor">
+                        Foto Profil
+                      </label>
                       <input
                         type="file"
                         onChange={handleProfilePhotoChange}
-                        className={`py-2 px-4 w-full bg-whitebg rounded-lg text-s mt-1 font-light border-solid border ${profilePhoto === "" ? "text-textsec" : "text-textcolor"
-                          } ${error.photo_profile ? "border-red-500" : "border-text2"}`}
+                        className={`py-2 px-4 w-full bg-whitebg rounded-lg text-s mt-1 font-light border-solid border ${
+                          profilePhoto === ""
+                            ? "text-textsec"
+                            : "text-textcolor"
+                        } ${
+                          error.photo_profile
+                            ? "border-red-500"
+                            : "border-text2"
+                        }`}
                       />
                       {error.photo_profile && (
                         <span className="text-red-500 text-sm">
@@ -708,13 +764,18 @@ export default function Register() {
                       )}
                     </div>
                     <div className="pt-5">
-                      <label className="text-m font-normal text-textcolor">Deskripsi</label>
+                      <label className="text-m font-normal text-textcolor">
+                        Deskripsi
+                      </label>
                       <textarea
                         value={description}
                         placeholder="Masukan deskripsi anda"
                         onChange={(e) => setdescription(e.target.value)}
-                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${description === "" ? "text-textsec" : "text-textcolor"
-                          } ${error.description ? "border-red-500" : "border-text2"}`}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
+                          description === "" ? "text-textsec" : "text-textcolor"
+                        } ${
+                          error.description ? "border-red-500" : "border-text2"
+                        }`}
                       />
                       {error.description && (
                         <span className="text-red-500 text-sm">
@@ -729,16 +790,22 @@ export default function Register() {
                 {role === "K" && (
                   <>
                     <div className="pt-5">
-                      <label className="text-m font-normal text-textcolor">Tanggal Memulai Praktik</label>
+                      <label className="text-m font-normal text-textcolor">
+                        Tanggal Memulai Praktik
+                      </label>
                       <input
                         type="date"
                         value={startPractice}
                         onFocus={() => setIsDateSelected(false)}
                         onBlur={() => setIsDateSelected(!!dateBirth)}
                         onChange={(e) => setStartPractice(e.target.value)}
-                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${isDateSelected ? "text-textcolor" : "text-textsec"
-                          } placeholder:text-textsec ${error.practice_start_date ? "border-red-500" : "border-text2"
-                          }`}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
+                          isDateSelected ? "text-textcolor" : "text-textsec"
+                        } placeholder:text-textsec ${
+                          error.practice_start_date
+                            ? "border-red-500"
+                            : "border-text2"
+                        }`}
                       />
                       {error.practice_start_date && (
                         <span className="text-red-500 text-sm">
@@ -747,41 +814,58 @@ export default function Register() {
                       )}
                     </div>
                     <div className="pt-5">
-                      <label className="text-m font-normal text-textcolor">Topik</label>
+                      <label className="text-m font-normal text-textcolor">
+                        Topik
+                      </label>
                       <div
-                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light bg-whitebg border-solid border ${topics === "" ? "text-textsec" : "text-textcolor"
-                          } ${error.topics ? "border-red-500" : "border-text2"}`}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light bg-whitebg border-solid border ${
+                          topics === "" ? "text-textsec" : "text-textcolor"
+                        } ${error.topics ? "border-red-500" : "border-text2"}`}
                         onClick={toogleDropdown}
                       >
                         {renderSelectedTopics()}
                         <div
-                          className={`absolute z-10 bg-white shadow-md rounded-lg mt-2 ${isDropdownOpen ? "block" : "hidden"
-                            }`}
+                          className={`absolute z-10 bg-white shadow-md rounded-lg mt-2 ${
+                            isDropdownOpen ? "block" : "hidden"
+                          }`}
                         >
-                          {Array.isArray(availableTopics) && availableTopics.length > 0 ? (
+                          {Array.isArray(availableTopics) &&
+                          availableTopics.length > 0 ? (
                             <div className="grid grid-cols-2 gap-4 px-4 py-2">
-                              {splitIntoColumns(availableTopics).map((column, colIdx) => (
-                                <div key={colIdx} className="flex flex-col">
-                                  {column.map((topic) => (
-                                    <div key={topic.id} className="flex items-center px-4 py-2 hover:bg-gray-100">
-                                      <input
-                                        type="checkbox"
-                                        id={topic.id}
-                                        value={topic.id}
-                                        checked={topics.includes(topic.id)}
-                                        onChange={() => handleTopicsChange(topic.id)}
-                                        className="mr-2"
-                                      />
-                                      <label htmlFor={topic.id} className="text-sm text-gray-800">
-                                        {topic.topic_name}
-                                      </label>
-                                    </div>
-                                  ))}
-                                </div>
-                              ))}
+                              {splitIntoColumns(availableTopics).map(
+                                (column, colIdx) => (
+                                  <div key={colIdx} className="flex flex-col">
+                                    {column.map((topic) => (
+                                      <div
+                                        key={topic.id}
+                                        className="flex items-center px-4 py-2 hover:bg-gray-100"
+                                      >
+                                        <input
+                                          type="checkbox"
+                                          id={topic.id}
+                                          value={topic.id}
+                                          checked={topics.includes(topic.id)}
+                                          onChange={() =>
+                                            handleTopicsChange(topic.id)
+                                          }
+                                          className="mr-2"
+                                        />
+                                        <label
+                                          htmlFor={topic.id}
+                                          className="text-sm text-gray-800"
+                                        >
+                                          {topic.topic_name}
+                                        </label>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )
+                              )}
                             </div>
                           ) : (
-                            <p className="text-gray-500 px-4 py-2">Tidak ada topik tersedia.</p>
+                            <p className="text-gray-500 px-4 py-2">
+                              Tidak ada topik tersedia.
+                            </p>
                           )}
                         </div>
                       </div>
@@ -792,12 +876,21 @@ export default function Register() {
                       )}
                     </div>
                     <div className="pt-5">
-                      <label className="text-m font-normal text-textcolor">Foto Profil</label>
+                      <label className="text-m font-normal text-textcolor">
+                        Foto Profil
+                      </label>
                       <input
                         type="file"
                         onChange={handleProfilePhotoChange}
-                        className={`py-2 px-4 w-full bg-whitebg rounded-lg text-s mt-1 font-light border-solid border ${profilePhoto === "" ? "text-textsec" : "text-textcolor"
-                          } ${error.photo_profile ? "border-red-500" : "border-text2"}`}
+                        className={`py-2 px-4 w-full bg-whitebg rounded-lg text-s mt-1 font-light border-solid border ${
+                          profilePhoto === ""
+                            ? "text-textsec"
+                            : "text-textcolor"
+                        } ${
+                          error.photo_profile
+                            ? "border-red-500"
+                            : "border-text2"
+                        }`}
                       />
                       {error.photo_profile && (
                         <span className="text-red-500 text-sm">
@@ -806,13 +899,18 @@ export default function Register() {
                       )}
                     </div>
                     <div className="pt-5">
-                      <label className="text-m font-normal text-textcolor">Deskripsi</label>
+                      <label className="text-m font-normal text-textcolor">
+                        Deskripsi
+                      </label>
                       <textarea
                         value={description}
                         placeholder="Masukan deskripsi anda"
                         onChange={(e) => setdescription(e.target.value)}
-                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${description === "" ? "text-textsec" : "text-textcolor"
-                          } ${error.description ? "border-red-500" : "border-text2"}`}
+                        className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
+                          description === "" ? "text-textsec" : "text-textcolor"
+                        } ${
+                          error.description ? "border-red-500" : "border-text2"
+                        }`}
                       />
                       {error.description && (
                         <span className="text-red-500 text-sm">

@@ -29,7 +29,7 @@ export default function CommissionProofModal({
         <div className="bg-primary text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
           <h2 className="text-lg font-semibold">Bukti Komisi</h2>
           <Image
-            src="/icons/close.png"
+            src="/image/icons/close.png"
             alt="Tutup"
             width={26}
             height={26}

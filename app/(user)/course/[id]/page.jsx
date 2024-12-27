@@ -23,7 +23,7 @@ export default async function DetailCoursePage({ params }) {
     <div className="py-9 px-20">
       <Link href="/course" className="flex items-center gap-4">
         <Image
-          src="/icons/arrow_back.png"
+          src="/image/icons/arrow_back.png"
           alt="icon kembali"
           width={9}
           height={14}

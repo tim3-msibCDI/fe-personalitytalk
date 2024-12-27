@@ -27,7 +27,7 @@ export default function SidebarProfilePsikolog() {
 
   // Function to handle file upload
   const handleFileChange = async (event) => {
-    const token = getToken();  
+    const token = getToken();
     const file = event.target.files[0];
     if (!file) return;
 
@@ -59,7 +59,7 @@ export default function SidebarProfilePsikolog() {
 
   // Handle loading state or user being undefined
   if (!user) {
-    return <Loading/>; // Or a placeholder while loading user data
+    return <Loading />; // Or a placeholder while loading user data
   }
 
   return (
@@ -67,7 +67,7 @@ export default function SidebarProfilePsikolog() {
       <div className="grid justify-items-center">
         <div className="relative">
           <Image
-            src= {`${process.env.NEXT_PUBLIC_IMG_URL}/${user.photoProfile}`}
+            src={`${process.env.NEXT_PUBLIC_IMG_URL}/${user.photoProfile}`}
             width={120}
             height={120}
             className="rounded-full"
@@ -79,7 +79,7 @@ export default function SidebarProfilePsikolog() {
             onClick={handlePencilClick} // Klik ikon pencil
           >
             <Image
-              src="/icons/edit-pencil.svg"
+              src="/image/icons/edit-pencil.svg"
               width={30}
               height={30}
               alt="Edit Icon"
@@ -94,9 +94,14 @@ export default function SidebarProfilePsikolog() {
             accept="image/*" // Hanya file gambar
           />
           {/* Modal Success Update Profile */}
-          <Modal isOpen={isSuccessModalOpen} onClose={() => setIsSuccessModalOpen(false)}>
-              <SuccessUpdateProfile onClose={() => setIsSuccessModalOpen(false)} />
-            </Modal>
+          <Modal
+            isOpen={isSuccessModalOpen}
+            onClose={() => setIsSuccessModalOpen(false)}
+          >
+            <SuccessUpdateProfile
+              onClose={() => setIsSuccessModalOpen(false)}
+            />
+          </Modal>
         </div>
         <div className="mt-2 text-center">
           <h3 className="text-h3 font-semibold">{user.name}</h3>
@@ -118,8 +123,8 @@ export default function SidebarProfilePsikolog() {
                 <Image
                   src={
                     isActive("/psikolog/profile")
-                      ? "/icons/user-white.svg"
-                      : "/icons/user-primary.svg"
+                      ? "/image/icons/user-white.svg"
+                      : "/image/icons/user-primary.svg"
                   }
                   height={15}
                   width={15}
@@ -145,8 +150,8 @@ export default function SidebarProfilePsikolog() {
                 <Image
                   src={
                     isActive("/psikolog/profile/change-password")
-                      ? "/icons/key-white.svg"
-                      : "/icons/key-primary.svg"
+                      ? "/image/icons/key-white.svg"
+                      : "/image/icons/key-primary.svg"
                   }
                   height={15}
                   width={15}
@@ -172,8 +177,8 @@ export default function SidebarProfilePsikolog() {
                 <Image
                   src={
                     isActive("/psikolog/profile/rating")
-                      ? "/icons/star-white.svg"
-                      : "/icons/star.svg"
+                      ? "/image/icons/star-white.svg"
+                      : "/image/icons/star.svg"
                   }
                   height={20}
                   width={20}

@@ -84,7 +84,7 @@ export default function SidebarProfile() {
             onClick={handlePencilClick} // Klik ikon pencil
           >
             <Image
-              src="/icons/edit-pencil.svg"
+              src="/image/icons/edit-pencil.svg"
               width={30}
               height={30}
               alt="Edit Icon"
@@ -128,8 +128,8 @@ export default function SidebarProfile() {
                 <Image
                   src={
                     isActive("/profile")
-                      ? "/icons/user-white.svg"
-                      : "/icons/user-primary.svg"
+                      ? "/image/icons/user-white.svg"
+                      : "/image/icons/user-primary.svg"
                   }
                   height={15}
                   width={15}
@@ -155,8 +155,8 @@ export default function SidebarProfile() {
                 <Image
                   src={
                     isActive("/profile/change-password")
-                      ? "/icons/key-white.svg"
-                      : "/icons/key-primary.svg"
+                      ? "/image/icons/key-white.svg"
+                      : "/image/icons/key-primary.svg"
                   }
                   height={15}
                   width={15}
@@ -179,8 +179,8 @@ export default function SidebarProfile() {
                 <Image
                   src={
                     isActive("/profile/konsultasi")
-                      ? "/icons/chat-white.svg"
-                      : "/icons/chat-primary.svg"
+                      ? "/image/icons/chat-white.svg"
+                      : "/image/icons/chat-primary.svg"
                   }
                   height={20}
                   width={20}
@@ -207,8 +207,8 @@ export default function SidebarProfile() {
                   <Image
                     src={
                       isActive("/profile/course")
-                        ? "/icons/course-white.svg"
-                        : "/icons/course-primary.svg"
+                        ? "/image/icons/course-white.svg"
+                        : "/image/icons/course-primary.svg"
                     }
                     height={20}
                     width={20}

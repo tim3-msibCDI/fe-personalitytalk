@@ -59,7 +59,7 @@ export default function RatingAdmin({ onClose, consul_id, psch_id }) {
           </p>
         </div>
         <Image
-          src="/icons/close.png"
+          src="/image/icons/close.png"
           alt="Tutup"
           width={26}
           height={26}
@@ -86,7 +86,7 @@ export default function RatingAdmin({ onClose, consul_id, psch_id }) {
             <div className="flex items-center gap-3 mt-2">
               <div className="flex items-center">
                 <Image
-                  src="/icons/i-konsultasi.png"
+                  src="/image/icons/i-konsultasi.png"
                   alt="Icon Konsultasi"
                   width={18}
                   height={18}
@@ -98,7 +98,7 @@ export default function RatingAdmin({ onClose, consul_id, psch_id }) {
               <span className="text-gray-400">|</span>
               <div className="flex items-center">
                 <Image
-                  src="/icons/time.svg"
+                  src="/image/icons/time.svg"
                   alt="Icon Waktu"
                   width={18}
                   height={18}
@@ -120,7 +120,7 @@ export default function RatingAdmin({ onClose, consul_id, psch_id }) {
                 [...Array(ratingData?.rating || 5)].map((_, i) => (
                   <Image
                     key={i}
-                    src="/icons/star.svg"
+                    src="/image/icons/star.svg"
                     alt="Star"
                     width={18}
                     height={18}

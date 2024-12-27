@@ -8,140 +8,171 @@ import { getToken } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { mutate } from "swr";
 
-export default function Pembayaran({ status,  chat_status, chat_sessions_id, consultation_id, sender_id, receiver_id }) {
-    const [isBelumMulaiModalOpen, setBelumMulaiModalOpen] = useState(false); // State untuk modal belum dimulai
-    const [isCatatanModalOpen, setCatatanModalOpen] = useState(false);
-    const [isBerhasilModalOpen, setBerhasilModalOpen] = useState(false)
-    const [formValues, setFormValues] = useState({
-        nama: "",
-        rekening: "",
-        bukti: null,
-    });
-    const [hasComplaint, setHasComplaint] = useState(false); 
-    const [isLoading, setIsLoading] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(0);
+export default function Pembayaran({
+  status,
+  chat_status,
+  chat_sessions_id,
+  consultation_id,
+  sender_id,
+  receiver_id,
+}) {
+  const [isBelumMulaiModalOpen, setBelumMulaiModalOpen] = useState(false); // State untuk modal belum dimulai
+  const [isCatatanModalOpen, setCatatanModalOpen] = useState(false);
+  const [isBerhasilModalOpen, setBerhasilModalOpen] = useState(false);
+  const [formValues, setFormValues] = useState({
+    nama: "",
+    rekening: "",
+    bukti: null,
+  });
+  const [hasComplaint, setHasComplaint] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(0);
 
-    const router = useRouter();
+  const router = useRouter();
 
-    const openCatatanModal = () => setCatatanModalOpen(true);
-    const closeCatatanModal = () => setCatatanModalOpen(false);
-    const openBelumMulaiModal = () => setBelumMulaiModalOpen(true);
-    const closeBelumMulaiModal = () => setBelumMulaiModalOpen(false);
-    const openBerhasilModal = () => setBerhasilModalOpen(true);
-    const closeBerhasilModal = () => setBerhasilModalOpen(false);
+  const openCatatanModal = () => setCatatanModalOpen(true);
+  const closeCatatanModal = () => setCatatanModalOpen(false);
+  const openBelumMulaiModal = () => setBelumMulaiModalOpen(true);
+  const closeBelumMulaiModal = () => setBelumMulaiModalOpen(false);
+  const openBerhasilModal = () => setBerhasilModalOpen(true);
+  const closeBerhasilModal = () => setBerhasilModalOpen(false);
 
-    // Ambil ID Transaksi
-    const transactionData = JSON.parse(localStorage.getItem("transactionData"));
+  // Ambil ID Transaksi
+  const transactionData = JSON.parse(localStorage.getItem("transactionData"));
+  const idTransaction = transactionData?.id_transaction;
+  // console.log("ID Transaksi:", idTransaction);
+
+  const handleInputChange = (field, value) => {
+    setFormValues((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const isFormComplete = () => {
+    const { nama, rekening, bukti } = formValues;
+    return nama && rekening && bukti;
+  };
+
+  const handleProsesLanjut = async () => {
+    const transactionData = JSON.parse(localStorage.getItem("transactionData")); // Ambil data transaksi
+    if (!transactionData || !transactionData.id_transaction) {
+      alert("ID transaksi tidak ditemukan di localStorage!");
+      return;
+    }
     const idTransaction = transactionData?.id_transaction;
-// console.log("ID Transaksi:", idTransaction);
 
-    const handleInputChange = (field, value) => {
-        setFormValues((prev) => ({ ...prev, [field]: value }));
-    };
+    setIsLoading(true);
 
-    const isFormComplete = () => {
-        const { nama, rekening, bukti } = formValues;
-        return nama && rekening && bukti;
-    };
+    const formData = new FormData();
+    formData.append("id_transaction", idTransaction); // ID Transaksi
+    formData.append("payment_proof", formValues.bukti); // File Bukti Pembayaran
+    formData.append("sender_name", formValues.nama); // Nama Pemilik Rekening
+    formData.append("sender_bank", formValues.rekening); // Nama Bank
 
-    const handleProsesLanjut = async () => {
-        const transactionData = JSON.parse(localStorage.getItem("transactionData")); // Ambil data transaksi
-        if (!transactionData || !transactionData.id_transaction) {
-            alert("ID transaksi tidak ditemukan di localStorage!");
-            return;
+    try {
+      // Ambil token menggunakan fungsi getToken
+      const token = await getToken();
+      if (!token) {
+        alert("Token tidak ditemukan. Silakan login ulang.");
+        return;
+      }
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/consultation/upload-payment-proof`,
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "ngrok-skip-browser-warning": "69420",
+          },
         }
-        const idTransaction = transactionData?.id_transaction;
+      );
 
-        setIsLoading(true);
+      if (response.ok) {
+        openBerhasilModal();
+      } else {
+        const errorData = await response.json();
+        alert(
+          `Gagal mengirim pembayaran: ${
+            errorData.message || "Terjadi kesalahan."
+          }`
+        );
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Terjadi kesalahan saat mengirim pembayaran.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-        const formData = new FormData();
-        formData.append("id_transaction", idTransaction); // ID Transaksi
-        formData.append("payment_proof", formValues.bukti); // File Bukti Pembayaran
-        formData.append("sender_name", formValues.nama); // Nama Pemilik Rekening
-        formData.append("sender_bank", formValues.rekening); // Nama Bank
+  const handlePesanLagi = () => {
+    router.push("/konsultasi"); // Navigasi ke halaman /konsultasi
+  };
 
-        try {
-            // Ambil token menggunakan fungsi getToken
-            const token = await getToken();
-            if (!token) {
-                alert("Token tidak ditemukan. Silakan login ulang.");
-                return;
-            }
+  const handleChatClick = ({
+    consulId,
+    chatSessionId,
+    psikologId,
+    senderId,
+    chatStatus,
+  }) => {
+    if (chat_status === "scheduled") {
+      openBelumMulaiModal(); // Ganti alert dengan membuka modal
+    } else if (chat_status === "ongoing" || chat_status === "completed") {
+      localStorage.setItem(
+        "clientChatData",
+        JSON.stringify({
+          consulId,
+          chatSessionId,
+          psikologId,
+          senderId,
+          chatStatus,
+        })
+      );
+      router.push(`/konsultasi/chat`);
+    } else {
+      alert(
+        "Chat hanya tersedia untuk sesi yang dijadwalkan atau sedang berlangsung."
+      );
+    }
+  };
 
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/consultation/upload-payment-proof`, {
-                method: "POST",
-                body: formData,
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "ngrok-skip-browser-warning": "69420",
-                },
-            });
+  useEffect(() => {
+    if (!idTransaction) return;
 
-            if (response.ok) {
-                openBerhasilModal();
-            } else {
-                const errorData = await response.json();
-                alert(`Gagal mengirim pembayaran: ${errorData.message || "Terjadi kesalahan."}`);
-            }
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Terjadi kesalahan saat mengirim pembayaran.");
-        } finally {
-            setIsLoading(false);
+    const fetchComplaintStatus = async () => {
+      try {
+        const token = await getToken();
+        if (!token) {
+          console.error("Token tidak ditemukan. Silakan login ulang.");
+          return;
         }
-    };
 
-    const handlePesanLagi = () => {
-        router.push("/konsultasi"); // Navigasi ke halaman /konsultasi
-    };
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/consultation/detail-complaint/${idTransaction}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+              "ngrok-skip-browser-warning": "69420",
+            },
+          }
+        );
 
-    const handleChatClick = ({ consulId, chatSessionId, psikologId, senderId, chatStatus }) => {
-        if (chat_status === "scheduled") {
-            openBelumMulaiModal(); // Ganti alert dengan membuka modal
-        } else if (chat_status === "ongoing" || chat_status === "completed") {
-            localStorage.setItem("clientChatData", JSON.stringify({ consulId, chatSessionId, psikologId, senderId, chatStatus }));
-            router.push(`/konsultasi/chat`);
+        const result = await response.json();
+        if (response.ok && result.data) {
+          setHasComplaint(true); // Keluhan ditemukan
         } else {
-            alert("Chat hanya tersedia untuk sesi yang dijadwalkan atau sedang berlangsung.");
+          setHasComplaint(false); // Keluhan tidak ditemukan
         }
+      } catch (error) {
+        console.error("Error fetching complaint status:", error);
+      }
     };
 
-    useEffect(() => {
-        if (!idTransaction) return;
-
-        const fetchComplaintStatus = async () => {
-            try {
-                const token = await getToken();
-                if (!token) {
-                    console.error("Token tidak ditemukan. Silakan login ulang.");
-                    return;
-                }
-
-                const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/consultation/detail-complaint/${idTransaction}`,
-                    {
-                        method: "GET",
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                            "Content-Type": "application/json",
-                            "ngrok-skip-browser-warning": "69420",
-                        },
-                    }
-                );
-
-                const result = await response.json();
-                if (response.ok && result.data) {
-                    setHasComplaint(true); // Keluhan ditemukan
-                } else {
-                    setHasComplaint(false); // Keluhan tidak ditemukan
-                }
-            } catch (error) {
-                console.error("Error fetching complaint status:", error);
-            }
-        };
-
-        fetchComplaintStatus();
-    }, [idTransaction]);
+    fetchComplaintStatus();
+  }, [idTransaction]);
 
     useEffect(() => {
         if (status === "pending") {
@@ -185,11 +216,13 @@ export default function Pembayaran({ status,  chat_status, chat_sessions_id, con
         }
     }, [status, idTransaction]);    
 
-    const formatTime = (time) => {
-        const minutes = Math.floor(time / 60);
-        const seconds = time % 60;
-        return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-    };
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
 
     return (
         <div className="flex flex-row gap-8">
@@ -297,7 +330,7 @@ export default function Pembayaran({ status,  chat_status, chat_sessions_id, con
                             className="flex items-center justify-center space-x-2 p-3 border border-primary text-primary rounded-lg text-m font-semibold"
                         >
                             <Image
-                                src="/icons/catatan.png"
+                                src="/image/icons/catatan.png"
                                 alt="Icon Catatan"
                                 width={24}
                                 height={24}
@@ -318,7 +351,7 @@ export default function Pembayaran({ status,  chat_status, chat_sessions_id, con
                           }   
                          >
                             <Image
-                                src="/icons/konsultasi.png"
+                                src="/image/icons/konsultasi.png"
                                 alt="Chat Psikolog Icon"
                                 width={24}
                                 height={24}
@@ -342,18 +375,17 @@ export default function Pembayaran({ status,  chat_status, chat_sessions_id, con
                 <Catatan onClose={closeCatatanModal} consulId={consultation_id}/>
             </Modal>
 
-            {/* Modal untuk Belum Dimulai */}
-            <Modal isOpen={isBelumMulaiModalOpen} onClose={closeBelumMulaiModal}>
-                <KonsulBelumMulai onClose={closeBelumMulaiModal} />
-            </Modal>
-            
-            <Modal isOpen={isBerhasilModalOpen} onClose={closeBerhasilModal}>
-                <Berhasil 
-                    onClose={closeBerhasilModal}
-                    message={"Pembayaran berhasil dikirim"}
-                />
-            </Modal>
+      {/* Modal untuk Belum Dimulai */}
+      <Modal isOpen={isBelumMulaiModalOpen} onClose={closeBelumMulaiModal}>
+        <KonsulBelumMulai onClose={closeBelumMulaiModal} />
+      </Modal>
 
-        </div>
-    );
+      <Modal isOpen={isBerhasilModalOpen} onClose={closeBerhasilModal}>
+        <Berhasil
+          onClose={closeBerhasilModal}
+          message={"Pembayaran berhasil dikirim"}
+        />
+      </Modal>
+    </div>
+  );
 }

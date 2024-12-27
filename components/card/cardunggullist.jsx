@@ -3,23 +3,25 @@ import CardUnggul from "./cardunggul";
 const CardUnggulList = () => {
   const cardData = [
     {
-      path: "/icons/konsultasi/puas.png", 
+      path: "/image/icons/konsultasi/puas.png",
       text: (
         <>
-          <span className="font-bold">86%</span> Pengguna merasa puas dengan layanan konsultasi
+          <span className="font-bold">86%</span> Pengguna merasa puas dengan
+          layanan konsultasi
         </>
       ),
     },
     {
-      path: "/icons/konsultasi/beragam.png",
+      path: "/image/icons/konsultasi/beragam.png",
       text: (
         <>
-          Topik yang disediakan sangat <span className="font-bold">beragam</span>
+          Topik yang disediakan sangat{" "}
+          <span className="font-bold">beragam</span>
         </>
       ),
     },
     {
-      path: "/icons/konsultasi/pengguna.png",
+      path: "/image/icons/konsultasi/pengguna.png",
       text: (
         <>
           Telah dipercaya oleh <span className="font-bold">8K+</span> Pengguna
@@ -27,10 +29,11 @@ const CardUnggulList = () => {
       ),
     },
     {
-      path: "/icons/konsultasi/psikolog.png",
+      path: "/image/icons/konsultasi/psikolog.png",
       text: (
         <>
-          Ditangani oleh <span className="font-bold">Psikolog & Konselor Bersertifikat</span>
+          Ditangani oleh{" "}
+          <span className="font-bold">Psikolog & Konselor Bersertifikat</span>
         </>
       ),
     },

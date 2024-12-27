@@ -119,7 +119,7 @@ export default function AdminProfile() {
             onClick={toggleEdit}
           >
             <Image
-              src="/icons/pencil-white.svg"
+              src="/image/icons/pencil-white.svg"
               width={20}
               height={20}
               alt="Edit Icon"

@@ -34,9 +34,13 @@ export async function addUser(userData) {
     formData.append("date_birth", userData.date_birth);
     formData.append("gender", userData.gender);
 
-    // Append photo_profile hanya jika ada
-    if (userData.photo_profile) {
+    if (userData.photo_profile instanceof File) {
       formData.append("photo_profile", userData.photo_profile);
+    }
+
+    // Debugging FormData
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
     }
 
     const response = await fetch(`${API_URL}/admin/users`, {
@@ -50,6 +54,7 @@ export async function addUser(userData) {
 
     if (!response.ok) {
       const errorData = await response.json();
+      console.error("Server Error:", errorData);
       throw new Error(errorData.message || "Failed to add user");
     }
 

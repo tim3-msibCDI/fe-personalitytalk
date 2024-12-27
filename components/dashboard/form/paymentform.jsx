@@ -214,7 +214,7 @@ export default function PaymentForm({
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="p-6 text-center">
           <Image
-            src="/icons/sucess.svg"
+            src="/image/icons/sucess.svg"
             width={150}
             height={150}
             alt="modal status"

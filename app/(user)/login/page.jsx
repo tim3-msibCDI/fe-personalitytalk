@@ -70,7 +70,7 @@ export default function Login() {
           <div className="pb-6 flex justify-items-end">
             <button onClick={() => setIsModalOpen(false)} className="ml-auto">
               <Image
-                src="/icons/close.svg"
+                src="/image/icons/close.svg"
                 alt="Login Image"
                 width={25}
                 height={25}
@@ -80,7 +80,7 @@ export default function Login() {
           </div>
           <div>
             <Image
-              src="/icons/sad.png"
+              src="/image/icons/sad.png"
               alt="Icons Sad"
               width={111}
               height={111}
@@ -128,7 +128,9 @@ export default function Login() {
                   />
                 </div>
                 <div className="relative pt-5">
-                  <label className="text-m font-normal text-textcolor">Password</label>
+                  <label className="text-m font-normal text-textcolor">
+                    Password
+                  </label>
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}
@@ -181,7 +183,10 @@ export default function Login() {
                     </button>
                   </div>
                   <div className="flex justify-end mt-2">
-                    <Link href="/lupa-password/request" className="text-primary text-sm font-medium">
+                    <Link
+                      href="/lupa-password/request"
+                      className="text-primary text-sm font-medium"
+                    >
                       Lupa Kata Sandi?
                     </Link>
                   </div>
@@ -194,7 +199,8 @@ export default function Login() {
                 </button>
                 <button
                   onClick={redirectToGoogleLogin}
-                  className="flex items-center px-4 py-2 bg-whitebg text-textcolor rounded-lg w-full justify-center text-s mt-3.5">
+                  className="flex items-center px-4 py-2 bg-whitebg text-textcolor rounded-lg w-full justify-center text-s mt-3.5"
+                >
                   <Image
                     src="/image/icons/google.svg"
                     alt="Google Logo"

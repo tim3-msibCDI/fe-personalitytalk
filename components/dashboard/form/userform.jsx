@@ -77,6 +77,7 @@ export default function UserForm({
     try {
       if (isAddMode) {
         const response = await addUser(formData);
+        console.log(formData);
         setMessage(response.message || "Pengguna berhasil ditambahkan");
       } else if (isEditMode) {
         // Kirimkan hanya data yang berubah
@@ -231,7 +232,7 @@ export default function UserForm({
               disabled={!isFormValid() || loading}
             >
               <Image
-                src="/icons/dashboard/save.svg"
+                src="/image/icons/dashboard/save.svg"
                 width={20}
                 height={20}
                 alt="sv"
@@ -250,7 +251,7 @@ export default function UserForm({
         <div className="p-6 text-center">
           <div className="py-16">
             <Image
-              src="/icons/dashboard/sucess.svg"
+              src="/image/icons/dashboard/sucess.svg"
               width={150}
               height={150}
               alt="success"

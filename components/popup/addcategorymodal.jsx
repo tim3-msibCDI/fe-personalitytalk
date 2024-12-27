@@ -187,9 +187,10 @@ export default function AddCategoryModal({ isOpen, onClose }) {
               className="px-6 py-2 text-white bg-primary rounded-lg flex items-center space-x-2 hover:bg-primarydark"
             >
               <Image
-                src="/icons/dashboard/add-data.svg"
+                src="/image/icons/dashboard/add-data.svg"
                 alt="Tambah"
-                width={16} height={16}
+                width={16}
+                height={16}
               />
               <span>{loading ? "Menambah..." : "Tambahkan"}</span>
             </button>

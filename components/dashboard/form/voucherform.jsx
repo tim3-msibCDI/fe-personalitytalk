@@ -39,7 +39,7 @@ export default function VoucherForm() {
     try {
       const response = await addVoucher(formData);
       setMessage(response.message || "Voucher berhasil ditambahkan");
-      setModalImage("/icons/dashboard/sucess.svg"); // Gambar sukses
+      setModalImage("/image/icons/dashboard/sucess.svg"); // Gambar sukses
       setIsModalOpen(true);
       setTimeout(() => {
         setIsModalOpen(false);
@@ -47,7 +47,7 @@ export default function VoucherForm() {
       }, 3000);
     } catch (error) {
       setMessage(error.message || "Terjadi kesalahan");
-      setModalImage("/icons/dashboard/fail.svg"); // Gambar gagal
+      setModalImage("/image/icons/dashboard/fail.svg"); // Gambar gagal
       setIsModalOpen(true);
     } finally {
       setLoading(false);

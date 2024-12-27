@@ -56,7 +56,7 @@ export default function PsiForm({
       if (stateValue === null || stateValue === undefined) {
         return;
       }
-    
+
       if (key === "rekening") {
         // Hanya tambahkan jika rekening berubah dan tidak kosong/null
         if (stateValue && stateValue !== originalValue) {
@@ -65,7 +65,10 @@ export default function PsiForm({
       } else if (key === "bank_id") {
         // Hanya tambahkan jika bank_id berubah dan valid
         const stateValueNumber = Number(stateValue);
-        if (!isNaN(stateValueNumber) && stateValueNumber !== Number(originalValue)) {
+        if (
+          !isNaN(stateValueNumber) &&
+          stateValueNumber !== Number(originalValue)
+        ) {
           updatedData[key] = stateValueNumber;
         }
       } else if (stateValue !== originalValue) {
@@ -409,7 +412,7 @@ export default function PsiForm({
         <div className="p-6 text-center">
           <div className="py-16">
             <Image
-              src="/icons/dashboard/sucess.svg"
+              src="/image/icons/dashboard/sucess.svg"
               width={150}
               height={150}
               alt="success"

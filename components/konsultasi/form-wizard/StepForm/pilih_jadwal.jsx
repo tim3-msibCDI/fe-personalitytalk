@@ -5,60 +5,60 @@ import { getToken } from "@/lib/auth";
 import Loading from "@/components/loading/loading";
 
 export default function FormPilihJadwal({ onBack, onNext }) {
-    const router = useRouter();
+  const router = useRouter();
 
-    // State for selected psychologist details and schedule
-    const [selectedPsikolog, setSelectedPsikolog] = useState(null);
-    const [weeklySchedule, setWeeklySchedule] = useState([]);
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [selectedTime, setSelectedTime] = useState(null);
-    const [reviews, setReviews] = useState([]);
-    const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
-    const [isLoading, setIsLoading] = useState(true); // Loading state
+  // State for selected psychologist details and schedule
+  const [selectedPsikolog, setSelectedPsikolog] = useState(null);
+  const [weeklySchedule, setWeeklySchedule] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [reviews, setReviews] = useState([]);
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true); // Loading state
 
-    useEffect(() => {
-        const token = getToken();
-        if (!token) {
-            router.push("/login");
+  useEffect(() => {
+    const token = getToken();
+    if (!token) {
+      router.push("/login");
+    }
+  }, [router]);
+
+  useEffect(() => {
+    const psikologId = localStorage.getItem("selectedPsikologId");
+    if (psikologId) {
+      fetchPsikologData(psikologId);
+    }
+  }, []);
+
+  const fetchPsikologData = async (psikologId) => {
+    const token = getToken();
+    if (!token) return;
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/consultation/psikolog/${psikologId}/details-and-schedules`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "ngrok-skip-browser-warning": "69420",
+            "Content-Type": "application/json",
+          },
         }
-    }, [router]);
+      );
 
-    useEffect(() => {
-        const psikologId = localStorage.getItem("selectedPsikologId");
-        if (psikologId) {
-            fetchPsikologData(psikologId);
-        }
-    }, []);
+      if (!response.ok) {
+        throw new Error("Failed to fetch psikolog data");
+      }
 
-    const fetchPsikologData = async (psikologId) => {
-        const token = getToken();
-        if (!token) return;
+      const result = await response.json();
 
-        try {
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/consultation/psikolog/${psikologId}/details-and-schedules`,
-                {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "ngrok-skip-browser-warning": "69420",
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
+      // Set psychologist details and weekly schedule data
+      setSelectedPsikolog(result.data.psikolog);
+      setWeeklySchedule(result.data.weekly_schedule);
 
-            if (!response.ok) {
-                throw new Error("Failed to fetch psikolog data");
-            }
-
-            const result = await response.json();
-
-            // Set psychologist details and weekly schedule data
-            setSelectedPsikolog(result.data.psikolog);
-            setWeeklySchedule(result.data.weekly_schedule);
-
-            // Set reviews data
-            setReviews(result.data.psikolog.list_top_ratings);
+      // Set reviews data
+      setReviews(result.data.psikolog.list_top_ratings);
 
             // Cek apakah ada tanggal yang tersimpan di localStorage
             const storedDate = localStorage.getItem("selectedDate");
@@ -77,32 +77,34 @@ export default function FormPilihJadwal({ onBack, onNext }) {
         }
     };
 
-    // Format harga
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 2
-        }).format(price).replace('Rp', 'Rp ');
-    };
+  // Format harga
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+    })
+      .format(price)
+      .replace("Rp", "Rp ");
+  };
 
-    const handleSelectSchedule = () => {
-        if (selectedTime) {
-            //Simpan psch_id ke localstorage
-            localStorage.setItem("selectedPschId", selectedTime.psch_id);
+  const handleSelectSchedule = () => {
+    if (selectedTime) {
+      //Simpan psch_id ke localstorage
+      localStorage.setItem("selectedPschId", selectedTime.psch_id);
 
-            //Pindah ke langkah berikutnya
-            onNext();
-        }
-    };
+      //Pindah ke langkah berikutnya
+      onNext();
+    }
+  };
 
-    //Fungsi navigasi review
-    const handlePrevReview = () => {
-        setCurrentReviewIndex((prevIndex) =>
-            prevIndex === 0 ? reviews.length - 1 : prevIndex - 1
-        );
-    };
+  //Fungsi navigasi review
+  const handlePrevReview = () => {
+    setCurrentReviewIndex((prevIndex) =>
+      prevIndex === 0 ? reviews.length - 1 : prevIndex - 1
+    );
+  };
 
     const handleNextReview = () => {
         setCurrentReviewIndex((prevIndex) =>
@@ -116,18 +118,18 @@ export default function FormPilihJadwal({ onBack, onNext }) {
         localStorage.setItem("selectedDate", schedule.date); // Simpan tanggal ke localStorage
     };
 
-    return (
-        <div className="py-6">
-            {/* Tombol Back */}
-            <div className="flex items-center gap-4 cursor-pointer" onClick={onBack}>
-                <Image
-                    src="/icons/arrow_back.png"
-                    alt="icon kembali"
-                    width={9}
-                    height={14}
-                />
-                <p className="text-m font-bold">Kembali</p>
-            </div>
+  return (
+    <div className="py-6">
+      {/* Tombol Back */}
+      <div className="flex items-center gap-4 cursor-pointer" onClick={onBack}>
+        <Image
+          src="/image/icons/arrow_back.png"
+          alt="icon kembali"
+          width={9}
+          height={14}
+        />
+        <p className="text-m font-bold">Kembali</p>
+      </div>
 
             {/* Loading */}
             {isLoading ? (
@@ -155,7 +157,7 @@ export default function FormPilihJadwal({ onBack, onNext }) {
                                             <>
                                                 <div className="flex items-center">
                                                     <Image
-                                                        src="/icons/bintang.png"
+                                                        src="/image/icons/bintang.png"
                                                         alt="Icon Star"
                                                         width={18}
                                                         height={18}
@@ -167,7 +169,7 @@ export default function FormPilihJadwal({ onBack, onNext }) {
                                         )}
                                         <div className="flex items-center">
                                             <Image
-                                                src="/icons/i-konsultasi.png"
+                                                src="/image/icons/i-konsultasi.png"
                                                 alt="Icon Konsultasi"
                                                 width={18}
                                                 height={18}
@@ -177,7 +179,7 @@ export default function FormPilihJadwal({ onBack, onNext }) {
                                         <span className="text-gray-400">|</span>
                                         <div className="flex items-center">
                                             <Image
-                                                src="/icons/role.png"
+                                                src="/image/icons/role.png"
                                                 alt="Icon Role"
                                                 width={18}
                                                 height={18}
@@ -197,115 +199,119 @@ export default function FormPilihJadwal({ onBack, onNext }) {
                                 </div>
                             </div>
 
-                            <hr className="my-4 border-1 border-gray-400" />
+              <hr className="my-4 border-1 border-gray-400" />
 
-                            <p className="text-justify">{selectedPsikolog?.description}</p>
+              <p className="text-justify">{selectedPsikolog?.description}</p>
 
-                            <hr className="my-4 border-1 border-gray-400" />
-                            <div>
-                                <div className="flex items-center gap-2">
-                                    <Image
-                                        src="/icons/topik_detail.png"
-                                        alt="Icon Topik"
-                                        width={24}
-                                        height={24}
-                                    />
-                                    <p className="text-m font-semibold">Topik</p>
-                                </div>
-                                <div className="mt-2">
-                                    <ul className="flex flex-wrap items-center gap-4">
-                                        {selectedPsikolog?.topics?.map((topic, index) => (
-                                            <li
-                                                key={index}
-                                                className="bg-primarylight px-3 py-1 rounded-md text-primary"
-                                            >
-                                                {topic}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
+              <hr className="my-4 border-1 border-gray-400" />
+              <div>
+                <div className="flex items-center gap-2">
+                  <Image
+                    src="/image/icons/topik_detail.png"
+                    alt="Icon Topik"
+                    width={24}
+                    height={24}
+                  />
+                  <p className="text-m font-semibold">Topik</p>
+                </div>
+                <div className="mt-2">
+                  <ul className="flex flex-wrap items-center gap-4">
+                    {selectedPsikolog?.topics?.map((topic, index) => (
+                      <li
+                        key={index}
+                        className="bg-primarylight px-3 py-1 rounded-md text-primary"
+                      >
+                        {topic}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
 
-                            <hr className="my-4 border-1 border-gray-400" />
+              <hr className="my-4 border-1 border-gray-400" />
 
-                            <div>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Image
-                                        src="/icons/bintang.png"
-                                        alt="Icon Star"
-                                        width={24}
-                                        height={24}
-                                    />
-                                    <p className="text-m font-semibold">Review</p>
-                                </div>
-                                {reviews.length > 0 ? (
-                                    <div className="flex items-center justify-between mb-3">
-                                        {/* Tombol Previous */}
-                                        <button onClick={handlePrevReview}>
-                                            <Image
-                                                src="/icons/kiri.png"
-                                                alt="Icon Previous"
-                                                width={11}
-                                                height={30}
-                                            />
-                                        </button>
-                                        {/* Review saat ini */}
-                                        <p className="mx-4 bg-primarylight rounded text-s px-4 py-2 w-[380px] h-[100px] overflow-y-auto">
-                                            {reviews[currentReviewIndex].review}
-                                        </p>
-                                        {/* Tombol Next */}
-                                        <button onClick={handleNextReview}>
-                                            <Image
-                                                src="/icons/kanan.png"
-                                                alt="Icon Next"
-                                                width={11}
-                                                height={30}
-                                            />
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div className="flex items-center justify-between mb-3">
-                                        {/* Tombol Previous */}
-                                        <button onClick={handlePrevReview}>
-                                            <Image
-                                                src="/icons/kiri.png"
-                                                alt="Icon Previous"
-                                                width={11}
-                                                height={30}
-                                            />
-                                        </button>
-                                        {/* Review saat ini */}
-                                        <p className="mx-4 bg-primarylight rounded text-s px-4 py-2 w-[380px] h-[100px] overflow-y-auto flex justify-center items-center">
-                                            Belum ada review
-                                        </p>
-                                        {/* Tombol Next */}
-                                        <button onClick={handleNextReview}>
-                                            <Image
-                                                src="/icons/kanan.png"
-                                                alt="Icon Next"
-                                                width={11}
-                                                height={30}
-                                            />
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    {/* Konten Kiri */}
-                    <div className="w-3/5 h-fit bg-primarylight2 rounded-md">
-                        <div className="p-4">
-                            <h3 className="text-h3 font-semibold">Jadwal {selectedPsikolog?.category_name}</h3>
-                            <p className="text-m">Pilih jadwal untuk sesi Konsultasi kamu</p>
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Image
+                    src="/image/icons/bintang.png"
+                    alt="Icon Star"
+                    width={24}
+                    height={24}
+                  />
+                  <p className="text-m font-semibold">Review</p>
+                </div>
+                {reviews.length > 0 ? (
+                  <div className="flex items-center justify-between mb-3">
+                    {/* Tombol Previous */}
+                    <button onClick={handlePrevReview}>
+                      <Image
+                        src="/image/icons/kiri.png"
+                        alt="Icon Previous"
+                        width={11}
+                        height={30}
+                      />
+                    </button>
+                    {/* Review saat ini */}
+                    <p className="mx-4 bg-primarylight rounded text-s px-4 py-2 w-[380px] h-[100px] overflow-y-auto">
+                      {reviews[currentReviewIndex].review}
+                    </p>
+                    {/* Tombol Next */}
+                    <button onClick={handleNextReview}>
+                      <Image
+                        src="/image/icons/kanan.png"
+                        alt="Icon Next"
+                        width={11}
+                        height={30}
+                      />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between mb-3">
+                    {/* Tombol Previous */}
+                    <button onClick={handlePrevReview}>
+                      <Image
+                        src="/image/icons/kiri.png"
+                        alt="Icon Previous"
+                        width={11}
+                        height={30}
+                      />
+                    </button>
+                    {/* Review saat ini */}
+                    <p className="mx-4 bg-primarylight rounded text-s px-4 py-2 w-[380px] h-[100px] overflow-y-auto flex justify-center items-center">
+                      Belum ada review
+                    </p>
+                    {/* Tombol Next */}
+                    <button onClick={handleNextReview}>
+                      <Image
+                        src="/image/icons/kanan.png"
+                        alt="Icon Next"
+                        width={11}
+                        height={30}
+                      />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          {/* Konten Kiri */}
+          <div className="w-3/5 h-fit bg-primarylight2 rounded-md">
+            <div className="p-4">
+              <h3 className="text-h3 font-semibold">
+                Jadwal {selectedPsikolog?.category_name}
+              </h3>
+              <p className="text-m">Pilih jadwal untuk sesi Konsultasi kamu</p>
 
-                            {/* Tanggal dan Hari */}
-                            <div className="flex gap-4 overflow-x-scroll w-full mt-4 mb-2"
-                                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                                {weeklySchedule?.length > 0 ? (
-                                    weeklySchedule.map((schedule, index) => {
-                                        // Pisahkan bagian hari dan tanggal
-                                        const [day, ...dateParts] = schedule.date.split(" ");
-                                        const date = dateParts.join(" ");
+              {/* Tanggal dan Hari */}
+              <div
+                className="flex gap-4 overflow-x-scroll w-full mt-4 mb-2"
+                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+              >
+                {weeklySchedule?.length > 0 ? (
+                  weeklySchedule.map((schedule, index) => {
+                    // Pisahkan bagian hari dan tanggal
+                    const [day, ...dateParts] = schedule.date.split(" ");
+                    const date = dateParts.join(" ");
 
                                         return (
                                             <div
@@ -326,41 +332,45 @@ export default function FormPilihJadwal({ onBack, onNext }) {
                                 )}
                             </div>
 
-                            {/* Tampilkan waktu untuk tanggal yang dipilih */}
-                            {selectedDate && (
-                                <div className="mt-6">
-                                    <h4 className="text-h3 font-semibold mb-2">Pilih Waktu Konsultasi</h4>
-                                    <ul className="grid grid-cols-2 gap-4">
-                                        {selectedDate.schedules.map((timeSlot, timeIndex) => (
-                                            <li
-                                                key={timeIndex}
-                                                className={`py-2 rounded-md text-center text-m font-semibold cursor-pointer ${selectedTime === timeSlot
-                                                    ? "bg-primary text-white"
-                                                    : "bg-primarylight"
-                                                    }`}
-                                                onClick={() => setSelectedTime(timeSlot)}
-                                            >
-                                                {timeSlot.time_slot}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
-
-                            <button
-                                className={`mt-8 text-m w-full py-2 rounded-md font-semibold ${selectedTime
-                                    ? "bg-primary text-white"
-                                    : "bg-disable text-whitebg"
-                                    }`}
-                                onClick={handleSelectSchedule}
-                                disabled={!selectedTime}
-                            >
-                                Pilih Jadwal
-                            </button>
-                        </div>
-                    </div>
+              {/* Tampilkan waktu untuk tanggal yang dipilih */}
+              {selectedDate && (
+                <div className="mt-6">
+                  <h4 className="text-h3 font-semibold mb-2">
+                    Pilih Waktu Konsultasi
+                  </h4>
+                  <ul className="grid grid-cols-2 gap-4">
+                    {selectedDate.schedules.map((timeSlot, timeIndex) => (
+                      <li
+                        key={timeIndex}
+                        className={`py-2 rounded-md text-center text-m font-semibold cursor-pointer ${
+                          selectedTime === timeSlot
+                            ? "bg-primary text-white"
+                            : "bg-primarylight"
+                        }`}
+                        onClick={() => setSelectedTime(timeSlot)}
+                      >
+                        {timeSlot.time_slot}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-            )}
+              )}
+
+              <button
+                className={`mt-8 text-m w-full py-2 rounded-md font-semibold ${
+                  selectedTime
+                    ? "bg-primary text-white"
+                    : "bg-disable text-whitebg"
+                }`}
+                onClick={handleSelectSchedule}
+                disabled={!selectedTime}
+              >
+                Pilih Jadwal
+              </button>
+            </div>
+          </div>
         </div>
-    );
+      )}
+    </div>
+  );
 }

@@ -109,7 +109,7 @@ export default function PaymentProofModal({
         <div className="bg-primary text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
           <h2 className="text-lg font-semibold">Bukti Pembayaran</h2>
           <Image
-            src="/icons/close.png"
+            src="/image/icons/close.png"
             alt="Tutup"
             width={26}
             height={26}
@@ -158,7 +158,7 @@ export default function PaymentProofModal({
                 disabled={isSubmitting}
               >
                 <Image
-                  src="/icons/no.png" // Path untuk ikon "Tolak"
+                  src="/image/icons/no.png" // Path untuk ikon "Tolak"
                   alt="Ikon Tolak"
                   width={20}
                   height={20}
@@ -176,7 +176,7 @@ export default function PaymentProofModal({
                 disabled={isSubmitting}
               >
                 <Image
-                  src="/icons/yes.png" // Path untuk ikon "Setujui"
+                  src="/image/icons/yes.png" // Path untuk ikon "Setujui"
                   alt="Ikon Setujui"
                   width={20}
                   height={20}

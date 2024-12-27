@@ -30,7 +30,6 @@ export default function Listransaksi() {
   if (loading) return <Loading />;
   if (error) return <p>Error: {error}</p>;
 
-
   return (
     <div>
       {Array.isArray(transaksiData) && transaksiData.length > 0 ? (
@@ -49,12 +48,14 @@ export default function Listransaksi() {
       ) : (
         <div className="p-6 flex flex-col items-center justify-center text-center">
           <Image
-            src="/icons/konsultasi/tidak_tersedia.svg"
+            src="/image/icons/konsultasi/tidak_tersedia.svg"
             alt="Vector Tidak Tersedia"
             width={96}
             height={96}
           />
-          <h3 className="text-h3 font-semibold mt-4">Anda belum mempunyai transaksi konsultasi</h3>
+          <h3 className="text-h3 font-semibold mt-4">
+            Anda belum mempunyai transaksi konsultasi
+          </h3>
         </div>
       )}
     </div>

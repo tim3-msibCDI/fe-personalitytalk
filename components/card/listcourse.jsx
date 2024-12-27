@@ -46,7 +46,7 @@ const ListCourse = ({ courses }) => {
             className="px-3 py-1 text-primary disabled:opacity-50"
           >
             <Image
-              src="/icons/arrow-left-pagenation.svg"
+              src="/image/icons/arrow-left-pagenation.svg"
               alt="<"
               height={10}
               width={10}
@@ -73,7 +73,7 @@ const ListCourse = ({ courses }) => {
             className="px-3 py-1 text-primary disabled:opacity-50"
           >
             <Image
-              src="/icons/arrow-right-pagenation.svg"
+              src="/image/icons/arrow-right-pagenation.svg"
               alt="<"
               height={10}
               width={10}

@@ -1,6 +1,14 @@
 import Image from "next/image";
 
-const CourseSummary = ({ imageUrl, name, description, rating, price, children, showPrice = true }) => {
+const CourseSummary = ({
+  imageUrl,
+  name,
+  description,
+  rating,
+  price,
+  children,
+  showPrice = true,
+}) => {
   return (
     <div className="flex gap-[20px] mt-6 p-4">
       {/* Image Section */}
@@ -21,7 +29,7 @@ const CourseSummary = ({ imageUrl, name, description, rating, price, children, s
           <p className="py-3">{description}</p>
           <div className="flex items-center">
             <Image
-              src="/icons/star-black.svg"
+              src="/image/icons/star-black.svg"
               alt="Star"
               width={15}
               height={15}
@@ -41,9 +49,7 @@ const CourseSummary = ({ imageUrl, name, description, rating, price, children, s
         )}
 
         {/* Button Section */}
-        <div className="w-full flex flex-col items-end">
-          {children}
-        </div>
+        <div className="w-full flex flex-col items-end">{children}</div>
       </div>
     </div>
   );

@@ -23,8 +23,8 @@ export const layanan = [
     buttonname: "Mulai Konsultasi",
     description:
       "Dapatkan penyelesaian masalah kamu dengan ditangani oleh Psikolog dan Konsulen yang handal dan terpercaya, dengan berbagai topik yang ada.",
-    icon_white: "/icons/konsultasi.png",
-    icon_orange: "/icons/i-konsultasi.png",
+    icon_white: "/image/icons/konsultasi.png",
+    icon_orange: "/image/icons/i-konsultasi.png",
     ialt: "Icon Konsultasi",
     images: "/image/img-konsul.png",
     imagealt: "Image Konsultasi",
@@ -36,8 +36,8 @@ export const layanan = [
     buttonname: "Mulai Course",
     description:
       "Cara kamu untuk Memperkaya wawasan, Mengasah keterampilan, dan Mengasah kemampuan anda di bidang Psikologi ataupun SDM dengan materi yang cocok untuk Mahasiswa Psikologi.",
-    icon_white: "/icons/course.png",
-    icon_orange: "/icons/i-ecourse.png",
+    icon_white: "/image/icons/course.png",
+    icon_orange: "/image/icons/i-ecourse.png",
     ialt: "Icon Course",
     images: "/image/img-course.png",
     imagealt: "Image Course",
@@ -49,8 +49,8 @@ export const layanan = [
     buttonname: "Mulai Tes",
     description:
       "Ketahui gambaran kesehatan mentalmu dan ketahui kebutuhan diri dengan mengisi asesmen tes dari PersonalityTalk secara gratis.",
-    icon_white: "/icons/tes-mental.png",
-    icon_orange: "/icons/i-test.png",
+    icon_white: "/image/icons/tes-mental.png",
+    icon_orange: "/image/icons/i-test.png",
     ialt: "Icon Tes Mental",
     images: "/image/img-test.png",
     imagealt: "Image Tes Mental",
@@ -62,8 +62,8 @@ export const layanan = [
     buttonname: "Cari Informasi",
     description:
       "Cari segala informasi termasuk pengertian, gejala, dan dampak dari <b> Kesehatan Mental </b> yang dapat dimengerti dan cara penangannya",
-    icon_white: "/icons/info-penyakit.png",
-    icon_orange: "/icons/i-info.png",
+    icon_white: "/image/icons/info-penyakit.png",
+    icon_orange: "/image/icons/i-info.png",
     iconalt: "Icon Informasi Kesehatan",
     images: "/image/img-info.png",
     imagealt: "Image Informasi Kesehatan",
@@ -1834,57 +1834,56 @@ export const steps = [
 
 export const jadwalPsikolog = [
   {
-      name: "Dr. Andi Wijaya",
-      photos: '/image/psikolog/photo.png',
-      rating: 4.9,
-      pengalaman: 10,
-      status_pembayaran: 1,
-      role: "Psikolog",
-      harga: "250.000",
-      deskripsi: "Hai, saya Taufik Alif Shalahuddin, akrab dipanggil Alif. Sebagai psikolog klinis saya banyak menangani permasalahan umum, kepribadian, kecemasan, keluarga, komunikasi, dan percintaan. Saya memiliki prinsip bahwa setiap klien itu unik, tidak ada klien yang sulit, yang ada psikolog yang kurang terampil. Saya sangat terbantu dan sangat senang dengan semua yang saya lakukan.",
-      sipp: "123456789",
-      topik: ["Umum", "Percintaan", "Keluarga", "Sekolah", "Pekerjaan"],
-      review: [
-          {
-              id: 1,
-              comment: "Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu.",
-          },
-          {
-              id: 2,
-              comment: "Penjelasan yang mudah dipahami, sangat direkomendasikan.",
-          }
-      ],
-      jadwal: [
-        { 
-            tanggal: "2024-10-25",
-            waktu: [
-                { jam: "09:00 - 10:00" },
-                { jam: "10:00 - 11:00" },
-                { jam: "11:00 - 12:00" }
-            ]
-        },
-        { 
-            tanggal: "2024-10-26",
-            waktu: [
-                { jam: "13:00 - 14:00" },
-                { jam: "14:00 - 15:00" },
-                { jam: "15:00 - 16:00" }
-            ]
-        },
-        { 
-            tanggal: "2024-10-27",
-            waktu: [
-                { jam: "09:00 - 10:00" },
-                { jam: "10:00 - 11:00" }
-            ]
-        },
-        { 
-          tanggal: "2024-10-28",
-          waktu: [
-              { jam: "09:00 - 10:00" },
-              { jam: "10:00 - 11:00" },
-              { jam: "11:00 - 12:00" }
-          ]
+    name: "Dr. Andi Wijaya",
+    photos: "/image/psikolog/photo.png",
+    rating: 4.9,
+    pengalaman: 10,
+    status_pembayaran: 1,
+    role: "Psikolog",
+    harga: "250.000",
+    deskripsi:
+      "Hai, saya Taufik Alif Shalahuddin, akrab dipanggil Alif. Sebagai psikolog klinis saya banyak menangani permasalahan umum, kepribadian, kecemasan, keluarga, komunikasi, dan percintaan. Saya memiliki prinsip bahwa setiap klien itu unik, tidak ada klien yang sulit, yang ada psikolog yang kurang terampil. Saya sangat terbantu dan sangat senang dengan semua yang saya lakukan.",
+    sipp: "123456789",
+    topik: ["Umum", "Percintaan", "Keluarga", "Sekolah", "Pekerjaan"],
+    review: [
+      {
+        id: 1,
+        comment:
+          "Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu. Dr. Andi sangat profesional dan membantu.",
+      },
+      {
+        id: 2,
+        comment: "Penjelasan yang mudah dipahami, sangat direkomendasikan.",
+      },
+    ],
+    jadwal: [
+      {
+        tanggal: "2024-10-25",
+        waktu: [
+          { jam: "09:00 - 10:00" },
+          { jam: "10:00 - 11:00" },
+          { jam: "11:00 - 12:00" },
+        ],
+      },
+      {
+        tanggal: "2024-10-26",
+        waktu: [
+          { jam: "13:00 - 14:00" },
+          { jam: "14:00 - 15:00" },
+          { jam: "15:00 - 16:00" },
+        ],
+      },
+      {
+        tanggal: "2024-10-27",
+        waktu: [{ jam: "09:00 - 10:00" }, { jam: "10:00 - 11:00" }],
+      },
+      {
+        tanggal: "2024-10-28",
+        waktu: [
+          { jam: "09:00 - 10:00" },
+          { jam: "10:00 - 11:00" },
+          { jam: "11:00 - 12:00" },
+        ],
       },
       {
         tanggal: "2024-10-29",
@@ -1975,12 +1974,12 @@ export const chatData = [
 export const tesmental = [
   {
     id: 1,
-    imageSrc: "/icons/v-tes.svg",
+    imageSrc: "/image/icons/v-tes.svg",
     title: "Personality",
     description:
       "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
     buttonText: "Selengkapnya",
-    arrowSrc: "/icons/arrow_right.svg",
+    arrowSrc: "/image/icons/arrow_right.svg",
     questions: [
       {
         id: 1,
@@ -2016,12 +2015,12 @@ export const tesmental = [
   },
   {
     id: 2,
-    imageSrc: "/icons/v-tes.svg",
+    imageSrc: "/image/icons/v-tes.svg",
     title: "Mentality",
     description:
       "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
     buttonText: "Selengkapnya",
-    arrowSrc: "/icons/arrow_right.svg",
+    arrowSrc: "/image/icons/arrow_right.svg",
     questions: [
       {
         id: 1,
@@ -2038,12 +2037,12 @@ export const tesmental = [
   },
   {
     id: 3,
-    imageSrc: "/icons/v-tes.svg",
+    imageSrc: "/image/icons/v-tes.svg",
     title: "Personality",
     description:
       "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
     buttonText: "Selengkapnya",
-    arrowSrc: "/icons/arrow_right.svg",
+    arrowSrc: "/image/icons/arrow_right.svg",
     questions: [
       {
         id: 1,
@@ -2060,12 +2059,12 @@ export const tesmental = [
   },
   {
     id: 4,
-    imageSrc: "/icons/v-tes.svg",
+    imageSrc: "/image/icons/v-tes.svg",
     title: "Mentality",
     description:
       "Tes kepribadian (personality test) adalah alat atau metode yang digunakan untuk mengukur dan menilai aspek-aspek kepribadian seseorang.",
     buttonText: "Selengkapnya",
-    arrowSrc: "/icons/arrow_right.svg",
+    arrowSrc: "/image/icons/arrow_right.svg",
     questions: [
       {
         id: 1,
@@ -2088,40 +2087,40 @@ export const PSIKOLOG_MENU = [
     title: "Dashboard",
     headername: "Dashboard",
     url: "/psikolog/dashboard",
-    icon: "/icons/sidebar/psikolog/dashboard.svg",
-    iconhover: "/icons/sidebar/psikolog/dashboard(white).svg",
+    icon: "/image/icons/sidebar/psikolog/dashboard.svg",
+    iconhover: "/image/icons/sidebar/psikolog/dashboard(white).svg",
   },
   {
     id: 2,
     title: "Chat Psikolog",
     headername: "Chat Konsultasi",
     url: "/psikolog/chat",
-    icon: "/icons/sidebar/psikolog/chat.svg",
-    iconhover: "/icons/sidebar/psikolog/chat(white).svg",
+    icon: "/image/icons/sidebar/psikolog/chat.svg",
+    iconhover: "/image/icons/sidebar/psikolog/chat(white).svg",
   },
   {
     id: 3,
     title: "Buat Jadwal",
     headername: "Buat Jadwal Konsultasi",
     url: "/psikolog/buat-jadwal",
-    icon: "/icons/sidebar/psikolog/buat-jadwal.svg",
-    iconhover: "/icons/sidebar/psikolog/buat-jadwal(white).svg",
+    icon: "/image/icons/sidebar/psikolog/buat-jadwal.svg",
+    iconhover: "/image/icons/sidebar/psikolog/buat-jadwal(white).svg",
   },
   {
     id: 4,
     title: "Lihat Jadwal",
     headername: "Lihat Jadwal Konsultasi",
     url: "/psikolog/lihat-jadwal",
-    icon: "/icons/sidebar/psikolog/lihat-jadwal.svg",
-    iconhover: "/icons/sidebar/psikolog/lihat-jadwal(white).svg",
+    icon: "/image/icons/sidebar/psikolog/lihat-jadwal.svg",
+    iconhover: "/image/icons/sidebar/psikolog/lihat-jadwal(white).svg",
   },
   {
     id: 5,
     title: "Transaksi",
     headername: "Transaksi",
     url: "/psikolog/transaksi",
-    icon: "/icons/sidebar/psikolog/transaksi.svg",
-    iconhover: "/icons/sidebar/psikolog/transaksi(white).svg",
+    icon: "/image/icons/sidebar/psikolog/transaksi.svg",
+    iconhover: "/image/icons/sidebar/psikolog/transaksi(white).svg",
   },
 ];
 
@@ -2130,156 +2129,156 @@ export const ADMIN_MENU = [
     id: 1,
     title: "Dashboard",
     url: "/admin/dashboard",
-    icon: "/icons/sidebar/admin/brown/dashboard.svg",
-    iconhover: "/icons/sidebar/admin/white/dashboard.svg",
+    icon: "/image/icons/sidebar/admin/brown/dashboard.svg",
+    iconhover: "/image/icons/sidebar/admin/white/dashboard.svg",
   },
   {
     id: 2,
     title: "Pengguna",
-    icon: "/icons/sidebar/admin/brown/pengguna.svg",
-    iconhover: "/icons/sidebar/admin/white/pengguna.svg",
+    icon: "/image/icons/sidebar/admin/brown/pengguna.svg",
+    iconhover: "/image/icons/sidebar/admin/white/pengguna.svg",
     subMenu: [
       {
         title: "Umum",
         url: "/admin/pengguna/umum",
-        icon: "/icons/sidebar/admin/brown/umum.svg",
-        iconhover: "/icons/sidebar/admin/white/umum.svg",
+        icon: "/image/icons/sidebar/admin/brown/umum.svg",
+        iconhover: "/image/icons/sidebar/admin/white/umum.svg",
       },
       {
         title: "Mahasiswa",
         url: "/admin/pengguna/mahasiswa",
-        icon: "/icons/sidebar/admin/brown/mahasiswa.svg",
-        iconhover: "/icons/sidebar/admin/white/mahasiswa.svg",
+        icon: "/image/icons/sidebar/admin/brown/mahasiswa.svg",
+        iconhover: "/image/icons/sidebar/admin/white/mahasiswa.svg",
       },
     ],
   },
   {
     id: 3,
     title: "Psikolog",
-    icon: "/icons/sidebar/admin/brown/psikolog.svg",
-    iconhover: "/icons/sidebar/admin/white/psikolog.svg",
+    icon: "/image/icons/sidebar/admin/brown/psikolog.svg",
+    iconhover: "/image/icons/sidebar/admin/white/psikolog.svg",
     subMenu: [
       {
         title: "Daftar Psikolog",
         url: "/admin/psikolog/daftar-psikolog",
-        icon: "/icons/sidebar/admin/brown/daftar-psikolog.svg",
-        iconhover: "/icons/sidebar/admin/white/daftar-psikolog.svg",
+        icon: "/image/icons/sidebar/admin/brown/daftar-psikolog.svg",
+        iconhover: "/image/icons/sidebar/admin/white/daftar-psikolog.svg",
       },
       {
         title: "Daftar Konselor",
         url: "/admin/psikolog/daftar-konselor",
-        icon: "/icons/sidebar/admin/brown/daftar-konselor.svg",
-        iconhover: "/icons/sidebar/admin/white/daftar-konselor.svg",
+        icon: "/image/icons/sidebar/admin/brown/daftar-konselor.svg",
+        iconhover: "/image/icons/sidebar/admin/white/daftar-konselor.svg",
       },
       {
         title: "Kelola Psikolog",
         url: "/admin/psikolog/kelola-psikolog",
-        icon: "/icons/sidebar/admin/brown/kelola-psikolog.svg",
-        iconhover: "/icons/sidebar/admin/white/kelola-psikolog.svg",
+        icon: "/image/icons/sidebar/admin/brown/kelola-psikolog.svg",
+        iconhover: "/image/icons/sidebar/admin/white/kelola-psikolog.svg",
       },
       {
         title: "Harga Psikolog",
         url: "/admin/psikolog/harga-psikolog",
-        icon: "/icons/sidebar/admin/brown/harga-psikolog.svg",
-        iconhover: "/icons/sidebar/admin/white/harga-psikolog.svg",
+        icon: "/image/icons/sidebar/admin/brown/harga-psikolog.svg",
+        iconhover: "/image/icons/sidebar/admin/white/harga-psikolog.svg",
       },
     ],
   },
   {
     id: 4,
     title: "Konsultasi",
-    icon: "/icons/sidebar/admin/brown/konsultasi.svg",
-    iconhover: "/icons/sidebar/admin/white/konsultasi.svg",
+    icon: "/image/icons/sidebar/admin/brown/konsultasi.svg",
+    iconhover: "/image/icons/sidebar/admin/white/konsultasi.svg",
     subMenu: [
       {
         title: "Topik Konsultasi",
         url: "/admin/konsultasi/topik-konsultasi",
-        icon: "/icons/sidebar/admin/brown/topik-konsultasi.svg",
-        iconhover: "/icons/sidebar/admin/white/topik-konsultasi.svg",
+        icon: "/image/icons/sidebar/admin/brown/topik-konsultasi.svg",
+        iconhover: "/image/icons/sidebar/admin/white/topik-konsultasi.svg",
       },
       {
         title: "Jadwal Konsultasi",
         url: "/admin/konsultasi/jadwal-konsultasi",
-        icon: "/icons/sidebar/admin/brown/jadwal-konsultasi.svg",
-        iconhover: "/icons/sidebar/admin/white/jadwal-konsultasi.svg",
+        icon: "/image/icons/sidebar/admin/brown/jadwal-konsultasi.svg",
+        iconhover: "/image/icons/sidebar/admin/white/jadwal-konsultasi.svg",
       },
       {
         title: "Riwayat Konsultasi",
         url: "/admin/konsultasi/riwayat-konsultasi",
-        icon: "/icons/sidebar/admin/brown/riwayat-konsultasi.svg",
-        iconhover: "/icons/sidebar/admin/white/riwayat-konsultasi.svg",
+        icon: "/image/icons/sidebar/admin/brown/riwayat-konsultasi.svg",
+        iconhover: "/image/icons/sidebar/admin/white/riwayat-konsultasi.svg",
       },
     ],
   },
   {
     id: 5,
     title: "Keuangan",
-    icon: "/icons/sidebar/admin/brown/keuangan.svg",
-    iconhover: "/icons/sidebar/admin/white/keuangan.svg",
+    icon: "/image/icons/sidebar/admin/brown/keuangan.svg",
+    iconhover: "/image/icons/sidebar/admin/white/keuangan.svg",
     subMenu: [
       {
         title: "Rekening",
         url: "/admin/keuangan/rekening",
-        icon: "/icons/sidebar/admin/brown/rekening.svg",
-        iconhover: "/icons/sidebar/admin/white/rekening.svg",
+        icon: "/image/icons/sidebar/admin/brown/rekening.svg",
+        iconhover: "/image/icons/sidebar/admin/white/rekening.svg",
       },
       {
         title: "Transaksi",
         url: "/admin/keuangan/transaksi",
-        icon: "/icons/sidebar/admin/brown/transaksi.svg",
-        iconhover: "/icons/sidebar/admin/white/transaksi.svg",
+        icon: "/image/icons/sidebar/admin/brown/transaksi.svg",
+        iconhover: "/image/icons/sidebar/admin/white/transaksi.svg",
       },
       {
         title: "Voucher",
         url: "/admin/keuangan/voucher",
-        icon: "/icons/sidebar/admin/brown/voucher.svg",
-        iconhover: "/icons/sidebar/admin/white/voucher.svg",
+        icon: "/image/icons/sidebar/admin/brown/voucher.svg",
+        iconhover: "/image/icons/sidebar/admin/white/voucher.svg",
       },
     ],
   },
   {
     id: 6,
     title: "Artikel",
-    icon: "/icons/sidebar/admin/brown/artikel.svg",
-    iconhover: "/icons/sidebar/admin/white/artikel.svg",
+    icon: "/image/icons/sidebar/admin/brown/artikel.svg",
+    iconhover: "/image/icons/sidebar/admin/white/artikel.svg",
     subMenu: [
       {
         title: "Artikel",
         url: "/admin/artikel/artikel",
-        icon: "/icons/sidebar/admin/brown/artikel.svg",
-        iconhover: "/icons/sidebar/admin/white/artikel.svg",
+        icon: "/image/icons/sidebar/admin/brown/artikel.svg",
+        iconhover: "/image/icons/sidebar/admin/white/artikel.svg",
       },
       {
         title: "Informasi Kesehatan",
         url: "/admin/artikel/informasi-kesehatan",
-        icon: "/icons/sidebar/admin/brown/informasi-kesehatan.svg",
-        iconhover: "/icons/sidebar/admin/white/informasi-kesehatan.svg",
+        icon: "/image/icons/sidebar/admin/brown/informasi-kesehatan.svg",
+        iconhover: "/image/icons/sidebar/admin/white/informasi-kesehatan.svg",
       },
     ],
   },
   {
     id: 7,
     title: "Lainnya",
-    icon: "/icons/sidebar/admin/brown/lainnya.svg",
-    iconhover: "/icons/sidebar/admin/white/lainnya.svg",
+    icon: "/image/icons/sidebar/admin/brown/lainnya.svg",
+    iconhover: "/image/icons/sidebar/admin/white/lainnya.svg",
     subMenu: [
       {
         title: "Mitra",
         url: "/admin/lainnya/mitra",
-        icon: "/icons/sidebar/admin/brown/mitra.svg",
-        iconhover: "/icons/sidebar/admin/white/mitra.svg",
+        icon: "/image/icons/sidebar/admin/brown/mitra.svg",
+        iconhover: "/image/icons/sidebar/admin/white/mitra.svg",
       },
       {
         title: "Tes Mental",
         url: "/admin/lainnya/tes-mental",
-        icon: "/icons/sidebar/admin/brown/tes-mental.svg",
-        iconhover: "/icons/sidebar/admin/white/tes-mental.svg",
+        icon: "/image/icons/sidebar/admin/brown/tes-mental.svg",
+        iconhover: "/image/icons/sidebar/admin/white/tes-mental.svg",
       },
       {
         title: "Course",
         url: "/admin/lainnya/course",
-        icon: "/icons/sidebar/admin/brown/course.svg",
-        iconhover: "/icons/sidebar/admin/white/course.svg",
+        icon: "/image/icons/sidebar/admin/brown/course.svg",
+        iconhover: "/image/icons/sidebar/admin/white/course.svg",
       },
     ],
   },
@@ -2287,8 +2286,8 @@ export const ADMIN_MENU = [
     id: 8,
     title: "Pengaturan",
     url: "/admin/pengaturan",
-    icon: "/icons/sidebar/admin/brown/pengaturan.svg",
-    iconhover: "/icons/sidebar/admin/white/pengaturan.svg",
+    icon: "/image/icons/sidebar/admin/brown/pengaturan.svg",
+    iconhover: "/image/icons/sidebar/admin/white/pengaturan.svg",
   },
 ];
 
@@ -2296,22 +2295,22 @@ export const dashboard = [
   {
     value: 1,
     label: "Total Client",
-    icon: "/icons/psikolog/dashboard/client.svg",
+    icon: "/image/icons/psikolog/dashboard/client.svg",
   },
   {
     value: 4,
     label: "Total Konsultasi",
-    icon: "/icons/psikolog/dashboard/konsultasi.svg",
+    icon: "/image/icons/psikolog/dashboard/konsultasi.svg",
   },
   {
     value: 5,
     label: "Jadwal Konsultasi",
-    icon: "/icons/psikolog/dashboard/jadwal.svg",
+    icon: "/image/icons/psikolog/dashboard/jadwal.svg",
   },
   {
     value: "4.6/5.0",
     label: "Kepuasan Client",
-    icon: "/icons/psikolog/dashboard/kepuasan.svg",
+    icon: "/image/icons/psikolog/dashboard/kepuasan.svg",
   },
 ];
 
@@ -2386,31 +2385,31 @@ export const coursesData = [
 
 export const transfer = [
   {
-    id : 1,
-    desc : "Pengecekan pembayaran dilakukan manual oleh admin PersonalityTalk.",
+    id: 1,
+    desc: "Pengecekan pembayaran dilakukan manual oleh admin PersonalityTalk.",
   },
   {
-    id : 2,
-    desc : "Proses pengecekan membutuhkan waktu ± 5 Menit.",
+    id: 2,
+    desc: "Proses pengecekan membutuhkan waktu ± 5 Menit.",
   },
   {
-    id : 3,
-    desc : "Pastikan transfer dengan nomor rekening dan atas nama rekening sesuai dengan yang tertera pada Detail Pemesanan.",
+    id: 3,
+    desc: "Pastikan transfer dengan nomor rekening dan atas nama rekening sesuai dengan yang tertera pada Detail Pemesanan.",
   },
   {
-    id : 4,
-    desc : "Lakukan pembayaran sesuai dengan total pembayaran."
+    id: 4,
+    desc: "Lakukan pembayaran sesuai dengan total pembayaran.",
   },
   {
-    id : 5,
-    desc : "Pastikan nama pengirim rekening dan nama bank pengirim sesuai dengan bukti transfer.",
+    id: 5,
+    desc: "Pastikan nama pengirim rekening dan nama bank pengirim sesuai dengan bukti transfer.",
   },
   {
     id: 6,
-    desc : "Upload bukti Transfer yang telah dilakukan."
+    desc: "Upload bukti Transfer yang telah dilakukan.",
   },
   {
     id: 7,
-    desc : "Jika terjadi kendala hubungi nomor admin PersonalityTalk dengan nomor whatsapp +6281xxxxxxxxx."
-  }
-]
+    desc: "Jika terjadi kendala hubungi nomor admin PersonalityTalk dengan nomor whatsapp +6281xxxxxxxxx.",
+  },
+];

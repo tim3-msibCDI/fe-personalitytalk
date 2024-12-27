@@ -40,7 +40,11 @@ export default function ChatInput({ onSendMessage, chat_status }) {
         <textarea
           ref={textareaRef}
           rows="1"
-          placeholder={chat_status === "completed" ? "Sesi konsultasi anda telah selesai" : "Ketik di sini"}
+          placeholder={
+            chat_status === "completed"
+              ? "Sesi konsultasi anda telah selesai"
+              : "Ketik di sini"
+          }
           className="flex-1 p-2 rounded-lg border border-gray-300 resize-none overflow-y-auto"
           value={input}
           onChange={handleInput}
@@ -48,18 +52,20 @@ export default function ChatInput({ onSendMessage, chat_status }) {
           style={{
             maxHeight: "150px",
           }}
-          disabled={chat_status === "completed"}  // Disable textarea if chat is completed
+          disabled={chat_status === "completed"} // Disable textarea if chat is completed
         />
         <Image
-          src="/icons/send.svg"
+          src="/image/icons/send.svg"
           alt="Icon Send"
           width={48}
           height={43}
           onClick={handleSend}
-          className={`cursor-pointer ${chat_status === "completed" ? "opacity-50" : "opacity-100"}`} // Adjust opacity to indicate it's disabled
+          className={`cursor-pointer ${
+            chat_status === "completed" ? "opacity-50" : "opacity-100"
+          }`} // Adjust opacity to indicate it's disabled
           style={{
-            pointerEvents: chat_status === "completed" ? "none" : "auto",  // Disable pointer events when chat is completed
-          filter: chat_status === "completed" ? "grayscale(100%)" : "none",  // Apply grayscale when disabled
+            pointerEvents: chat_status === "completed" ? "none" : "auto", // Disable pointer events when chat is completed
+            filter: chat_status === "completed" ? "grayscale(100%)" : "none", // Apply grayscale when disabled
           }}
         />
       </div>

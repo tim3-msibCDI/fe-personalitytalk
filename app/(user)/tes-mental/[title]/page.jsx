@@ -1,14 +1,14 @@
 "use client";
-import { useRouter } from 'next/navigation';
-import { tesmental } from '@/constants';
-import Image from 'next/image';
+import { useRouter } from "next/navigation";
+import { tesmental } from "@/constants";
+import Image from "next/image";
 
 export default function DetailTesMental({ params }) {
   const { title } = params;
   const router = useRouter();
 
   // Ubah title dari URL kembali menjadi format aslinya
-  const formattedTitle = title.replace(/-/g, ' ').toLowerCase();
+  const formattedTitle = title.replace(/-/g, " ").toLowerCase();
 
   // Cari tes berdasarkan title
   const detailTes = tesmental.find(
@@ -16,7 +16,7 @@ export default function DetailTesMental({ params }) {
   );
 
   // Ubah title ke format slug untuk URL (mengganti spasi dengan -)
-  const slugTitle = detailTes.title.toLowerCase().replace(/\s+/g, '-');
+  const slugTitle = detailTes.title.toLowerCase().replace(/\s+/g, "-");
 
   // Jika tes tidak ditemukan
   if (!detailTes) {
@@ -32,7 +32,7 @@ export default function DetailTesMental({ params }) {
         <div className="flex mx-auto px-10 w-full">
           <div className="w-1/2 flex justify-center mt-20 w-82 h-72 relative">
             <Image
-              src="/icons/b-tes.svg"
+              src="/image/icons/b-tes.svg"
               alt="Background white for vector tes"
               width={300}
               height={300}
@@ -56,7 +56,7 @@ export default function DetailTesMental({ params }) {
                   onClick={() => router.push(`/tes-mental/${slugTitle}/1`)}
                 >
                   <Image
-                    src="/icons/arrow_right.png"
+                    src="/image/icons/arrow_right.png"
                     alt="Arrow Right"
                     width={24}
                     height={24}

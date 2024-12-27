@@ -22,7 +22,7 @@ export default function PaymentDetail() {
   }, []);
 
   if (!course) {
-    return <Loading/>;
+    return <Loading />;
   }
 
   return (
@@ -33,7 +33,7 @@ export default function PaymentDetail() {
           className="flex items-center gap-4"
         >
           <Image
-            src="/icons/arrow_back.png"
+            src="/image/icons/arrow_back.png"
             alt="icon kembali"
             width={9}
             height={14}
@@ -96,11 +96,10 @@ export default function PaymentDetail() {
             <div className="flex justify-between w-full font-semibold">
               <p className="text-left">Total Pembayaran :</p>
               <p className="text-right">
-              Rp. {Number(totalCost).toLocaleString("id-ID")}
+                Rp. {Number(totalCost).toLocaleString("id-ID")}
               </p>
             </div>
           </div>
-
         </div>
 
         <div className="bg-primarylight2 p-6 rounded-lg w-1/4 border border-text2 flex flex-col items-center h-fit">

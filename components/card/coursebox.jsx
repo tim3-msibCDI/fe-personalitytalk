@@ -18,7 +18,7 @@ const CourseBox = ({ id, name, description, rating, price, imageUrl }) => {
         {/* Badge Icon */}
         <div className="flex justify-end items-center w-full">
           <Image
-            src="/icons/favorite-course.svg"
+            src="/image/icons/favorite-course.svg"
             width={72}
             height={72}
             alt="favorite icon"
