@@ -149,8 +149,8 @@ export default function Login() {
                           showPassword ? "eye-fill" : "eye-off-fill"
                         }.svg`}
                         alt={showPassword ? "Hide Password" : "Show Password"}
-                        width={24}
-                        height={24}
+                        width={20}
+                        height={20}
                       />
                     </button>
                   </div>

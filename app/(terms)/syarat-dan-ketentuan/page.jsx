@@ -35,7 +35,7 @@ export default function SyaratKetentuan() {
         <div className="w-full py-4">
           <hr className="bg-textsec" />
         </div>
-        <div className="text-s">
+        <div className="text-s leading-8">
           <ul className="list-disc">
             <li>
               PersonalityTalk berfungsi sebagai sarana untuk menyediakan konten

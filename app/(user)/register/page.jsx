@@ -376,8 +376,8 @@ export default function Register() {
                           showPassword ? "eye-fill" : "eye-off-fill"
                         }.svg`}
                         alt={showPassword ? "Hide Password" : "Show Password"}
-                        width={24}
-                        height={24}
+                        width={20}
+                        height={20}
                       />
                     </button>
                   </div>
@@ -413,11 +413,15 @@ export default function Register() {
                     >
                       <Image
                         src={`/image/icons/${
-                          showPassword ? "eye-fill" : "eye-off-fill"
+                          showConfirmPassword ? "eye-fill" : "eye-off-fill"
                         }.svg`}
-                        alt={showPassword ? "Hide Password" : "Show Password"}
-                        width={24}
-                        height={24}
+                        alt={
+                          showConfirmPassword
+                            ? "Hide Password"
+                            : "Show Password"
+                        }
+                        width={20}
+                        height={20}
                       />
                     </button>
                   </div>
@@ -448,29 +452,31 @@ export default function Register() {
                   )}
                 </div>
 
-                <div className="pt-5">
+                <div className="pt-5 relative">
                   <label className="text-m font-normal text-textcolor">
                     Tanggal Lahir
                   </label>
-                  <input
-                    type="date"
-                    value={dateBirth}
-                    onChange={handleDateChange}
-                    onFocus={() => setIsDateSelected(false)}
-                    onBlur={() => setIsDateSelected(!!dateBirth)}
-                    className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border ${
-                      isDateSelected ? "text-textcolor" : "text-textsec"
-                    } placeholder:text-textsec ${
-                      error.date_birth ? "border-red-500" : "border-text2"
-                    }`}
-                  />
-                  <Image
-                    src="/image/icons/calendar.svg"
-                    alt="Select Date"
-                    className="absolute inset-y-0 right-4 pointer-events-none"
-                    width={24}
-                    height={24}
-                  />
+                  <div className="relative">
+                    <input
+                      type="date"
+                      value={dateBirth}
+                      onChange={handleDateChange}
+                      onFocus={() => setIsDateSelected(false)}
+                      onBlur={() => setIsDateSelected(!!dateBirth)}
+                      className={`py-2 px-4 w-full rounded-lg text-s mt-1 font-light border-solid border pr-12 ${
+                        isDateSelected ? "text-textcolor" : "text-textsec"
+                      } placeholder:text-textsec ${
+                        error.date_birth ? "border-red-500" : "border-text2"
+                      }`}
+                    />
+                    <Image
+                      src="/image/icons/calendar.svg"
+                      alt="Select Date"
+                      className="absolute top-1/2 right-4 transform -translate-y-1/2 pointer-events-none"
+                      width={15}
+                      height={15}
+                    />
+                  </div>
                   {error.date_birth && (
                     <span className="text-red-500 text-sm">
                       {error.date_birth}
