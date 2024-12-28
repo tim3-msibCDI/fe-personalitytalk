@@ -68,6 +68,8 @@ export default function ChatContent({
     setIsPsikologModalOpen(false);
   };
 
+  // console.log("Chats:", chats);
+
   return (
     <div className="flex flex-col px-6 md:px-8 lg:px-12 ml-4 lg:ml-8 py-5 mr-2 md:mr-4 overflow-y-auto h-[67vh]">
       <div className="flex-1 space-y-2 overflow-y-auto h-[calc(100vh-200px)]">
