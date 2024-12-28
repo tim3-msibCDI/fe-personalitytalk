@@ -8,7 +8,7 @@ export default function Founder() {
   };
   return (
     <>
-      <div className="py-14 px-24 text-textcolor bg-whitebg">
+      <div className="py-14 lg:px-24 px-4 text-textcolor bg-whitebg">
         <div>
           <h1 className="text-h1 font-semibold text-center">Founder</h1>
         </div>

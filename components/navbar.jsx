@@ -13,6 +13,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const { user } = useUser();
   const [loading, setLoading] = useState(false); // Loading state for logout
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for responsive menu
 
   const isActive = (href) => pathname === href;
 
@@ -42,14 +43,13 @@ export default function Navbar() {
           />
         </Link>
       </div>
+      {/* Desktop Menu */}
       <ul className="hidden md:flex space-x-4 lg:space-x-6 font-light text-textcolor text-m md:text-base lg:text-m">
-      <li>
+        <li>
           <Link
             href="/"
             className={`${
-              isActive("/")
-                ? "font-semibold underline underline-offset-8"
-                : ""
+              isActive("/") ? "font-semibold underline underline-offset-8" : ""
             }`}
           >
             Beranda
@@ -96,8 +96,7 @@ export default function Navbar() {
             href="/about"
             className={`${
               isActive("/about")
-                ? "font-semibold underline underline-offset-8"
-                : ""
+                ? "font-semibold underline underline-offset-8" : ""
             }`}
           >
             About Us
@@ -143,9 +142,12 @@ export default function Navbar() {
 
       {loading && <Loading />}
 
-      {/* Responsive mobile menu */}
+      {/* Responsive mobile menu button */}
       <div className="md:hidden flex items-center">
-        <button className="text-primary focus:outline-none">
+        <button
+          className="text-primary focus:outline-none"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
           <svg
             className="w-6 h-6"
             fill="none"
@@ -162,6 +164,71 @@ export default function Navbar() {
           </svg>
         </button>
       </div>
+
+      {/* Responsive Menu */}
+      {isMenuOpen && (
+        <div className="absolute top-full left-0 w-full bg-white shadow-lg">
+          <ul className="flex flex-col space-y-4 py-4 px-6 text-textcolor text-m font-light">
+            <li>
+              <Link
+                href="/"
+                className={`${
+                  isActive("/") ? "font-semibold underline underline-offset-8" : ""
+                }`}
+              >
+                Beranda
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/konsultasi"
+                className={`${
+                  isActive("/konsultasi")
+                    ? "font-semibold underline underline-offset-8"
+                    : ""
+                }`}
+              >
+                Konsultasi
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/course"
+                className={`${
+                  isActive("/course")
+                    ? "font-semibold underline underline-offset-8"
+                    : ""
+                }`}
+              >
+                Course
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/tes-mental"
+                className={`${
+                  isActive("/tes-mental")
+                    ? "font-semibold underline underline-offset-8"
+                    : ""
+                }`}
+              >
+                Tes Mental
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/about"
+                className={`${
+                  isActive("/about")
+                    ? "font-semibold underline underline-offset-8" : ""
+                }`}
+              >
+                About Us
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
     </nav>
   );
 }

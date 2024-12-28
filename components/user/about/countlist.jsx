@@ -9,7 +9,7 @@ export default function Countlist() {
             PersonalityTalk dalam Angka
           </h2>
           <div className="flex justify-center space-x-4 mt-9">
-            <Cardcount number="+10K" description="Total Pengguna 2024" />
+            <Cardcount number="+5K" description="Total Pengguna 2024" />
             <Cardcount number="+20" description="Modul Course" />
             <Cardcount number="+30" description="Psikologi & Konsulen" />
           </div>
