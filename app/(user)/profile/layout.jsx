@@ -10,15 +10,15 @@ export default function ProfileUserLayout({ children }) {
 
   // Handle loading and error states
   if (isLoading) {
-    return <Loading/>;
+    return <Loading />;
   }
 
   if (isError) {
-    return <div>Error loading user profile.</div>; 
+    return <div>Error loading user profile.</div>;
   }
 
   return (
-    <div className="mx-20 my-9 text-textcolor">
+    <div className="mx-4 sm:mx-20 my-9 text-textcolor">
       <div>
         <h1 className="text-h2 font-semibold">
           Selamat datang kembali {user.name}!

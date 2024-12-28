@@ -1,14 +1,22 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState } from "react";
-// import { useChatContext } from "/constants/ChatContext";
 import KonsulBelumMulai from "@/components/popup/konsul-belum-mulai";
 import Modal from "@/components/modals/modal";
 
+const formatRupiah = (amount) => {
+  const formatter = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+  return formatter.format(amount);
+};
+
 export default function ConsultationHistoryCard({
-  name,
-  chat_sessions_id,
   consultation_id,
+  name,
   status,
   date,
   time,
@@ -17,10 +25,6 @@ export default function ConsultationHistoryCard({
   receiver_id,
 }) {
   const router = useRouter();
-  // const { setChatId, setSenderId, setReceiverId, setConsulId, setChatStatus } =
-  //   useChatContext();
-
-  // State for modal management
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
@@ -34,7 +38,6 @@ export default function ConsultationHistoryCard({
     setModalContent(null);
   };
 
-  // Determine background color based on status
   const getStatusBgColor = () => {
     switch (status) {
       case "completed":
@@ -50,48 +53,48 @@ export default function ConsultationHistoryCard({
     }
   };
 
-  // Get status label
   const getKet = () => {
     switch (status) {
       case "completed":
-        return "Selesai";
+        return (
+          <>
+            <span className="sm:inline hidden">Transaksi </span>
+            <span>Selesai</span>
+          </>
+        );
       case "ongoing":
-        return "Sedang Berlangsung";
+        return (
+          <>
+            <span className="sm:inline hidden">Sedang </span>
+            <span>Berlangsung</span>
+          </>
+        );
       case "scheduled":
-        return "Dijadwalkan";
+        return (
+          <>
+            <span className="sm:inline hidden">Dijadwalkan </span>
+            <span>Sesi</span>
+          </>
+        );
       case "failed":
-        return "Gagal";
+        return (
+          <>
+            <span className="sm:inline hidden">Transaksi </span>
+            <span>Gagal</span>
+          </>
+        );
       default:
         return "Status";
     }
   };
 
-  // Handle card click
-  const navigateToChat = ({
-    consulId,
-    chatSessionId,
-    psikologId,
-    senderId,
-    chatStatus,
-  }) => {
+  const navigateToChat = ({ consulId, psikologId, senderId, chatStatus }) => {
     if (status === "scheduled") {
       openModal(<KonsulBelumMulai onClose={closeModal} />);
     } else if (status === "ongoing" || status === "completed") {
-      // setChatId(chat_sessions_id);
-      // setConsulId(consultation_id);
-      // setSenderId(sender_id);
-      // setReceiverId(receiver_id);
-      // setChatStatus(status);
-
       localStorage.setItem(
         "clientChatData",
-        JSON.stringify({
-          consulId,
-          chatSessionId,
-          psikologId,
-          senderId,
-          chatStatus,
-        })
+        JSON.stringify({ consulId, psikologId, senderId, chatStatus })
       );
       router.push(`/konsultasi/chat`);
     } else {
@@ -103,13 +106,11 @@ export default function ConsultationHistoryCard({
 
   return (
     <>
-      {/* Consultation Card */}
       <div
         className="w-full h-[124px] p-4 bg-primarylight rounded-lg border border-primary justify-between items-center inline-flex mb-2 cursor-pointer"
         onClick={() =>
           navigateToChat({
             consulId: consultation_id,
-            chatSessionId: chat_sessions_id,
             psikologId: receiver_id,
             senderId: sender_id,
             chatStatus: status,
@@ -119,11 +120,11 @@ export default function ConsultationHistoryCard({
         <div className="justify-start items-center gap-3 flex">
           <div className="h-20 rounded-lg justify-start items-center gap-2.5 flex">
             <Image
-              className="grow shrink basis-0 rounded-lg"
+              className="grow shrink basis-0 rounded-lg hidden sm:inline"
               src={
                 psikolog_profile
                   ? `${process.env.NEXT_PUBLIC_IMG_URL}/${psikolog_profile}`
-                  : "/default-profile.jpg" // Gambar default jika `psikolog_profile` kosong
+                  : "/default-profile.jpg"
               }
               alt={`${name}'s profile picture`}
               height={100}
@@ -131,7 +132,7 @@ export default function ConsultationHistoryCard({
             />
           </div>
           <div className="self-stretch flex-col justify-center items-start gap-2 inline-flex">
-            <div className="text-textcolor text-base font-semibold">{name}</div>
+            <div className="text-textcolor sm:text-base text-s font-semibold">{name}</div>
             <div
               className={`h-5 px-4 py-2 ${getStatusBgColor()} rounded-lg justify-center items-center gap-2.5 inline-flex`}
             >
@@ -144,7 +145,6 @@ export default function ConsultationHistoryCard({
         <div className="h-11 justify-end items-center gap-4 flex">
           <div className="flex-col justify-center items-start gap-2 inline-flex">
             <div className="justify-start items-center gap-2 inline-flex">
-              <div className="w-4 h-4 relative" />
               <Image
                 src="/image/icons/chat-primary.svg"
                 width={15}
@@ -154,7 +154,6 @@ export default function ConsultationHistoryCard({
               <div className="text-textcolor text-xs font-semibold">{date}</div>
             </div>
             <div className="justify-start items-center gap-2 inline-flex">
-              <div className="w-4 h-[14.30px] relative" />
               <Image
                 src="/image/icons/coins-primary.svg"
                 width={15}
@@ -175,7 +174,6 @@ export default function ConsultationHistoryCard({
         </div>
       </div>
 
-      {/* Modal Component */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         {modalContent}
       </Modal>

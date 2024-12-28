@@ -115,7 +115,7 @@ export default function SidebarProfile() {
             Gabung Sejak: {user.joined_at}
           </p>
           <hr className="border-t-1 border-text2 my-4 lg:block flex w-full" />
-          <ul className="text-left text-sm flex lg:block">
+          <ul className="text-left text-sm flex lg:block justify-center">
             {/* Biodata Link */}
             <li
               className={`flex p-3 my-2 gap-2 rounded-lg cursor-pointer ${

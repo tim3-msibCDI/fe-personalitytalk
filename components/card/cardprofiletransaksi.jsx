@@ -39,13 +39,33 @@ export default function TransactionHistoryCard({
   const getKet = () => {
     switch (status) {
       case "pending":
-        return "Menunggu Pembayaran";
+        return (
+          <>
+            <span className="sm:inline hidden">Menunggu </span>
+            <span>Pembayaran</span>
+          </>
+        );
       case "pending_confirmation":
-        return "Menunggu Konfirmasi";
+        return (
+          <>
+            <span className="sm:inline hidden">Menunggu </span>
+            <span>Konfirmasi</span>
+          </>
+        );
       case "completed":
-        return "Transaksi Berhasil";
+        return (
+          <>
+            <span className="sm:inline hidden">Transaksi </span>
+            <span>Berhasil</span>
+          </>
+        );
       case "failed":
-        return "Transaksi Gagal";
+        return (
+          <>
+            <span className="sm:inline hidden">Transaksi </span>
+            <span>Gagal</span>
+          </>
+        );
       default:
         return "Status";
     }
@@ -53,23 +73,23 @@ export default function TransactionHistoryCard({
 
   const navigateToDetailTransaksi = ({ idTransaction, noPemesanan }) => {
     localStorage.setItem("id_transaction", idTransaction);
-    router.push(`/detail-transaksi/${noPemesanan}`);
+    router.push(`/detail-transaksi/${no_pemesanan}`);
   };
 
   return (
     <div
-    className="w-full h-[124px] p-4 bg-primarylight rounded-lg border border-primary justify-between items-center inline-flex mb-2 cursor-pointer"
-    onClick={() =>
-      navigateToDetailTransaksi({
-        idTransaction: id_transaction,
-        noPemesanan: no_pemesanan,
-      })
-    }
+      className="w-full h-[124px] p-4 bg-primarylight rounded-lg border border-primary justify-between items-center inline-flex mb-2 cursor-pointer"
+      onClick={() =>
+        navigateToDetailTransaksi({
+          idTransaction: id_transaction,
+          noPemesanan: no_pemesanan,
+        })
+      }
     >
       <div className="justify-start items-center gap-3 flex">
         <div className="h-20 rounded-lg justify-start items-center gap-2.5 flex">
           <Image
-            className="grow shrink basis-0 rounded-lg"
+            className="grow shrink basis-0 rounded-lg hidden sm:inline"
             src={
               psikolog_profile
                 ? `${process.env.NEXT_PUBLIC_IMG_URL}/${psikolog_profile}`
@@ -81,7 +101,9 @@ export default function TransactionHistoryCard({
           />
         </div>
         <div className="self-stretch flex-col justify-center items-start gap-2 inline-flex">
-          <div className="text-textcolor text-base font-semibold">{name}</div>
+          <div className="text-textcolor lg:text-base text-s font-semibold">
+            {name}
+          </div>
           <div
             className={`h-5 px-4 py-2 ${getStatusBgColor()} rounded-lg justify-center items-center gap-2.5 inline-flex`}
           >
@@ -100,7 +122,7 @@ export default function TransactionHistoryCard({
               height={15}
               alt="icons"
             />
-            <div className="text-textcolor text-xs font-semibold">{date}</div>
+            <div className="text-textcolor text-vs font-semibold">{date}</div>
           </div>
           <div className="justify-start items-center gap-2 inline-flex">
             <Image
@@ -109,7 +131,7 @@ export default function TransactionHistoryCard({
               height={15}
               alt="icons"
             />
-            <div className="text-textcolor text-xs font-semibold">
+            <div className="text-textcolor text-vs font-semibold">
               {formatRupiah(price)}
             </div>
           </div>

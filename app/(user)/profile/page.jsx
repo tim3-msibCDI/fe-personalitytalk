@@ -130,7 +130,7 @@ export default function Profile() {
         <h3 className="text-h3 font-semibold pb-3">Biodata Diri</h3>
         {!isEditing && !isUpgrading && (
           <button
-            className="inline-flex bg-primary text-whitebg px-6 py-2 rounded-lg flex-start hover:bg-hover"
+            className="inline-flex bg-primary text-whitebg lg:px-6 px-4 py-2 rounded-lg flex-start hover:bg-hover sm:text-base text-s"
             onClick={toggleEdit}
           >
             <Image

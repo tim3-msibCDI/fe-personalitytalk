@@ -14,7 +14,7 @@ export default function KonsultasiUserPage() {
       <div className="">
         <ul className="flex space-x-4">
           <li
-            className={`py-2 px-4 cursor-pointer text-primary ${
+            className={`py-2 px-4 cursor-pointer text-primary sm:text-base text-s ${
               activeTab === "konsultasi" ? "bg-primarylight rounded-t-lg font-semibold" : ""
             }`}
             onClick={() => setActiveTab("konsultasi")}
@@ -22,7 +22,7 @@ export default function KonsultasiUserPage() {
             Riwayat Konsultasi
           </li>
           <li
-            className={`py-2 px-4 cursor-pointer text-primary ${
+            className={`py-2 px-4 cursor-pointer text-primary sm:text-base text-s ${
               activeTab === "transaksi" ? "bg-primarylight rounded-t-lg font-semibold" : ""
             }`}
             onClick={() => setActiveTab("transaksi")}
