@@ -81,9 +81,9 @@ export const getUserDetail = async () => {
       email: data.email,
       role: data.role,
       photoProfile: data.photo_profile,
-      gender: data.gender === "M" ? "Laki-Laki" : "Perempuan",
+      gender: data.gender,
       dateBirth: data.date_birth,
-      phoneNumber: data.phone_number,
+      phone_number: data.phone_number,
       joined_at: data.joined_since,
       universitas: data.mahasiswa_details?.universitas || "",
       jurusan: data.mahasiswa_details?.jurusan || "",
@@ -139,6 +139,7 @@ export const updateProfile = async (formData) => {
       }
     );
     return response.data;
+    console.log(response);
   } catch (error) {
     throw new Error("Failed to update profile");
   }

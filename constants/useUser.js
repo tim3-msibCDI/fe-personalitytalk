@@ -14,7 +14,7 @@ const fetchUserDetail = async () => {
       photoProfile: userDetails.photoProfile,
       gender: userDetails.gender,
       dateBirth: userDetails.dateBirth,
-      phoneNumber: userDetails.phoneNumber,
+      phone_number: userDetails.phone_number,
     };
 
     // Kondisi jika user adalah mahasiswa

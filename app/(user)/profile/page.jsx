@@ -62,13 +62,15 @@ export default function Profile() {
       email: formData.email,
       gender: formData.gender === "Perempuan" ? "F" : "M",
       date_birth: formData.dateBirth,
-      phone_number: formData.phoneNumber,
+      phone_number: formData.phone_number,
       universitas: formData.universitas || "",
       jurusan: formData.jurusan || "",
     };
 
     try {
+      console.log(dataToSend);
       await updateUserProfile(dataToSend);
+      setIsModalOpen(true);
       mutate((prevUser) => ({ ...prevUser, ...dataToSend }), {
         revalidate: false,
       }).then((dataToSend) => {
@@ -187,18 +189,28 @@ export default function Profile() {
             </div>
             <div>
               {isEditing ? (
-                <select
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  className={`border border-textcolor w-full rounded-lg p-3 ${
-                    isEditing ? "bg-white" : "bg-gray-100"
-                  }`}
-                >
-                  <option value="">Jenis Kelamin</option>
-                  <option value="Perempuan">Perempuan</option>
-                  <option value="Laki-laki">Laki-laki</option>
-                </select>
+                <div className="relative">
+                  <select
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                    className={`border border-textcolor w-full rounded-lg p-3 pr-12 ${
+                      isEditing ? "bg-white" : "bg-gray-100"
+                    }`}
+                  >
+                    <option value="">Jenis Kelamin</option>
+                    <option value="F">Perempuan</option>
+                    <option value="M">Laki-laki</option>
+                  </select>
+                  <div className="absolute top-1/2 right-4 transform -translate-y-1/2 pointer-events-none">
+                    <Image
+                      src="/image/icons/select-arrow-down.svg"
+                      alt="Dropdown Icon"
+                      width={20}
+                      height={20}
+                    />
+                  </div>
+                </div>
               ) : (
                 <input
                   type="text"
@@ -244,8 +256,8 @@ export default function Profile() {
             <div>
               <input
                 type="number"
-                name="phoneNumber"
-                value={isEditing ? formData.phoneNumber : user.phoneNumber}
+                name="phone_number"
+                value={isEditing ? formData.phone_number : user.phone_number}
                 onChange={handleChange}
                 className={`border border-textcolor w-full rounded-lg p-3 ${
                   isEditing ? "bg-white" : "bg-gray-100"
