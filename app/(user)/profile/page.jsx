@@ -128,7 +128,7 @@ export default function Profile() {
       )}
       <div className="w-full flex justify-between items-start self-stretch">
         <h3 className="text-h3 font-semibold pb-3">Biodata Diri</h3>
-        {!isEditing && (
+        {!isEditing && !isUpgrading && (
           <button
             className="inline-flex bg-primary text-whitebg px-6 py-2 rounded-lg flex-start hover:bg-hover"
             onClick={toggleEdit}
