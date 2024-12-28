@@ -30,6 +30,11 @@ export default function Navbar() {
     }
   };
 
+  // Function to handle menu item click
+  const handleMenuItemClick = () => {
+    setIsMenuOpen(false); // Close the menu when a menu item is clicked
+  };
+
   return (
     <nav className="flex justify-between items-center py-4 px-6 md:px-8 lg:px-12 bg-white shadow-lg text-m sticky top-0 z-50">
       <div className="text-m font-bold ml-4 lg:ml-8">
@@ -96,7 +101,8 @@ export default function Navbar() {
             href="/about"
             className={`${
               isActive("/about")
-                ? "font-semibold underline underline-offset-8" : ""
+                ? "font-semibold underline underline-offset-8"
+                : ""
             }`}
           >
             About Us
@@ -173,8 +179,11 @@ export default function Navbar() {
               <Link
                 href="/"
                 className={`${
-                  isActive("/") ? "font-semibold underline underline-offset-8" : ""
+                  isActive("/")
+                    ? "font-semibold underline underline-offset-8"
+                    : ""
                 }`}
+                onClick={handleMenuItemClick}
               >
                 Beranda
               </Link>
@@ -187,6 +196,7 @@ export default function Navbar() {
                     ? "font-semibold underline underline-offset-8"
                     : ""
                 }`}
+                onClick={handleMenuItemClick}
               >
                 Konsultasi
               </Link>
@@ -199,6 +209,7 @@ export default function Navbar() {
                     ? "font-semibold underline underline-offset-8"
                     : ""
                 }`}
+                onClick={handleMenuItemClick}
               >
                 Course
               </Link>
@@ -211,6 +222,7 @@ export default function Navbar() {
                     ? "font-semibold underline underline-offset-8"
                     : ""
                 }`}
+                onClick={handleMenuItemClick}
               >
                 Tes Mental
               </Link>
@@ -220,8 +232,10 @@ export default function Navbar() {
                 href="/about"
                 className={`${
                   isActive("/about")
-                    ? "font-semibold underline underline-offset-8" : ""
+                    ? "font-semibold underline underline-offset-8"
+                    : ""
                 }`}
+                onClick={handleMenuItemClick}
               >
                 About Us
               </Link>

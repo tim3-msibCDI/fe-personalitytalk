@@ -10,14 +10,26 @@ export default function Founder() {
     <>
       <div className="py-14 lg:px-24 px-4 text-textcolor bg-whitebg">
         <div>
-          <h1 className="text-h1 font-semibold text-center">Founder</h1>
+          <h1 className="sm:text-h1 text-h2 font-semibold text-center">
+            Founder
+          </h1>
         </div>
         <div className="lg:flex mt-6">
-          <Image src="/image/founder1.png" alt="Founder" width={184.346} height={310} className="lg:ml-14 mx-auto" />
+          <Image
+            src="/image/founder1.png"
+            alt="Founder"
+            width={184.346}
+            height={310}
+            className="lg:ml-14 mx-auto"
+          />
           <div className="lg:ml-28 my-7 text-center lg:text-left">
-            <h1 className="text-h2 font-semibold mb-3">{founder.name}</h1>
-            <p className="text-m font-medium mb-3">{founder.jabatan}</p>
-            <p className="text-m font-light">{founder.ket}</p>
+            <h1 className="sm:text-h2 text-h3 font-semibold lg:mb-3 mb-1">
+              {founder.name}
+            </h1>
+            <p className="sm:text-m text-s font-medium lg:mb-3 mb-1">
+              {founder.jabatan}
+            </p>
+            <p className="sm:text-m text-s font-light">{founder.ket}</p>
           </div>
         </div>
       </div>

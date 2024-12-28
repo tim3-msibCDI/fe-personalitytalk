@@ -60,7 +60,7 @@ export default function Layanan() {
                   <div className="mb-4">
                     {/* Render description dengan tag <b> */}
                     <p
-                      className="lg:text-m text-xs text-bold"
+                      className="lg:text-base text-xs text-bold "
                       dangerouslySetInnerHTML={{ __html: item.description }}
                     />
                   </div>

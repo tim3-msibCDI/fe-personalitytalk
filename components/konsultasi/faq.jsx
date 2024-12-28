@@ -14,7 +14,7 @@ export default function FAQ() {
   return (
     <div className="min-h-screen px-6 md:px-8 lg:px-12">
       <div className="text-center mb-20">
-        <h1 className="text-h1 font-semibold border-b-4 border-black inline-block pb-2 text-textcolor">
+        <h1 className="sm:text-h1 text-h2 font-semibold border-b-4 border-black inline-block pb-2 text-textcolor">
           Frequently Asked Question
         </h1>
       </div>
@@ -28,7 +28,7 @@ export default function FAQ() {
               onClick={() => toggleFAQ(index)}
               className="cursor-pointer flex justify-between items-center p-4 bg-orange-500 text-white"
             >
-              <h2>{item.name}</h2>
+              <h2 className="lg:text-base text-sm">{item.name}</h2>
               <Image
                 src="/image/icons/arrow_down.png"
                 alt="Arrow"
@@ -41,7 +41,7 @@ export default function FAQ() {
             </div>
             {activeIndex === index && (
               <div className="mt-3 p-4 bg-transparent rounded-md">
-                <p>{item.detail}</p>
+                <p className="lg:text-base text-sm">{item.detail}</p>
               </div>
             )}
           </div>

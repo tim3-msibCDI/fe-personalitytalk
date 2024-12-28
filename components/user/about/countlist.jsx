@@ -4,8 +4,8 @@ export default function Countlist() {
   return (
     <>
       <div className="bg-primary p-6">
-        <div className="my-16">
-          <h2 className="text-h1 font-bold mb-4 text-center text-whitebg">
+        <div className="lg:my-16 my-4">
+          <h2 className="lg:text-h1 text-h2 font-bold mb-4 text-center text-whitebg">
             PersonalityTalk dalam Angka
           </h2>
           <div className="flex justify-center space-x-4 mt-9">

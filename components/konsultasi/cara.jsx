@@ -12,18 +12,18 @@ export default function Cara() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-primarylight to-transparent min-h-screen px-6 md:px-8 lg:px-12 py-9">
+    <div className="bg-gradient-to-b from-primarylight to-transparent min-h-screen px-0 md:px-8 lg:px-12 py-9">
       {/* Header */}
       <div className="text-center mb-8">
-        <h1 className="text-h1 font-semibold border-b-4 border-black inline-block pb-2 text-textcolor">
+        <h1 className="sm:text-h1 text-h2 font-semibold border-b-4 border-black inline-block pb-2 text-textcolor">
           Cara Berkonsultasi
         </h1>
       </div>
 
       {/* Layout dua kolom */}
-      <div className="flex space-x-8 ml-4 lg:ml-8">
+      <div className="flex flex-col-reverse md:flex-row space-y-8 md:space-y-0 md:space-x-8 ml-4 lg:ml-8">
         {/* Kolom kanan (Daftar konsultasi) */}
-        <div className="flex flex-col w-1/3 space-y-4">
+        <div className="flex flex-col w-full md:w-1/3 space-y-4">
           <div className="mt-4">
             {cara_konsultasi.map((item) => (
               <div
@@ -43,17 +43,17 @@ export default function Cara() {
                       : "bg-primary border-primary text-white group-hover:border-white"
                   }`}
                 >
-                  <span className="font-bold text-h3">{item.id}</span>
+                  <span className="font-bold sm:text-h3 text-m">{item.id}</span>
                 </div>
                 {/* Nama Item */}
-                <span className="font-semibold text-m">{item.name}</span>
+                <span className="font-semibold lg:text-m text-xs">{item.name}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Kolom kiri (Image berdasarkan item yang dipilih) */}
-        <div className="w-2/3 flex items-center justify-center">
+        <div className="w-full md:w-2/3 flex items-center justify-center mb-4 md:mb-0">
           {cara_konsultasi.map((item) => {
             if (item.id === selectedId) {
               return (
@@ -63,7 +63,7 @@ export default function Cara() {
                   alt={item.name}
                   width={500}
                   height={400}
-                  className="rounded-lg"
+                  className="rounded-lg max-w-full h-auto"
                 />
               );
             }

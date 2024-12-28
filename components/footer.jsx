@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="bg-whitebg py-10 text-base font-light text-textcolor shadow-bottom">
+    <footer className="bg-whitebg py-10 sm:text-base text-s font-light text-textcolor shadow-bottom">
       <div className="container mx-auto px-4 flex flex-col lg:flex-row justify-between items-start">
         <div className="lg:w-1/2 ml-6">
           <div className="lg:w-1/2">
@@ -22,10 +22,10 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="lg:w-1/2 flex sm:ml-6 sm:mb-4">
+        <div className="lg:w-1/2 flex sm:ml-6 mx-auto sm:mb-4 mb-2">
           <div className="lg:w-1/2 text-gray-700 mt-6 lg:mt-0 sm:pr-20">
             <h5 className="font-semibold mb-3">Tentang</h5>
-            <ul>
+            <ul className="sm:text-base text-s pr-2 sm:pr-0">
               <li>
                 <Link href="/about" className="hover:underline">
                   Tentang PersonalityTalk
@@ -56,7 +56,7 @@ const Footer = () => {
 
           <div className="lg:w-1/2 text-gray-700 mt-6 lg:mt-0">
             <h5 className="font-semibold mb-3">Lainnya</h5>
-            <ul>
+            <ul className="sm:text-base text-s">
               <li>
                 <Link href="/syarat-dan-ketentuan" className="hover:underline">
                   Syarat & Ketentuan
