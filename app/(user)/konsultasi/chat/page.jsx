@@ -95,7 +95,6 @@ export default function Chat() {
       console.error("Error loading psikolog info:", error);
     }
   };
-
   
   useEffect(() => {
     loadChats(); // Memuat pesan saat komponen di-mount
@@ -126,6 +125,7 @@ export default function Chat() {
       <ChatInput
         onSendMessage={handleSendMessage} 
         chat_status={chatData.chatStatus}
+        consultationTime={consultationTime}
       />
     </div>
   );

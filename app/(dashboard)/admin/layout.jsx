@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import TopbarAdmin from "@/components/dashboard/section/topbar-admin";
 import { Suspense } from "react";
+import { SkeletonTable } from "@/components/dashboard/table/skeleton-table";
 
 export default function AdminLayout({ children }) {
   const path = usePathname();
@@ -16,7 +17,7 @@ export default function AdminLayout({ children }) {
   return (
     <div className="default-layout">
       <TopbarAdmin />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div><SkeletonTable/></div>}>
         <div>{children}</div>
       </Suspense>
     </div>
