@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Loading from "../loading/loading";
+import { SkeletonTable } from "../dashboard/table/skeleton-table";
 import Link from "next/link";
 
 export default function Artikel() {
@@ -47,7 +47,7 @@ export default function Artikel() {
     return (
       <section id="artikel" className="mb-20">
         <div className="flex justify-center items-center h-64">
-          <Loading />
+          <SkeletonTable/>
         </div>
       </section>
     );

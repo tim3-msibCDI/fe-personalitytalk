@@ -37,7 +37,7 @@ export default function ChatSelesai({
           psikolog secara berkala. Tenang aja chat kamu tidak akan terhapus dan
           kamu dapat melanjutkannya lagi.
         </p>
-        <div className="flex gap-5 text-m font-semibold">
+        <div className="flex gap-5 text-m font-semibold mb-7">
           {/* Rating */}
           <button
             className="border border-primary text-primary rounded-lg px-4 py-2 flex gap-1 items-center"

@@ -71,7 +71,7 @@ export default function Chat() {
 
     try {
       const data = await sendChatMessage(newMessage);
-      console.log("Message sent:", data); // Debugging log
+      // console.log("Message sent:", data); // Debugging log
       if (data.success) {
         setChats((prevChats) => [...prevChats, data.data]);
       }
@@ -126,10 +126,12 @@ export default function Chat() {
         sender={chatData.senderId}
         chat_status={chatData.chatStatus}
         type="psikolog"
+        consultationTime={consultationTime} 
       />
       <ChatInput
         onSendMessage={handleSendMessage}
         chat_status={chatData.chatStatus}
+        consultationTime={consultationTime} 
       />
     </div>
   );

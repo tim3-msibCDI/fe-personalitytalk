@@ -18,20 +18,51 @@ export default function ChatContent({
   const chatEndRef = useRef(null);
   const prevChatsLength = useRef(chats.length);
   const [isPsikologModalOpen, setIsPsikologModalOpen] = useState(false);
+  const [isChatCompleted, setIsChatCompleted] = useState(false);
+  const [hasOpenedModal, setHasOpenedModal] = useState(false); // State untuk mencegah modal dibuka lebih dari sekali
+
+  // Periksa waktu konsultasi
+  useEffect(() => {
+    if (!consultationTime) return;
+
+    const checkConsultationEndTime = () => {
+      const currentTime = new Date();
+      const consultationEndTime = new Date(
+        `${consultationTime.date}T${consultationTime.end_time}:00`
+      );
+
+      if (currentTime > consultationEndTime && !hasOpenedModal) {
+        setIsChatCompleted(true);
+        if (type === "psikolog") {
+          setIsPsikologModalOpen(true);
+          setHasOpenedModal(true); // Pastikan modal hanya terbuka sekali
+        }
+      }
+    };
+
+    const interval = setInterval(checkConsultationEndTime, 5000);
+    checkConsultationEndTime();
+
+    return () => clearInterval(interval);
+  }, [consultationTime, type, hasOpenedModal]);
+
+  // Pantau perubahan chat_status
+  useEffect(() => {
+    if (chat_status === "completed" && !hasOpenedModal) {
+      setIsChatCompleted(true);
+      if (type === "psikolog") {
+        setIsPsikologModalOpen(true);
+        setHasOpenedModal(true); // Pastikan modal hanya terbuka sekali
+      }
+    }
+  }, [chat_status, type, hasOpenedModal]);
 
   useEffect(() => {
     if (chats.length > prevChatsLength.current) {
       chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-    prevChatsLength.current = chats.length; 
+    prevChatsLength.current = chats.length;
   }, [chats]);
-
-  // Buka modal untuk psikolog jika status adalah "completed"
-  useEffect(() => {
-    if (chat_status === "completed" && type === "psikolog") {
-      setIsPsikologModalOpen(true);
-    }
-  }, [chat_status, type]);
 
   const closePsikologModal = () => {
     setIsPsikologModalOpen(false);
@@ -67,20 +98,21 @@ export default function ChatContent({
         {/* Referensi untuk scroll otomatis ke bawah */}
         <div ref={chatEndRef} />
       </div>
+
       {/* Tampilkan ChatSelesai untuk client */}
-      {chat_status === "completed" && type === "client" 
-        && <ChatSelesai 
-            consulId={consulId} 
-            psikologId={psikologId} 
-            psikologInfo={psikologInfo} 
-            consultationTime={consultationTime}
-          />
-      }
+      {isChatCompleted && type === "client" && (
+        <ChatSelesai
+          consulId={consulId}
+          psikologId={psikologId}
+          psikologInfo={psikologInfo}
+          consultationTime={consultationTime}
+        />
+      )}
 
       {/* Modal ChatSelesai untuk psikolog */}
       <Modal isOpen={isPsikologModalOpen} onClose={closePsikologModal}>
         <ChatSelesaiPsikolog onClose={closePsikologModal} />
       </Modal>
-      </div>    
+    </div>
   );
 }

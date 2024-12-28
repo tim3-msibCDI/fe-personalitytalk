@@ -1,11 +1,33 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
-export default function ChatInput({ onSendMessage, chat_status }) {
+export default function ChatInput({ onSendMessage, chat_status, consultationTime }) {
   const [input, setInput] = useState("");
+  const [isChatCompleted, setIsChatCompleted] = useState(false); // State untuk status waktu selesai
   const textareaRef = useRef(null);
+
+  // Periksa waktu konsultasi
+  useEffect(() => {
+    if (!consultationTime) return; // Pastikan consultationTime tidak null
+  
+    const checkConsultationEndTime = () => {
+      const currentTime = new Date();
+      const consultationEndTime = new Date(
+        `${consultationTime.date}T${consultationTime.end_time}:00`
+      );
+  
+      if (currentTime > consultationEndTime) {
+        setIsChatCompleted(true);
+      }
+    };
+  
+    const interval = setInterval(checkConsultationEndTime, 5000); // Periksa setiap 5 detik
+    checkConsultationEndTime();
+  
+    return () => clearInterval(interval);
+  }, [consultationTime]);
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -41,7 +63,7 @@ export default function ChatInput({ onSendMessage, chat_status }) {
           ref={textareaRef}
           rows="1"
           placeholder={
-            chat_status === "completed"
+            isChatCompleted || chat_status === "completed"
               ? "Sesi konsultasi anda telah selesai"
               : "Ketik di sini"
           }
@@ -52,7 +74,7 @@ export default function ChatInput({ onSendMessage, chat_status }) {
           style={{
             maxHeight: "150px",
           }}
-          disabled={chat_status === "completed"} // Disable textarea if chat is completed
+          disabled={isChatCompleted || chat_status === "completed"} // Disable textarea jika chat selesai atau waktu berakhir
         />
         <Image
           src="/image/icons/send.svg"
@@ -61,11 +83,11 @@ export default function ChatInput({ onSendMessage, chat_status }) {
           height={43}
           onClick={handleSend}
           className={`cursor-pointer ${
-            chat_status === "completed" ? "opacity-50" : "opacity-100"
+            isChatCompleted || chat_status === "completed" ? "opacity-50" : "opacity-100"
           }`} // Adjust opacity to indicate it's disabled
           style={{
-            pointerEvents: chat_status === "completed" ? "none" : "auto", // Disable pointer events when chat is completed
-            filter: chat_status === "completed" ? "grayscale(100%)" : "none", // Apply grayscale when disabled
+            pointerEvents: isChatCompleted || chat_status === "completed" ? "none" : "auto", // Disable pointer events
+            filter: isChatCompleted || chat_status === "completed" ? "grayscale(100%)" : "none", // Grayscale jika disable
           }}
         />
       </div>
