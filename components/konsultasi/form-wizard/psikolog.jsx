@@ -29,9 +29,9 @@ export default function Psikolog({ data }) {
 
       {/* Informasi Psikolog */}
       <div className="flex flex-col">
-        <p className="text-m font-semibold">{name || "Nama tidak tersedia"}</p>
+        <p className="sm:text-m text-s font-semibold">{name || "Nama tidak tersedia"}</p>
         {/* Rating, Pengalaman, dan Role */}
-        <div className="flex items-center gap-3 mt-2">
+        <div className="flex items-center gap-3 mt-2 sm:px-0 px-2">
           {/* Rating */}
           {rating && rating > 0 && (
             <>
@@ -42,7 +42,7 @@ export default function Psikolog({ data }) {
                   width={18}
                   height={18}
                 />
-                <p className="ml-1">{rating}</p>
+                <p className="ml-1 sm:text-base text-[9px]">{rating}</p>
               </div>
               <span className="text-gray-400">|</span>
             </>
@@ -55,7 +55,7 @@ export default function Psikolog({ data }) {
               width={18}
               height={18}
             />
-            <p className="ml-1">{experience || "0"} tahun</p>
+            <p className="ml-1 sm:text-base text-[9px]">{experience || "0"} tahun</p>
           </div>
           <span className="text-gray-400">|</span>
           {/* Role */}
@@ -66,7 +66,7 @@ export default function Psikolog({ data }) {
               width={18}
               height={18}
             />
-            <p className="ml-1">{category || "Kategori tidak tersedia"}</p>
+            <p className="ml-1 sm:text-base text-[9px]">{category || "Kategori tidak tersedia"}</p>
           </div>
         </div>
 
@@ -74,7 +74,7 @@ export default function Psikolog({ data }) {
         {status && (
           <div className="mt-3 flex items-center">
             <div
-              className={`px-4 py-2 rounded-md text-white font-semibold text-sm ${
+              className={`px-4 py-2 rounded-md text-white font-semibold sm:text-sm text-xs ${
                 status === "pending"
                   ? "bg-wait"
                   : status === "pending_confirmation"

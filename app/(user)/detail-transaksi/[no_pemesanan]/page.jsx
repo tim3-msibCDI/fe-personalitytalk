@@ -110,7 +110,7 @@ export default function DetailTransaksi() {
     },
   } = transactionData;
 
-  //Fungsi kalkulasi durasi konsultasi
+  // Fungsi kalkulasi durasi konsultasi
   function calculateDuration(consultationTime) {
     if (!consultationTime) return 0;
 
@@ -165,8 +165,8 @@ export default function DetailTransaksi() {
           />
           <p className="text-m font-bold">Konsultasi Saya</p>
         </div>
-        <div className="flex gap-8 mt-6">
-          <div className="w-2/5">
+        <div className="flex flex-col lg:flex-row gap-8 mt-6">
+          <div className="w-full lg:w-2/5">
             <div className="bg-primarylight2 rounded-md p-4">
               {/* Informasi Psikolog */}
               <Psikolog
@@ -184,7 +184,7 @@ export default function DetailTransaksi() {
               {/* Detail Konsultasi */}
               <div className="text-m gap-2">
                 <p className="font-semibold mb-2">Detail Konsultasi</p>
-                <div className="grid grid-cols-2 gap-y-2 text-m text-textcolor">
+                <div className="grid grid-cols-2 gap-y-2 sm:text-m text-s text-textcolor">
                   <p>Topik Konsultasi</p>
                   <p>: {topic}</p>
 
@@ -209,16 +209,16 @@ export default function DetailTransaksi() {
               </div>
             </div>
           </div>
-          <div className="w-3/5">
-            <div className="flex flex-row gap-8">
+          <div className="w-full lg:w-3/5">
+            <div className="flex flex-col lg:flex-row gap-8">
               {/* Rincian */}
-              <div className="w-3/5">
+              <div className="w-full lg:w-3/5">
                 {/* Detail Pemesanan */}
                 <div className="bg-primarylight2 p-4 rounded-lg h-auto w-full max-w-[500px] flex flex-col justify-center">
                   <p className="text-m font-semibold text-left mb-3">
                     Detail Pemesanan
                   </p>
-                  <div className="grid grid-cols-2 gap-y-2 text-m text-textcolor">
+                  <div className="grid grid-cols-2 gap-y-2 sm:text-m text-s text-textcolor">
                     <p>No. Pemesanan</p>
                     <p>: {no_pemesanan}</p>
 
@@ -248,7 +248,7 @@ export default function DetailTransaksi() {
                   <p className="text-m font-semibold text-left mb-3">
                     Rincian Nota
                   </p>
-                  <div className="grid grid-cols-2 gap-y-2 text-m text-textcolor">
+                  <div className="grid grid-cols-2 gap-y-2 lg:text-m text-s text-textcolor">
                     <p>Total Harga Konsultasi</p>
                     <p>: {formatPrice(total_harga)}</p>
 
@@ -262,7 +262,9 @@ export default function DetailTransaksi() {
                   </div>
                 </div>
               </div>
-              <div className="w-2/5">
+
+              {/* Pembayaran */}
+              <div className="w-full lg:w-2/5">
                 <Pembayaran
                   status={status}
                   chat_status={chat_status}
@@ -275,11 +277,14 @@ export default function DetailTransaksi() {
             </div>
           </div>
         </div>
-        {/* Modal Informasi Transfer */}
+      </div>
+
+      {/* Modal Informasi Transfer */}
+      {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <InfoTransfer onClose={closeModal} />
         </Modal>
-      </div>
+      )}
     </div>
   );
 }
