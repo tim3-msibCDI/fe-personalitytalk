@@ -15,7 +15,7 @@ export default function Alasan() {
                         className="w-auto h-auto"
                     />
                 </div>
-                <h1 className="text-h1 font-bold self-end text-whitebg mx-2 whitespace-nowrap">Kenapa Harus PersonalityTalk</h1>
+                <h1 className="lg:text-h1 text-h2 font-bold self-end text-whitebg mx-2 whitespace-nowrap">Kenapa Harus PersonalityTalk</h1>
                 <div className="flex-grow flex justify-end">
                     <Image
                         src="/image/right.png"
@@ -27,7 +27,7 @@ export default function Alasan() {
                 </div>
             </div>
             {/* Konten */}
-            <div className="grid grid-cols-4 gap-8 mr-4 lg:mr-8 justify-center items-center">
+            <div className="grid lg:grid-cols-4 grid-cols-2 gap-8 mr-4 lg:mr-8 justify-center items-center">
                 {alasan.map((item, index) => (
                     <div key={item.id} className="flex flex-col items-center justify-center space-y-2 p-4 rounded-lg text-center mb-8">
                         <Image className="mb-4"
@@ -36,7 +36,7 @@ export default function Alasan() {
                             width={200}
                             height={200}
                         />
-                        <span className="flex justify-center items-center text-whitebg text-h3 h-full">{item.name}</span>
+                        <span className="flex justify-center items-center text-whitebg lg:text-h3 text-m h-full">{item.name}</span>
                     </div>
                 ))}
             </div>

@@ -21,7 +21,7 @@ export default function Penjelasan() {
     return (
         <section className="py-12 px-6 md:px-12 mb-20 ml-4 lg:ml-8">
             <div className="mb-8">
-                <h1 className="text-h1 font-bold mb-4 text-center md:text-left">Apa itu PersonalityTalk?</h1>
+                <h1 className="lg:text-h1 text-h2 font-bold mb-4 text-center md:text-left">Apa itu PersonalityTalk?</h1>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
                 <div className="md:col-span-1 flex flex-col items-center">

@@ -7,7 +7,7 @@ import { getToken } from '@/lib/auth';
 
 export default function HomePage() {
   return (
-    <div>
+    <div className='border border-black'>
       <Keunggulan />
       <Penjelasan />
       <Alasan />

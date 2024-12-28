@@ -6,11 +6,11 @@ export default function Layanan() {
   return (
     <section
       id="layanan"
-      className="flex flex-col items-center py-12 px-6 mr-4 lg:mr-8 ml-4 lg:ml-8 scroll-mt-20"
+      className="flex flex-col items-center py-12 lg:px-6 px-1 mr-4 lg:mr-8 ml-4 lg:ml-8 scroll-mt-20"
     >
       {/* Header */}
       <div className="text-center">
-        <h2 className="font-bold text-black text-3xl">
+        <h2 className="font-bold text-black lg:text-3xl text-2xl">
           Layanan PersonalityTalk
         </h2>
         <p className="text-black mt-2 mb-10">
@@ -53,14 +53,14 @@ export default function Layanan() {
                       width={30}
                       height={30}
                     />
-                    <span className="ml-2 text-primary font-semibold text-h2">
+                    <span className="ml-2 text-primary font-semibold lg:text-h2 text-h3">
                       {item.name}
                     </span>
                   </div>
                   <div className="mb-4">
                     {/* Render description dengan tag <b> */}
                     <p
-                      className="text-m text-bold"
+                      className="lg:text-m text-xs text-bold"
                       dangerouslySetInnerHTML={{ __html: item.description }}
                     />
                   </div>
@@ -69,7 +69,7 @@ export default function Layanan() {
                       item.id % 2 === 0 ? "justify-end" : ""
                     } bg-primary py-2 px-4 rounded-md cursor-pointer`}
                   >
-                    <p className="text-white text-h3 mr-2">{item.buttonname}</p>
+                    <p className="text-white lg:text-h3 text-xs mr-2">{item.buttonname}</p>
                     <Image
                       src="/image/icons/arrow.png"
                       alt="Arrow"
