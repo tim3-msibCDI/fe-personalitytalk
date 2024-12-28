@@ -57,7 +57,21 @@ export default function Login() {
   }
 
   async function redirectToGoogleLogin() {
-    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth/google`;
+    try {
+      // Cek jika API URL sudah terdefinisi dengan benar
+      if (!process.env.NEXT_PUBLIC_API_URL) {
+        throw new Error("API URL is not configured.");
+      }
+  
+      // Redirect ke halaman login Google
+      window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth/google`;
+  
+    } catch (error) {
+      // Menangani error jika API URL tidak terdefinisi atau ada masalah lain
+      console.error("Redirect to Google Login failed:", error.message);
+      setError("An error occurred while trying to log in with Google. Please try again.");
+      setIsModalOpen(true); // Menampilkan modal error
+    }
   }
 
   return (

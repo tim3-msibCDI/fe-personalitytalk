@@ -2,34 +2,41 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { setToken } from "@/lib/auth"; // Fungsi yang Anda miliki untuk menyimpan token
-
+import { setToken } from "@/lib/auth"; // Fungsi untuk menyimpan token
+import Loading from "@/components/loading/loading";
 export default function GoogleCallback() {
   const router = useRouter();
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get("token");
-    const role = params.get("role");
+    const fetchCallbackData = async () => {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get("token");
+        const role = params.get("role");
 
-    if (!token || !role) {
-      console.error("Invalid callback parameters");
-      router.push("/login");
-      return;
-    }
+        if (!token || !role) {
+          throw new Error("Invalid callback parameters");
+        }
 
-    // Simpan token di cookie
-    setToken(token);
+        // Simpan token di cookie atau localStorage
+        setToken(token, role);
 
-    // Arahkan ke halaman berdasarkan role
-    if (role === "U") {
-      router.push("/"); // Halaman utama untuk pengguna biasa
-    } else if (role === "P") {
-      router.push("/psikolog/dashboard"); // Halaman utama untuk psikolog
-    } else {
-      router.push("/login"); // Fallback jika role tidak dikenali
-    }
+        // Navigasi berdasarkan role
+        if (["U", "M"].includes(role)) {
+          router.push("/"); // Halaman utama untuk user biasa atau manager
+        } else if (["P", "K"].includes(role)) {
+          router.push("/psikolog/dashboard"); // Halaman utama untuk psikolog atau konsultan
+        } else {
+          router.push("/login"); // Fallback jika role tidak valid
+        }
+      } catch (error) {
+        console.error(error.message);
+        router.push("/login");
+      }
+    };
+
+    fetchCallbackData();
   }, [router]);
 
-  return <p>Processing your login...</p>;
+  return <Loading />; // Menggunakan komponen Loading untuk menampilkan loading spinner
 }
