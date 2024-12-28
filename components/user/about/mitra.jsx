@@ -61,7 +61,7 @@ export default function Mitra() {
   return (
     <>
       <div className="pt-14 bg-whitebg">
-        <h1 className="sm:text-h1 text-h2 font-semibold mt-2 text-center">Mitra</h1>
+        <h1 className="sm:text-h1 text-h2 font-bold text-center">Mitra</h1>
       </div>
       <div className="flex items-center justify-center pb-14 bg-whitebg">
         <div

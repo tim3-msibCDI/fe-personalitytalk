@@ -12,6 +12,8 @@ export default function Artikel() {
   const [articles, setArticles] = useState([]); // State untuk menyimpan data artikel
   const [loading, setLoading] = useState(true); // State untuk memantau loading state
   const [error, setError] = useState(null); // State untuk memantau error
+  const [visibleArticles, setVisibleArticles] = useState([]); // Artikel yang terlihat berdasarkan ukuran layar
+  const [isSmallScreen, setIsSmallScreen] = useState(false); // State untuk mendeteksi ukuran layar
 
   useEffect(() => {
     // Fungsi untuk fetch data artikel
@@ -43,6 +45,20 @@ export default function Artikel() {
     fetchArticles();
   }, []);
 
+  useEffect(() => {
+    // Fungsi untuk mendeteksi ukuran layar dan mengatur artikel yang terlihat
+    const handleResize = () => {
+      const smallScreen = window.innerWidth <= 640; // Deteksi layar kecil (lebar <= 640px)
+      setIsSmallScreen(smallScreen);
+      setVisibleArticles(smallScreen ? articles.slice(0, 2) : articles);
+    };
+
+    handleResize(); // Panggil fungsi saat komponen pertama kali dimuat
+    window.addEventListener("resize", handleResize); // Tambahkan event listener untuk perubahan ukuran layar
+
+    return () => window.removeEventListener("resize", handleResize); // Bersihkan event listener
+  }, [articles]);
+
   if (loading) {
     return (
       <section id="artikel" className="mb-20">
@@ -66,15 +82,15 @@ export default function Artikel() {
   return (
     <section id="artikel" className="mb-20">
       <div className="flex flex-col items-center mb-8">
-        <h1 className="text-h1 text-textcolor font-bold">Artikel</h1>
-        <p className="text-m text-textcolor text-center mt-2">
+        <h1 className="sm:text-h1 text-h2 text-textcolor font-bold">Artikel</h1>
+        <p className="sm:text-m text-s text-textcolor text-center mt-2">
           Menyediakan berbagai informasi berkaitan dengan Psikologi dan
           Kehidupan sehari-hari yang terbaru
         </p>
       </div>
       {/* Card Artikel */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-20">
-        {articles.map((item) => (
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:px-20 px-4">
+        {visibleArticles.map((item) => (
           <Link
             key={item.id}
             href={`/article/${item.article_title
@@ -83,7 +99,7 @@ export default function Artikel() {
             passHref
           >
             <div className="bg-primarylight2 rounded-lg shadow-md p-4 cursor-pointer flex flex-col h-full">
-              <div className="w-full h-56 overflow-hidden rounded-t-lg relative">
+              <div className="w-full sm:h-56 h-28 overflow-hidden rounded-t-lg relative">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.article_img}`}
                   alt={item.article_title || "Gambar artikel"}
@@ -94,12 +110,12 @@ export default function Artikel() {
               </div>
               <div className="py-4 flex flex-col flex-grow">
                 <h5
-                  className="text-m font-bold text-textcolor truncate"
+                  className="sm:text-m text-s font-bold text-textcolor truncate"
                   title={item.article_title}
                 >
                   {item.article_title || "Judul Artikel"}
                 </h5>
-                <p className="text-s text-textcolor mt-2">
+                <p className="sm:text-s text-xs text-textcolor mt-2">
                   {item.publication_date || "Tanggal tidak tersedia"}
                 </p>
               </div>
@@ -107,10 +123,10 @@ export default function Artikel() {
           </Link>
         ))}
       </div>
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center lg:mt-8 mt-4">
         <button
           onClick={() => router.push("/article")}
-          className="flex items-center bg-primary text-h3 text-white py-2 px-4 rounded-md"
+          className="flex items-center bg-primary sm:text-h3 text-base text-white py-2 px-4 rounded-md"
         >
           Lihat Artikel Lainnya
           <Image

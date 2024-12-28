@@ -240,6 +240,42 @@ export default function Navbar() {
                 About Us
               </Link>
             </li>
+            <li className="mt-4">
+              {isAuthenticated() && user?.name ? (
+                <>
+                  <Link
+                    href="/profile"
+                    className="block px-4 py-2 border border-primary bg-primary text-white rounded-lg text-center"
+                    onClick={handleMenuItemClick}
+                  >
+                    {user.name}
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 border mt-2 text-primary bg-white rounded-lg"
+                  >
+                    Log Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/register"
+                    className="block px-4 py-2 border border-primary text-primary rounded-lg text-center"
+                    onClick={handleMenuItemClick}
+                  >
+                    Register
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="block px-4 py-2 border border-primary bg-primary text-white rounded-lg text-center mt-2"
+                    onClick={handleMenuItemClick}
+                  >
+                    Login
+                  </Link>
+                </>
+              )}
+            </li>
           </ul>
         </div>
       )}
