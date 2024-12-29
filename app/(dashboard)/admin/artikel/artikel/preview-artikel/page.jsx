@@ -70,10 +70,7 @@ export default function PreviewArtikelPage() {
             />
           </div>
         )}
-        <div
-          className="prose"
-          dangerouslySetInnerHTML={{ __html: articleData.content }}
-        />
+        <div dangerouslySetInnerHTML={{ __html: articleData.content }} />
       </div>
     </>
   );

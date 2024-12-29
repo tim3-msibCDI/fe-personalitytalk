@@ -5,6 +5,10 @@ import { useRouter } from "next/navigation";
 import Modal from "@/components/modals/modal";
 import Image from "next/image";
 import { addDisease, editDisease } from "@/api/manage-artikel";
+import dynamic from "next/dynamic";
+import "suneditor/dist/css/suneditor.min.css";
+
+const SunEditor = dynamic(() => import("suneditor-react"), { ssr: false });
 
 const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
 
@@ -20,6 +24,7 @@ export default function DiseaseForm({
   const [previewImage, setPreviewImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("success");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -64,8 +69,8 @@ export default function DiseaseForm({
         if (disease_img instanceof File) {
           formData.append("disease_img", disease_img);
         }
-
-        response = await addDisease(formData); // Kirim FormData
+        response = await addDisease(formData);
+        setMessageType("success");
         setMessage(response.message || "Penyakit berhasil ditambahkan");
       }
 
@@ -92,7 +97,7 @@ export default function DiseaseForm({
         } else {
           response = await editDisease(diseaseData.id, updatedData);
         }
-
+        setMessageType("success");
         setMessage(response.message || "Penyakit berhasil diubah");
       }
 
@@ -107,6 +112,7 @@ export default function DiseaseForm({
         error.response?.data?.message ||
         "Terjadi kesalahan saat memproses data penyakit";
       setMessage(errorMessage);
+      setMessageType("error");
       setIsModalOpen(true);
     } finally {
       setLoading(false);
@@ -163,11 +169,20 @@ export default function DiseaseForm({
           <label className="block text-sm font-medium text-gray-700">
             Deskripsi Penyakit
           </label>
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Tulis deskripsi penyakit di sini..."
-            className="bg-white w-full h-64 border rounded-md p-2"
+          <SunEditor
+            setOptions={{
+              height: 800,
+              buttonList: [
+                ["bold", "italic", "underline", "strike"],
+                ["font", "fontSize", "formatBlock"],
+                ["align", "list", "table"],
+                ["fontColor", "hiliteColor"],
+                ["removeFormat"],
+              ],
+            }}
+            setContents={content}
+            onChange={(value) => setContent(value)}
+            placeholder="Masukkan deskripsi panjang informasi penyakit..."
           />
         </div>
 
@@ -185,7 +200,16 @@ export default function DiseaseForm({
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="p-6 text-center">
-          <h2 className="text-h2 font-medium text-textcolor">{message}</h2>
+          <Image
+            src={`/image/icons/dashboard/${
+              messageType === "error" ? "fail" : "sucess"
+            }.svg`}
+            width={150}
+            height={150}
+            alt={messageType === "error" ? "fail" : "success"}
+            className="mx-auto"
+          />
+          <h2 className="text-h2 font-medium mt-4 text-textcolor">{message}</h2>
         </div>
       </Modal>
     </>
