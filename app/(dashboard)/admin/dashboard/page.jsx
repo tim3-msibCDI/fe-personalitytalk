@@ -43,7 +43,7 @@ export default function AdminDashboard() {
     );  
   }
 
-  const { totalUser, totalPsikolog, totalConsultation, totalCourse, consultationChart } = dashboardData;
+  const { consultationChart, courseChart } = dashboardData;
 
   return (
     <>
@@ -73,12 +73,12 @@ export default function AdminDashboard() {
           </div>
           <div className="bg-primarylight2 p-5 rounded-lg shadow-md">
             <BarChart
-              months={consultationChart.months}
-              totals={consultationChart.totals} 
+              months={courseChart.months}
+              totals={courseChart.totals} 
             />
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 }

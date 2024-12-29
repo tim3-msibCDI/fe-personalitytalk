@@ -62,7 +62,7 @@ const BarChart = ({ months, totals, title }) => {
         formatter: (value) => value, // Format the value to be displayed (you can customize this)
         align: "end", // Posisikan angka di tengah secara vertikal
         anchor: "end", // Tetapkan posisi di dalam batang
-        offset: -0, // Tambahkan jarak sedikit agar tidak terlalu dekat
+        offset: 0, // Tambahkan jarak sedikit agar tidak terlalu dekat
       },
     },
     scales: {
@@ -82,7 +82,12 @@ const BarChart = ({ months, totals, title }) => {
     },
   };
 
-  return <Bar data={data} options={options} />;
+  return(
+    <div style={{ height: "300px" }}>
+      <Bar data={data} options={options} />
+    </div>
+  );
+     
 };
 
 export default BarChart;

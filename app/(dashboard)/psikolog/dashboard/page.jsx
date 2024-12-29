@@ -5,6 +5,8 @@ import axios from "axios";
 import { getToken } from "@/lib/auth";
 import Loading from "@/components/loading/loading";
 import Image from "next/image";
+import BarChart from "@/components/dashboard/chart/bar-chart";
+import DoughnutChart from "@/components/dashboard/chart/doughnut-chart";
 
 export default function PsikologDashboard() {
   const [dashboardData, setDashboardData] = useState(null);
@@ -82,83 +84,115 @@ export default function PsikologDashboard() {
     return <p>Error: {error}</p>;
   }
 
+  const { consultationChart, topicChart } = dashboardData;
+
   return (
-    <div className="grid grid-cols-4 gap-5 px-4 py-5">
+    <div className="flex flex-col p-6">
       {dashboardData && (
         <>
-          <div className="flex items-center rounded-lg p-4 shadow-md bg-primarylight2">
-            <div className="w-12 h-12 mr-4">
-              <Image
-                src="/image/icons/psikolog/dashboard/client.svg"
-                alt="Total Clients Icon"
-                className="w-full h-full object-contain"
-                width={48}
-                height={48}
-              />
+          {/* Grid for Total Clients, Consultations, Scheduled Consultations, and Satisfaction */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="flex items-center rounded-lg p-4 shadow-md bg-primarylight2">
+              <div className="w-12 h-12 mr-4">
+                <Image
+                  src="/image/icons/psikolog/dashboard/client.svg"
+                  alt="Total Clients Icon"
+                  className="w-full h-full object-contain"
+                  width={48}
+                  height={48}
+                />
+              </div>
+              <div>
+                <h2 className="text-h2 font-semibold">
+                  {animatedCounts.totalClients.toLocaleString()}
+                </h2>
+                <p className="text-s">Total Klien</p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-h2 font-semibold">
-                {animatedCounts.totalClients.toLocaleString()}
-              </h2>
-              <p className="text-s">Total Klien</p>
+  
+            <div className="flex items-center rounded-lg p-4 shadow-md bg-primarylight2">
+              <div className="w-12 h-12 mr-4">
+                <Image
+                  src="/image/icons/psikolog/dashboard/konsultasi.svg"
+                  alt="Total Consultations Icon"
+                  className="w-full h-full object-contain"
+                  width={48}
+                  height={48}
+                />
+              </div>
+              <div>
+                <h2 className="text-h2 font-semibold">
+                  {animatedCounts.totalConsultations.toLocaleString()}
+                </h2>
+                <p className="text-s">Total Konsultasi</p>
+              </div>
+            </div>
+  
+            <div className="flex items-center rounded-lg p-4 shadow-md bg-primarylight2">
+              <div className="w-12 h-12 mr-4">
+                <Image
+                  src="/image/icons/psikolog/dashboard/jadwal.svg"
+                  alt="Total Scheduled Consultations Icon"
+                  className="w-full h-full object-contain"
+                  width={48}
+                  height={48}
+                />
+              </div>
+              <div>
+                <h2 className="text-h2 font-semibold">
+                  {animatedCounts.totalScheduledConsultations.toLocaleString()}
+                </h2>
+                <p className="text-s">Jadwal Konsultasi</p>
+              </div>
+            </div>
+  
+            <div className="flex items-center rounded-lg p-4 shadow-md bg-primarylight2">
+              <div className="w-12 h-12 mr-4">
+                <Image
+                  src="/image/icons/psikolog/dashboard/kepuasan.svg"
+                  alt="Average Rating Icon"
+                  className="w-full h-full object-contain"
+                  width={48}
+                  height={48}
+                />
+              </div>
+              <div>
+                <h2 className="text-h2 font-semibold">
+                  {animatedCounts.averageRating.toLocaleString()}
+                </h2>
+                <p className="text-s">Kepuasan Klien</p>
+              </div>
             </div>
           </div>
-
-          <div className="flex items-center rounded-lg p-4 shadow-md bg-primarylight2">
-            <div className="w-12 h-12 mr-4">
-              <Image
-                src="/image/icons/psikolog/dashboard/konsultasi.svg"
-                alt="Total Consultations Icon"
-                className="w-full h-full object-contain"
-                width={48}
-                height={48}
-              />
+  
+          {/* Charts Section */}
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-primarylight2 p-3 rounded-lg shadow-md">
+              <div className="ml-1">
+                <h3 className="text-m font-bold text-black">Total Konsultasi (6 Bulan Terakhir)</h3>
+              </div>
             </div>
-            <div>
-              <h2 className="text-h2 font-semibold">
-                {animatedCounts.totalConsultations.toLocaleString()}
-              </h2>
-              <p className="text-s">Total Konsultasi</p>
+            <div className="bg-primarylight2 p-3 rounded-lg shadow-md">
+              <div className="ml-1">
+                <h3 className="text-m font-bold text-black">Total Topik Konsultasi (6 Bulan terakhir)</h3>
+              </div>
             </div>
           </div>
-
-          <div className="flex items-center rounded-lg p-4 shadow-md bg-primarylight2">
-            <div className="w-12 h-12 mr-4">
-              <Image
-                src="/image/icons/psikolog/dashboard/jadwal.svg"
-                alt="Total Scheduled Consultations Icon"
-                className="w-full h-full object-contain"
-                width={48}
-                height={48}
+          <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-primarylight2 p-5 rounded-lg shadow-md">
+              <BarChart
+                months={consultationChart.months}
+                totals={consultationChart.totals}
               />
             </div>
-            <div>
-              <h2 className="text-h2 font-semibold">
-                {animatedCounts.totalScheduledConsultations.toLocaleString()}
-              </h2>
-              <p className="text-s">Jadwal Konsultasi</p>
-            </div>
-          </div>
-
-          <div className="flex items-center rounded-lg p-4 shadow-md bg-primarylight2">
-            <div className="w-12 h-12 mr-4">
-              <Image
-                src="/image/icons/psikolog/dashboard/kepuasan.svg"
-                alt="Average Rating Icon"
-                className="w-full h-full object-contain"
-                width={48}
-                height={48}
-              />
-            </div>
-            <div>
-              <h2 className="text-h2 font-semibold">
-                {animatedCounts.averageRating.toLocaleString()}
-              </h2>
-              <p className="text-s">Kepuasan Klien</p>
+            <div
+              className="bg-primarylight2 p-5 rounded-lg shadow-md flex justify-center items-center"
+            >
+              <DoughnutChart topicChart={topicChart} />
             </div>
           </div>
         </>
       )}
     </div>
-  );
+  );  
 }
