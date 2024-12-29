@@ -84,7 +84,7 @@ function Card({ icon, title, count, isLoading }) {
   }, [isLoading, count]);
 
   return (
-    <div className="bg-orange-100 p-5 rounded-lg flex items-center shadow-md">
+    <div className="bg-primarylight2 p-5 rounded-lg flex items-center shadow-md">
       <div className="rounded-lg flex items-center justify-center">
         <Image src={icon} alt={`${title} Icon`} width={40} height={40} />
       </div>

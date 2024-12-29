@@ -189,7 +189,7 @@ export const upgradeMahasiswa = async (universitas, jurusan) => {
   try {
     const response = await axios.put(
       `${process.env.NEXT_PUBLIC_API_URL}/user/profile/updateMahasiswa`,
-      { universitas, jurusan },
+      { universitas: universitas, jurusan: jurusan },
       {
         headers: {
           "Content-Type": "application/json",
@@ -235,6 +235,7 @@ export const loginAdmin = async (email, password) => {
     {
       headers: {
         "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "69420",
       },
     }
   );
