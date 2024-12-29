@@ -526,15 +526,17 @@ export default function Table() {
           },
           {
             key: "photo_profile",
-            render: (photo) => {
+            render: (photo, row) => {
+              // Mendapatkan link foto dari row.user.photoprofile
               const linkphoto =
-                photo && photo.startsWith("http")
-                  ? photo
-                  : photo
-                  ? `${API_REAL}/${photo}`
+                row.user?.photo_profile && row.user.photo_profile.startsWith("http")
+                  ? row.user.photo_profile
+                  : row.user?.photo_profile
+                  ? `${API_REAL}/${row.user.photo_profile}`
                   : "/image/default-profile.jpg"; // URL foto default
-
+          
               return (
+                console.log(linkphoto),
                 <Image
                   src={linkphoto}
                   alt="Foto Profil"
@@ -607,8 +609,16 @@ export default function Table() {
             render: (_, __, index) => data.data.from - 1 + index + 1,
           },
           { key: "code" },
-          { key: "price" },
           {
+            key: "price",
+            render: (text) =>
+              new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              }).format(text),
+          },          {
             key: "actions",
             render: (_, row) => (
               <div className="space-x-2">
@@ -899,8 +909,36 @@ export default function Table() {
             key: "code",
           },
           { key: "voucher_type" },
-          { key: "discount_value" },
-          { key: "min_transaction_amount" },
+          {
+            key: "discount_value",
+/*************  ✨ Codeium Command ⭐  *************/
+/**
+ * Formats the given text as an Indonesian Rupiah currency string.
+ * Uses the `Intl.NumberFormat` API with "id-ID" locale settings.
+ *
+ * @param {number} text - The numeric value to be formatted as currency.
+ * @returns {string} The formatted currency string in IDR.
+ */
+
+/******  36fe661b-9ed4-4c9e-9787-389d97e5ec9c  *******/
+            render: (text) =>
+              new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              }).format(text),
+          },
+          {
+            key: "min_transaction_amount",
+            render: (text) =>
+              new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              }).format(text),
+          },
           { key: "valid_from" },
           {
             key: "is_active",
