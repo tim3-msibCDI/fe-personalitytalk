@@ -30,18 +30,27 @@ const PasswordResetRequest = () => {
         );
       }
     } catch (err) {
-      if (
-        err.response &&
-        err.response.data.errors &&
-        err.response.data.errors.email
+      // Cek apakah error berasal dari rate-limiting (status 429)
+      if (err.response && err.response.status === 429) {
+        // Tangkap pesan dari server jika tersedia
+        setError(
+            err.response.data.message || "Terlalu banyak permintaan. Silakan coba lagi nanti."
+        );
+      } 
+      // Tangkap error validasi dari email
+      else if (
+          err.response &&
+          err.response.data.errors &&
+          err.response.data.errors.email
       ) {
-        setError(err.response.data.errors.email[0]);
+          setError(err.response.data.errors.email[0]);
       } else {
-        setError("Terjadi kesalahan. Silakan coba lagi.");
+          setError("Terjadi kesalahan. Silakan coba lagi.");
       }
+    
     } finally {
-      setLoading(false); // Selesai loading
-    }
+        setLoading(false); // Selesai loading
+  }
   };
 
   return (
