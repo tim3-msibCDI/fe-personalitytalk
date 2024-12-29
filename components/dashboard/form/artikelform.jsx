@@ -2,27 +2,35 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 import Modal from "@/components/modals/modal";
 import Image from "next/image";
 import { editArticle, addArticle } from "@/api/manage-artikel";
+import { getToken } from "@/lib/auth";
+import dynamic from "next/dynamic";
+import "suneditor/dist/css/suneditor.min.css";
+
+const SunEditor = dynamic(() => import("suneditor-react"), { ssr: false });
 
 const API_REAL = process.env.NEXT_PUBLIC_IMG_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function ArticleForm({
   isEditMode = false,
   isAddMode = false,
-  isViewMode = false,
   articleData,
 }) {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
   const [reviewedBy, setReviewedBy] = useState("");
   const [content, setContent] = useState("");
   const [article_img, setArticleImg] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("success");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -40,9 +48,30 @@ export default function ArticleForm({
           : "/image/upload_picture_long.png";
 
       setPreviewImage(linkPhoto);
-      setArticleImg(linkPhoto); // Atur preview untuk artikel image
+      setArticleImg(linkPhoto);
     }
   }, [articleData]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/admin/article-categories`,
+          {
+            headers: {
+              Authorization: `Bearer ${getToken()}`,
+              "ngrok-skip-browser-warning": "69420",
+            },
+          }
+        );
+        setCategories(response.data.data || []);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -60,7 +89,6 @@ export default function ArticleForm({
       let response;
 
       if (isAddMode) {
-        // Penambahan data menggunakan FormData
         const formData = new FormData();
         formData.append("article_title", title);
         formData.append("category_id", parseInt(category, 10));
@@ -74,10 +102,10 @@ export default function ArticleForm({
         if (article_img instanceof File) {
           formData.append("article_img", article_img);
         }
-
-        formData.append("admin_id", 1); // Admin ID otomatis
+        formData.append("admin_id", 1);
 
         response = await addArticle(formData);
+        setMessageType("success");
         setMessage(response.message || "Artikel berhasil ditambahkan");
       }
 
@@ -101,7 +129,7 @@ export default function ArticleForm({
         } else {
           response = await editArticle(articleData.id, updatedData);
         }
-
+        setMessageType("success");
         setMessage(response.message || "Artikel berhasil diubah");
       }
 
@@ -116,6 +144,7 @@ export default function ArticleForm({
         error.response?.data?.message ||
         "Terjadi kesalahan saat memproses artikel";
       setMessage(errorMessage);
+      setMessageType("error");
       setIsModalOpen(true);
     } finally {
       setLoading(false);
@@ -126,7 +155,6 @@ export default function ArticleForm({
     <>
       <form onSubmit={handleSubmit} className="p-6 bg-primarylight2 rounded-lg">
         <div className="grid grid-cols-2 gap-6">
-          {/* Image Upload */}
           <div>
             <div className="relative w-full h-56 bg-gray-200 flex items-center justify-center rounded-lg overflow-hidden">
               <Image
@@ -150,7 +178,6 @@ export default function ArticleForm({
             </div>
           </div>
 
-          {/* Input Fields */}
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
@@ -170,21 +197,17 @@ export default function ArticleForm({
               </label>
               <select
                 value={category}
-                onChange={(e) => setCategory(parseInt(e.target.value, 10))} // Konversi ke number
+                onChange={(e) => setCategory(e.target.value)}
                 className="mt-1 block w-full border rounded-md p-2"
               >
                 <option value="" disabled>
                   Pilih Kategori Artikel
                 </option>
-                <option value={1}>Teknologi</option>
-                <option value={2}>Kesehatan</option>
-                <option value={3}>Pendidikan</option>
-                <option value={4}>Bisnis</option>
-                <option value={5}>Hiburan</option>
-                <option value={6}>Olahraga</option>
-                <option value={7}>Travel</option>
-                <option value={8}>Gaya Hidup</option>
-                <option value={14}>Politik</option>
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
@@ -202,20 +225,27 @@ export default function ArticleForm({
           </div>
         </div>
 
-        {/* Textarea for Content */}
         <div className="mt-4">
           <label className="block text-sm font-medium text-gray-700">
             Deskripsi Panjang
           </label>
-          <textarea
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+          <SunEditor
+            setOptions={{
+              height: 800,
+              buttonList: [
+                ["bold", "italic", "underline", "strike"],
+                ["font", "fontSize", "formatBlock"],
+                ["align", "list", "table"],
+                ["fontColor", "hiliteColor"],
+                ["removeFormat"],
+              ],
+            }}
+            setContents={content}
+            onChange={(value) => setContent(value)}
             placeholder="Masukkan deskripsi panjang artikel"
-            className="border p-2 rounded-md bg-white w-full h-64 resize-none"
           />
         </div>
 
-        {/* Submit Button */}
         <div className="mt-6 text-right">
           <button
             type="submit"
@@ -229,7 +259,16 @@ export default function ArticleForm({
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="p-6 text-center">
-          <h2 className="text-h2 font-medium text-textcolor">{message}</h2>
+          <Image
+            src={`/image/icons/dashboard/${
+              messageType === "error" ? "fail" : "sucess"
+            }.svg`}
+            width={150}
+            height={150}
+            alt={messageType === "error" ? "fail" : "success"}
+            className="mx-auto"
+          />
+          <h2 className="text-h2 font-medium mt-4 text-textcolor">{message}</h2>
         </div>
       </Modal>
     </>

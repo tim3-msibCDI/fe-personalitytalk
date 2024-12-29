@@ -174,18 +174,10 @@ export async function getAllArticles() {
 }
 
 // Fungsi untuk menambahkan artikel
-export async function addArticle(articleData) {
+export async function addArticle(formData) {
   try {
-    const formData = new FormData();
-    formData.append("admin_id", articleData.admin_id);
-    formData.append("article_title", articleData.article_title);
-    formData.append("category_id", articleData.category_id);
-    formData.append("publication_date", articleData.publication_date);
-    formData.append("content", articleData.content);
-    formData.append("publisher_name", articleData.publisher_name);
-
-    if (articleData.article_img && articleData.article_img instanceof File) {
-      formData.append("article_img", articleData.article_img);
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value); // Debug untuk memastikan data
     }
 
     const response = await fetch(`${API_URL}/admin/articles`, {
@@ -296,16 +288,10 @@ export async function getArticleDetail(articleId) {
   }
 }
 
-export async function addDisease(diseaseData) {
+export async function addDisease(formData) {
   try {
-    const formData = new FormData();
-    formData.append("disease_name", diseaseData.disease_name);
-    formData.append("content", diseaseData.content);
-    formData.append("admin_id", diseaseData.admin_id);
-
-    // Append disease_img hanya jika ada
-    if (diseaseData.disease_img) {
-      formData.append("disease_img", diseaseData.disease_img);
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
     }
 
     const response = await fetch(`${API_URL}/admin/diseases`, {
