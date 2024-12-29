@@ -136,13 +136,15 @@ export default function PaymentForm({
 
           <div>
             <label>Jenis Pembayaran</label>
-            <input
-              type="text"
+            <select
               value={type}
               onChange={(e) => setType(e.target.value)}
-              placeholder="Masukkan Jenis Pembayaran"
               className="border border-textcolor p-2 rounded-md w-full"
-            />
+            >
+              <option value="" disabled>Pilih Jenis Pembayaran</option>
+              <option value="Pembayaran Otomatis">Pembayaran Otomatis</option>
+              <option value="Transfer Bank">Transfer Bank</option>
+            </select>
           </div>
 
           <div>
