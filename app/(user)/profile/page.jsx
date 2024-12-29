@@ -60,7 +60,7 @@ export default function Profile() {
     const dataToSend = {
       name: formData.name,
       email: formData.email,
-      gender: formData.gender === "Perempuan" ? "F" : "M",
+      gender: formData.gender,
       date_birth: formData.dateBirth,
       phone_number: formData.phone_number,
       universitas: formData.universitas || "",
@@ -92,7 +92,9 @@ export default function Profile() {
     setUpgradeErrors({});
   };
 
-  const handleUpgradeSubmit = async () => {
+  const handleUpgradeSubmit = async (e) => {
+    e.preventDefault();
+
     const errors = {};
     if (!formData.universitas) errors.universitas = "Universitas wajib diisi";
     if (!formData.jurusan) errors.jurusan = "Jurusan wajib diisi";
@@ -101,6 +103,7 @@ export default function Profile() {
 
     // Prevent submission if there are errors
     if (Object.keys(errors).length > 0) return;
+    console.log(formData.universitas, formData.jurusan);
 
     try {
       await upgradeToMahasiswa(formData.universitas, formData.jurusan);

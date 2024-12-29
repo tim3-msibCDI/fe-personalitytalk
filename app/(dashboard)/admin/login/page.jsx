@@ -27,6 +27,7 @@ export default function Login() {
 
     try {
       const data = await loginAdmin(email, password);
+      console.log(email)
 
       if (data.success) {
         const token = data.data.token;
