@@ -58,8 +58,8 @@ export default function ConsultationHistoryCard({
       case "completed":
         return (
           <>
-            <span className="sm:inline hidden">Transaksi </span>
-            <span>Selesai</span>
+            <span className="sm:inline hidden">Selesai </span>
+            <span></span>
           </>
         );
       case "ongoing":
