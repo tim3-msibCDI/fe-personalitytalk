@@ -66,6 +66,7 @@ export default function TablePsikolog() {
   const [selectedTransactionId, setSelectedTransactionId] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("");
+  const [isBelumMulaiModalOpen, setBelumMulaiModalOpen] = useState(false); // State untuk modal belum dimulai
 
   let searchPlaceholder = "Cari Data";
   const apiEndpoint =
@@ -127,6 +128,9 @@ export default function TablePsikolog() {
     setIsCheckModalOpen(false); // Tutup modal informasi
     setSelectedTransactionId(null);
   };
+
+  const openBelumMulaiModal = () => setBelumMulaiModalOpen(true);
+  const closeBelumMulaiModal = () => setBelumMulaiModalOpen(false);
 
   // Fungsi untuk reload halaman
   const reloadPage = () => {
@@ -374,25 +378,18 @@ export default function TablePsikolog() {
         ]
         : [];
 
-  const navigateToChat = (
-    consulId,
-    chatSessionId,
-    clientId,
-    senderId,
-    chatStatus
-  ) => {
-    localStorage.setItem(
-      "psikologChatData",
-      JSON.stringify({
-        consulId,
-        chatSessionId,
-        clientId,
-        senderId,
-        chatStatus,
-      })
-    );
-    router.push(`/psikolog/chat/${chatSessionId}`);
-  };
+  const navigateToChat = (consulId, chatSessionId, clientId, senderId, chatStatus) => {
+    // const chatData = { consulId, chatSessionId, clientId, senderId, chatStatus };
+    // console.log("Navigating to chat with:", { consulId, chatSessionId, clientId, senderId, chatStatus });
+    if (chatStatus === "scheduled") {
+        openBelumMulaiModal();
+    } else if (chatStatus === "ongoing" || chatStatus === "completed") {
+        localStorage.setItem("psikologChatData", JSON.stringify({ consulId, chatSessionId, clientId, senderId, chatStatus }));
+        router.push(`/psikolog/chat/${chatSessionId}`);
+    } else {
+        alert("Chat hanya tersedia untuk sesi yang dijadwalkan atau sedang berlangsung.");
+    }
+};
 
   return (
     <div className="overflow-x-auto">
@@ -473,6 +470,11 @@ export default function TablePsikolog() {
           transactionId={selectedTransactionId}
           onReload={reloadPage}
         />
+      </Modal>
+
+      {/* Modal KonsulBelumMulai */}
+      <Modal isOpen={isBelumMulaiModalOpen} onClose={closeBelumMulaiModal}>
+          <KonsulBelumMulai onClose={closeBelumMulaiModal} />
       </Modal>
     </div>
   );
